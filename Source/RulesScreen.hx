@@ -10,11 +10,16 @@ class RulesScreen extends Sprite
 
     var backButton:Button;
     var backButtonIsPressed:Bool = false;
+
+    var backGround:BackGround;
     public function new(width:Int, height:Int)
     {
         super();
         sizeWidth = width;
         sizeHeight = height;
+
+        backGround = new BackGround("rulesScreen");
+        addChild(backGround);
         backButton = new Button(sizeWidth, sizeHeight, "BACK");
         backButton.x = sizeWidth /2;
         backButton.y = sizeHeight *3.5/ 4;

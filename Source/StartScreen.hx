@@ -8,8 +8,11 @@ import openfl.display.Sprite;
 class StartScreen extends Sprite
 {
     var startButton:Button;
+    var startButtonIsPressed:Bool = false;
     var rulesButton:Button;
     var rulesButtonIsPressed:Bool = false;
+
+    var backGround:BackGround;
 
     var sizeWidth:Int;
     var sizeHeight:Int;
@@ -17,14 +20,20 @@ class StartScreen extends Sprite
     public function new(width:Int, height:Int , main:Main)
     {
         super();
+
         
         sizeWidth = width;
         sizeHeight = height;
+
+        backGround = new BackGround("startScreen");
+        addChild(backGround);
+
         startButton = new Button(sizeWidth,sizeHeight,"START");
         startButton.x = sizeWidth / 2;
         startButton.y = sizeHeight / 4;
         startButton.addEventListener(MouseEvent.MOUSE_OVER, startButtonOver);
         startButton.addEventListener(MouseEvent.MOUSE_OUT, startButtonOut);
+        startButton.addEventListener(MouseEvent.MOUSE_DOWN, startButtonClick);
         addChild(startButton);
         rulesButton = new Button(sizeWidth,sizeHeight,"RULES");
         rulesButton.x = sizeWidth / 2;
@@ -43,6 +52,10 @@ class StartScreen extends Sprite
     {
         startButton.scaleX = 1.0;
         startButton.scaleY = 1.0;    
+    }
+    public function startButtonClick(e:MouseEvent) 
+    {
+        startButtonIsPressed = true;
     }
     public function rulesButtonOver(e:MouseEvent)
      {
@@ -64,6 +77,11 @@ class StartScreen extends Sprite
     }
     public function reset() 
     {
-        rulesButtonIsPressed = false;    
+        rulesButtonIsPressed = false; 
+        startButtonIsPressed = false;   
+    }
+    public function get_startButtonIsPressed() 
+    {
+        return startButtonIsPressed;    
     }
 }

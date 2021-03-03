@@ -870,9 +870,9 @@ ApplicationMain.create = function(config) {
 	ManifestResources.init(config);
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-		_this.setReserved("build","41");
+		_this.setReserved("build","1");
 	} else {
-		_this.h["build"] = "41";
+		_this.h["build"] = "1";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -4077,7 +4077,7 @@ var Main = function() {
 	this.startScreen = new StartScreen(this.sizeWidth,this.sizeHeight,this);
 	this.rulesScreen = new RulesScreen(this.sizeWidth,this.sizeHeight);
 	this.addChild(this.startScreen);
-	haxe_Log.trace(this.get_width() + " " + this.get_height(),{ fileName : "Source/Main.hx", lineNumber : 21, className : "Main", methodName : "new"});
+	haxe_Log.trace(this.get_width() + " " + this.get_height(),{ fileName : "Source/Main.hx", lineNumber : 22, className : "Main", methodName : "new"});
 	this.addEventListener("enterFrame",$bind(this,this.update));
 };
 $hxClasses["Main"] = Main;
@@ -4095,6 +4095,19 @@ Main.prototype = $extend(openfl_display_Sprite.prototype,{
 			this.rulesScreen.reset();
 			this.addChild(this.startScreen);
 		}
+		if(this.startScreen.get_startButtonIsPressed()) {
+			this.removeChild(this.startScreen);
+			this.startScreen.reset();
+			this.game = new Game(this.sizeWidth,this.sizeHeight);
+			this.addChild(this.game);
+		}
+		if(this.contains(this.game)) {
+			if(this.game.get_quitButtonIsPressed()) {
+				this.removeChild(this.game);
+				this.addChild(this.startScreen);
+				this.game = null;
+			}
+		}
 	}
 	,__class__: Main
 });
@@ -4109,24 +4122,37 @@ DocumentClass.__super__ = Main;
 DocumentClass.prototype = $extend(Main.prototype,{
 	__class__: DocumentClass
 });
+var BackGround = function(name) {
+	openfl_display_Sprite.call(this);
+	this.bmp = new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("assets/backGround/" + name + ".png"));
+	this.addChild(this.bmp);
+};
+$hxClasses["BackGround"] = BackGround;
+BackGround.__name__ = "BackGround";
+BackGround.__super__ = openfl_display_Sprite;
+BackGround.prototype = $extend(openfl_display_Sprite.prototype,{
+	__class__: BackGround
+});
 var Button = function(width,height,text) {
 	openfl_display_Sprite.call(this);
 	var buttonWidth = width / 2.5;
 	var buttonHeight = height / 10;
 	this.get_graphics().beginFill(16711935);
-	this.get_graphics().drawRoundRect(-buttonWidth / 2,-buttonHeight / 2,buttonWidth,buttonHeight,50.0);
+	this.get_graphics().drawRoundRect(-buttonWidth / 2,-buttonHeight / 2,buttonWidth,buttonHeight,width / 16);
 	this.get_graphics().endFill();
 	this.get_graphics().lineStyle(5,0);
-	this.get_graphics().drawRoundRect(-buttonWidth / 2,-buttonHeight / 2,buttonWidth,buttonHeight,50.0);
+	this.get_graphics().drawRoundRect(-buttonWidth / 2,-buttonHeight / 2,buttonWidth,buttonHeight,width / 16);
 	this.get_graphics().endFill();
 	var textstart = new openfl_text_TextField();
 	textstart.set_text(text);
 	textstart.set_textColor(0);
-	textstart.set_x(-50);
-	textstart.set_y(-25);
+	textstart.set_x(-buttonWidth / 6);
+	textstart.set_y(-buttonHeight / 2.5);
 	textstart.mouseEnabled = false;
-	textstart.set_scaleX(2.5);
-	textstart.set_scaleY(2.5);
+	textstart.set_scaleX(width / 800 * 2.5);
+	textstart.set_scaleY(height / 600 * 2.5);
+	textstart.set_height(buttonHeight / 3);
+	textstart.set_width(buttonWidth / 5);
 	this.addChild(textstart);
 };
 $hxClasses["Button"] = Button;
@@ -4224,6 +4250,42 @@ EReg.prototype = {
 	}
 	,__class__: EReg
 };
+var Game = function(width,height) {
+	this.quitButtonIsPressed = false;
+	openfl_display_Sprite.call(this);
+	this.sizeWidth = width;
+	this.sizeHeight = height;
+	this.backGround = new BackGround("gameScreen");
+	this.backGround.set_scaleY(1.5);
+	this.addChild(this.backGround);
+	this.quitButton = new Button(this.sizeWidth / 2,this.sizeHeight / 2,"QUIT");
+	this.quitButton.set_x(this.sizeWidth * 7 / 8);
+	this.quitButton.set_y(this.sizeHeight / 25);
+	this.addChild(this.quitButton);
+	this.quitButton.addEventListener("mouseOver",$bind(this,this.quitButtonOver));
+	this.quitButton.addEventListener("mouseOut",$bind(this,this.quitButtonOut));
+	this.quitButton.addEventListener("mouseDown",$bind(this,this.quitButtonClick));
+};
+$hxClasses["Game"] = Game;
+Game.__name__ = "Game";
+Game.__super__ = openfl_display_Sprite;
+Game.prototype = $extend(openfl_display_Sprite.prototype,{
+	quitButtonClick: function(e) {
+		this.quitButtonIsPressed = true;
+	}
+	,quitButtonOver: function(e) {
+		this.quitButton.set_scaleX(1.25);
+		this.quitButton.set_scaleY(1.25);
+	}
+	,quitButtonOut: function(e) {
+		this.quitButton.set_scaleX(1.0);
+		this.quitButton.set_scaleY(1.0);
+	}
+	,get_quitButtonIsPressed: function() {
+		return this.quitButtonIsPressed;
+	}
+	,__class__: Game
+});
 var HxOverrides = function() { };
 $hxClasses["HxOverrides"] = HxOverrides;
 HxOverrides.__name__ = "HxOverrides";
@@ -4309,7 +4371,7 @@ ManifestResources.init = function(config) {
 		ManifestResources.rootPath = "./";
 	}
 	var bundle;
-	var data = "{\"name\":null,\"assets\":\"ah\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
+	var data = "{\"name\":null,\"assets\":\"aoy4:pathy35:assets%2FbackGround%2Fdesert_BG.pngy4:sizei40660y4:typey5:IMAGEy2:idR1y7:preloadtgoR0y40:assets%2FbackGround%2FgameOverScreen.pngR2i100976R3R4R5R7R6tgoR0y36:assets%2FbackGround%2FgameScreen.pngR2i92561R3R4R5R8R6tgoR0y37:assets%2FbackGround%2FrulesScreen.pngR2i81718R3R4R5R9R6tgoR0y37:assets%2FbackGround%2FstartScreen.pngR2i11036R3R4R5R10R6tgh\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
 	var manifest = lime_utils_AssetManifest.parse(data,ManifestResources.rootPath);
 	var library = lime_utils_AssetLibrary.fromManifest(manifest);
 	lime_utils_Assets.registerLibrary("default",library);
@@ -4392,6 +4454,8 @@ var RulesScreen = function(width,height) {
 	openfl_display_Sprite.call(this);
 	this.sizeWidth = width;
 	this.sizeHeight = height;
+	this.backGround = new BackGround("rulesScreen");
+	this.addChild(this.backGround);
 	this.backButton = new Button(this.sizeWidth,this.sizeHeight,"BACK");
 	this.backButton.set_x(this.sizeWidth / 2);
 	this.backButton.set_y(this.sizeHeight * 3.5 / 4);
@@ -4425,14 +4489,18 @@ RulesScreen.prototype = $extend(openfl_display_Sprite.prototype,{
 });
 var StartScreen = function(width,height,main) {
 	this.rulesButtonIsPressed = false;
+	this.startButtonIsPressed = false;
 	openfl_display_Sprite.call(this);
 	this.sizeWidth = width;
 	this.sizeHeight = height;
+	this.backGround = new BackGround("startScreen");
+	this.addChild(this.backGround);
 	this.startButton = new Button(this.sizeWidth,this.sizeHeight,"START");
 	this.startButton.set_x(this.sizeWidth / 2);
 	this.startButton.set_y(this.sizeHeight / 4);
 	this.startButton.addEventListener("mouseOver",$bind(this,this.startButtonOver));
 	this.startButton.addEventListener("mouseOut",$bind(this,this.startButtonOut));
+	this.startButton.addEventListener("mouseDown",$bind(this,this.startButtonClick));
 	this.addChild(this.startButton);
 	this.rulesButton = new Button(this.sizeWidth,this.sizeHeight,"RULES");
 	this.rulesButton.set_x(this.sizeWidth / 2);
@@ -4454,6 +4522,9 @@ StartScreen.prototype = $extend(openfl_display_Sprite.prototype,{
 		this.startButton.set_scaleX(1.0);
 		this.startButton.set_scaleY(1.0);
 	}
+	,startButtonClick: function(e) {
+		this.startButtonIsPressed = true;
+	}
 	,rulesButtonOver: function(e) {
 		this.rulesButton.set_scaleX(1.25);
 		this.rulesButton.set_scaleY(1.25);
@@ -4470,6 +4541,10 @@ StartScreen.prototype = $extend(openfl_display_Sprite.prototype,{
 	}
 	,reset: function() {
 		this.rulesButtonIsPressed = false;
+		this.startButtonIsPressed = false;
+	}
+	,get_startButtonIsPressed: function() {
+		return this.startButtonIsPressed;
 	}
 	,__class__: StartScreen
 });
@@ -23004,7 +23079,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 876788;
+	this.version = 614802;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
