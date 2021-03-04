@@ -23,6 +23,7 @@ HX_LOCAL_STACK_FRAME(_hx_pos_b5269e0ce41f90ec_100_createEnum,"Type","createEnum"
 HX_LOCAL_STACK_FRAME(_hx_pos_b5269e0ce41f90ec_111_getInstanceFields,"Type","getInstanceFields",0xe970f890,"Type.getInstanceFields","C:\\HaxeToolkit\\haxe\\std/cpp/_std/Type.hx",111,0x00143afe)
 HX_LOCAL_STACK_FRAME(_hx_pos_b5269e0ce41f90ec_120_getEnumConstructs,"Type","getEnumConstructs",0x7f46cf7f,"Type.getEnumConstructs","C:\\HaxeToolkit\\haxe\\std/cpp/_std/Type.hx",120,0x00143afe)
 HX_LOCAL_STACK_FRAME(_hx_pos_b5269e0ce41f90ec_124_typeof,"Type","typeof",0xd6c51d65,"Type.typeof","C:\\HaxeToolkit\\haxe\\std/cpp/_std/Type.hx",124,0x00143afe)
+HX_LOCAL_STACK_FRAME(_hx_pos_b5269e0ce41f90ec_156_enumParameters,"Type","enumParameters",0xf9e1b41f,"Type.enumParameters","C:\\HaxeToolkit\\haxe\\std/cpp/_std/Type.hx",156,0x00143afe)
 
 void Type_obj::__construct() { }
 
@@ -219,6 +220,15 @@ HXLINE( 128)		return null();
 
 STATIC_HX_DEFINE_DYNAMIC_FUNC1(Type_obj,_hx_typeof,return )
 
+::cpp::VirtualArray Type_obj::enumParameters( ::Dynamic e){
+            	HX_STACKFRAME(&_hx_pos_b5269e0ce41f90ec_156_enumParameters)
+HXLINE( 157)		 hx::EnumBase value = ( ( hx::EnumBase)(e) );
+HXLINE( 158)		return value->_hx_getParameters();
+            	}
+
+
+STATIC_HX_DEFINE_DYNAMIC_FUNC1(Type_obj,enumParameters,return )
+
 
 Type_obj::Type_obj()
 {
@@ -249,6 +259,7 @@ bool Type_obj::__GetStatic(const ::String &inName, Dynamic &outValue, hx::Proper
 		break;
 	case 14:
 		if (HX_FIELD_EQ(inName,"createInstance") ) { outValue = createInstance_dyn(); return true; }
+		if (HX_FIELD_EQ(inName,"enumParameters") ) { outValue = enumParameters_dyn(); return true; }
 		break;
 	case 17:
 		if (HX_FIELD_EQ(inName,"getInstanceFields") ) { outValue = getInstanceFields_dyn(); return true; }
@@ -280,6 +291,7 @@ static ::String Type_obj_sStaticFields[] = {
 	HX_("getInstanceFields",24,2f,97,ed),
 	HX_("getEnumConstructs",13,06,6d,83),
 	HX_("typeof",51,f6,36,57),
+	HX_("enumParameters",0b,59,78,fa),
 	::String(null())
 };
 

@@ -79,6 +79,15 @@
 #ifndef INCLUDED_openfl_utils__Endian_Endian_Impl_
 #include <openfl/utils/_Endian/Endian_Impl_.h>
 #endif
+#ifndef INCLUDED_openfl_utils__Dictionary_UtilsObjectMap
+#include <openfl/utils/_Dictionary/UtilsObjectMap.h>
+#endif
+#ifndef INCLUDED_openfl_utils__Dictionary_FloatMap
+#include <openfl/utils/_Dictionary/FloatMap.h>
+#endif
+#ifndef INCLUDED_openfl_utils__Dictionary_ClassMap
+#include <openfl/utils/_Dictionary/ClassMap.h>
+#endif
 #ifndef INCLUDED_openfl_utils__CompressionAlgorithm_CompressionAlgorithm_Impl_
 #include <openfl/utils/_CompressionAlgorithm/CompressionAlgorithm_Impl_.h>
 #endif
@@ -189,9 +198,6 @@
 #endif
 #ifndef INCLUDED_openfl_media_SoundTransform
 #include <openfl/media/SoundTransform.h>
-#endif
-#ifndef INCLUDED_openfl_geom_Point
-#include <openfl/geom/Point.h>
 #endif
 #ifndef INCLUDED_openfl_geom__Orientation3D_Orientation3D_Impl_
 #include <openfl/geom/_Orientation3D/Orientation3D_Impl_.h>
@@ -346,8 +352,20 @@
 #ifndef INCLUDED_openfl_display__internal_PerlinNoise
 #include <openfl/display/_internal/PerlinNoise.h>
 #endif
+#ifndef INCLUDED_openfl_display__internal_FlashTilemap
+#include <openfl/display/_internal/FlashTilemap.h>
+#endif
+#ifndef INCLUDED_openfl_geom_Point
+#include <openfl/geom/Point.h>
+#endif
+#ifndef INCLUDED_openfl_display__internal_FlashRenderer
+#include <openfl/display/_internal/FlashRenderer.h>
+#endif
 #ifndef INCLUDED_openfl_display__internal_DrawCommandReader
 #include <openfl/display/_internal/DrawCommandReader.h>
+#endif
+#ifndef INCLUDED_openfl_display__internal_DOMTilemap
+#include <openfl/display/_internal/DOMTilemap.h>
 #endif
 #ifndef INCLUDED_openfl_display__internal_DOMTextField
 #include <openfl/display/_internal/DOMTextField.h>
@@ -357,6 +375,9 @@
 #endif
 #ifndef INCLUDED_openfl_display__internal_DOMBitmap
 #include <openfl/display/_internal/DOMBitmap.h>
+#endif
+#ifndef INCLUDED_openfl_display__internal_Context3DTilemap
+#include <openfl/display/_internal/Context3DTilemap.h>
 #endif
 #ifndef INCLUDED_openfl_display__internal_Context3DTextField
 #include <openfl/display/_internal/Context3DTextField.h>
@@ -385,6 +406,9 @@
 #ifndef INCLUDED_openfl_display__internal_Context3DBitmap
 #include <openfl/display/_internal/Context3DBitmap.h>
 #endif
+#ifndef INCLUDED_openfl_display__internal_CanvasTilemap
+#include <openfl/display/_internal/CanvasTilemap.h>
+#endif
 #ifndef INCLUDED_openfl_display__internal_CanvasTextField
 #include <openfl/display/_internal/CanvasTextField.h>
 #endif
@@ -396,6 +420,9 @@
 #endif
 #ifndef INCLUDED_openfl_display__internal_CanvasBitmap
 #include <openfl/display/_internal/CanvasBitmap.h>
+#endif
+#ifndef INCLUDED_openfl_display__internal_CairoTilemap
+#include <openfl/display/_internal/CairoTilemap.h>
 #endif
 #ifndef INCLUDED_openfl_display__internal_CairoTextField
 #include <openfl/display/_internal/CairoTextField.h>
@@ -423,6 +450,12 @@
 #endif
 #ifndef INCLUDED_openfl_display__TriangleCulling_TriangleCulling_Impl_
 #include <openfl/display/_TriangleCulling/TriangleCulling_Impl_.h>
+#endif
+#ifndef INCLUDED_openfl_display__Tileset_TileData
+#include <openfl/display/_Tileset/TileData.h>
+#endif
+#ifndef INCLUDED_openfl_display_Tile
+#include <openfl/display/Tile.h>
 #endif
 #ifndef INCLUDED_openfl_display__StageScaleMode_StageScaleMode_Impl_
 #include <openfl/display/_StageScaleMode/StageScaleMode_Impl_.h>
@@ -745,6 +778,9 @@
 #ifndef INCLUDED_sys_FileSystem
 #include <sys/FileSystem.h>
 #endif
+#ifndef INCLUDED_openfl_utils__Dictionary_Dictionary_Impl_
+#include <openfl/utils/_Dictionary/Dictionary_Impl_.h>
+#endif
 #ifndef INCLUDED_openfl_utils_IDataInput
 #include <openfl/utils/IDataInput.h>
 #endif
@@ -847,6 +883,9 @@
 #ifndef INCLUDED_openfl_display3D_IndexBuffer3D
 #include <openfl/display3D/IndexBuffer3D.h>
 #endif
+#ifndef INCLUDED_openfl_display__internal_IDisplayObject
+#include <openfl/display/_internal/IDisplayObject.h>
+#endif
 #ifndef INCLUDED_openfl_display__internal__DrawCommandReader_WindingNonZeroView_Impl_
 #include <openfl/display/_internal/_DrawCommandReader/WindingNonZeroView_Impl_.h>
 #endif
@@ -916,6 +955,15 @@
 #ifndef INCLUDED_openfl_display_Timeline
 #include <openfl/display/Timeline.h>
 #endif
+#ifndef INCLUDED_openfl_display_Tileset
+#include <openfl/display/Tileset.h>
+#endif
+#ifndef INCLUDED_openfl_display_Tilemap
+#include <openfl/display/Tilemap.h>
+#endif
+#ifndef INCLUDED_openfl_display_TileContainer
+#include <openfl/display/TileContainer.h>
+#endif
 #ifndef INCLUDED_openfl_display_Stage3D
 #include <openfl/display/Stage3D.h>
 #endif
@@ -939,6 +987,9 @@
 #endif
 #ifndef INCLUDED_openfl_display_JPEGEncoderOptions
 #include <openfl/display/JPEGEncoderOptions.h>
+#endif
+#ifndef INCLUDED_openfl_display_ITileContainer
+#include <openfl/display/ITileContainer.h>
 #endif
 #ifndef INCLUDED_openfl_display_GraphicsTrianglePath
 #include <openfl/display/GraphicsTrianglePath.h>
@@ -1810,6 +1861,9 @@
 #ifndef INCLUDED_haxe_zip_HuffTools
 #include <haxe/zip/HuffTools.h>
 #endif
+#ifndef INCLUDED_haxe_iterators_MapKeyValueIterator
+#include <haxe/iterators/MapKeyValueIterator.h>
+#endif
 #ifndef INCLUDED_haxe_io_Path
 #include <haxe/io/Path.h>
 #endif
@@ -1848,6 +1902,15 @@
 #endif
 #ifndef INCLUDED_haxe_ds_IntMap
 #include <haxe/ds/IntMap.h>
+#endif
+#ifndef INCLUDED_haxe_ds_EnumValueMap
+#include <haxe/ds/EnumValueMap.h>
+#endif
+#ifndef INCLUDED_haxe_ds_TreeNode
+#include <haxe/ds/TreeNode.h>
+#endif
+#ifndef INCLUDED_haxe_ds_BalancedTree
+#include <haxe/ds/BalancedTree.h>
 #endif
 #ifndef INCLUDED_haxe_ds_ArraySort
 #include <haxe/ds/ArraySort.h>
@@ -1899,6 +1962,9 @@
 #endif
 #ifndef INCLUDED_Lambda
 #include <Lambda.h>
+#endif
+#ifndef INCLUDED_GameLevel
+#include <GameLevel.h>
 #endif
 #ifndef INCLUDED_Game
 #include <Game.h>
@@ -1993,6 +2059,9 @@ hx::RegisterResources( hx::GetResources() );
 ::haxe::lang::Iterator_obj::__register();
 ::openfl::utils::_Object::Object_Impl__obj::__register();
 ::openfl::utils::_Endian::Endian_Impl__obj::__register();
+::openfl::utils::_Dictionary::UtilsObjectMap_obj::__register();
+::openfl::utils::_Dictionary::FloatMap_obj::__register();
+::openfl::utils::_Dictionary::ClassMap_obj::__register();
 ::openfl::utils::_CompressionAlgorithm::CompressionAlgorithm_Impl__obj::__register();
 ::openfl::utils::ByteArrayData_obj::__register();
 ::openfl::utils::_ByteArray::ByteArray_Impl__obj::__register();
@@ -2030,7 +2099,6 @@ hx::RegisterResources( hx::GetResources() );
 ::openfl::net::NetConnection_obj::__register();
 ::openfl::media::SoundMixer_obj::__register();
 ::openfl::media::SoundTransform_obj::__register();
-::openfl::geom::Point_obj::__register();
 ::openfl::geom::_Orientation3D::Orientation3D_Impl__obj::__register();
 ::openfl::geom::Matrix3D_obj::__register();
 ::openfl::events::UncaughtErrorEvent_obj::__register();
@@ -2082,10 +2150,15 @@ hx::RegisterResources( hx::GetResources() );
 ::openfl::display::_internal::ShaderBuffer_obj::__register();
 ::openfl::display::_internal::SamplerState_obj::__register();
 ::openfl::display::_internal::PerlinNoise_obj::__register();
+::openfl::display::_internal::FlashTilemap_obj::__register();
+::openfl::geom::Point_obj::__register();
+::openfl::display::_internal::FlashRenderer_obj::__register();
 ::openfl::display::_internal::DrawCommandReader_obj::__register();
+::openfl::display::_internal::DOMTilemap_obj::__register();
 ::openfl::display::_internal::DOMTextField_obj::__register();
 ::openfl::display::_internal::DOMDisplayObject_obj::__register();
 ::openfl::display::_internal::DOMBitmap_obj::__register();
+::openfl::display::_internal::Context3DTilemap_obj::__register();
 ::openfl::display::_internal::Context3DTextField_obj::__register();
 ::openfl::display::_internal::Context3DShape_obj::__register();
 ::openfl::display::_internal::Context3DMaskShader_obj::__register();
@@ -2095,10 +2168,12 @@ hx::RegisterResources( hx::GetResources() );
 ::openfl::display::_internal::Context3DDisplayObject_obj::__register();
 ::openfl::display::_internal::Context3DBuffer_obj::__register();
 ::openfl::display::_internal::Context3DBitmap_obj::__register();
+::openfl::display::_internal::CanvasTilemap_obj::__register();
 ::openfl::display::_internal::CanvasTextField_obj::__register();
 ::openfl::display::_internal::CanvasGraphics_obj::__register();
 ::openfl::display::_internal::CanvasDisplayObject_obj::__register();
 ::openfl::display::_internal::CanvasBitmap_obj::__register();
+::openfl::display::_internal::CairoTilemap_obj::__register();
 ::openfl::display::_internal::CairoTextField_obj::__register();
 ::openfl::display::_internal::CairoShape_obj::__register();
 ::openfl::display::_internal::CairoGraphics_obj::__register();
@@ -2108,6 +2183,8 @@ hx::RegisterResources( hx::GetResources() );
 ::openfl::display::_internal::AbstractNoise_obj::__register();
 ::openfl::display::Window_obj::__register();
 ::openfl::display::_TriangleCulling::TriangleCulling_Impl__obj::__register();
+::openfl::display::_Tileset::TileData_obj::__register();
+::openfl::display::Tile_obj::__register();
 ::openfl::display::_StageScaleMode::StageScaleMode_Impl__obj::__register();
 ::openfl::display::_StageQuality::StageQuality_Impl__obj::__register();
 ::openfl::display::_StageDisplayState::StageDisplayState_Impl__obj::__register();
@@ -2215,6 +2292,7 @@ hx::RegisterResources( hx::GetResources() );
 ::sys::io::FileInput_obj::__register();
 ::sys::io::File_obj::__register();
 ::sys::FileSystem_obj::__register();
+::openfl::utils::_Dictionary::Dictionary_Impl__obj::__register();
 ::openfl::utils::IDataInput_obj::__register();
 ::openfl::utils::IDataOutput_obj::__register();
 ::openfl::utils::AssetLibrary_obj::__register();
@@ -2249,6 +2327,7 @@ hx::RegisterResources( hx::GetResources() );
 ::openfl::display3D::VertexBuffer3D_obj::__register();
 ::openfl::display3D::Program3D_obj::__register();
 ::openfl::display3D::IndexBuffer3D_obj::__register();
+::openfl::display::_internal::IDisplayObject_obj::__register();
 ::openfl::display::_internal::_DrawCommandReader::WindingNonZeroView_Impl__obj::__register();
 ::openfl::display::_internal::_DrawCommandReader::WindingEvenOddView_Impl__obj::__register();
 ::openfl::display::_internal::_DrawCommandReader::OverrideMatrixView_Impl__obj::__register();
@@ -2272,6 +2351,9 @@ hx::RegisterResources( hx::GetResources() );
 ::openfl::display::_internal::_DrawCommandReader::BeginFillView_Impl__obj::__register();
 ::openfl::display::_internal::_DrawCommandReader::BeginBitmapFillView_Impl__obj::__register();
 ::openfl::display::Timeline_obj::__register();
+::openfl::display::Tileset_obj::__register();
+::openfl::display::Tilemap_obj::__register();
+::openfl::display::TileContainer_obj::__register();
 ::openfl::display::Stage3D_obj::__register();
 ::openfl::display::SimpleButton_obj::__register();
 ::openfl::display::Shape_obj::__register();
@@ -2280,6 +2362,7 @@ hx::RegisterResources( hx::GetResources() );
 ::openfl::display::PNGEncoderOptions_obj::__register();
 ::openfl::display::MovieClip_obj::__register();
 ::openfl::display::JPEGEncoderOptions_obj::__register();
+::openfl::display::ITileContainer_obj::__register();
 ::openfl::display::GraphicsTrianglePath_obj::__register();
 ::openfl::display::GraphicsStroke_obj::__register();
 ::openfl::display::IGraphicsStroke_obj::__register();
@@ -2570,6 +2653,7 @@ hx::RegisterResources( hx::GetResources() );
 ::haxe::zip::Reader_obj::__register();
 ::haxe::zip::_InflateImpl::Window_obj::__register();
 ::haxe::zip::HuffTools_obj::__register();
+::haxe::iterators::MapKeyValueIterator_obj::__register();
 ::haxe::io::Path_obj::__register();
 ::haxe::io::FPHelper_obj::__register();
 ::haxe::io::Eof_obj::__register();
@@ -2583,6 +2667,9 @@ hx::RegisterResources( hx::GetResources() );
 ::haxe::ds::_List::ListIterator_obj::__register();
 ::haxe::ds::_List::ListNode_obj::__register();
 ::haxe::ds::IntMap_obj::__register();
+::haxe::ds::EnumValueMap_obj::__register();
+::haxe::ds::TreeNode_obj::__register();
+::haxe::ds::BalancedTree_obj::__register();
 ::haxe::ds::ArraySort_obj::__register();
 ::haxe::crypto::BaseCode_obj::__register();
 ::haxe::io::Bytes_obj::__register();
@@ -2600,6 +2687,7 @@ hx::RegisterResources( hx::GetResources() );
 ::Reflect_obj::__register();
 ::ManifestResources_obj::__register();
 ::Lambda_obj::__register();
+::GameLevel_obj::__register();
 ::Game_obj::__register();
 ::EReg_obj::__register();
 ::Date_obj::__register();
@@ -2748,6 +2836,8 @@ hx::RegisterResources( hx::GetResources() );
 ::openfl::display::_StageDisplayState::StageDisplayState_Impl__obj::__boot();
 ::openfl::display::_StageQuality::StageQuality_Impl__obj::__boot();
 ::openfl::display::_StageScaleMode::StageScaleMode_Impl__obj::__boot();
+::openfl::display::Tile_obj::__boot();
+::openfl::display::_Tileset::TileData_obj::__boot();
 ::openfl::display::_TriangleCulling::TriangleCulling_Impl__obj::__boot();
 ::openfl::display::Window_obj::__boot();
 ::openfl::display::_internal::AbstractNoise_obj::__boot();
@@ -2757,10 +2847,12 @@ hx::RegisterResources( hx::GetResources() );
 ::openfl::display::_internal::CairoGraphics_obj::__boot();
 ::openfl::display::_internal::CairoShape_obj::__boot();
 ::openfl::display::_internal::CairoTextField_obj::__boot();
+::openfl::display::_internal::CairoTilemap_obj::__boot();
 ::openfl::display::_internal::CanvasBitmap_obj::__boot();
 ::openfl::display::_internal::CanvasDisplayObject_obj::__boot();
 ::openfl::display::_internal::CanvasGraphics_obj::__boot();
 ::openfl::display::_internal::CanvasTextField_obj::__boot();
+::openfl::display::_internal::CanvasTilemap_obj::__boot();
 ::openfl::display::_internal::Context3DBitmap_obj::__boot();
 ::openfl::display::_internal::Context3DBuffer_obj::__boot();
 ::openfl::display::_internal::Context3DDisplayObject_obj::__boot();
@@ -2770,10 +2862,15 @@ hx::RegisterResources( hx::GetResources() );
 ::openfl::display::_internal::Context3DMaskShader_obj::__boot();
 ::openfl::display::_internal::Context3DShape_obj::__boot();
 ::openfl::display::_internal::Context3DTextField_obj::__boot();
+::openfl::display::_internal::Context3DTilemap_obj::__boot();
 ::openfl::display::_internal::DOMBitmap_obj::__boot();
 ::openfl::display::_internal::DOMDisplayObject_obj::__boot();
 ::openfl::display::_internal::DOMTextField_obj::__boot();
+::openfl::display::_internal::DOMTilemap_obj::__boot();
 ::openfl::display::_internal::DrawCommandReader_obj::__boot();
+::openfl::display::_internal::FlashRenderer_obj::__boot();
+::openfl::geom::Point_obj::__boot();
+::openfl::display::_internal::FlashTilemap_obj::__boot();
 ::openfl::display::_internal::PerlinNoise_obj::__boot();
 ::openfl::display::_internal::SamplerState_obj::__boot();
 ::openfl::display::_internal::ShaderBuffer_obj::__boot();
@@ -2825,7 +2922,6 @@ hx::RegisterResources( hx::GetResources() );
 ::openfl::events::UncaughtErrorEvent_obj::__boot();
 ::openfl::geom::Matrix3D_obj::__boot();
 ::openfl::geom::_Orientation3D::Orientation3D_Impl__obj::__boot();
-::openfl::geom::Point_obj::__boot();
 ::openfl::media::SoundTransform_obj::__boot();
 ::openfl::media::SoundMixer_obj::__boot();
 ::openfl::net::NetConnection_obj::__boot();
@@ -2863,6 +2959,9 @@ hx::RegisterResources( hx::GetResources() );
 ::openfl::utils::_ByteArray::ByteArray_Impl__obj::__boot();
 ::openfl::utils::ByteArrayData_obj::__boot();
 ::openfl::utils::_CompressionAlgorithm::CompressionAlgorithm_Impl__obj::__boot();
+::openfl::utils::_Dictionary::ClassMap_obj::__boot();
+::openfl::utils::_Dictionary::FloatMap_obj::__boot();
+::openfl::utils::_Dictionary::UtilsObjectMap_obj::__boot();
 ::openfl::utils::_Endian::Endian_Impl__obj::__boot();
 ::openfl::utils::_Object::Object_Impl__obj::__boot();
 ::haxe::lang::Iterator_obj::__boot();

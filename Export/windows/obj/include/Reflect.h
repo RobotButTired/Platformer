@@ -76,6 +76,9 @@ class HXCPP_CLASS_ATTRIBUTES Reflect_obj : public hx::Object
 		static bool isObject( ::Dynamic v);
 		static ::Dynamic isObject_dyn();
 
+		static bool isEnumValue( ::Dynamic v);
+		static ::Dynamic isEnumValue_dyn();
+
 		static  ::Dynamic makeVarArgs( ::Dynamic f);
 		static ::Dynamic makeVarArgs_dyn();
 

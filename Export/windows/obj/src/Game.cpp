@@ -10,6 +10,9 @@
 #ifndef INCLUDED_Game
 #include <Game.h>
 #endif
+#ifndef INCLUDED_GameLevel
+#include <GameLevel.h>
+#endif
 #ifndef INCLUDED_openfl_display_DisplayObject
 #include <openfl/display/DisplayObject.h>
 #endif
@@ -39,10 +42,10 @@
 #endif
 
 HX_DEFINE_STACK_FRAME(_hx_pos_69efd8c9269cf369_6_new,"Game","new",0x79ba3204,"Game.new","Game.hx",6,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_37_quitButtonClick,"Game","quitButtonClick",0x3679e10b,"Game.quitButtonClick","Game.hx",37,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_40_quitButtonOver,"Game","quitButtonOver",0x51ad35f1,"Game.quitButtonOver","Game.hx",40,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_45_quitButtonOut,"Game","quitButtonOut",0x0f4a3e91,"Game.quitButtonOut","Game.hx",45,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_52_get_quitButtonIsPressed,"Game","get_quitButtonIsPressed",0x5edb1ab2,"Game.get_quitButtonIsPressed","Game.hx",52,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_46_quitButtonClick,"Game","quitButtonClick",0x3679e10b,"Game.quitButtonClick","Game.hx",46,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_49_quitButtonOver,"Game","quitButtonOver",0x51ad35f1,"Game.quitButtonOver","Game.hx",49,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_54_quitButtonOut,"Game","quitButtonOut",0x0f4a3e91,"Game.quitButtonOut","Game.hx",54,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_61_get_quitButtonIsPressed,"Game","get_quitButtonIsPressed",0x5edb1ab2,"Game.get_quitButtonIsPressed","Game.hx",61,0x56a4f9ec)
 
 void Game_obj::__construct(int width,int height){
             	HX_GC_STACKFRAME(&_hx_pos_69efd8c9269cf369_6_new)
@@ -50,16 +53,17 @@ HXLINE(  12)		this->quitButtonIsPressed = false;
 HXLINE(  16)		super::__construct();
 HXLINE(  17)		this->sizeWidth = width;
 HXLINE(  18)		this->sizeHeight = height;
-HXLINE(  19)		this->backGround =  ::BackGround_obj::__alloc( HX_CTX ,HX_("gameScreen",fe,24,d3,89));
-HXLINE(  20)		this->backGround->set_scaleY(((Float)1.5));
-HXLINE(  21)		this->addChild(this->backGround);
-HXLINE(  23)		this->quitButton =  ::Button_obj::__alloc( HX_CTX ,(( (Float)(this->sizeWidth) ) / ( (Float)(2) )),(( (Float)(this->sizeHeight) ) / ( (Float)(2) )),HX_("QUIT",cf,07,cb,35));
-HXLINE(  24)		this->quitButton->set_x((( (Float)((this->sizeWidth * 7)) ) / ( (Float)(8) )));
-HXLINE(  25)		this->quitButton->set_y((( (Float)(this->sizeHeight) ) / ( (Float)(25) )));
-HXLINE(  27)		this->addChild(this->quitButton);
-HXLINE(  29)		this->quitButton->addEventListener(HX_("mouseOver",19,4a,0d,f6),this->quitButtonOver_dyn(),null(),null(),null());
-HXLINE(  30)		this->quitButton->addEventListener(HX_("mouseOut",69,e7,1d,a4),this->quitButtonOut_dyn(),null(),null(),null());
-HXLINE(  31)		this->quitButton->addEventListener(HX_("mouseDown",27,b1,c2,ee),this->quitButtonClick_dyn(),null(),null(),null());
+HXLINE(  20)		this->backGround =  ::BackGround_obj::__alloc( HX_CTX ,HX_("gameScreen",fe,24,d3,89));
+HXLINE(  22)		this->addChild(this->backGround);
+HXLINE(  25)		this->gameLevel =  ::GameLevel_obj::__alloc( HX_CTX ,this->sizeWidth,this->sizeHeight);
+HXLINE(  26)		this->addChild(this->gameLevel);
+HXLINE(  30)		this->quitButton =  ::Button_obj::__alloc( HX_CTX ,(( (Float)(this->sizeWidth) ) / ( (Float)(2) )),(( (Float)(this->sizeHeight) ) / ( (Float)(2) )),HX_("QUIT",cf,07,cb,35));
+HXLINE(  31)		this->quitButton->set_x((( (Float)((this->sizeWidth * 7)) ) / ( (Float)(8) )));
+HXLINE(  32)		this->quitButton->set_y((( (Float)(this->sizeHeight) ) / ( (Float)(25) )));
+HXLINE(  34)		this->addChild(this->quitButton);
+HXLINE(  36)		this->quitButton->addEventListener(HX_("mouseOver",19,4a,0d,f6),this->quitButtonOver_dyn(),null(),null(),null());
+HXLINE(  37)		this->quitButton->addEventListener(HX_("mouseOut",69,e7,1d,a4),this->quitButtonOut_dyn(),null(),null(),null());
+HXLINE(  38)		this->quitButton->addEventListener(HX_("mouseDown",27,b1,c2,ee),this->quitButtonClick_dyn(),null(),null(),null());
             	}
 
 Dynamic Game_obj::__CreateEmpty() { return new Game_obj; }
@@ -94,34 +98,34 @@ bool Game_obj::_hx_isInstanceOf(int inClassId) {
 }
 
 void Game_obj::quitButtonClick( ::openfl::events::MouseEvent e){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_37_quitButtonClick)
-HXDLIN(  37)		this->quitButtonIsPressed = true;
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_46_quitButtonClick)
+HXDLIN(  46)		this->quitButtonIsPressed = true;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC1(Game_obj,quitButtonClick,(void))
 
 void Game_obj::quitButtonOver( ::openfl::events::MouseEvent e){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_40_quitButtonOver)
-HXLINE(  41)		this->quitButton->set_scaleX(((Float)1.25));
-HXLINE(  42)		this->quitButton->set_scaleY(((Float)1.25));
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_49_quitButtonOver)
+HXLINE(  50)		this->quitButton->set_scaleX(((Float)1.25));
+HXLINE(  51)		this->quitButton->set_scaleY(((Float)1.25));
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC1(Game_obj,quitButtonOver,(void))
 
 void Game_obj::quitButtonOut( ::openfl::events::MouseEvent e){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_45_quitButtonOut)
-HXLINE(  46)		this->quitButton->set_scaleX(((Float)1.0));
-HXLINE(  47)		this->quitButton->set_scaleY(((Float)1.0));
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_54_quitButtonOut)
+HXLINE(  55)		this->quitButton->set_scaleX(((Float)1.0));
+HXLINE(  56)		this->quitButton->set_scaleY(((Float)1.0));
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC1(Game_obj,quitButtonOut,(void))
 
 bool Game_obj::get_quitButtonIsPressed(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_52_get_quitButtonIsPressed)
-HXDLIN(  52)		return this->quitButtonIsPressed;
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_61_get_quitButtonIsPressed)
+HXDLIN(  61)		return this->quitButtonIsPressed;
             	}
 
 
@@ -153,6 +157,7 @@ void Game_obj::__Mark(HX_MARK_PARAMS)
 	HX_MARK_MEMBER_NAME(backGround,"backGround");
 	HX_MARK_MEMBER_NAME(quitButton,"quitButton");
 	HX_MARK_MEMBER_NAME(quitButtonIsPressed,"quitButtonIsPressed");
+	HX_MARK_MEMBER_NAME(gameLevel,"gameLevel");
 	 ::openfl::display::Sprite_obj::__Mark(HX_MARK_ARG);
 	HX_MARK_END_CLASS();
 }
@@ -164,6 +169,7 @@ void Game_obj::__Visit(HX_VISIT_PARAMS)
 	HX_VISIT_MEMBER_NAME(backGround,"backGround");
 	HX_VISIT_MEMBER_NAME(quitButton,"quitButton");
 	HX_VISIT_MEMBER_NAME(quitButtonIsPressed,"quitButtonIsPressed");
+	HX_VISIT_MEMBER_NAME(gameLevel,"gameLevel");
 	 ::openfl::display::Sprite_obj::__Visit(HX_VISIT_ARG);
 }
 
@@ -172,6 +178,7 @@ hx::Val Game_obj::__Field(const ::String &inName,hx::PropertyAccess inCallProp)
 	switch(inName.length) {
 	case 9:
 		if (HX_FIELD_EQ(inName,"sizeWidth") ) { return hx::Val( sizeWidth ); }
+		if (HX_FIELD_EQ(inName,"gameLevel") ) { return hx::Val( gameLevel ); }
 		break;
 	case 10:
 		if (HX_FIELD_EQ(inName,"sizeHeight") ) { return hx::Val( sizeHeight ); }
@@ -201,6 +208,7 @@ hx::Val Game_obj::__SetField(const ::String &inName,const hx::Val &inValue,hx::P
 	switch(inName.length) {
 	case 9:
 		if (HX_FIELD_EQ(inName,"sizeWidth") ) { sizeWidth=inValue.Cast< int >(); return inValue; }
+		if (HX_FIELD_EQ(inName,"gameLevel") ) { gameLevel=inValue.Cast<  ::GameLevel >(); return inValue; }
 		break;
 	case 10:
 		if (HX_FIELD_EQ(inName,"sizeHeight") ) { sizeHeight=inValue.Cast< int >(); return inValue; }
@@ -220,6 +228,7 @@ void Game_obj::__GetFields(Array< ::String> &outFields)
 	outFields->push(HX_("backGround",0e,08,b2,5a));
 	outFields->push(HX_("quitButton",21,5b,13,a5));
 	outFields->push(HX_("quitButtonIsPressed",77,e8,7a,c2));
+	outFields->push(HX_("gameLevel",32,04,7e,a7));
 	super::__GetFields(outFields);
 };
 
@@ -230,6 +239,7 @@ static hx::StorageInfo Game_obj_sMemberStorageInfo[] = {
 	{hx::fsObject /*  ::BackGround */ ,(int)offsetof(Game_obj,backGround),HX_("backGround",0e,08,b2,5a)},
 	{hx::fsObject /*  ::Button */ ,(int)offsetof(Game_obj,quitButton),HX_("quitButton",21,5b,13,a5)},
 	{hx::fsBool,(int)offsetof(Game_obj,quitButtonIsPressed),HX_("quitButtonIsPressed",77,e8,7a,c2)},
+	{hx::fsObject /*  ::GameLevel */ ,(int)offsetof(Game_obj,gameLevel),HX_("gameLevel",32,04,7e,a7)},
 	{ hx::fsUnknown, 0, null()}
 };
 static hx::StaticInfo *Game_obj_sStaticStorageInfo = 0;
@@ -241,6 +251,7 @@ static ::String Game_obj_sMemberFields[] = {
 	HX_("backGround",0e,08,b2,5a),
 	HX_("quitButton",21,5b,13,a5),
 	HX_("quitButtonIsPressed",77,e8,7a,c2),
+	HX_("gameLevel",32,04,7e,a7),
 	HX_("quitButtonClick",67,99,35,9d),
 	HX_("quitButtonOver",15,bd,27,d6),
 	HX_("quitButtonOut",ed,e7,43,c5),

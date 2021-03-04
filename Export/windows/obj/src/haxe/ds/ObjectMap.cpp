@@ -7,6 +7,9 @@
 #ifndef INCLUDED_haxe_ds_ObjectMap
 #include <haxe/ds/ObjectMap.h>
 #endif
+#ifndef INCLUDED_haxe_iterators_MapKeyValueIterator
+#include <haxe/iterators/MapKeyValueIterator.h>
+#endif
 
 HX_DEFINE_STACK_FRAME(_hx_pos_37f1448d22653c94_58_new,"haxe.ds.ObjectMap","new",0x27af5498,"haxe.ds.ObjectMap.new","C:\\HaxeToolkit\\haxe\\std/cpp/_std/haxe/ds/ObjectMap.hx",58,0xd94cd95e)
 HX_LOCAL_STACK_FRAME(_hx_pos_37f1448d22653c94_61_set,"haxe.ds.ObjectMap","set",0x27b31fda,"haxe.ds.ObjectMap.set","C:\\HaxeToolkit\\haxe\\std/cpp/_std/haxe/ds/ObjectMap.hx",61,0xd94cd95e)
@@ -14,6 +17,10 @@ HX_LOCAL_STACK_FRAME(_hx_pos_37f1448d22653c94_65_get,"haxe.ds.ObjectMap","get",0
 HX_LOCAL_STACK_FRAME(_hx_pos_37f1448d22653c94_69_exists,"haxe.ds.ObjectMap","exists",0xc8930ca4,"haxe.ds.ObjectMap.exists","C:\\HaxeToolkit\\haxe\\std/cpp/_std/haxe/ds/ObjectMap.hx",69,0xd94cd95e)
 HX_LOCAL_STACK_FRAME(_hx_pos_37f1448d22653c94_73_remove,"haxe.ds.ObjectMap","remove",0x0d3b8b0c,"haxe.ds.ObjectMap.remove","C:\\HaxeToolkit\\haxe\\std/cpp/_std/haxe/ds/ObjectMap.hx",73,0xd94cd95e)
 HX_LOCAL_STACK_FRAME(_hx_pos_37f1448d22653c94_76_keys,"haxe.ds.ObjectMap","keys",0x8fbf0ebc,"haxe.ds.ObjectMap.keys","C:\\HaxeToolkit\\haxe\\std/cpp/_std/haxe/ds/ObjectMap.hx",76,0xd94cd95e)
+HX_LOCAL_STACK_FRAME(_hx_pos_37f1448d22653c94_81_iterator,"haxe.ds.ObjectMap","iterator",0x61fc7ab6,"haxe.ds.ObjectMap.iterator","C:\\HaxeToolkit\\haxe\\std/cpp/_std/haxe/ds/ObjectMap.hx",81,0xd94cd95e)
+HX_LOCAL_STACK_FRAME(_hx_pos_37f1448d22653c94_87_keyValueIterator,"haxe.ds.ObjectMap","keyValueIterator",0x5b9b0628,"haxe.ds.ObjectMap.keyValueIterator","C:\\HaxeToolkit\\haxe\\std/cpp/_std/haxe/ds/ObjectMap.hx",87,0xd94cd95e)
+HX_LOCAL_STACK_FRAME(_hx_pos_37f1448d22653c94_98_toString,"haxe.ds.ObjectMap","toString",0x06d10174,"haxe.ds.ObjectMap.toString","C:\\HaxeToolkit\\haxe\\std/cpp/_std/haxe/ds/ObjectMap.hx",98,0xd94cd95e)
+HX_LOCAL_STACK_FRAME(_hx_pos_37f1448d22653c94_103_clear,"haxe.ds.ObjectMap","clear",0xa0ca73c5,"haxe.ds.ObjectMap.clear","C:\\HaxeToolkit\\haxe\\std/cpp/_std/haxe/ds/ObjectMap.hx",103,0xd94cd95e)
 namespace haxe{
 namespace ds{
 
@@ -37,9 +44,13 @@ bool ObjectMap_obj::_hx_isInstanceOf(int inClassId) {
 }
 
 static ::haxe::IMap_obj _hx_haxe_ds_ObjectMap__hx_haxe_IMap= {
+	(  ::Dynamic (hx::Object::*)( ::Dynamic))&::haxe::ds::ObjectMap_obj::get,
 	( void (hx::Object::*)( ::Dynamic, ::Dynamic))&::haxe::ds::ObjectMap_obj::set_41d0cb46,
 	( bool (hx::Object::*)( ::Dynamic))&::haxe::ds::ObjectMap_obj::exists,
 	( bool (hx::Object::*)( ::Dynamic))&::haxe::ds::ObjectMap_obj::remove,
+	(  ::Dynamic (hx::Object::*)())&::haxe::ds::ObjectMap_obj::keys,
+	(  ::Dynamic (hx::Object::*)())&::haxe::ds::ObjectMap_obj::iterator,
+	(  ::Dynamic (hx::Object::*)())&::haxe::ds::ObjectMap_obj::keyValueIterator,
 };
 
 void ObjectMap_obj::set_41d0cb46( ::Dynamic k, ::Dynamic v) {
@@ -97,6 +108,40 @@ HXLINE(  78)		return a->iterator();
 
 HX_DEFINE_DYNAMIC_FUNC0(ObjectMap_obj,keys,return )
 
+ ::Dynamic ObjectMap_obj::iterator(){
+            	HX_STACKFRAME(&_hx_pos_37f1448d22653c94_81_iterator)
+HXLINE(  82)		::cpp::VirtualArray a =  ::__object_hash_values(this->h);
+HXLINE(  83)		return a->iterator();
+            	}
+
+
+HX_DEFINE_DYNAMIC_FUNC0(ObjectMap_obj,iterator,return )
+
+ ::Dynamic ObjectMap_obj::keyValueIterator(){
+            	HX_GC_STACKFRAME(&_hx_pos_37f1448d22653c94_87_keyValueIterator)
+HXDLIN(  87)		return  ::haxe::iterators::MapKeyValueIterator_obj::__alloc( HX_CTX ,hx::ObjectPtr<OBJ_>(this));
+            	}
+
+
+HX_DEFINE_DYNAMIC_FUNC0(ObjectMap_obj,keyValueIterator,return )
+
+::String ObjectMap_obj::toString(){
+            	HX_STACKFRAME(&_hx_pos_37f1448d22653c94_98_toString)
+HXDLIN(  98)		return  ::__object_hash_to_string(this->h);
+            	}
+
+
+HX_DEFINE_DYNAMIC_FUNC0(ObjectMap_obj,toString,return )
+
+void ObjectMap_obj::clear(){
+            	HX_STACKFRAME(&_hx_pos_37f1448d22653c94_103_clear)
+HXDLIN( 103)		 ::__object_hash_clear(this->h);
+HXDLIN( 103)		return;
+            	}
+
+
+HX_DEFINE_DYNAMIC_FUNC0(ObjectMap_obj,clear,(void))
+
 
 hx::ObjectPtr< ObjectMap_obj > ObjectMap_obj::__new() {
 	hx::ObjectPtr< ObjectMap_obj > __this = new ObjectMap_obj();
@@ -140,9 +185,19 @@ hx::Val ObjectMap_obj::__Field(const ::String &inName,hx::PropertyAccess inCallP
 	case 4:
 		if (HX_FIELD_EQ(inName,"keys") ) { return hx::Val( keys_dyn() ); }
 		break;
+	case 5:
+		if (HX_FIELD_EQ(inName,"clear") ) { return hx::Val( clear_dyn() ); }
+		break;
 	case 6:
 		if (HX_FIELD_EQ(inName,"exists") ) { return hx::Val( exists_dyn() ); }
 		if (HX_FIELD_EQ(inName,"remove") ) { return hx::Val( remove_dyn() ); }
+		break;
+	case 8:
+		if (HX_FIELD_EQ(inName,"iterator") ) { return hx::Val( iterator_dyn() ); }
+		if (HX_FIELD_EQ(inName,"toString") ) { return hx::Val( toString_dyn() ); }
+		break;
+	case 16:
+		if (HX_FIELD_EQ(inName,"keyValueIterator") ) { return hx::Val( keyValueIterator_dyn() ); }
 	}
 	return super::__Field(inName,inCallProp);
 }
@@ -177,6 +232,10 @@ static ::String ObjectMap_obj_sMemberFields[] = {
 	HX_("exists",dc,1d,e0,bf),
 	HX_("remove",44,9c,88,04),
 	HX_("keys",f4,e1,06,47),
+	HX_("iterator",ee,49,9a,93),
+	HX_("keyValueIterator",60,cd,ee,4a),
+	HX_("toString",ac,d0,6e,38),
+	HX_("clear",8d,71,5b,48),
 	::String(null()) };
 
 hx::Class ObjectMap_obj::__mClass;

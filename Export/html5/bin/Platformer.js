@@ -870,9 +870,9 @@ ApplicationMain.create = function(config) {
 	ManifestResources.init(config);
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-		_this.setReserved("build","1");
+		_this.setReserved("build","2");
 	} else {
-		_this.h["build"] = "1";
+		_this.h["build"] = "2";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -1537,6 +1537,9 @@ haxe_ds_ObjectMap.prototype = {
 		this.h[id] = value;
 		this.h.__keys__[id] = key;
 	}
+	,get: function(key) {
+		return this.h[key.__id__];
+	}
 	,exists: function(key) {
 		return this.h.__keys__[key.__id__] != null;
 	}
@@ -1557,6 +1560,34 @@ haxe_ds_ObjectMap.prototype = {
 		}
 		}
 		return HxOverrides.iter(a);
+	}
+	,iterator: function() {
+		return { ref : this.h, it : this.keys(), hasNext : function() {
+			return this.it.hasNext();
+		}, next : function() {
+			var i = this.it.next();
+			return this.ref[i.__id__];
+		}};
+	}
+	,keyValueIterator: function() {
+		return new haxe_iterators_MapKeyValueIterator(this);
+	}
+	,toString: function() {
+		var s_b = "";
+		s_b += "{";
+		var it = this.keys();
+		var i = it;
+		while(i.hasNext()) {
+			var i1 = i.next();
+			s_b += Std.string(Std.string(i1));
+			s_b += " => ";
+			s_b += Std.string(Std.string(this.h[i1.__id__]));
+			if(it.hasNext()) {
+				s_b += ", ";
+			}
+		}
+		s_b += "}";
+		return s_b;
 	}
 	,__class__: haxe_ds_ObjectMap
 };
@@ -4256,8 +4287,9 @@ var Game = function(width,height) {
 	this.sizeWidth = width;
 	this.sizeHeight = height;
 	this.backGround = new BackGround("gameScreen");
-	this.backGround.set_scaleY(1.5);
 	this.addChild(this.backGround);
+	this.gameLevel = new GameLevel(this.sizeWidth,this.sizeHeight);
+	this.addChild(this.gameLevel);
 	this.quitButton = new Button(this.sizeWidth / 2,this.sizeHeight / 2,"QUIT");
 	this.quitButton.set_x(this.sizeWidth * 7 / 8);
 	this.quitButton.set_y(this.sizeHeight / 25);
@@ -4285,6 +4317,58 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 		return this.quitButtonIsPressed;
 	}
 	,__class__: Game
+});
+var GameLevel = function(width,height) {
+	openfl_display_Sprite.call(this);
+	this.sizeWidth = width;
+	this.sizeHeight = height;
+	this.bmpData = openfl_utils_Assets.getBitmapData("assets/tileMap/PixelAtlas.png");
+	this.tileset = new openfl_display_Tileset(this.bmpData);
+	this.tilemap = new openfl_display_Tilemap(this.sizeWidth,this.sizeHeight,this.tileset);
+	this.addChild(this.tilemap);
+	var ind1 = this.tileset.addRect(new openfl_geom_Rectangle(0,0,32,32));
+	var ind2 = this.tileset.addRect(new openfl_geom_Rectangle(32,0,32,32));
+	var ind3 = this.tileset.addRect(new openfl_geom_Rectangle(64,0,32,32));
+	var ind4 = this.tileset.addRect(new openfl_geom_Rectangle(96,0,32,32));
+	this.IDs = [];
+	this.IDs.push(ind1);
+	this.IDs.push(ind2);
+	this.IDs.push(ind3);
+	this.IDs.push(ind4);
+	this.addTiles();
+};
+$hxClasses["GameLevel"] = GameLevel;
+GameLevel.__name__ = "GameLevel";
+GameLevel.__super__ = openfl_display_Sprite;
+GameLevel.prototype = $extend(openfl_display_Sprite.prototype,{
+	addTiles: function() {
+		var _g = 0;
+		while(_g < 15) {
+			var i = _g++;
+			var _g1 = 0;
+			while(_g1 < 20) {
+				var j = _g1++;
+				if(i == 11) {
+					this.tile = new openfl_display_Tile(this.IDs[0],j * this.sizeWidth / 20,i * this.sizeHeight / 15);
+				}
+				if(i == 12) {
+					this.tile = new openfl_display_Tile(this.IDs[1],j * this.sizeWidth / 20,i * this.sizeHeight / 15);
+				}
+				if(i == 13) {
+					this.tile = new openfl_display_Tile(this.IDs[2],j * this.sizeWidth / 20,i * this.sizeHeight / 15);
+				}
+				if(i == 14) {
+					this.tile = new openfl_display_Tile(this.IDs[3],j * this.sizeWidth / 20,i * this.sizeHeight / 15);
+				}
+				if(i >= 11) {
+					this.tile.set_scaleX(1.25);
+					this.tile.set_scaleY(1.25);
+					this.tilemap.addTile(this.tile);
+				}
+			}
+		}
+	}
+	,__class__: GameLevel
 });
 var HxOverrides = function() { };
 $hxClasses["HxOverrides"] = HxOverrides;
@@ -4371,7 +4455,7 @@ ManifestResources.init = function(config) {
 		ManifestResources.rootPath = "./";
 	}
 	var bundle;
-	var data = "{\"name\":null,\"assets\":\"aoy4:pathy35:assets%2FbackGround%2Fdesert_BG.pngy4:sizei40660y4:typey5:IMAGEy2:idR1y7:preloadtgoR0y40:assets%2FbackGround%2FgameOverScreen.pngR2i100976R3R4R5R7R6tgoR0y36:assets%2FbackGround%2FgameScreen.pngR2i92561R3R4R5R8R6tgoR0y37:assets%2FbackGround%2FrulesScreen.pngR2i81718R3R4R5R9R6tgoR0y37:assets%2FbackGround%2FstartScreen.pngR2i11036R3R4R5R10R6tgh\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
+	var data = "{\"name\":null,\"assets\":\"aoy4:pathy35:assets%2FbackGround%2Fdesert_BG.pngy4:sizei40660y4:typey5:IMAGEy2:idR1y7:preloadtgoR0y40:assets%2FbackGround%2FgameOverScreen.pngR2i100976R3R4R5R7R6tgoR0y36:assets%2FbackGround%2FgameScreen.pngR2i448276R3R4R5R8R6tgoR0y37:assets%2FbackGround%2FrulesScreen.pngR2i81718R3R4R5R9R6tgoR0y37:assets%2FbackGround%2FstartScreen.pngR2i11036R3R4R5R10R6tgoR0y41:assets%2FCowboy%204%20HiRes%2FCowboy4.pngR2i6250R3R4R5R11R6tgoR0y61:assets%2FCowboy%204%20HiRes%2FCowboy4_idle%20with%20gun_0.pngR2i623R3R4R5R12R6tgoR0y61:assets%2FCowboy%204%20HiRes%2FCowboy4_idle%20with%20gun_1.pngR2i623R3R4R5R13R6tgoR0y61:assets%2FCowboy%204%20HiRes%2FCowboy4_idle%20with%20gun_2.pngR2i627R3R4R5R14R6tgoR0y61:assets%2FCowboy%204%20HiRes%2FCowboy4_idle%20with%20gun_3.pngR2i627R3R4R5R15R6tgoR0y64:assets%2FCowboy%204%20HiRes%2FCowboy4_idle%20without%20gun_0.pngR2i557R3R4R5R16R6tgoR0y64:assets%2FCowboy%204%20HiRes%2FCowboy4_idle%20without%20gun_1.pngR2i557R3R4R5R17R6tgoR0y64:assets%2FCowboy%204%20HiRes%2FCowboy4_idle%20without%20gun_2.pngR2i560R3R4R5R18R6tgoR0y64:assets%2FCowboy%204%20HiRes%2FCowboy4_idle%20without%20gun_3.pngR2i560R3R4R5R19R6tgoR0y61:assets%2FCowboy%204%20HiRes%2FCowboy4_jumo%20with%20gun_0.pngR2i627R3R4R5R20R6tgoR0y56:assets%2FCowboy%204%20HiRes%2FCowboy4_jump%20shoot_0.pngR2i626R3R4R5R21R6tgoR0y56:assets%2FCowboy%204%20HiRes%2FCowboy4_jump%20shoot_1.pngR2i808R3R4R5R22R6tgoR0y56:assets%2FCowboy%204%20HiRes%2FCowboy4_jump%20shoot_2.pngR2i778R3R4R5R23R6tgoR0y56:assets%2FCowboy%204%20HiRes%2FCowboy4_jump%20shoot_3.pngR2i767R3R4R5R24R6tgoR0y64:assets%2FCowboy%204%20HiRes%2FCowboy4_jump%20without%20gun_0.pngR2i560R3R4R5R25R6tgoR0y49:assets%2FCowboy%204%20HiRes%2FCowboy4_shoot_0.pngR2i630R3R4R5R26R6tgoR0y49:assets%2FCowboy%204%20HiRes%2FCowboy4_shoot_1.pngR2i817R3R4R5R27R6tgoR0y49:assets%2FCowboy%204%20HiRes%2FCowboy4_shoot_2.pngR2i788R3R4R5R28R6tgoR0y49:assets%2FCowboy%204%20HiRes%2FCowboy4_shoot_3.pngR2i774R3R4R5R29R6tgoR0y61:assets%2FCowboy%204%20HiRes%2FCowboy4_walk%20with%20gun_0.pngR2i628R3R4R5R30R6tgoR0y61:assets%2FCowboy%204%20HiRes%2FCowboy4_walk%20with%20gun_1.pngR2i610R3R4R5R31R6tgoR0y61:assets%2FCowboy%204%20HiRes%2FCowboy4_walk%20with%20gun_2.pngR2i630R3R4R5R32R6tgoR0y61:assets%2FCowboy%204%20HiRes%2FCowboy4_walk%20with%20gun_3.pngR2i610R3R4R5R33R6tgoR0y64:assets%2FCowboy%204%20HiRes%2FCowboy4_walk%20without%20gun_0.pngR2i551R3R4R5R34R6tgoR0y64:assets%2FCowboy%204%20HiRes%2FCowboy4_walk%20without%20gun_1.pngR2i513R3R4R5R35R6tgoR0y64:assets%2FCowboy%204%20HiRes%2FCowboy4_walk%20without%20gun_2.pngR2i541R3R4R5R36R6tgoR0y64:assets%2FCowboy%204%20HiRes%2FCowboy4_walk%20without%20gun_3.pngR2i513R3R4R5R37R6tgoR0y28:assets%2FtileMap%2Fgrass.pngR2i6766R3R4R5R38R6tgoR0y33:assets%2FtileMap%2FPixelAtlas.pngR2i5091R3R4R5R39R6tgh\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
 	var manifest = lime_utils_AssetManifest.parse(data,ManifestResources.rootPath);
 	var library = lime_utils_AssetLibrary.fromManifest(manifest);
 	lime_utils_Assets.registerLibrary("default",library);
@@ -4432,6 +4516,13 @@ Reflect.compareMethods = function(f1,f2) {
 	}
 	if(f1.scope == f2.scope && f1.method == f2.method) {
 		return f1.method != null;
+	} else {
+		return false;
+	}
+};
+Reflect.isEnumValue = function(v) {
+	if(v != null) {
+		return v.__enum__ != null;
 	} else {
 		return false;
 	}
@@ -6138,6 +6229,244 @@ haxe_ds_ArraySort.swap = function(a,i,j) {
 	a[i] = a[j];
 	a[j] = tmp;
 };
+var haxe_ds_BalancedTree = function() {
+};
+$hxClasses["haxe.ds.BalancedTree"] = haxe_ds_BalancedTree;
+haxe_ds_BalancedTree.__name__ = "haxe.ds.BalancedTree";
+haxe_ds_BalancedTree.__interfaces__ = [haxe_IMap];
+haxe_ds_BalancedTree.prototype = {
+	set: function(key,value) {
+		this.root = this.setLoop(key,value,this.root);
+	}
+	,get: function(key) {
+		var node = this.root;
+		while(node != null) {
+			var c = this.compare(key,node.key);
+			if(c == 0) {
+				return node.value;
+			}
+			if(c < 0) {
+				node = node.left;
+			} else {
+				node = node.right;
+			}
+		}
+		return null;
+	}
+	,remove: function(key) {
+		try {
+			this.root = this.removeLoop(key,this.root);
+			return true;
+		} catch( e ) {
+			haxe_CallStack.lastException = e;
+			var e1 = ((e) instanceof js__$Boot_HaxeError) ? e.val : e;
+			if(typeof(e1) == "string") {
+				var e2 = e1;
+				return false;
+			} else {
+				throw e;
+			}
+		}
+	}
+	,exists: function(key) {
+		var node = this.root;
+		while(node != null) {
+			var c = this.compare(key,node.key);
+			if(c == 0) {
+				return true;
+			} else if(c < 0) {
+				node = node.left;
+			} else {
+				node = node.right;
+			}
+		}
+		return false;
+	}
+	,iterator: function() {
+		var ret = [];
+		this.iteratorLoop(this.root,ret);
+		return HxOverrides.iter(ret);
+	}
+	,keyValueIterator: function() {
+		return new haxe_iterators_MapKeyValueIterator(this);
+	}
+	,keys: function() {
+		var ret = [];
+		this.keysLoop(this.root,ret);
+		return HxOverrides.iter(ret);
+	}
+	,setLoop: function(k,v,node) {
+		if(node == null) {
+			return new haxe_ds_TreeNode(null,k,v,null);
+		}
+		var c = this.compare(k,node.key);
+		if(c == 0) {
+			return new haxe_ds_TreeNode(node.left,k,v,node.right,node == null ? 0 : node._height);
+		} else if(c < 0) {
+			var nl = this.setLoop(k,v,node.left);
+			return this.balance(nl,node.key,node.value,node.right);
+		} else {
+			var nr = this.setLoop(k,v,node.right);
+			return this.balance(node.left,node.key,node.value,nr);
+		}
+	}
+	,removeLoop: function(k,node) {
+		if(node == null) {
+			throw new js__$Boot_HaxeError("Not_found");
+		}
+		var c = this.compare(k,node.key);
+		if(c == 0) {
+			return this.merge(node.left,node.right);
+		} else if(c < 0) {
+			return this.balance(this.removeLoop(k,node.left),node.key,node.value,node.right);
+		} else {
+			return this.balance(node.left,node.key,node.value,this.removeLoop(k,node.right));
+		}
+	}
+	,iteratorLoop: function(node,acc) {
+		if(node != null) {
+			this.iteratorLoop(node.left,acc);
+			acc.push(node.value);
+			this.iteratorLoop(node.right,acc);
+		}
+	}
+	,keysLoop: function(node,acc) {
+		if(node != null) {
+			this.keysLoop(node.left,acc);
+			acc.push(node.key);
+			this.keysLoop(node.right,acc);
+		}
+	}
+	,merge: function(t1,t2) {
+		if(t1 == null) {
+			return t2;
+		}
+		if(t2 == null) {
+			return t1;
+		}
+		var t = this.minBinding(t2);
+		return this.balance(t1,t.key,t.value,this.removeMinBinding(t2));
+	}
+	,minBinding: function(t) {
+		if(t == null) {
+			throw new js__$Boot_HaxeError("Not_found");
+		} else if(t.left == null) {
+			return t;
+		} else {
+			return this.minBinding(t.left);
+		}
+	}
+	,removeMinBinding: function(t) {
+		if(t.left == null) {
+			return t.right;
+		} else {
+			return this.balance(this.removeMinBinding(t.left),t.key,t.value,t.right);
+		}
+	}
+	,balance: function(l,k,v,r) {
+		var hl = l == null ? 0 : l._height;
+		var hr = r == null ? 0 : r._height;
+		if(hl > hr + 2) {
+			var _this = l.left;
+			var _this1 = l.right;
+			if((_this == null ? 0 : _this._height) >= (_this1 == null ? 0 : _this1._height)) {
+				return new haxe_ds_TreeNode(l.left,l.key,l.value,new haxe_ds_TreeNode(l.right,k,v,r));
+			} else {
+				return new haxe_ds_TreeNode(new haxe_ds_TreeNode(l.left,l.key,l.value,l.right.left),l.right.key,l.right.value,new haxe_ds_TreeNode(l.right.right,k,v,r));
+			}
+		} else if(hr > hl + 2) {
+			var _this2 = r.right;
+			var _this3 = r.left;
+			if((_this2 == null ? 0 : _this2._height) > (_this3 == null ? 0 : _this3._height)) {
+				return new haxe_ds_TreeNode(new haxe_ds_TreeNode(l,k,v,r.left),r.key,r.value,r.right);
+			} else {
+				return new haxe_ds_TreeNode(new haxe_ds_TreeNode(l,k,v,r.left.left),r.left.key,r.left.value,new haxe_ds_TreeNode(r.left.right,r.key,r.value,r.right));
+			}
+		} else {
+			return new haxe_ds_TreeNode(l,k,v,r,(hl > hr ? hl : hr) + 1);
+		}
+	}
+	,compare: function(k1,k2) {
+		return Reflect.compare(k1,k2);
+	}
+	,__class__: haxe_ds_BalancedTree
+};
+var haxe_ds_TreeNode = function(l,k,v,r,h) {
+	if(h == null) {
+		h = -1;
+	}
+	this.left = l;
+	this.key = k;
+	this.value = v;
+	this.right = r;
+	if(h == -1) {
+		var tmp;
+		var _this = this.left;
+		var _this1 = this.right;
+		if((_this == null ? 0 : _this._height) > (_this1 == null ? 0 : _this1._height)) {
+			var _this2 = this.left;
+			tmp = _this2 == null ? 0 : _this2._height;
+		} else {
+			var _this3 = this.right;
+			tmp = _this3 == null ? 0 : _this3._height;
+		}
+		this._height = tmp + 1;
+	} else {
+		this._height = h;
+	}
+};
+$hxClasses["haxe.ds.TreeNode"] = haxe_ds_TreeNode;
+haxe_ds_TreeNode.__name__ = "haxe.ds.TreeNode";
+haxe_ds_TreeNode.prototype = {
+	__class__: haxe_ds_TreeNode
+};
+var haxe_ds_EnumValueMap = function() {
+	haxe_ds_BalancedTree.call(this);
+};
+$hxClasses["haxe.ds.EnumValueMap"] = haxe_ds_EnumValueMap;
+haxe_ds_EnumValueMap.__name__ = "haxe.ds.EnumValueMap";
+haxe_ds_EnumValueMap.__interfaces__ = [haxe_IMap];
+haxe_ds_EnumValueMap.__super__ = haxe_ds_BalancedTree;
+haxe_ds_EnumValueMap.prototype = $extend(haxe_ds_BalancedTree.prototype,{
+	compare: function(k1,k2) {
+		var d = k1._hx_index - k2._hx_index;
+		if(d != 0) {
+			return d;
+		}
+		var p1 = Type.enumParameters(k1);
+		var p2 = Type.enumParameters(k2);
+		if(p1.length == 0 && p2.length == 0) {
+			return 0;
+		}
+		return this.compareArgs(p1,p2);
+	}
+	,compareArgs: function(a1,a2) {
+		var ld = a1.length - a2.length;
+		if(ld != 0) {
+			return ld;
+		}
+		var _g = 0;
+		var _g1 = a1.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var d = this.compareArg(a1[i],a2[i]);
+			if(d != 0) {
+				return d;
+			}
+		}
+		return 0;
+	}
+	,compareArg: function(v1,v2) {
+		if(Reflect.isEnumValue(v1) && Reflect.isEnumValue(v2)) {
+			return this.compare(v1,v2);
+		} else if(((v1) instanceof Array) && ((v2) instanceof Array)) {
+			return this.compareArgs(v1,v2);
+		} else {
+			return Reflect.compare(v1,v2);
+		}
+	}
+	,__class__: haxe_ds_EnumValueMap
+});
 var haxe_ds_IntMap = function() {
 	this.h = { };
 };
@@ -6147,6 +6476,9 @@ haxe_ds_IntMap.__interfaces__ = [haxe_IMap];
 haxe_ds_IntMap.prototype = {
 	set: function(key,value) {
 		this.h[key] = value;
+	}
+	,get: function(key) {
+		return this.h[key];
 	}
 	,exists: function(key) {
 		return this.h.hasOwnProperty(key);
@@ -6170,6 +6502,9 @@ haxe_ds_IntMap.prototype = {
 			var i = this.it.next();
 			return this.ref[i];
 		}};
+	}
+	,keyValueIterator: function() {
+		return new haxe_iterators_MapKeyValueIterator(this);
 	}
 	,__class__: haxe_ds_IntMap
 };
@@ -6235,6 +6570,12 @@ haxe_ds_StringMap.prototype = {
 			this.h[key] = value;
 		}
 	}
+	,get: function(key) {
+		if(__map_reserved[key] != null) {
+			return this.getReserved(key);
+		}
+		return this.h[key];
+	}
 	,exists: function(key) {
 		if(__map_reserved[key] != null) {
 			return this.existsReserved(key);
@@ -6294,6 +6635,31 @@ haxe_ds_StringMap.prototype = {
 			}
 		}
 		return out;
+	}
+	,iterator: function() {
+		return new haxe_ds__$StringMap_StringMapIterator(this,this.arrayKeys());
+	}
+	,keyValueIterator: function() {
+		return new haxe_iterators_MapKeyValueIterator(this);
+	}
+	,toString: function() {
+		var s_b = "";
+		s_b += "{";
+		var keys = this.arrayKeys();
+		var _g = 0;
+		var _g1 = keys.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var k = keys[i];
+			s_b += k == null ? "null" : "" + k;
+			s_b += " => ";
+			s_b += Std.string(Std.string(__map_reserved[k] != null ? this.getReserved(k) : this.h[k]));
+			if(i < keys.length - 1) {
+				s_b += ", ";
+			}
+		}
+		s_b += "}";
+		return s_b;
 	}
 	,__class__: haxe_ds_StringMap
 };
@@ -6580,6 +6946,22 @@ haxe_io_Path.directory = function(path) {
 };
 haxe_io_Path.prototype = {
 	__class__: haxe_io_Path
+};
+var haxe_iterators_MapKeyValueIterator = function(map) {
+	this.map = map;
+	this.keys = map.keys();
+};
+$hxClasses["haxe.iterators.MapKeyValueIterator"] = haxe_iterators_MapKeyValueIterator;
+haxe_iterators_MapKeyValueIterator.__name__ = "haxe.iterators.MapKeyValueIterator";
+haxe_iterators_MapKeyValueIterator.prototype = {
+	hasNext: function() {
+		return this.keys.hasNext();
+	}
+	,next: function() {
+		var key = this.keys.next();
+		return { value : this.map.get(key), key : key};
+	}
+	,__class__: haxe_iterators_MapKeyValueIterator
 };
 var haxe_zip_ExtraField = $hxEnums["haxe.zip.ExtraField"] = { __ename__ : "haxe.zip.ExtraField", __constructs__ : ["FUnknown","FInfoZipUnicodePath","FUtf8"]
 	,FUnknown: ($_=function(tag,bytes) { return {_hx_index:0,tag:tag,bytes:bytes,__enum__:"haxe.zip.ExtraField",toString:$estr}; },$_.__params__ = ["tag","bytes"],$_)
@@ -23079,7 +23461,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 614802;
+	this.version = 50363;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
@@ -32690,6 +33072,13 @@ openfl_display_GraphicsTrianglePath.__interfaces__ = [openfl_display_IGraphicsPa
 openfl_display_GraphicsTrianglePath.prototype = {
 	__class__: openfl_display_GraphicsTrianglePath
 };
+var openfl_display_ITileContainer = function() { };
+$hxClasses["openfl.display.ITileContainer"] = openfl_display_ITileContainer;
+openfl_display_ITileContainer.__name__ = "openfl.display.ITileContainer";
+openfl_display_ITileContainer.__isInterface__ = true;
+openfl_display_ITileContainer.prototype = {
+	__class__: openfl_display_ITileContainer
+};
 var openfl_display__$InterpolationMethod_InterpolationMethod_$Impl_$ = {};
 $hxClasses["openfl.display._InterpolationMethod.InterpolationMethod_Impl_"] = openfl_display__$InterpolationMethod_InterpolationMethod_$Impl_$;
 openfl_display__$InterpolationMethod_InterpolationMethod_$Impl_$.__name__ = "openfl.display._InterpolationMethod.InterpolationMethod_Impl_";
@@ -37643,6 +38032,1222 @@ openfl_display__$StageScaleMode_StageScaleMode_$Impl_$.toString = function(this1
 		return null;
 	}
 };
+var openfl_display_Tile = function(id,x,y,scaleX,scaleY,rotation,originX,originY) {
+	if(originY == null) {
+		originY = 0;
+	}
+	if(originX == null) {
+		originX = 0;
+	}
+	if(rotation == null) {
+		rotation = 0;
+	}
+	if(scaleY == null) {
+		scaleY = 1;
+	}
+	if(scaleX == null) {
+		scaleX = 1;
+	}
+	if(y == null) {
+		y = 0;
+	}
+	if(x == null) {
+		x = 0;
+	}
+	if(id == null) {
+		id = 0;
+	}
+	this.__id = id;
+	this.__matrix = new openfl_geom_Matrix();
+	if(x != 0) {
+		this.set_x(x);
+	}
+	if(y != 0) {
+		this.set_y(y);
+	}
+	if(scaleX != 1) {
+		this.set_scaleX(scaleX);
+	}
+	if(scaleY != 1) {
+		this.set_scaleY(scaleY);
+	}
+	if(rotation != 0) {
+		this.set_rotation(rotation);
+	}
+	this.__dirty = true;
+	this.__length = 0;
+	this.__originX = originX;
+	this.__originY = originY;
+	this.__alpha = 1;
+	this.__blendMode = null;
+	this.__visible = true;
+};
+$hxClasses["openfl.display.Tile"] = openfl_display_Tile;
+openfl_display_Tile.__name__ = "openfl.display.Tile";
+openfl_display_Tile.prototype = {
+	clone: function() {
+		var tile = new openfl_display_Tile(this.__id);
+		tile.__alpha = this.__alpha;
+		tile.__blendMode = this.__blendMode;
+		tile.__originX = this.__originX;
+		tile.__originY = this.__originY;
+		if(this.__rect != null) {
+			tile.__rect = this.__rect.clone();
+		}
+		tile.set_matrix(this.__matrix.clone());
+		tile.__shader = this.__shader;
+		tile.set_tileset(this.__tileset);
+		if(this.__colorTransform != null) {
+			tile.__colorTransform = this.__colorTransform.__clone();
+		}
+		return tile;
+	}
+	,getBounds: function(targetCoordinateSpace) {
+		var result = new openfl_geom_Rectangle();
+		this.__findTileRect(result);
+		var matrix = openfl_geom_Matrix.__pool.get();
+		if(targetCoordinateSpace != null && targetCoordinateSpace != this) {
+			matrix.copyFrom(this.__getWorldTransform());
+			var targetMatrix = openfl_geom_Matrix.__pool.get();
+			targetMatrix.copyFrom(targetCoordinateSpace.__getWorldTransform());
+			targetMatrix.invert();
+			matrix.concat(targetMatrix);
+			openfl_geom_Matrix.__pool.release(targetMatrix);
+		} else {
+			matrix.identity();
+		}
+		this.__getBounds(result,matrix);
+		openfl_geom_Matrix.__pool.release(matrix);
+		return result;
+	}
+	,__getBounds: function(result,matrix) {
+		result.__transform(result,matrix);
+	}
+	,hitTestTile: function(obj) {
+		if(obj != null && obj.parent != null && this.parent != null) {
+			var currentBounds = this.getBounds(this);
+			var targetBounds = obj.getBounds(this);
+			return currentBounds.intersects(targetBounds);
+		}
+		return false;
+	}
+	,invalidate: function() {
+		this.__setRenderDirty();
+	}
+	,__findTileRect: function(result) {
+		if(this.get_tileset() == null) {
+			if(this.parent != null) {
+				var parentTileset = this.parent.__findTileset();
+				if(parentTileset == null) {
+					result.setTo(0,0,0,0);
+				} else {
+					var _g = parentTileset.getRect(this.get_id());
+					if(_g == null) {
+						result.setTo(0,0,0,0);
+					} else {
+						var not_null = _g;
+						result.copyFrom(not_null);
+					}
+				}
+			} else {
+				result.setTo(0,0,0,0);
+			}
+		} else {
+			result.copyFrom(this.get_tileset().getRect(this.get_id()));
+		}
+		result.x = 0;
+		result.y = 0;
+	}
+	,__findTileset: function() {
+		if(this.get_tileset() != null) {
+			return this.get_tileset();
+		}
+		if(((this.parent) instanceof openfl_display_Tilemap)) {
+			return this.parent.get_tileset();
+		}
+		if(this.parent == null) {
+			return null;
+		}
+		return this.parent.__findTileset();
+	}
+	,__getWorldTransform: function() {
+		var retval = this.get_matrix().clone();
+		if(this.parent != null) {
+			retval.concat(this.parent.__getWorldTransform());
+		}
+		return retval;
+	}
+	,__setRenderDirty: function() {
+		if(!this.__dirty) {
+			this.__dirty = true;
+			if(this.parent != null) {
+				this.parent.__setRenderDirty();
+			}
+		}
+	}
+	,get_alpha: function() {
+		return this.__alpha;
+	}
+	,set_alpha: function(value) {
+		if(value != this.__alpha) {
+			this.__alpha = value;
+			this.__setRenderDirty();
+		}
+		return value;
+	}
+	,get_blendMode: function() {
+		return this.__blendMode;
+	}
+	,set_blendMode: function(value) {
+		if(value != this.__blendMode) {
+			this.__blendMode = value;
+			this.__setRenderDirty();
+		}
+		return value;
+	}
+	,get_colorTransform: function() {
+		return this.__colorTransform;
+	}
+	,set_colorTransform: function(value) {
+		if(value != this.__colorTransform) {
+			this.__colorTransform = value;
+			this.__setRenderDirty();
+		}
+		return value;
+	}
+	,get_height: function() {
+		var result = openfl_geom_Rectangle.__pool.get();
+		this.__findTileRect(result);
+		this.__getBounds(result,this.get_matrix());
+		var h = result.height;
+		openfl_geom_Rectangle.__pool.release(result);
+		return h;
+	}
+	,set_height: function(value) {
+		var result = openfl_geom_Rectangle.__pool.get();
+		this.__findTileRect(result);
+		if(result.height != 0) {
+			this.set_scaleY(value / result.height);
+		}
+		openfl_geom_Rectangle.__pool.release(result);
+		return value;
+	}
+	,get_id: function() {
+		return this.__id;
+	}
+	,set_id: function(value) {
+		if(value != this.__id) {
+			this.__id = value;
+			this.__setRenderDirty();
+		}
+		return value;
+	}
+	,get_matrix: function() {
+		return this.__matrix;
+	}
+	,set_matrix: function(value) {
+		if(value != this.__matrix) {
+			this.__rotation = null;
+			this.__scaleX = null;
+			this.__scaleY = null;
+			this.__matrix = value;
+			this.__setRenderDirty();
+		}
+		return value;
+	}
+	,get_originX: function() {
+		return this.__originX;
+	}
+	,set_originX: function(value) {
+		if(value != this.__originX) {
+			this.__originX = value;
+			this.__setRenderDirty();
+		}
+		return value;
+	}
+	,get_originY: function() {
+		return this.__originY;
+	}
+	,set_originY: function(value) {
+		if(value != this.__originY) {
+			this.__originY = value;
+			this.__setRenderDirty();
+		}
+		return value;
+	}
+	,get_rect: function() {
+		return this.__rect;
+	}
+	,set_rect: function(value) {
+		if(value != this.__rect) {
+			this.__rect = value;
+			this.__setRenderDirty();
+		}
+		return value;
+	}
+	,get_rotation: function() {
+		if(this.__rotation == null) {
+			if(this.__matrix.b == 0 && this.__matrix.c == 0) {
+				this.__rotation = 0;
+				this.__rotationSine = 0;
+				this.__rotationCosine = 1;
+			} else {
+				var radians = Math.atan2(this.__matrix.d,this.__matrix.c) - Math.PI / 2;
+				this.__rotation = radians * (180 / Math.PI);
+				this.__rotationSine = Math.sin(radians);
+				this.__rotationCosine = Math.cos(radians);
+			}
+		}
+		return this.__rotation;
+	}
+	,set_rotation: function(value) {
+		if(value != this.__rotation) {
+			this.__rotation = value;
+			var radians = value * (Math.PI / 180);
+			this.__rotationSine = Math.sin(radians);
+			this.__rotationCosine = Math.cos(radians);
+			var __scaleX = this.get_scaleX();
+			var __scaleY = this.get_scaleY();
+			this.__matrix.a = this.__rotationCosine * __scaleX;
+			this.__matrix.b = this.__rotationSine * __scaleX;
+			this.__matrix.c = -this.__rotationSine * __scaleY;
+			this.__matrix.d = this.__rotationCosine * __scaleY;
+			this.__setRenderDirty();
+		}
+		return value;
+	}
+	,get_scaleX: function() {
+		if(this.__scaleX == null) {
+			if(this.get_matrix().b == 0) {
+				this.__scaleX = this.__matrix.a;
+			} else {
+				this.__scaleX = Math.sqrt(this.__matrix.a * this.__matrix.a + this.__matrix.b * this.__matrix.b);
+			}
+		}
+		return this.__scaleX;
+	}
+	,set_scaleX: function(value) {
+		if(value != this.__scaleX) {
+			this.__scaleX = value;
+			if(this.__matrix.b == 0) {
+				this.__matrix.a = value;
+			} else {
+				var rotation = this.get_rotation();
+				var a = this.__rotationCosine * value;
+				var b = this.__rotationSine * value;
+				this.__matrix.a = a;
+				this.__matrix.b = b;
+			}
+			this.__setRenderDirty();
+		}
+		return value;
+	}
+	,get_scaleY: function() {
+		if(this.__scaleY == null) {
+			if(this.__matrix.c == 0) {
+				this.__scaleY = this.get_matrix().d;
+			} else {
+				this.__scaleY = Math.sqrt(this.__matrix.c * this.__matrix.c + this.__matrix.d * this.__matrix.d);
+			}
+		}
+		return this.__scaleY;
+	}
+	,set_scaleY: function(value) {
+		if(value != this.__scaleY) {
+			this.__scaleY = value;
+			if(this.__matrix.c == 0) {
+				this.__matrix.d = value;
+			} else {
+				var rotation = this.get_rotation();
+				var c = -this.__rotationSine * value;
+				var d = this.__rotationCosine * value;
+				this.__matrix.c = c;
+				this.__matrix.d = d;
+			}
+			this.__setRenderDirty();
+		}
+		return value;
+	}
+	,get_shader: function() {
+		return this.__shader;
+	}
+	,set_shader: function(value) {
+		if(value != this.__shader) {
+			this.__shader = value;
+			this.__setRenderDirty();
+		}
+		return value;
+	}
+	,get_tileset: function() {
+		return this.__tileset;
+	}
+	,set_tileset: function(value) {
+		if(value != this.__tileset) {
+			this.__tileset = value;
+			this.__setRenderDirty();
+		}
+		return value;
+	}
+	,get_visible: function() {
+		return this.__visible;
+	}
+	,set_visible: function(value) {
+		if(value != this.__visible) {
+			this.__visible = value;
+			this.__setRenderDirty();
+		}
+		return value;
+	}
+	,get_width: function() {
+		var result = openfl_geom_Rectangle.__pool.get();
+		this.__findTileRect(result);
+		this.__getBounds(result,this.get_matrix());
+		var w = result.width;
+		openfl_geom_Rectangle.__pool.release(result);
+		return w;
+	}
+	,set_width: function(value) {
+		var result = openfl_geom_Rectangle.__pool.get();
+		this.__findTileRect(result);
+		if(result.width != 0) {
+			this.set_scaleX(value / result.width);
+		}
+		openfl_geom_Rectangle.__pool.release(result);
+		return value;
+	}
+	,get_x: function() {
+		return this.__matrix.tx;
+	}
+	,set_x: function(value) {
+		if(value != this.__matrix.tx) {
+			this.__matrix.tx = value;
+			this.__setRenderDirty();
+		}
+		return value;
+	}
+	,get_y: function() {
+		return this.__matrix.ty;
+	}
+	,set_y: function(value) {
+		if(value != this.__matrix.ty) {
+			this.__matrix.ty = value;
+			this.__setRenderDirty();
+		}
+		return value;
+	}
+	,__class__: openfl_display_Tile
+};
+var openfl_display_TileContainer = function(x,y,scaleX,scaleY,rotation,originX,originY) {
+	if(originY == null) {
+		originY = 0;
+	}
+	if(originX == null) {
+		originX = 0;
+	}
+	if(rotation == null) {
+		rotation = 0;
+	}
+	if(scaleY == null) {
+		scaleY = 1;
+	}
+	if(scaleX == null) {
+		scaleX = 1;
+	}
+	if(y == null) {
+		y = 0;
+	}
+	if(x == null) {
+		x = 0;
+	}
+	openfl_display_Tile.call(this,-1,x,y,scaleX,scaleY,rotation,originX,originY);
+	this.__tiles = [];
+	this.__length = 0;
+};
+$hxClasses["openfl.display.TileContainer"] = openfl_display_TileContainer;
+openfl_display_TileContainer.__name__ = "openfl.display.TileContainer";
+openfl_display_TileContainer.__interfaces__ = [openfl_display_ITileContainer];
+openfl_display_TileContainer.__super__ = openfl_display_Tile;
+openfl_display_TileContainer.prototype = $extend(openfl_display_Tile.prototype,{
+	addTile: function(tile) {
+		if(tile == null) {
+			return null;
+		}
+		if(tile.parent == this) {
+			HxOverrides.remove(this.__tiles,tile);
+			this.__length--;
+		}
+		this.__tiles[this.get_numTiles()] = tile;
+		tile.parent = this;
+		this.__length++;
+		this.__setRenderDirty();
+		return tile;
+	}
+	,addTileAt: function(tile,index) {
+		if(tile == null) {
+			return null;
+		}
+		if(tile.parent == this) {
+			HxOverrides.remove(this.__tiles,tile);
+			this.__length--;
+		}
+		this.__tiles.splice(index,0,tile);
+		tile.parent = this;
+		this.__length++;
+		this.__setRenderDirty();
+		return tile;
+	}
+	,addTiles: function(tiles) {
+		var _g = 0;
+		while(_g < tiles.length) {
+			var tile = tiles[_g];
+			++_g;
+			this.addTile(tile);
+		}
+		return tiles;
+	}
+	,clone: function() {
+		var group = new openfl_display_TileContainer();
+		var _g = 0;
+		var _g1 = this.__tiles;
+		while(_g < _g1.length) {
+			var tile = _g1[_g];
+			++_g;
+			group.addTile(tile.clone());
+		}
+		return group;
+	}
+	,contains: function(tile) {
+		return this.__tiles.indexOf(tile) > -1;
+	}
+	,getBounds: function(targetCoordinateSpace) {
+		var result = new openfl_geom_Rectangle();
+		var rect = null;
+		var _g = 0;
+		var _g1 = this.__tiles;
+		while(_g < _g1.length) {
+			var tile = _g1[_g];
+			++_g;
+			rect = tile.getBounds(targetCoordinateSpace);
+			result.__expand(rect.x,rect.y,rect.width,rect.height);
+		}
+		return result;
+	}
+	,getTileAt: function(index) {
+		if(index >= 0 && index < this.get_numTiles()) {
+			return this.__tiles[index];
+		}
+		return null;
+	}
+	,getTileIndex: function(tile) {
+		var _g = 0;
+		var _g1 = this.__tiles.length;
+		while(_g < _g1) {
+			var i = _g++;
+			if(this.__tiles[i] == tile) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	,removeTile: function(tile) {
+		if(tile != null && tile.parent == this) {
+			tile.parent = null;
+			HxOverrides.remove(this.__tiles,tile);
+			this.__length--;
+			this.__setRenderDirty();
+		}
+		return tile;
+	}
+	,removeTileAt: function(index) {
+		if(index >= 0 && index < this.get_numTiles()) {
+			return this.removeTile(this.__tiles[index]);
+		}
+		return null;
+	}
+	,removeTiles: function(beginIndex,endIndex) {
+		if(endIndex == null) {
+			endIndex = 2147483647;
+		}
+		if(beginIndex == null) {
+			beginIndex = 0;
+		}
+		if(beginIndex < 0) {
+			beginIndex = 0;
+		}
+		if(endIndex > this.__tiles.length - 1) {
+			endIndex = this.__tiles.length - 1;
+		}
+		var removed = this.__tiles.splice(beginIndex,endIndex - beginIndex + 1);
+		var _g = 0;
+		while(_g < removed.length) {
+			var tile = removed[_g];
+			++_g;
+			tile.parent = null;
+		}
+		this.__length = this.__tiles.length;
+		this.__setRenderDirty();
+	}
+	,setTileIndex: function(tile,index) {
+		if(index >= 0 && index <= this.get_numTiles() && tile.parent == this) {
+			HxOverrides.remove(this.__tiles,tile);
+			this.__tiles.splice(index,0,tile);
+			this.__setRenderDirty();
+		}
+	}
+	,sortTiles: function(compareFunction) {
+		this.__tiles.sort(compareFunction);
+		this.__setRenderDirty();
+	}
+	,swapTiles: function(tile1,tile2) {
+		if(tile1.parent == this && tile2.parent == this) {
+			var index1 = this.__tiles.indexOf(tile1);
+			var index2 = this.__tiles.indexOf(tile2);
+			this.__tiles[index1] = tile2;
+			this.__tiles[index2] = tile1;
+			this.__setRenderDirty();
+		}
+	}
+	,swapTilesAt: function(index1,index2) {
+		var swap = this.__tiles[index1];
+		this.__tiles[index1] = this.__tiles[index2];
+		this.__tiles[index2] = swap;
+		swap = null;
+		this.__setRenderDirty();
+	}
+	,get_numTiles: function() {
+		return this.__length;
+	}
+	,get_height: function() {
+		var result = openfl_geom_Rectangle.__pool.get();
+		var rect = null;
+		var _g = 0;
+		var _g1 = this.__tiles;
+		while(_g < _g1.length) {
+			var tile = _g1[_g];
+			++_g;
+			rect = tile.getBounds(this);
+			result.__expand(rect.x,rect.y,rect.width,rect.height);
+		}
+		this.__getBounds(result,this.get_matrix());
+		var h = result.height;
+		openfl_geom_Rectangle.__pool.release(result);
+		return h;
+	}
+	,set_height: function(value) {
+		var result = openfl_geom_Rectangle.__pool.get();
+		var rect = null;
+		var _g = 0;
+		var _g1 = this.__tiles;
+		while(_g < _g1.length) {
+			var tile = _g1[_g];
+			++_g;
+			rect = tile.getBounds(this);
+			result.__expand(rect.x,rect.y,rect.width,rect.height);
+		}
+		if(result.height != 0) {
+			this.set_scaleY(value / result.height);
+		}
+		openfl_geom_Rectangle.__pool.release(result);
+		return value;
+	}
+	,get_width: function() {
+		var result = openfl_geom_Rectangle.__pool.get();
+		var rect = null;
+		var _g = 0;
+		var _g1 = this.__tiles;
+		while(_g < _g1.length) {
+			var tile = _g1[_g];
+			++_g;
+			rect = tile.getBounds(this);
+			result.__expand(rect.x,rect.y,rect.width,rect.height);
+		}
+		this.__getBounds(result,this.get_matrix());
+		var w = result.width;
+		openfl_geom_Rectangle.__pool.release(result);
+		return w;
+	}
+	,set_width: function(value) {
+		var result = openfl_geom_Rectangle.__pool.get();
+		var rect = null;
+		var _g = 0;
+		var _g1 = this.__tiles;
+		while(_g < _g1.length) {
+			var tile = _g1[_g];
+			++_g;
+			rect = tile.getBounds(this);
+			result.__expand(rect.x,rect.y,rect.width,rect.height);
+		}
+		if(result.width != 0) {
+			this.set_scaleX(value / result.width);
+		}
+		openfl_geom_Rectangle.__pool.release(result);
+		return value;
+	}
+	,__class__: openfl_display_TileContainer
+});
+var openfl_display_Tilemap = function(width,height,tileset,smoothing) {
+	if(smoothing == null) {
+		smoothing = true;
+	}
+	openfl_display_DisplayObject.call(this);
+	this.__tileset = tileset;
+	this.smoothing = smoothing;
+	this.tileAlphaEnabled = true;
+	this.tileBlendModeEnabled = true;
+	this.tileColorTransformEnabled = true;
+	this.__group = new openfl_display_TileContainer();
+	this.__group.set_tileset(tileset);
+	this.__width = width;
+	this.__height = height;
+};
+$hxClasses["openfl.display.Tilemap"] = openfl_display_Tilemap;
+openfl_display_Tilemap.__name__ = "openfl.display.Tilemap";
+openfl_display_Tilemap.__interfaces__ = [openfl_display_ITileContainer];
+openfl_display_Tilemap.__super__ = openfl_display_DisplayObject;
+openfl_display_Tilemap.prototype = $extend(openfl_display_DisplayObject.prototype,{
+	addTile: function(tile) {
+		return this.__group.addTile(tile);
+	}
+	,addTileAt: function(tile,index) {
+		return this.__group.addTileAt(tile,index);
+	}
+	,addTiles: function(tiles) {
+		return this.__group.addTiles(tiles);
+	}
+	,contains: function(tile) {
+		return this.__group.contains(tile);
+	}
+	,getTileAt: function(index) {
+		return this.__group.getTileAt(index);
+	}
+	,getTileIndex: function(tile) {
+		return this.__group.getTileIndex(tile);
+	}
+	,getTiles: function() {
+		return this.__group.clone();
+	}
+	,removeTile: function(tile) {
+		return this.__group.removeTile(tile);
+	}
+	,removeTileAt: function(index) {
+		return this.__group.removeTileAt(index);
+	}
+	,removeTiles: function(beginIndex,endIndex) {
+		if(endIndex == null) {
+			endIndex = 2147483647;
+		}
+		if(beginIndex == null) {
+			beginIndex = 0;
+		}
+		this.__group.removeTiles(beginIndex,endIndex);
+		return;
+	}
+	,setTileIndex: function(tile,index) {
+		this.__group.setTileIndex(tile,index);
+	}
+	,setTiles: function(group) {
+		var _g = 0;
+		var _g1 = this.__group.__tiles;
+		while(_g < _g1.length) {
+			var tile = _g1[_g];
+			++_g;
+			this.removeTile(tile);
+		}
+		var _g2 = 0;
+		var _g3 = group.__tiles;
+		while(_g2 < _g3.length) {
+			var tile1 = _g3[_g2];
+			++_g2;
+			this.addTile(tile1);
+		}
+	}
+	,sortTiles: function(compareFunction) {
+		this.__group.sortTiles(compareFunction);
+	}
+	,swapTiles: function(tile1,tile2) {
+		this.__group.swapTiles(tile1,tile2);
+	}
+	,swapTilesAt: function(index1,index2) {
+		this.__group.swapTilesAt(index1,index2);
+	}
+	,__enterFrame: function(deltaTime) {
+		if(this.__group.__dirty) {
+			if(!this.__renderDirty) {
+				this.__renderDirty = true;
+				this.__setParentRenderDirty();
+			}
+		}
+	}
+	,__getBounds: function(rect,matrix) {
+		var bounds = openfl_geom_Rectangle.__pool.get();
+		bounds.setTo(0,0,this.__width,this.__height);
+		bounds.__transform(bounds,matrix);
+		rect.__expand(bounds.x,bounds.y,bounds.width,bounds.height);
+		openfl_geom_Rectangle.__pool.release(bounds);
+	}
+	,__hitTest: function(x,y,shapeFlag,stack,interactiveOnly,hitObject) {
+		if(!hitObject.get_visible() || this.__isMask) {
+			return false;
+		}
+		if(this.get_mask() != null && !this.get_mask().__hitTestMask(x,y)) {
+			return false;
+		}
+		this.__getRenderTransform();
+		var _this = this.__renderTransform;
+		var norm = _this.a * _this.d - _this.b * _this.c;
+		var px = norm == 0 ? -_this.tx : 1.0 / norm * (_this.c * (_this.ty - y) + _this.d * (x - _this.tx));
+		var _this1 = this.__renderTransform;
+		var norm1 = _this1.a * _this1.d - _this1.b * _this1.c;
+		var py = norm1 == 0 ? -_this1.ty : 1.0 / norm1 * (_this1.a * (y - _this1.ty) + _this1.b * (_this1.tx - x));
+		if(px > 0 && py > 0 && px <= this.__width && py <= this.__height) {
+			if(stack != null && !interactiveOnly) {
+				stack.push(hitObject);
+			}
+			return true;
+		}
+		return false;
+	}
+	,__renderCairo: function(renderer) {
+	}
+	,__renderCanvas: function(renderer) {
+		this.__updateCacheBitmap(renderer,false);
+		if(this.__cacheBitmap != null && !this.__isCacheBitmapRender) {
+			var bitmap = this.__cacheBitmap;
+			if(!(!bitmap.__renderable)) {
+				var alpha = renderer.__getAlpha(bitmap.__worldAlpha);
+				if(alpha > 0 && bitmap.__bitmapData != null && bitmap.__bitmapData.__isValid && bitmap.__bitmapData.readable) {
+					var context = renderer.context;
+					renderer.__setBlendMode(bitmap.__worldBlendMode);
+					renderer.__pushMaskObject(bitmap,false);
+					lime__$internal_graphics_ImageCanvasUtil.convertToCanvas(bitmap.__bitmapData.image);
+					context.globalAlpha = alpha;
+					var scrollRect = bitmap.__scrollRect;
+					renderer.setTransform(bitmap.__renderTransform,context);
+					if(!renderer.__allowSmoothing || !bitmap.smoothing) {
+						context.imageSmoothingEnabled = false;
+					}
+					if(scrollRect == null) {
+						context.drawImage(bitmap.__bitmapData.image.get_src(),0,0,bitmap.__bitmapData.image.width,bitmap.__bitmapData.image.height);
+					} else {
+						context.drawImage(bitmap.__bitmapData.image.get_src(),scrollRect.x,scrollRect.y,scrollRect.width,scrollRect.height);
+					}
+					if(!renderer.__allowSmoothing || !bitmap.smoothing) {
+						context.imageSmoothingEnabled = true;
+					}
+					renderer.__popMaskObject(bitmap,false);
+				}
+			}
+		} else {
+			if(!(this.opaqueBackground == null && this.__graphics == null)) {
+				if(!(!this.__renderable)) {
+					var alpha1 = renderer.__getAlpha(this.__worldAlpha);
+					if(!(alpha1 <= 0)) {
+						if(this.opaqueBackground != null && !this.__isCacheBitmapRender && this.get_width() > 0 && this.get_height() > 0) {
+							renderer.__setBlendMode(this.__worldBlendMode);
+							renderer.__pushMaskObject(this);
+							var context1 = renderer.context;
+							renderer.setTransform(this.__renderTransform,context1);
+							var color = this.opaqueBackground;
+							context1.fillStyle = "rgb(" + (color >>> 16 & 255) + "," + (color >>> 8 & 255) + "," + (color & 255) + ")";
+							context1.fillRect(0,0,this.get_width(),this.get_height());
+							renderer.__popMaskObject(this);
+						}
+						if(this.__graphics != null) {
+							if(!(!this.__renderable)) {
+								var alpha2 = renderer.__getAlpha(this.__worldAlpha);
+								if(!(alpha2 <= 0)) {
+									var graphics = this.__graphics;
+									if(graphics != null) {
+										openfl_display__$internal_CanvasGraphics.render(graphics,renderer);
+										var width = graphics.__width;
+										var height = graphics.__height;
+										var canvas = graphics.__canvas;
+										if(canvas != null && graphics.__visible && width >= 1 && height >= 1) {
+											var transform = graphics.__worldTransform;
+											var context2 = renderer.context;
+											var scrollRect1 = this.__scrollRect;
+											var scale9Grid = this.__worldScale9Grid;
+											if(scrollRect1 == null || scrollRect1.width > 0 && scrollRect1.height > 0) {
+												renderer.__setBlendMode(this.__worldBlendMode);
+												renderer.__pushMaskObject(this);
+												context2.globalAlpha = alpha2;
+												if(scale9Grid != null && transform.b == 0 && transform.c == 0) {
+													context2.setTransform(1,0,0,1,transform.tx,transform.ty);
+													var bounds = graphics.__bounds;
+													var scaleX = graphics.__renderTransform.a;
+													var scaleY = graphics.__renderTransform.d;
+													var renderScaleX = transform.a;
+													var renderScaleY = transform.d;
+													var left = Math.max(1,Math.round(scale9Grid.x * scaleX));
+													var top = Math.round(scale9Grid.y * scaleY);
+													var right = Math.max(1,Math.round((bounds.get_right() - scale9Grid.get_right()) * scaleX));
+													var bottom = Math.round((bounds.get_bottom() - scale9Grid.get_bottom()) * scaleY);
+													var centerWidth = Math.round(scale9Grid.width * scaleX);
+													var centerHeight = Math.round(scale9Grid.height * scaleY);
+													var renderLeft = Math.round(scale9Grid.x * renderScaleX);
+													var renderTop = Math.round(scale9Grid.y * renderScaleY);
+													var renderRight = Math.round((bounds.get_right() - scale9Grid.get_right()) * renderScaleX);
+													var renderBottom = Math.round((bounds.get_bottom() - scale9Grid.get_bottom()) * renderScaleY);
+													var renderCenterWidth = Math.round(width * renderScaleX) - renderLeft - renderRight;
+													var renderCenterHeight = Math.round(height * renderScaleY) - renderTop - renderBottom;
+													renderer.applySmoothing(context2,false);
+													if(centerWidth != 0 && centerHeight != 0) {
+														context2.drawImage(canvas,0,0,left,top,0,0,renderLeft,renderTop);
+														context2.drawImage(canvas,left,0,centerWidth,top,renderLeft,0,renderCenterWidth,renderTop);
+														context2.drawImage(canvas,left + centerWidth,0,right,top,renderLeft + renderCenterWidth,0,renderRight,renderTop);
+														context2.drawImage(canvas,0,top,left,centerHeight,0,renderTop,renderLeft,renderCenterHeight);
+														context2.drawImage(canvas,left,top,centerWidth,centerHeight,renderLeft,renderTop,renderCenterWidth,renderCenterHeight);
+														context2.drawImage(canvas,left + centerWidth,top,right,centerHeight,renderLeft + renderCenterWidth,renderTop,renderRight,renderCenterHeight);
+														context2.drawImage(canvas,0,top + centerHeight,left,bottom,0,renderTop + renderCenterHeight,renderLeft,renderBottom);
+														context2.drawImage(canvas,left,top + centerHeight,centerWidth,bottom,renderLeft,renderTop + renderCenterHeight,renderCenterWidth,renderBottom);
+														context2.drawImage(canvas,left + centerWidth,top + centerHeight,right,bottom,renderLeft + renderCenterWidth,renderTop + renderCenterHeight,renderRight,renderBottom);
+													} else if(centerWidth == 0 && centerHeight != 0) {
+														var renderWidth = renderLeft + renderCenterWidth + renderRight;
+														context2.drawImage(canvas,0,0,width,top,0,0,renderWidth,renderTop);
+														context2.drawImage(canvas,0,top,width,centerHeight,0,renderTop,renderWidth,renderCenterHeight);
+														context2.drawImage(canvas,0,top + centerHeight,width,bottom,0,renderTop + renderCenterHeight,renderWidth,renderBottom);
+													} else if(centerHeight == 0 && centerWidth != 0) {
+														var renderHeight = renderTop + renderCenterHeight + renderBottom;
+														context2.drawImage(canvas,0,0,left,height,0,0,renderLeft,renderHeight);
+														context2.drawImage(canvas,left,0,centerWidth,height,renderLeft,0,renderCenterWidth,renderHeight);
+														context2.drawImage(canvas,left + centerWidth,0,right,height,renderLeft + renderCenterWidth,0,renderRight,renderHeight);
+													}
+												} else {
+													renderer.setTransform(transform,context2);
+													if(renderer.__isDOM) {
+														var reverseScale = 1 / renderer.pixelRatio;
+														context2.scale(reverseScale,reverseScale);
+													}
+													context2.drawImage(canvas,0,0,width,height);
+												}
+												renderer.__popMaskObject(this);
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			if(!(!this.__renderable || this.__group.__tiles.length == 0)) {
+				var alpha3 = renderer.__getAlpha(this.__worldAlpha);
+				if(!(alpha3 <= 0)) {
+					var context3 = renderer.context;
+					renderer.__setBlendMode(this.__worldBlendMode);
+					renderer.__pushMaskObject(this);
+					var rect = openfl_geom_Rectangle.__pool.get();
+					rect.setTo(0,0,this.__width,this.__height);
+					renderer.__pushMaskRect(rect,this.__renderTransform);
+					if(!renderer.__allowSmoothing || !this.smoothing) {
+						context3.imageSmoothingEnabled = false;
+					}
+					openfl_display__$internal_CanvasTilemap.renderTileContainer(this.__group,renderer,this.__renderTransform,this.__tileset,renderer.__allowSmoothing && this.smoothing,this.tileAlphaEnabled,alpha3,this.tileBlendModeEnabled,this.__worldBlendMode,null,null,rect);
+					if(!renderer.__allowSmoothing || !this.smoothing) {
+						context3.imageSmoothingEnabled = true;
+					}
+					renderer.__popMaskRect();
+					renderer.__popMaskObject(this);
+					openfl_geom_Rectangle.__pool.release(rect);
+				}
+			}
+		}
+		this.__renderEvent(renderer);
+	}
+	,__renderDOM: function(renderer) {
+		this.__updateCacheBitmap(renderer,false);
+		if(this.__cacheBitmap != null && !this.__isCacheBitmapRender) {
+			this.__renderDOMClear(renderer);
+			this.__cacheBitmap.stage = this.stage;
+			var bitmap = this.__cacheBitmap;
+			if(bitmap.stage != null && bitmap.__worldVisible && bitmap.__renderable && bitmap.__bitmapData != null && bitmap.__bitmapData.__isValid && bitmap.__bitmapData.readable) {
+				renderer.__pushMaskObject(bitmap);
+				if(bitmap.__bitmapData.image.buffer.__srcImage != null) {
+					openfl_display__$internal_DOMBitmap.renderImage(bitmap,renderer);
+				} else {
+					openfl_display__$internal_DOMBitmap.renderCanvas(bitmap,renderer);
+				}
+				renderer.__popMaskObject(bitmap);
+			} else {
+				openfl_display__$internal_DOMBitmap.clear(bitmap,renderer);
+			}
+		} else {
+			var tmp = this.opaqueBackground != null && !this.__isCacheBitmapRender && this.get_width() > 0 && this.get_height() > 0;
+			var graphics = this.__graphics;
+			if(this.stage != null && this.__worldVisible && this.__renderable && graphics != null) {
+				openfl_display__$internal_CanvasGraphics.render(graphics,renderer.__canvasRenderer);
+				if(graphics.__softwareDirty || this.__worldAlphaChanged || this.__canvas != graphics.__canvas) {
+					if(graphics.__canvas != null) {
+						if(this.__canvas != graphics.__canvas) {
+							if(this.__canvas != null) {
+								renderer.element.removeChild(this.__canvas);
+							}
+							this.__canvas = graphics.__canvas;
+							this.__context = graphics.__context;
+							renderer.__initializeElement(this,this.__canvas);
+						}
+					} else {
+						openfl_display__$internal_DOMShape.clear(this,renderer);
+					}
+				}
+				if(this.__canvas != null) {
+					renderer.__pushMaskObject(this);
+					var cacheTransform = this.__renderTransform;
+					this.__renderTransform = graphics.__worldTransform;
+					if(graphics.__transformDirty) {
+						graphics.__transformDirty = false;
+						this.__renderTransformChanged = true;
+					}
+					renderer.__updateClip(this);
+					renderer.__applyStyle(this,true,true,true);
+					this.__renderTransform = cacheTransform;
+					renderer.__popMaskObject(this);
+				}
+			} else {
+				openfl_display__$internal_DOMShape.clear(this,renderer);
+			}
+			if(this.stage != null && this.__worldVisible && this.__renderable && this.__group.__tiles.length > 0) {
+				if(this.__canvas == null) {
+					this.__canvas = window.document.createElement("canvas");
+					this.__context = this.__canvas.getContext("2d");
+					renderer.__initializeElement(this,this.__canvas);
+				}
+				this.__canvas.width = this.__width;
+				this.__canvas.height = this.__height;
+				renderer.__canvasRenderer.context = this.__context;
+				var renderer1 = renderer.__canvasRenderer;
+				if(!(!this.__renderable || this.__group.__tiles.length == 0)) {
+					var alpha = renderer1.__getAlpha(this.__worldAlpha);
+					if(!(alpha <= 0)) {
+						var context = renderer1.context;
+						renderer1.__setBlendMode(this.__worldBlendMode);
+						renderer1.__pushMaskObject(this);
+						var rect = openfl_geom_Rectangle.__pool.get();
+						rect.setTo(0,0,this.__width,this.__height);
+						renderer1.__pushMaskRect(rect,this.__renderTransform);
+						if(!renderer1.__allowSmoothing || !this.smoothing) {
+							context.imageSmoothingEnabled = false;
+						}
+						openfl_display__$internal_CanvasTilemap.renderTileContainer(this.__group,renderer1,this.__renderTransform,this.__tileset,renderer1.__allowSmoothing && this.smoothing,this.tileAlphaEnabled,alpha,this.tileBlendModeEnabled,this.__worldBlendMode,null,null,rect);
+						if(!renderer1.__allowSmoothing || !this.smoothing) {
+							context.imageSmoothingEnabled = true;
+						}
+						renderer1.__popMaskRect();
+						renderer1.__popMaskObject(this);
+						openfl_geom_Rectangle.__pool.release(rect);
+					}
+				}
+				renderer.__canvasRenderer.context = null;
+				renderer.__updateClip(this);
+				renderer.__applyStyle(this,true,false,true);
+			} else {
+				openfl_display__$internal_DOMTilemap.clear(this,renderer);
+			}
+		}
+		this.__renderEvent(renderer);
+	}
+	,__renderDOMClear: function(renderer) {
+		openfl_display__$internal_DOMTilemap.clear(this,renderer);
+	}
+	,__renderFlash: function() {
+	}
+	,__renderGL: function(renderer) {
+		this.__updateCacheBitmap(renderer,false);
+		if(this.__cacheBitmap != null && !this.__isCacheBitmapRender) {
+			openfl_display__$internal_Context3DBitmap.render(this.__cacheBitmap,renderer);
+		} else {
+			if(!(this.opaqueBackground == null && this.__graphics == null)) {
+				if(!(!this.__renderable || this.__worldAlpha <= 0)) {
+					if(this.opaqueBackground != null && !this.__isCacheBitmapRender && this.get_width() > 0 && this.get_height() > 0) {
+						renderer.__setBlendMode(this.__worldBlendMode);
+						renderer.__pushMaskObject(this);
+						var context = renderer.__context3D;
+						var rect = openfl_geom_Rectangle.__pool.get();
+						rect.setTo(0,0,this.get_width(),this.get_height());
+						renderer.__pushMaskRect(rect,this.__renderTransform);
+						var color = this.opaqueBackground;
+						context.clear((color >>> 16 & 255) / 255,(color >>> 8 & 255) / 255,(color & 255) / 255,1,0,0,1);
+						renderer.__popMaskRect();
+						renderer.__popMaskObject(this);
+						openfl_geom_Rectangle.__pool.release(rect);
+					}
+					if(this.__graphics != null) {
+						openfl_display__$internal_Context3DShape.render(this,renderer);
+					}
+				}
+			}
+			openfl_display__$internal_Context3DTilemap.render(this,renderer);
+		}
+		this.__renderEvent(renderer);
+	}
+	,__renderGLMask: function(renderer) {
+		if(!(this.opaqueBackground == null && this.__graphics == null)) {
+			var tmp = this.opaqueBackground != null && !this.__isCacheBitmapRender && this.get_width() > 0 && this.get_height() > 0;
+			if(this.__graphics != null) {
+				openfl_display__$internal_Context3DShape.renderMask(this,renderer);
+			}
+		}
+		openfl_display__$internal_Context3DTilemap.renderMask(this,renderer);
+	}
+	,__shouldCacheHardware: function(value) {
+		return true;
+	}
+	,__updateCacheBitmap: function(renderer,force) {
+		if(this.__filters == null && renderer.__type == "opengl" && this.__cacheBitmap == null) {
+			return false;
+		}
+		return openfl_display_DisplayObject.prototype.__updateCacheBitmap.call(this,renderer,force);
+	}
+	,get_height: function() {
+		return this.__height * Math.abs(this.get_scaleY());
+	}
+	,set_height: function(value) {
+		this.__height = value | 0;
+		return this.__height * Math.abs(this.get_scaleY());
+	}
+	,get_numTiles: function() {
+		return this.__group.__length;
+	}
+	,get_tileset: function() {
+		return this.__tileset;
+	}
+	,set_tileset: function(value) {
+		if(value != this.__tileset) {
+			this.__tileset = value;
+			this.__group.set_tileset(value);
+			this.__group.__dirty = true;
+			if(!this.__renderDirty) {
+				this.__renderDirty = true;
+				this.__setParentRenderDirty();
+			}
+		}
+		return value;
+	}
+	,get_width: function() {
+		return this.__width * Math.abs(this.__scaleX);
+	}
+	,set_width: function(value) {
+		this.__width = value | 0;
+		return this.__width * Math.abs(this.__scaleX);
+	}
+	,__class__: openfl_display_Tilemap
+});
+var openfl_display_Tileset = function(bitmapData,rects) {
+	this.__bitmapData = bitmapData;
+	this.rectData = openfl__$Vector_Vector_$Impl_$.toFloatVector(null);
+	this.__data = [];
+	if(rects != null) {
+		var _g = 0;
+		while(_g < rects.length) {
+			var rect = rects[_g];
+			++_g;
+			this.addRect(rect);
+		}
+	}
+};
+$hxClasses["openfl.display.Tileset"] = openfl_display_Tileset;
+openfl_display_Tileset.__name__ = "openfl.display.Tileset";
+openfl_display_Tileset.prototype = {
+	addRect: function(rect) {
+		if(rect == null) {
+			return -1;
+		}
+		this.rectData.push(rect.x);
+		this.rectData.push(rect.y);
+		this.rectData.push(rect.width);
+		this.rectData.push(rect.height);
+		var tileData = new openfl_display__$Tileset_TileData(rect);
+		tileData.__update(this.__bitmapData);
+		this.__data.push(tileData);
+		return this.__data.length - 1;
+	}
+	,clone: function() {
+		var tileset = new openfl_display_Tileset(this.__bitmapData,null);
+		var rect = openfl_geom_Rectangle.__pool.get();
+		var _g = 0;
+		var _g1 = this.__data;
+		while(_g < _g1.length) {
+			var tileData = _g1[_g];
+			++_g;
+			rect.setTo(tileData.x,tileData.y,tileData.width,tileData.height);
+			tileset.addRect(rect);
+		}
+		openfl_geom_Rectangle.__pool.release(rect);
+		return tileset;
+	}
+	,hasRect: function(rect) {
+		var _g = 0;
+		var _g1 = this.__data;
+		while(_g < _g1.length) {
+			var tileData = _g1[_g];
+			++_g;
+			if(rect.x == tileData.x && rect.y == tileData.y && rect.width == tileData.width && rect.height == tileData.height) {
+				return true;
+			}
+		}
+		return false;
+	}
+	,getRect: function(id) {
+		if(id < this.__data.length && id >= 0) {
+			return new openfl_geom_Rectangle(this.__data[id].x,this.__data[id].y,this.__data[id].width,this.__data[id].height);
+		}
+		return null;
+	}
+	,getRectID: function(rect) {
+		var tileData;
+		var _g = 0;
+		var _g1 = this.__data.length;
+		while(_g < _g1) {
+			var i = _g++;
+			tileData = this.__data[i];
+			if(rect.x == tileData.x && rect.y == tileData.y && rect.width == tileData.width && rect.height == tileData.height) {
+				return i;
+			}
+		}
+		return null;
+	}
+	,get_bitmapData: function() {
+		return this.__bitmapData;
+	}
+	,set_bitmapData: function(value) {
+		this.__bitmapData = value;
+		var _g = 0;
+		var _g1 = this.__data;
+		while(_g < _g1.length) {
+			var data = _g1[_g];
+			++_g;
+			data.__update(this.__bitmapData);
+		}
+		return value;
+	}
+	,get_numRects: function() {
+		return this.__data.length;
+	}
+	,__class__: openfl_display_Tileset
+};
+var openfl_display__$Tileset_TileData = function(rect) {
+	if(rect != null) {
+		this.x = rect.x | 0;
+		this.y = rect.y | 0;
+		this.width = rect.width | 0;
+		this.height = rect.height | 0;
+	}
+};
+$hxClasses["openfl.display._Tileset.TileData"] = openfl_display__$Tileset_TileData;
+openfl_display__$Tileset_TileData.__name__ = "openfl.display._Tileset.TileData";
+openfl_display__$Tileset_TileData.prototype = {
+	__update: function(bitmapData) {
+		if(bitmapData != null) {
+			var bitmapWidth = bitmapData.width;
+			var bitmapHeight = bitmapData.height;
+			this.__uvX = this.x / bitmapWidth;
+			this.__uvY = this.y / bitmapHeight;
+			this.__uvWidth = (this.x + this.width) / bitmapWidth;
+			this.__uvHeight = (this.y + this.height) / bitmapHeight;
+		}
+	}
+	,__class__: openfl_display__$Tileset_TileData
+};
 var openfl_display_Timeline = function() {
 	this.__framesLoaded = 1;
 	this.__totalFrames = 1;
@@ -38066,6 +39671,112 @@ var openfl_display__$internal_CairoTextField = function() { };
 $hxClasses["openfl.display._internal.CairoTextField"] = openfl_display__$internal_CairoTextField;
 openfl_display__$internal_CairoTextField.__name__ = "openfl.display._internal.CairoTextField";
 openfl_display__$internal_CairoTextField.render = function(textField,renderer,transform) {
+};
+var openfl_display__$internal_CairoTilemap = function() { };
+$hxClasses["openfl.display._internal.CairoTilemap"] = openfl_display__$internal_CairoTilemap;
+openfl_display__$internal_CairoTilemap.__name__ = "openfl.display._internal.CairoTilemap";
+openfl_display__$internal_CairoTilemap.render = function(tilemap,renderer) {
+	if(!tilemap.__renderable || tilemap.__group.__tiles.length == 0) {
+		return;
+	}
+	var alpha = renderer.__getAlpha(tilemap.__worldAlpha);
+	if(alpha <= 0) {
+		return;
+	}
+	renderer.__setBlendMode(tilemap.__worldBlendMode);
+	renderer.__pushMaskObject(tilemap);
+	var rect = openfl_geom_Rectangle.__pool.get();
+	rect.setTo(0,0,tilemap.__width,tilemap.__height);
+	renderer.__pushMaskRect(rect,tilemap.__renderTransform);
+	openfl_display__$internal_CairoTilemap.renderTileContainer(tilemap.__group,renderer,tilemap.__renderTransform,tilemap.__tileset,renderer.__allowSmoothing && tilemap.smoothing,tilemap.tileAlphaEnabled,alpha,tilemap.tileBlendModeEnabled,tilemap.__worldBlendMode,null,null,null,rect,new lime_math_Matrix3());
+	renderer.__popMaskRect();
+	renderer.__popMaskObject(tilemap);
+	openfl_geom_Rectangle.__pool.release(rect);
+};
+openfl_display__$internal_CairoTilemap.renderTileContainer = function(group,renderer,parentTransform,defaultTileset,smooth,alphaEnabled,worldAlpha,blendModeEnabled,defaultBlendMode,cacheBitmapData,surface,pattern,rect,matrix) {
+	var cairo = renderer.cairo;
+	var tileTransform = openfl_geom_Matrix.__pool.get();
+	var tiles = group.__tiles;
+	var tile;
+	var tileset;
+	var alpha;
+	var visible;
+	var blendMode = null;
+	var id;
+	var tileData;
+	var tileRect;
+	var bitmapData;
+	var _g = 0;
+	while(_g < tiles.length) {
+		var tile1 = tiles[_g];
+		++_g;
+		tileTransform.setTo(1,0,0,1,-tile1.get_originX(),-tile1.get_originY());
+		tileTransform.concat(tile1.get_matrix());
+		tileTransform.concat(parentTransform);
+		tileset = tile1.get_tileset() != null ? tile1.get_tileset() : defaultTileset;
+		alpha = tile1.get_alpha() * worldAlpha;
+		visible = tile1.get_visible();
+		if(!visible || alpha <= 0) {
+			continue;
+		}
+		if(!alphaEnabled) {
+			alpha = 1;
+		}
+		if(blendModeEnabled) {
+			blendMode = tile1.__blendMode != null ? tile1.__blendMode : defaultBlendMode;
+		}
+		if(tile1.__length > 0) {
+			openfl_display__$internal_CairoTilemap.renderTileContainer(tile1,renderer,tileTransform,tileset,smooth,alphaEnabled,alpha,blendModeEnabled,blendMode,cacheBitmapData,surface,pattern,rect,matrix);
+		} else {
+			if(tileset == null) {
+				continue;
+			}
+			id = tile1.get_id();
+			if(id == -1) {
+				tileRect = tile1.__rect;
+				if(tileRect == null || tileRect.width <= 0 || tileRect.height <= 0) {
+					continue;
+				}
+			} else {
+				tileData = tileset.__data[id];
+				if(tileData == null) {
+					continue;
+				}
+				rect.setTo(tileData.x,tileData.y,tileData.width,tileData.height);
+				tileRect = rect;
+			}
+			bitmapData = tileset.__bitmapData;
+			if(bitmapData == null) {
+				continue;
+			}
+			if(bitmapData != cacheBitmapData) {
+				surface = bitmapData.getSurface();
+				pattern = lime_graphics_cairo__$CairoPattern_CairoPattern_$Impl_$.createForSurface(surface);
+				lime_graphics_cairo__$CairoPattern_CairoPattern_$Impl_$.set_filter(pattern,smooth ? 1 : 3);
+				cairo.set_source(pattern);
+				cacheBitmapData = bitmapData;
+			}
+			if(blendModeEnabled) {
+				renderer.__setBlendMode(blendMode);
+			}
+			renderer.applyMatrix(tileTransform,cairo);
+			matrix.tx = tileRect.x;
+			matrix.ty = tileRect.y;
+			lime_graphics_cairo__$CairoPattern_CairoPattern_$Impl_$.set_matrix(pattern,matrix);
+			cairo.set_source(pattern);
+			cairo.save();
+			cairo.newPath();
+			cairo.rectangle(0,0,tileRect.width,tileRect.height);
+			cairo.clip();
+			if(alpha == 1) {
+				cairo.paint();
+			} else {
+				cairo.paintWithAlpha(alpha);
+			}
+			cairo.restore();
+		}
+	}
+	openfl_geom_Matrix.__pool.release(tileTransform);
 };
 var openfl_display__$internal_CanvasBitmap = function() { };
 $hxClasses["openfl.display._internal.CanvasBitmap"] = openfl_display__$internal_CanvasBitmap;
@@ -46888,6 +48599,114 @@ openfl_display__$internal_CanvasTextField.render = function(textField,renderer,t
 		}
 	}
 };
+var openfl_display__$internal_CanvasTilemap = function() { };
+$hxClasses["openfl.display._internal.CanvasTilemap"] = openfl_display__$internal_CanvasTilemap;
+openfl_display__$internal_CanvasTilemap.__name__ = "openfl.display._internal.CanvasTilemap";
+openfl_display__$internal_CanvasTilemap.render = function(tilemap,renderer) {
+	if(!tilemap.__renderable || tilemap.__group.__tiles.length == 0) {
+		return;
+	}
+	var alpha = renderer.__getAlpha(tilemap.__worldAlpha);
+	if(alpha <= 0) {
+		return;
+	}
+	var context = renderer.context;
+	renderer.__setBlendMode(tilemap.__worldBlendMode);
+	renderer.__pushMaskObject(tilemap);
+	var rect = openfl_geom_Rectangle.__pool.get();
+	rect.setTo(0,0,tilemap.__width,tilemap.__height);
+	renderer.__pushMaskRect(rect,tilemap.__renderTransform);
+	if(!renderer.__allowSmoothing || !tilemap.smoothing) {
+		context.imageSmoothingEnabled = false;
+	}
+	openfl_display__$internal_CanvasTilemap.renderTileContainer(tilemap.__group,renderer,tilemap.__renderTransform,tilemap.__tileset,renderer.__allowSmoothing && tilemap.smoothing,tilemap.tileAlphaEnabled,alpha,tilemap.tileBlendModeEnabled,tilemap.__worldBlendMode,null,null,rect);
+	if(!renderer.__allowSmoothing || !tilemap.smoothing) {
+		context.imageSmoothingEnabled = true;
+	}
+	renderer.__popMaskRect();
+	renderer.__popMaskObject(tilemap);
+	openfl_geom_Rectangle.__pool.release(rect);
+};
+openfl_display__$internal_CanvasTilemap.renderTileContainer = function(group,renderer,parentTransform,defaultTileset,smooth,alphaEnabled,worldAlpha,blendModeEnabled,defaultBlendMode,cacheBitmapData,source,rect) {
+	var context = renderer.context;
+	var roundPixels = renderer.__roundPixels;
+	var tileTransform = openfl_geom_Matrix.__pool.get();
+	var tiles = group.__tiles;
+	var length = group.__length;
+	var tile;
+	var tileset;
+	var alpha;
+	var visible;
+	var blendMode = null;
+	var id;
+	var tileData;
+	var tileRect;
+	var bitmapData;
+	var _g = 0;
+	var _g1 = length;
+	while(_g < _g1) {
+		var i = _g++;
+		tile = tiles[i];
+		tileTransform.setTo(1,0,0,1,-tile.get_originX(),-tile.get_originY());
+		tileTransform.concat(tile.get_matrix());
+		tileTransform.concat(parentTransform);
+		if(roundPixels) {
+			tileTransform.tx = Math.round(tileTransform.tx);
+			tileTransform.ty = Math.round(tileTransform.ty);
+		}
+		tileset = tile.get_tileset() != null ? tile.get_tileset() : defaultTileset;
+		alpha = tile.get_alpha() * worldAlpha;
+		visible = tile.get_visible();
+		if(!visible || alpha <= 0) {
+			continue;
+		}
+		if(!alphaEnabled) {
+			alpha = 1;
+		}
+		if(blendModeEnabled) {
+			blendMode = tile.__blendMode != null ? tile.__blendMode : defaultBlendMode;
+		}
+		if(tile.__length > 0) {
+			openfl_display__$internal_CanvasTilemap.renderTileContainer(tile,renderer,tileTransform,tileset,smooth,alphaEnabled,alpha,blendModeEnabled,blendMode,cacheBitmapData,source,rect);
+		} else {
+			if(tileset == null) {
+				continue;
+			}
+			id = tile.get_id();
+			if(id == -1) {
+				tileRect = tile.__rect;
+				if(tileRect == null || tileRect.width <= 0 || tileRect.height <= 0) {
+					continue;
+				}
+			} else {
+				tileData = tileset.__data[id];
+				if(tileData == null) {
+					continue;
+				}
+				rect.setTo(tileData.x,tileData.y,tileData.width,tileData.height);
+				tileRect = rect;
+			}
+			bitmapData = tileset.__bitmapData;
+			if(bitmapData == null) {
+				continue;
+			}
+			if(bitmapData != cacheBitmapData) {
+				if(bitmapData.image.buffer.__srcImage == null) {
+					lime__$internal_graphics_ImageCanvasUtil.convertToCanvas(bitmapData.image);
+				}
+				source = bitmapData.image.get_src();
+				cacheBitmapData = bitmapData;
+			}
+			context.globalAlpha = alpha;
+			if(blendModeEnabled) {
+				renderer.__setBlendMode(blendMode);
+			}
+			renderer.setTransform(tileTransform,context);
+			context.drawImage(source,tileRect.x,tileRect.y,tileRect.width,tileRect.height,0,0,tileRect.width,tileRect.height);
+		}
+	}
+	openfl_geom_Matrix.__pool.release(tileTransform);
+};
 var openfl_display__$internal_Context3DBitmap = function() { };
 $hxClasses["openfl.display._internal.Context3DBitmap"] = openfl_display__$internal_Context3DBitmap;
 openfl_display__$internal_Context3DBitmap.__name__ = "openfl.display._internal.Context3DBitmap";
@@ -50775,6 +52594,365 @@ openfl_display__$internal_Context3DTextField.renderMask = function(textField,ren
 	}
 	textField.__graphics.__hardwareDirty = false;
 };
+var openfl_display__$internal_Context3DTilemap = function() { };
+$hxClasses["openfl.display._internal.Context3DTilemap"] = openfl_display__$internal_Context3DTilemap;
+openfl_display__$internal_Context3DTilemap.__name__ = "openfl.display._internal.Context3DTilemap";
+openfl_display__$internal_Context3DTilemap.buildBuffer = function(tilemap,renderer) {
+	if(!tilemap.__renderable || tilemap.__group.__tiles.length == 0 || tilemap.__worldAlpha <= 0) {
+		return;
+	}
+	openfl_display__$internal_Context3DTilemap.numTiles = 0;
+	openfl_display__$internal_Context3DTilemap.vertexBufferData = tilemap.__buffer != null ? tilemap.__buffer.vertexBufferData : null;
+	openfl_display__$internal_Context3DTilemap.vertexDataPosition = 0;
+	var rect = openfl_geom_Rectangle.__pool.get();
+	var matrix = openfl_geom_Matrix.__pool.get();
+	var parentTransform = openfl_geom_Matrix.__pool.get();
+	openfl_display__$internal_Context3DTilemap.dataPerVertex = 4;
+	if(tilemap.tileAlphaEnabled) {
+		openfl_display__$internal_Context3DTilemap.dataPerVertex++;
+	}
+	if(tilemap.tileColorTransformEnabled) {
+		openfl_display__$internal_Context3DTilemap.dataPerVertex += 8;
+	}
+	openfl_display__$internal_Context3DTilemap.buildBufferTileContainer(tilemap,tilemap.__group,renderer,parentTransform,tilemap.__tileset,tilemap.tileAlphaEnabled,tilemap.__worldAlpha,tilemap.tileColorTransformEnabled,tilemap.__worldColorTransform,null,rect,matrix);
+	tilemap.__buffer.flushVertexBufferData();
+	openfl_geom_Rectangle.__pool.release(rect);
+	openfl_geom_Matrix.__pool.release(matrix);
+	openfl_geom_Matrix.__pool.release(parentTransform);
+};
+openfl_display__$internal_Context3DTilemap.buildBufferTileContainer = function(tilemap,group,renderer,parentTransform,defaultTileset,alphaEnabled,worldAlpha,colorTransformEnabled,defaultColorTransform,cacheBitmapData,rect,matrix) {
+	var tileTransform = openfl_geom_Matrix.__pool.get();
+	var roundPixels = renderer.__roundPixels;
+	var tiles = group.__tiles;
+	var length = group.__length;
+	openfl_display__$internal_Context3DTilemap.resizeBuffer(tilemap,openfl_display__$internal_Context3DTilemap.numTiles + length);
+	var tile;
+	var tileset;
+	var alpha;
+	var visible;
+	var colorTransform = null;
+	var id;
+	var tileData;
+	var tileRect;
+	var bitmapData;
+	var tileWidth;
+	var tileHeight;
+	var uvX;
+	var uvY;
+	var uvHeight;
+	var uvWidth;
+	var vertexOffset;
+	var x;
+	var y;
+	var x2;
+	var y2;
+	var x3;
+	var y3;
+	var x4;
+	var y4;
+	var alphaPosition = 4;
+	var ctPosition = alphaEnabled ? 5 : 4;
+	var _g = 0;
+	while(_g < tiles.length) {
+		var tile1 = tiles[_g];
+		++_g;
+		tileTransform.setTo(1,0,0,1,-tile1.get_originX(),-tile1.get_originY());
+		tileTransform.concat(tile1.get_matrix());
+		tileTransform.concat(parentTransform);
+		if(roundPixels) {
+			tileTransform.tx = Math.round(tileTransform.tx);
+			tileTransform.ty = Math.round(tileTransform.ty);
+		}
+		tileset = tile1.get_tileset() != null ? tile1.get_tileset() : defaultTileset;
+		alpha = tile1.get_alpha() * worldAlpha;
+		visible = tile1.get_visible();
+		tile1.__dirty = false;
+		if(!visible || alpha <= 0) {
+			continue;
+		}
+		if(colorTransformEnabled) {
+			if(tile1.get_colorTransform() != null) {
+				if(defaultColorTransform == null) {
+					colorTransform = tile1.get_colorTransform();
+				} else {
+					if(openfl_display__$internal_Context3DTilemap.cacheColorTransform == null) {
+						openfl_display__$internal_Context3DTilemap.cacheColorTransform = new openfl_geom_ColorTransform();
+					}
+					colorTransform = openfl_display__$internal_Context3DTilemap.cacheColorTransform;
+					colorTransform.redMultiplier = defaultColorTransform.redMultiplier * tile1.get_colorTransform().redMultiplier;
+					colorTransform.greenMultiplier = defaultColorTransform.greenMultiplier * tile1.get_colorTransform().greenMultiplier;
+					colorTransform.blueMultiplier = defaultColorTransform.blueMultiplier * tile1.get_colorTransform().blueMultiplier;
+					colorTransform.alphaMultiplier = defaultColorTransform.alphaMultiplier * tile1.get_colorTransform().alphaMultiplier;
+					colorTransform.redOffset = defaultColorTransform.redOffset + tile1.get_colorTransform().redOffset;
+					colorTransform.greenOffset = defaultColorTransform.greenOffset + tile1.get_colorTransform().greenOffset;
+					colorTransform.blueOffset = defaultColorTransform.blueOffset + tile1.get_colorTransform().blueOffset;
+					colorTransform.alphaOffset = defaultColorTransform.alphaOffset + tile1.get_colorTransform().alphaOffset;
+				}
+			} else {
+				colorTransform = defaultColorTransform;
+			}
+		}
+		if(!alphaEnabled) {
+			alpha = 1;
+		}
+		if(tile1.__length > 0) {
+			openfl_display__$internal_Context3DTilemap.buildBufferTileContainer(tilemap,tile1,renderer,tileTransform,tileset,alphaEnabled,alpha,colorTransformEnabled,colorTransform,cacheBitmapData,rect,matrix);
+		} else {
+			if(tileset == null) {
+				continue;
+			}
+			id = tile1.get_id();
+			bitmapData = tileset.__bitmapData;
+			if(bitmapData == null) {
+				continue;
+			}
+			if(id == -1) {
+				tileRect = tile1.__rect;
+				if(tileRect == null || tileRect.width <= 0 || tileRect.height <= 0) {
+					continue;
+				}
+				uvX = tileRect.x / bitmapData.width;
+				uvY = tileRect.y / bitmapData.height;
+				uvWidth = tileRect.get_right() / bitmapData.width;
+				uvHeight = tileRect.get_bottom() / bitmapData.height;
+			} else {
+				tileData = tileset.__data[id];
+				if(tileData == null) {
+					continue;
+				}
+				rect.setTo(tileData.x,tileData.y,tileData.width,tileData.height);
+				tileRect = rect;
+				uvX = tileData.__uvX;
+				uvY = tileData.__uvY;
+				uvWidth = tileData.__uvWidth;
+				uvHeight = tileData.__uvHeight;
+			}
+			tileWidth = tileRect.width;
+			tileHeight = tileRect.height;
+			x = 0 * tileTransform.a + 0 * tileTransform.c + tileTransform.tx;
+			y = 0 * tileTransform.b + 0 * tileTransform.d + tileTransform.ty;
+			x2 = tileWidth * tileTransform.a + 0 * tileTransform.c + tileTransform.tx;
+			y2 = tileWidth * tileTransform.b + 0 * tileTransform.d + tileTransform.ty;
+			x3 = 0 * tileTransform.a + tileHeight * tileTransform.c + tileTransform.tx;
+			y3 = 0 * tileTransform.b + tileHeight * tileTransform.d + tileTransform.ty;
+			x4 = tileWidth * tileTransform.a + tileHeight * tileTransform.c + tileTransform.tx;
+			y4 = tileWidth * tileTransform.b + tileHeight * tileTransform.d + tileTransform.ty;
+			vertexOffset = openfl_display__$internal_Context3DTilemap.vertexDataPosition;
+			openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset] = x;
+			openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + 1] = y;
+			openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + 2] = uvX;
+			openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + 3] = uvY;
+			openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex] = x2;
+			openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex + 1] = y2;
+			openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex + 2] = uvWidth;
+			openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex + 3] = uvY;
+			openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * 2] = x3;
+			openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * 2 + 1] = y3;
+			openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * 2 + 2] = uvX;
+			openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * 2 + 3] = uvHeight;
+			openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * 3] = x4;
+			openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * 3 + 1] = y4;
+			openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * 3 + 2] = uvWidth;
+			openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * 3 + 3] = uvHeight;
+			if(alphaEnabled) {
+				openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * 0 + alphaPosition] = alpha;
+				openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex + alphaPosition] = alpha;
+				openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * 2 + alphaPosition] = alpha;
+				openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * 3 + alphaPosition] = alpha;
+			}
+			if(colorTransformEnabled) {
+				if(colorTransform != null) {
+					var _g1 = 0;
+					while(_g1 < 4) {
+						var i = _g1++;
+						openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * i + ctPosition] = colorTransform.redMultiplier;
+						openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * i + ctPosition + 1] = colorTransform.greenMultiplier;
+						openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * i + ctPosition + 2] = colorTransform.blueMultiplier;
+						openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * i + ctPosition + 3] = colorTransform.alphaMultiplier;
+						openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * i + ctPosition + 4] = colorTransform.redOffset;
+						openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * i + ctPosition + 5] = colorTransform.greenOffset;
+						openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * i + ctPosition + 6] = colorTransform.blueOffset;
+						openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * i + ctPosition + 7] = colorTransform.alphaOffset;
+					}
+				} else {
+					var _g2 = 0;
+					while(_g2 < 4) {
+						var i1 = _g2++;
+						openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * i1 + ctPosition] = 1;
+						openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * i1 + ctPosition + 1] = 1;
+						openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * i1 + ctPosition + 2] = 1;
+						openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * i1 + ctPosition + 3] = 1;
+						openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * i1 + ctPosition + 4] = 0;
+						openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * i1 + ctPosition + 5] = 0;
+						openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * i1 + ctPosition + 6] = 0;
+						openfl_display__$internal_Context3DTilemap.vertexBufferData[vertexOffset + openfl_display__$internal_Context3DTilemap.dataPerVertex * i1 + ctPosition + 7] = 0;
+					}
+				}
+			}
+			openfl_display__$internal_Context3DTilemap.vertexDataPosition += openfl_display__$internal_Context3DTilemap.dataPerVertex * 4;
+		}
+	}
+	group.__dirty = false;
+	openfl_geom_Matrix.__pool.release(tileTransform);
+};
+openfl_display__$internal_Context3DTilemap.flush = function(tilemap,renderer,blendMode) {
+	if(openfl_display__$internal_Context3DTilemap.currentShader == null) {
+		openfl_display__$internal_Context3DTilemap.currentShader = renderer.__defaultDisplayShader;
+	}
+	if(openfl_display__$internal_Context3DTilemap.bufferPosition > openfl_display__$internal_Context3DTilemap.lastFlushedPosition && openfl_display__$internal_Context3DTilemap.currentBitmapData != null && openfl_display__$internal_Context3DTilemap.currentShader != null) {
+		var shader = renderer.__initDisplayShader(openfl_display__$internal_Context3DTilemap.currentShader);
+		renderer.setShader(shader);
+		renderer.applyBitmapData(openfl_display__$internal_Context3DTilemap.currentBitmapData,tilemap.smoothing);
+		renderer.applyMatrix(renderer.__getMatrix(tilemap.__renderTransform,1));
+		if(tilemap.tileAlphaEnabled) {
+			renderer.useAlphaArray();
+		} else {
+			renderer.applyAlpha(tilemap.__worldAlpha);
+		}
+		if(tilemap.tileBlendModeEnabled) {
+			renderer.__setBlendMode(blendMode);
+		}
+		if(tilemap.tileColorTransformEnabled) {
+			renderer.applyHasColorTransform(true);
+			renderer.useColorTransformArray();
+		} else {
+			renderer.applyColorTransform(tilemap.__worldColorTransform);
+		}
+		renderer.updateShader();
+		var vertexBuffer = tilemap.__buffer.vertexBuffer;
+		var vertexBufferPosition = openfl_display__$internal_Context3DTilemap.lastFlushedPosition * openfl_display__$internal_Context3DTilemap.dataPerVertex * 4;
+		var length = openfl_display__$internal_Context3DTilemap.bufferPosition - openfl_display__$internal_Context3DTilemap.lastFlushedPosition;
+		while(openfl_display__$internal_Context3DTilemap.lastFlushedPosition < openfl_display__$internal_Context3DTilemap.bufferPosition) {
+			length = Math.min(openfl_display__$internal_Context3DTilemap.bufferPosition - openfl_display__$internal_Context3DTilemap.lastFlushedPosition,openfl_display__$internal_Context3DTilemap.context.__quadIndexBufferElements) | 0;
+			if(length <= 0) {
+				break;
+			}
+			if(shader.__position != null) {
+				openfl_display__$internal_Context3DTilemap.context.setVertexBufferAt(shader.__position.index,vertexBuffer,vertexBufferPosition,2);
+			}
+			if(shader.__textureCoord != null) {
+				openfl_display__$internal_Context3DTilemap.context.setVertexBufferAt(shader.__textureCoord.index,vertexBuffer,vertexBufferPosition + 2,2);
+			}
+			if(tilemap.tileAlphaEnabled) {
+				if(shader.__alpha != null) {
+					openfl_display__$internal_Context3DTilemap.context.setVertexBufferAt(shader.__alpha.index,vertexBuffer,vertexBufferPosition + 4,1);
+				}
+			}
+			if(tilemap.tileColorTransformEnabled) {
+				var position = tilemap.tileAlphaEnabled ? 5 : 4;
+				if(shader.__colorMultiplier != null) {
+					openfl_display__$internal_Context3DTilemap.context.setVertexBufferAt(shader.__colorMultiplier.index,vertexBuffer,vertexBufferPosition + position,4);
+				}
+				if(shader.__colorOffset != null) {
+					openfl_display__$internal_Context3DTilemap.context.setVertexBufferAt(shader.__colorOffset.index,vertexBuffer,vertexBufferPosition + position + 4,4);
+				}
+			}
+			openfl_display__$internal_Context3DTilemap.context.drawTriangles(openfl_display__$internal_Context3DTilemap.context.__quadIndexBuffer,0,length * 2);
+			openfl_display__$internal_Context3DTilemap.lastFlushedPosition += length;
+		}
+		renderer.__clearShader();
+	}
+	openfl_display__$internal_Context3DTilemap.lastUsedBitmapData = openfl_display__$internal_Context3DTilemap.currentBitmapData;
+	openfl_display__$internal_Context3DTilemap.lastUsedShader = openfl_display__$internal_Context3DTilemap.currentShader;
+};
+openfl_display__$internal_Context3DTilemap.render = function(tilemap,renderer) {
+	if(!tilemap.__renderable || tilemap.__worldAlpha <= 0) {
+		return;
+	}
+	openfl_display__$internal_Context3DTilemap.context = renderer.__context3D;
+	openfl_display__$internal_Context3DTilemap.buildBuffer(tilemap,renderer);
+	if(openfl_display__$internal_Context3DTilemap.numTiles == 0) {
+		return;
+	}
+	openfl_display__$internal_Context3DTilemap.bufferPosition = 0;
+	openfl_display__$internal_Context3DTilemap.lastFlushedPosition = 0;
+	openfl_display__$internal_Context3DTilemap.lastUsedBitmapData = null;
+	openfl_display__$internal_Context3DTilemap.lastUsedShader = null;
+	openfl_display__$internal_Context3DTilemap.currentBitmapData = null;
+	openfl_display__$internal_Context3DTilemap.currentShader = null;
+	openfl_display__$internal_Context3DTilemap.currentBlendMode = tilemap.__worldBlendMode;
+	if(!tilemap.tileBlendModeEnabled) {
+		renderer.__setBlendMode(openfl_display__$internal_Context3DTilemap.currentBlendMode);
+	}
+	renderer.__pushMaskObject(tilemap);
+	var rect = openfl_geom_Rectangle.__pool.get();
+	rect.setTo(0,0,tilemap.__width,tilemap.__height);
+	renderer.__pushMaskRect(rect,tilemap.__renderTransform);
+	openfl_display__$internal_Context3DTilemap.renderTileContainer(tilemap,renderer,tilemap.__group,tilemap.__worldShader,tilemap.__tileset,tilemap.__worldAlpha,tilemap.tileBlendModeEnabled,openfl_display__$internal_Context3DTilemap.currentBlendMode,null);
+	openfl_display__$internal_Context3DTilemap.flush(tilemap,renderer,openfl_display__$internal_Context3DTilemap.currentBlendMode);
+	renderer.__popMaskRect();
+	renderer.__popMaskObject(tilemap);
+	openfl_geom_Rectangle.__pool.release(rect);
+};
+openfl_display__$internal_Context3DTilemap.renderTileContainer = function(tilemap,renderer,group,defaultShader,defaultTileset,worldAlpha,blendModeEnabled,defaultBlendMode,cacheBitmapData) {
+	var tiles = group.__tiles;
+	var tile;
+	var tileset;
+	var alpha;
+	var visible;
+	var blendMode = null;
+	var id;
+	var tileData;
+	var tileRect;
+	var shader;
+	var bitmapData;
+	var _g = 0;
+	while(_g < tiles.length) {
+		var tile1 = tiles[_g];
+		++_g;
+		tileset = tile1.get_tileset() != null ? tile1.get_tileset() : defaultTileset;
+		alpha = tile1.get_alpha() * worldAlpha;
+		visible = tile1.get_visible();
+		if(!visible || alpha <= 0) {
+			continue;
+		}
+		shader = tile1.get_shader() != null ? tile1.get_shader() : defaultShader;
+		if(blendModeEnabled) {
+			blendMode = tile1.__blendMode != null ? tile1.__blendMode : defaultBlendMode;
+		}
+		if(tile1.__length > 0) {
+			openfl_display__$internal_Context3DTilemap.renderTileContainer(tilemap,renderer,tile1,shader,tileset,alpha,blendModeEnabled,blendMode,cacheBitmapData);
+		} else {
+			if(tileset == null) {
+				continue;
+			}
+			id = tile1.get_id();
+			bitmapData = tileset.__bitmapData;
+			if(bitmapData == null) {
+				continue;
+			}
+			if(id == -1) {
+				tileRect = tile1.__rect;
+				if(tileRect == null || tileRect.width <= 0 || tileRect.height <= 0) {
+					continue;
+				}
+			} else {
+				tileData = tileset.__data[id];
+				if(tileData == null) {
+					continue;
+				}
+			}
+			if(shader != openfl_display__$internal_Context3DTilemap.currentShader || bitmapData != openfl_display__$internal_Context3DTilemap.currentBitmapData && openfl_display__$internal_Context3DTilemap.currentBitmapData != null || openfl_display__$internal_Context3DTilemap.currentBlendMode != blendMode) {
+				openfl_display__$internal_Context3DTilemap.flush(tilemap,renderer,openfl_display__$internal_Context3DTilemap.currentBlendMode);
+			}
+			openfl_display__$internal_Context3DTilemap.currentBitmapData = bitmapData;
+			openfl_display__$internal_Context3DTilemap.currentShader = shader;
+			openfl_display__$internal_Context3DTilemap.currentBlendMode = blendMode;
+			openfl_display__$internal_Context3DTilemap.bufferPosition++;
+		}
+	}
+};
+openfl_display__$internal_Context3DTilemap.renderMask = function(tilemap,renderer) {
+};
+openfl_display__$internal_Context3DTilemap.resizeBuffer = function(tilemap,count) {
+	openfl_display__$internal_Context3DTilemap.numTiles = count;
+	if(tilemap.__buffer == null) {
+		tilemap.__buffer = new openfl_display__$internal_Context3DBuffer(openfl_display__$internal_Context3DTilemap.context,openfl_display__$internal_Context3DElementType.QUADS,openfl_display__$internal_Context3DTilemap.numTiles,openfl_display__$internal_Context3DTilemap.dataPerVertex);
+	} else {
+		tilemap.__buffer.resize(openfl_display__$internal_Context3DTilemap.numTiles,openfl_display__$internal_Context3DTilemap.dataPerVertex);
+	}
+	openfl_display__$internal_Context3DTilemap.vertexBufferData = tilemap.__buffer.vertexBufferData;
+};
 var openfl_display__$internal_DOMBitmap = function() { };
 $hxClasses["openfl.display._internal.DOMBitmap"] = openfl_display__$internal_DOMBitmap;
 openfl_display__$internal_DOMBitmap.__name__ = "openfl.display._internal.DOMBitmap";
@@ -51123,6 +53301,55 @@ openfl_display__$internal_DOMTextField.__getAttributeMatch = function(regex) {
 		return regex.matched(2);
 	} else {
 		return regex.matched(3);
+	}
+};
+var openfl_display__$internal_DOMTilemap = function() { };
+$hxClasses["openfl.display._internal.DOMTilemap"] = openfl_display__$internal_DOMTilemap;
+openfl_display__$internal_DOMTilemap.__name__ = "openfl.display._internal.DOMTilemap";
+openfl_display__$internal_DOMTilemap.clear = function(tilemap,renderer) {
+	if(tilemap.__canvas != null) {
+		renderer.element.removeChild(tilemap.__canvas);
+		tilemap.__canvas = null;
+		tilemap.__style = null;
+	}
+};
+openfl_display__$internal_DOMTilemap.render = function(tilemap,renderer) {
+	if(tilemap.stage != null && tilemap.__worldVisible && tilemap.__renderable && tilemap.__group.__tiles.length > 0) {
+		if(tilemap.__canvas == null) {
+			tilemap.__canvas = window.document.createElement("canvas");
+			tilemap.__context = tilemap.__canvas.getContext("2d");
+			renderer.__initializeElement(tilemap,tilemap.__canvas);
+		}
+		tilemap.__canvas.width = tilemap.__width;
+		tilemap.__canvas.height = tilemap.__height;
+		renderer.__canvasRenderer.context = tilemap.__context;
+		var renderer1 = renderer.__canvasRenderer;
+		if(!(!tilemap.__renderable || tilemap.__group.__tiles.length == 0)) {
+			var alpha = renderer1.__getAlpha(tilemap.__worldAlpha);
+			if(!(alpha <= 0)) {
+				var context = renderer1.context;
+				renderer1.__setBlendMode(tilemap.__worldBlendMode);
+				renderer1.__pushMaskObject(tilemap);
+				var rect = openfl_geom_Rectangle.__pool.get();
+				rect.setTo(0,0,tilemap.__width,tilemap.__height);
+				renderer1.__pushMaskRect(rect,tilemap.__renderTransform);
+				if(!renderer1.__allowSmoothing || !tilemap.smoothing) {
+					context.imageSmoothingEnabled = false;
+				}
+				openfl_display__$internal_CanvasTilemap.renderTileContainer(tilemap.__group,renderer1,tilemap.__renderTransform,tilemap.__tileset,renderer1.__allowSmoothing && tilemap.smoothing,tilemap.tileAlphaEnabled,alpha,tilemap.tileBlendModeEnabled,tilemap.__worldBlendMode,null,null,rect);
+				if(!renderer1.__allowSmoothing || !tilemap.smoothing) {
+					context.imageSmoothingEnabled = true;
+				}
+				renderer1.__popMaskRect();
+				renderer1.__popMaskObject(tilemap);
+				openfl_geom_Rectangle.__pool.release(rect);
+			}
+		}
+		renderer.__canvasRenderer.context = null;
+		renderer.__updateClip(tilemap);
+		renderer.__applyStyle(tilemap,true,false,true);
+	} else {
+		openfl_display__$internal_DOMTilemap.clear(tilemap,renderer);
 	}
 };
 var openfl_display__$internal_DrawCommandReader = function(buffer) {
@@ -53527,6 +55754,115 @@ var openfl_display__$internal_DrawCommandType = $hxEnums["openfl.display._intern
 	,WINDING_EVEN_ODD: {_hx_index:21,__enum__:"openfl.display._internal.DrawCommandType",toString:$estr}
 	,WINDING_NON_ZERO: {_hx_index:22,__enum__:"openfl.display._internal.DrawCommandType",toString:$estr}
 	,UNKNOWN: {_hx_index:23,__enum__:"openfl.display._internal.DrawCommandType",toString:$estr}
+};
+var openfl_display__$internal_FlashRenderer = function() { };
+$hxClasses["openfl.display._internal.FlashRenderer"] = openfl_display__$internal_FlashRenderer;
+openfl_display__$internal_FlashRenderer.__name__ = "openfl.display._internal.FlashRenderer";
+openfl_display__$internal_FlashRenderer.register = function(renderObject) {
+	if(openfl_display__$internal_FlashRenderer.instances == null) {
+		openfl_display__$internal_FlashRenderer.instances = openfl_utils__$Dictionary_Dictionary_$Impl_$.toObjectMap(null,true);
+		openfl_Lib.get_current().stage.addEventListener("enterFrame",openfl_display__$internal_FlashRenderer.render,false,-2147483648);
+	}
+	openfl_display__$internal_FlashRenderer.instances.set(renderObject,true);
+};
+openfl_display__$internal_FlashRenderer.render = function(_) {
+	var instance = openfl_display__$internal_FlashRenderer.instances.keys();
+	while(instance.hasNext()) {
+		var instance1 = instance.next();
+		instance1.__renderFlash();
+	}
+};
+var openfl_display__$internal_IDisplayObject = function() { };
+$hxClasses["openfl.display._internal.IDisplayObject"] = openfl_display__$internal_IDisplayObject;
+openfl_display__$internal_IDisplayObject.__name__ = "openfl.display._internal.IDisplayObject";
+openfl_display__$internal_IDisplayObject.__isInterface__ = true;
+openfl_display__$internal_IDisplayObject.prototype = {
+	__class__: openfl_display__$internal_IDisplayObject
+};
+var openfl_geom_Point = function(x,y) {
+	if(y == null) {
+		y = 0;
+	}
+	if(x == null) {
+		x = 0;
+	}
+	this.x = x;
+	this.y = y;
+};
+$hxClasses["openfl.geom.Point"] = openfl_geom_Point;
+openfl_geom_Point.__name__ = "openfl.geom.Point";
+openfl_geom_Point.distance = function(pt1,pt2) {
+	var dx = pt1.x - pt2.x;
+	var dy = pt1.y - pt2.y;
+	return Math.sqrt(dx * dx + dy * dy);
+};
+openfl_geom_Point.interpolate = function(pt1,pt2,f) {
+	return new openfl_geom_Point(pt2.x + f * (pt1.x - pt2.x),pt2.y + f * (pt1.y - pt2.y));
+};
+openfl_geom_Point.polar = function(len,angle) {
+	return new openfl_geom_Point(len * Math.cos(angle),len * Math.sin(angle));
+};
+openfl_geom_Point.prototype = {
+	add: function(v) {
+		return new openfl_geom_Point(v.x + this.x,v.y + this.y);
+	}
+	,clone: function() {
+		return new openfl_geom_Point(this.x,this.y);
+	}
+	,copyFrom: function(sourcePoint) {
+		this.x = sourcePoint.x;
+		this.y = sourcePoint.y;
+	}
+	,equals: function(toCompare) {
+		if(toCompare != null && toCompare.x == this.x) {
+			return toCompare.y == this.y;
+		} else {
+			return false;
+		}
+	}
+	,normalize: function(thickness) {
+		if(this.x == 0 && this.y == 0) {
+			return;
+		} else {
+			var norm = thickness / Math.sqrt(this.x * this.x + this.y * this.y);
+			this.x *= norm;
+			this.y *= norm;
+		}
+	}
+	,offset: function(dx,dy) {
+		this.x += dx;
+		this.y += dy;
+	}
+	,setTo: function(xa,ya) {
+		this.x = xa;
+		this.y = ya;
+	}
+	,subtract: function(v) {
+		return new openfl_geom_Point(this.x - v.x,this.y - v.y);
+	}
+	,toString: function() {
+		return "(x=" + this.x + ", y=" + this.y + ")";
+	}
+	,__toLimeVector2: function() {
+		if(openfl_geom_Point.__limeVector2 == null) {
+			openfl_geom_Point.__limeVector2 = new lime_math_Vector2();
+		}
+		var _this = openfl_geom_Point.__limeVector2;
+		_this.x = this.x;
+		_this.y = this.y;
+		return openfl_geom_Point.__limeVector2;
+	}
+	,get_length: function() {
+		return Math.sqrt(this.x * this.x + this.y * this.y);
+	}
+	,__class__: openfl_geom_Point
+};
+var openfl_display__$internal_FlashTilemap = function() { };
+$hxClasses["openfl.display._internal.FlashTilemap"] = openfl_display__$internal_FlashTilemap;
+openfl_display__$internal_FlashTilemap.__name__ = "openfl.display._internal.FlashTilemap";
+openfl_display__$internal_FlashTilemap.render = function(tilemap) {
+};
+openfl_display__$internal_FlashTilemap.renderTileContainer = function(group,bitmapData,parentTransform,defaultTileset,smooth,alphaEnabled,worldAlpha,colorTransformEnabled,defaultColorTransform,blendModeEnabled,defaultBlendMode,cacheBitmapData) {
 };
 var openfl_display__$internal_PerlinNoise = function(seed,octaves,channels,grayScale,falloff,stitch,stitch_threshold) {
 	if(stitch_threshold == null) {
@@ -60612,84 +62948,6 @@ openfl_geom__$Orientation3D_Orientation3D_$Impl_$.toString = function(this1) {
 	default:
 		return null;
 	}
-};
-var openfl_geom_Point = function(x,y) {
-	if(y == null) {
-		y = 0;
-	}
-	if(x == null) {
-		x = 0;
-	}
-	this.x = x;
-	this.y = y;
-};
-$hxClasses["openfl.geom.Point"] = openfl_geom_Point;
-openfl_geom_Point.__name__ = "openfl.geom.Point";
-openfl_geom_Point.distance = function(pt1,pt2) {
-	var dx = pt1.x - pt2.x;
-	var dy = pt1.y - pt2.y;
-	return Math.sqrt(dx * dx + dy * dy);
-};
-openfl_geom_Point.interpolate = function(pt1,pt2,f) {
-	return new openfl_geom_Point(pt2.x + f * (pt1.x - pt2.x),pt2.y + f * (pt1.y - pt2.y));
-};
-openfl_geom_Point.polar = function(len,angle) {
-	return new openfl_geom_Point(len * Math.cos(angle),len * Math.sin(angle));
-};
-openfl_geom_Point.prototype = {
-	add: function(v) {
-		return new openfl_geom_Point(v.x + this.x,v.y + this.y);
-	}
-	,clone: function() {
-		return new openfl_geom_Point(this.x,this.y);
-	}
-	,copyFrom: function(sourcePoint) {
-		this.x = sourcePoint.x;
-		this.y = sourcePoint.y;
-	}
-	,equals: function(toCompare) {
-		if(toCompare != null && toCompare.x == this.x) {
-			return toCompare.y == this.y;
-		} else {
-			return false;
-		}
-	}
-	,normalize: function(thickness) {
-		if(this.x == 0 && this.y == 0) {
-			return;
-		} else {
-			var norm = thickness / Math.sqrt(this.x * this.x + this.y * this.y);
-			this.x *= norm;
-			this.y *= norm;
-		}
-	}
-	,offset: function(dx,dy) {
-		this.x += dx;
-		this.y += dy;
-	}
-	,setTo: function(xa,ya) {
-		this.x = xa;
-		this.y = ya;
-	}
-	,subtract: function(v) {
-		return new openfl_geom_Point(this.x - v.x,this.y - v.y);
-	}
-	,toString: function() {
-		return "(x=" + this.x + ", y=" + this.y + ")";
-	}
-	,__toLimeVector2: function() {
-		if(openfl_geom_Point.__limeVector2 == null) {
-			openfl_geom_Point.__limeVector2 = new lime_math_Vector2();
-		}
-		var _this = openfl_geom_Point.__limeVector2;
-		_this.x = this.x;
-		_this.y = this.y;
-		return openfl_geom_Point.__limeVector2;
-	}
-	,get_length: function() {
-		return Math.sqrt(this.x * this.x + this.y * this.y);
-	}
-	,__class__: openfl_geom_Point
 };
 var openfl_geom_Transform = function(displayObject) {
 	this.__colorTransform = new openfl_geom_ColorTransform();
@@ -69027,6 +71285,312 @@ openfl_utils__$CompressionAlgorithm_CompressionAlgorithm_$Impl_$.toString = func
 		return null;
 	}
 };
+var openfl_utils__$Dictionary_Dictionary_$Impl_$ = {};
+$hxClasses["openfl.utils._Dictionary.Dictionary_Impl_"] = openfl_utils__$Dictionary_Dictionary_$Impl_$;
+openfl_utils__$Dictionary_Dictionary_$Impl_$.__name__ = "openfl.utils._Dictionary.Dictionary_Impl_";
+openfl_utils__$Dictionary_Dictionary_$Impl_$.exists = function(this1,key) {
+	return this1.exists(key);
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.get = function(this1,key) {
+	return this1.get(key);
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.keyValueIterator = function(this1) {
+	return this1.keyValueIterator();
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.remove = function(this1,key) {
+	return this1.remove(key);
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.set = function(this1,key,value) {
+	this1.set(key,value);
+	return value;
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.iterator = function(this1) {
+	return this1.keys();
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.each = function(this1) {
+	return this1.iterator();
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.toStringMap = function(t,weakKeys) {
+	return new haxe_ds_StringMap();
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.toIntMap = function(t,weakKeys) {
+	return new haxe_ds_IntMap();
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.toFloatMap = function(t,weakKeys) {
+	return new openfl_utils__$Dictionary_FloatMap();
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.toEnumValueMapMap = function(t,weakKeys) {
+	return new haxe_ds_EnumValueMap();
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.toObjectMap = function(t,weakKeys) {
+	return new haxe_ds_ObjectMap();
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.toUtilsObjectMap = function(t,weakKeys) {
+	return new openfl_utils__$Dictionary_UtilsObjectMap();
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.toClassMap = function(t,weakKeys) {
+	return new openfl_utils__$Dictionary_ClassMap();
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.fromStringMap = function(map) {
+	return map;
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.fromIntMap = function(map) {
+	return map;
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.fromFloatMap = function(map) {
+	return map;
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.fromObjectMap = function(map) {
+	return map;
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.fromUtilsObjectMap = function(map) {
+	return map;
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.fromClassMap = function(map) {
+	return map;
+};
+var openfl_utils__$Dictionary_ClassMap = function() {
+	this.types = new haxe_ds_StringMap();
+	this.values = new haxe_ds_StringMap();
+};
+$hxClasses["openfl.utils._Dictionary.ClassMap"] = openfl_utils__$Dictionary_ClassMap;
+openfl_utils__$Dictionary_ClassMap.__name__ = "openfl.utils._Dictionary.ClassMap";
+openfl_utils__$Dictionary_ClassMap.__interfaces__ = [haxe_IMap];
+openfl_utils__$Dictionary_ClassMap.prototype = {
+	clear: function() {
+		var _this = this.types;
+		_this.h = { };
+		_this.rh = null;
+		var _this1 = this.values;
+		_this1.h = { };
+		_this1.rh = null;
+	}
+	,copy: function() {
+		var copied = new openfl_utils__$Dictionary_ClassMap();
+		var key = this.keys();
+		while(key.hasNext()) {
+			var key1 = key.next();
+			copied.set(key1,this.get(key1));
+		}
+		return copied;
+	}
+	,exists: function(key) {
+		var this1 = this.types;
+		var key1 = key.__name__;
+		var _this = this1;
+		if(__map_reserved[key1] != null) {
+			return _this.existsReserved(key1);
+		} else {
+			return _this.h.hasOwnProperty(key1);
+		}
+	}
+	,get: function(key) {
+		var this1 = this.values;
+		var key1 = key.__name__;
+		var _this = this1;
+		if(__map_reserved[key1] != null) {
+			return _this.getReserved(key1);
+		} else {
+			return _this.h[key1];
+		}
+	}
+	,keyValueIterator: function() {
+		return new haxe_iterators_MapKeyValueIterator(this);
+	}
+	,keys: function() {
+		var _this = this.types;
+		return new haxe_ds__$StringMap_StringMapIterator(_this,_this.arrayKeys());
+	}
+	,iterator: function() {
+		var _this = this.values;
+		return new haxe_ds__$StringMap_StringMapIterator(_this,_this.arrayKeys());
+	}
+	,remove: function(key) {
+		var name = key.__name__;
+		if(!this.types.remove(name)) {
+			return this.values.remove(name);
+		} else {
+			return true;
+		}
+	}
+	,set: function(key,value) {
+		var name = key.__name__;
+		var _this = this.types;
+		if(__map_reserved[name] != null) {
+			_this.setReserved(name,key);
+		} else {
+			_this.h[name] = key;
+		}
+		var _this1 = this.values;
+		if(__map_reserved[name] != null) {
+			_this1.setReserved(name,value);
+		} else {
+			_this1.h[name] = value;
+		}
+	}
+	,toString: function() {
+		return this.values.toString();
+	}
+	,__class__: openfl_utils__$Dictionary_ClassMap
+};
+var openfl_utils__$Dictionary_FloatMap = function() {
+	this.floatKeys = [];
+	this.values = [];
+};
+$hxClasses["openfl.utils._Dictionary.FloatMap"] = openfl_utils__$Dictionary_FloatMap;
+openfl_utils__$Dictionary_FloatMap.__name__ = "openfl.utils._Dictionary.FloatMap";
+openfl_utils__$Dictionary_FloatMap.__interfaces__ = [haxe_IMap];
+openfl_utils__$Dictionary_FloatMap.prototype = {
+	clear: function() {
+		this.floatKeys = [];
+		this.values = [];
+	}
+	,copy: function() {
+		var copied = new openfl_utils__$Dictionary_FloatMap();
+		var key = this.keys();
+		while(key.hasNext()) {
+			var key1 = key.next();
+			copied.set(key1,this.get(key1));
+		}
+		return copied;
+	}
+	,exists: function(key) {
+		return this.indexOf(key) > -1;
+	}
+	,get: function(key) {
+		var ind = this.indexOf(key);
+		if(ind > -1) {
+			return this.values[ind];
+		} else {
+			return null;
+		}
+	}
+	,keyValueIterator: function() {
+		return new haxe_iterators_MapKeyValueIterator(this);
+	}
+	,keys: function() {
+		return HxOverrides.iter(this.floatKeys.slice());
+	}
+	,iterator: function() {
+		return HxOverrides.iter(this.values.slice());
+	}
+	,remove: function(key) {
+		var ind = this.indexOf(key);
+		if(ind > -1) {
+			this.floatKeys.splice(ind,1);
+			this.values.splice(ind,1);
+			return true;
+		}
+		return false;
+	}
+	,set: function(key,value) {
+		this.insertSorted(key,value);
+	}
+	,indexOf: function(key) {
+		var len = this.floatKeys.length;
+		var startIndex = 0;
+		var endIndex = len - 1;
+		if(len == 0) {
+			return -1;
+		}
+		var midIndex = 0;
+		while(startIndex < endIndex) {
+			midIndex = Math.floor((startIndex + endIndex) / 2);
+			if(this.floatKeys[midIndex] == key) {
+				return midIndex;
+			} else if(this.floatKeys[midIndex] > key) {
+				endIndex = midIndex - 1;
+			} else {
+				startIndex = midIndex + 1;
+			}
+		}
+		if(this.floatKeys[startIndex] == key) {
+			return startIndex;
+		} else {
+			return -1;
+		}
+	}
+	,insertSorted: function(key,value) {
+		var len = this.floatKeys.length;
+		var startIndex = 0;
+		var endIndex = len - 1;
+		if(len == 0) {
+			this.floatKeys.push(key);
+			this.values.push(value);
+			return;
+		}
+		var midIndex = 0;
+		while(startIndex < endIndex) {
+			midIndex = Math.floor((startIndex + endIndex) / 2);
+			if(this.floatKeys[midIndex] == key) {
+				this.values[midIndex] = value;
+				return;
+			} else if(this.floatKeys[midIndex] > key) {
+				endIndex = midIndex - 1;
+			} else {
+				startIndex = midIndex + 1;
+			}
+		}
+		if(this.floatKeys[startIndex] > key) {
+			this.floatKeys.splice(startIndex,0,key);
+			this.values.splice(startIndex,0,value);
+		} else if(this.floatKeys[startIndex] < key) {
+			this.floatKeys.splice(startIndex + 1,0,key);
+			this.values.splice(startIndex + 1,0,value);
+		} else {
+			this.values[startIndex] = value;
+		}
+	}
+	,toString: function() {
+		return this.values.toString();
+	}
+	,__class__: openfl_utils__$Dictionary_FloatMap
+};
+var openfl_utils__$Dictionary_UtilsObjectMap = function() {
+	this.map = new haxe_ds_ObjectMap();
+};
+$hxClasses["openfl.utils._Dictionary.UtilsObjectMap"] = openfl_utils__$Dictionary_UtilsObjectMap;
+openfl_utils__$Dictionary_UtilsObjectMap.__name__ = "openfl.utils._Dictionary.UtilsObjectMap";
+openfl_utils__$Dictionary_UtilsObjectMap.__interfaces__ = [haxe_IMap];
+openfl_utils__$Dictionary_UtilsObjectMap.prototype = {
+	clear: function() {
+		this.map.h = { __keys__ : { }};
+	}
+	,copy: function() {
+		var copied = new openfl_utils__$Dictionary_UtilsObjectMap();
+		var key = this.keys();
+		while(key.hasNext()) {
+			var key1 = key.next();
+			copied.set(key1,this.get(key1));
+		}
+		return copied;
+	}
+	,exists: function(key) {
+		return this.map.h.__keys__[key.__id__] != null;
+	}
+	,get: function(key) {
+		return this.map.h[key.__id__];
+	}
+	,keyValueIterator: function() {
+		return new haxe_iterators_MapKeyValueIterator(this);
+	}
+	,keys: function() {
+		return this.map.keys();
+	}
+	,iterator: function() {
+		return this.map.iterator();
+	}
+	,remove: function(key) {
+		return this.map.remove(key);
+	}
+	,set: function(key,value) {
+		this.map.set(key,value);
+	}
+	,toString: function() {
+		return this.map.toString();
+	}
+	,__class__: openfl_utils__$Dictionary_UtilsObjectMap
+};
 var openfl_utils__$Endian_Endian_$Impl_$ = {};
 $hxClasses["openfl.utils._Endian.Endian_Impl_"] = openfl_utils__$Endian_Endian_$Impl_$;
 openfl_utils__$Endian_Endian_$Impl_$.__name__ = "openfl.utils._Endian.Endian_Impl_";
@@ -70723,6 +73287,8 @@ openfl_display__$StageScaleMode_StageScaleMode_$Impl_$.EXACT_FIT = 0;
 openfl_display__$StageScaleMode_StageScaleMode_$Impl_$.NO_BORDER = 1;
 openfl_display__$StageScaleMode_StageScaleMode_$Impl_$.NO_SCALE = 2;
 openfl_display__$StageScaleMode_StageScaleMode_$Impl_$.SHOW_ALL = 3;
+openfl_display_Tile.__meta__ = { fields : { data : { SuppressWarnings : ["checkstyle:Dynamic"]}}};
+openfl_display__$Tileset_TileData.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}};
 openfl_display__$TriangleCulling_TriangleCulling_$Impl_$.NEGATIVE = 0;
 openfl_display__$TriangleCulling_TriangleCulling_$Impl_$.NONE = 1;
 openfl_display__$TriangleCulling_TriangleCulling_$Impl_$.POSITIVE = 2;
@@ -70732,6 +73298,7 @@ openfl_display__$internal_CairoBitmap.__meta__ = { obj : { SuppressWarnings : ["
 openfl_display__$internal_CairoDisplayObject.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}};
 openfl_display__$internal_CairoGraphics.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}};
 openfl_display__$internal_CairoTextField.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}};
+openfl_display__$internal_CairoTilemap.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}, statics : { renderTileContainer : { SuppressWarnings : ["checkstyle:Dynamic"]}}};
 openfl_display__$internal_CanvasBitmap.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}};
 openfl_display__$internal_CanvasDisplayObject.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}};
 openfl_display__$internal_DrawCommandBuffer.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}, fields : { o : { SuppressWarnings : ["checkstyle:Dynamic"]}}};
@@ -70743,6 +73310,7 @@ openfl_display__$internal_CanvasGraphics.fillCommands = new openfl_display__$int
 openfl_display__$internal_CanvasGraphics.strokeCommands = new openfl_display__$internal_DrawCommandBuffer();
 openfl_display__$internal_CanvasShape.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}};
 openfl_display__$internal_CanvasTextField.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}};
+openfl_display__$internal_CanvasTilemap.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}, statics : { renderTileContainer : { SuppressWarnings : ["checkstyle:Dynamic"]}}};
 openfl_display__$internal_Context3DBitmap.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}};
 openfl_display__$internal_Context3DBuffer.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}};
 openfl_display__$internal_Context3DBuffer.MAX_INDEX_BUFFER_LENGTH = 65535;
@@ -70768,6 +73336,7 @@ openfl_display__$internal_Context3DGraphics.tempColorTransform = new openfl_geom
 openfl_display__$internal_Context3DMaskShader.opaqueBitmapData = new openfl_display_BitmapData(1,1,false,0);
 openfl_display__$internal_Context3DShape.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}};
 openfl_display__$internal_Context3DTextField.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}};
+openfl_display__$internal_Context3DTilemap.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}};
 openfl_display__$internal_DOMBitmap.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}};
 openfl_display__$internal_DOMDisplayObject.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}};
 openfl_display__$internal_DOMShape.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}};
@@ -70777,7 +73346,19 @@ openfl_display__$internal_DOMTextField.__regexFace = new EReg("face=(\"([^\"]+)\
 openfl_display__$internal_DOMTextField.__regexFont = new EReg("<font ([^>]+)>","gi");
 openfl_display__$internal_DOMTextField.__regexCloseFont = new EReg("</font>","gi");
 openfl_display__$internal_DOMTextField.__regexSize = new EReg("size=(\"([^\"]+)\"|'([^']+)')","i");
+openfl_display__$internal_DOMTilemap.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}};
 openfl_display__$internal_DrawCommandReader.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}, fields : { obj : { SuppressWarnings : ["checkstyle:Dynamic"]}}};
+openfl_display__$internal_FlashRenderer.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}};
+openfl_geom_Point.__pool = new lime_utils_ObjectPool(function() {
+	return new openfl_geom_Point();
+},function(p) {
+	p.setTo(0,0);
+});
+openfl_display__$internal_FlashTilemap.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}};
+openfl_display__$internal_FlashTilemap.alphaColorTransform = new openfl_geom_ColorTransform();
+openfl_display__$internal_FlashTilemap.bitmap = new openfl_display_Bitmap();
+openfl_display__$internal_FlashTilemap.destPoint = new openfl_geom_Point();
+openfl_display__$internal_FlashTilemap.sourceRect = new openfl_geom_Rectangle();
 openfl_display__$internal_PerlinNoise.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}, statics : { P : { SuppressWarnings : ["checkstyle:ConstantName"]}}};
 openfl_display__$internal_PerlinNoise.P = [151,160,137,91,90,15,131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,190,6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,35,11,32,57,177,33,88,237,149,56,87,174,20,125,136,171,168,68,175,74,165,71,134,139,48,27,166,77,146,158,231,83,111,229,122,60,211,133,230,220,105,92,41,55,46,245,40,244,102,143,54,65,25,63,161,1,216,80,73,209,76,132,187,208,89,18,169,200,196,135,130,116,188,159,86,164,100,109,198,173,186,3,64,52,217,226,250,124,123,5,202,38,147,118,126,255,82,85,212,207,206,59,227,47,16,58,17,182,189,28,42,223,183,170,213,119,248,152,2,44,154,163,70,221,153,101,155,167,43,172,9,129,22,39,253,19,98,108,110,79,113,224,232,178,185,112,104,218,246,97,228,251,34,242,193,238,210,144,12,191,179,162,241,81,51,145,235,249,14,239,107,49,192,214,31,181,199,106,157,184,84,204,176,115,121,50,45,127,4,150,254,138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180,151,160,137,91,90,15,131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,190,6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,35,11,32,57,177,33,88,237,149,56,87,174,20,125,136,171,168,68,175,74,165,71,134,139,48,27,166,77,146,158,231,83,111,229,122,60,211,133,230,220,105,92,41,55,46,245,40,244,102,143,54,65,25,63,161,1,216,80,73,209,76,132,187,208,89,18,169,200,196,135,130,116,188,159,86,164,100,109,198,173,186,3,64,52,217,226,250,124,123,5,202,38,147,118,126,255,82,85,212,207,206,59,227,47,16,58,17,182,189,28,42,223,183,170,213,119,248,152,2,44,154,163,70,221,153,101,155,167,43,172,9,129,22,39,253,19,98,108,110,79,113,224,232,178,185,112,104,218,246,97,228,251,34,242,193,238,210,144,12,191,179,162,241,81,51,145,235,249,14,239,107,49,192,214,31,181,199,106,157,184,84,204,176,115,121,50,45,127,4,150,254,138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180];
 openfl_display__$internal_SamplerState.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}};
@@ -70966,11 +73547,6 @@ openfl_geom_Matrix3D.__meta__ = { statics : { create2D : { SuppressWarnings : ["
 openfl_geom__$Orientation3D_Orientation3D_$Impl_$.AXIS_ANGLE = 0;
 openfl_geom__$Orientation3D_Orientation3D_$Impl_$.EULER_ANGLES = 1;
 openfl_geom__$Orientation3D_Orientation3D_$Impl_$.QUATERNION = 2;
-openfl_geom_Point.__pool = new lime_utils_ObjectPool(function() {
-	return new openfl_geom_Point();
-},function(p) {
-	p.setTo(0,0);
-});
 openfl_media_SoundTransform.__meta__ = { fields : { clone : { SuppressWarnings : ["checkstyle:FieldDocComment"]}}};
 openfl_media_SoundMixer.MAX_ACTIVE_CHANNELS = 32;
 openfl_media_SoundMixer.__soundChannels = [];
@@ -71428,6 +74004,9 @@ openfl_utils_ByteArrayData.defaultObjectEncoding = 10;
 openfl_utils__$CompressionAlgorithm_CompressionAlgorithm_$Impl_$.DEFLATE = 0;
 openfl_utils__$CompressionAlgorithm_CompressionAlgorithm_$Impl_$.LZMA = 1;
 openfl_utils__$CompressionAlgorithm_CompressionAlgorithm_$Impl_$.ZLIB = 2;
+openfl_utils__$Dictionary_ClassMap.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}};
+openfl_utils__$Dictionary_FloatMap.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}};
+openfl_utils__$Dictionary_UtilsObjectMap.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}};
 openfl_utils__$Endian_Endian_$Impl_$.BIG_ENDIAN = 0;
 openfl_utils__$Endian_Endian_$Impl_$.LITTLE_ENDIAN = 1;
 openfl_utils__$Object_Object_$Impl_$.__meta__ = { statics : { iterator : { SuppressWarnings : ["checkstyle:FieldDocComment"]}, __get : { SuppressWarnings : ["checkstyle:FieldDocComment"]}, __set : { SuppressWarnings : ["checkstyle:FieldDocComment"]}}};

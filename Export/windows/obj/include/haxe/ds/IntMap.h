@@ -52,6 +52,8 @@ class HXCPP_CLASS_ATTRIBUTES IntMap_obj : public hx::Object
 		bool exists_5889326f( ::Dynamic k);
 
 		void set_41d0cb46( ::Dynamic k, ::Dynamic v);
+
+		 ::Dynamic get_dc94b8fa( ::Dynamic k);
 		::String __ToString() const { return HX_("IntMap",0d,a9,08,d3); }
 
 		 ::Dynamic h;
@@ -72,6 +74,9 @@ class HXCPP_CLASS_ATTRIBUTES IntMap_obj : public hx::Object
 
 		 ::Dynamic iterator();
 		::Dynamic iterator_dyn();
+
+		 ::Dynamic keyValueIterator();
+		::Dynamic keyValueIterator_dyn();
 
 
   inline void set(int key, ::null value) { __int_hash_set(HX_MAP_THIS,key,value); }

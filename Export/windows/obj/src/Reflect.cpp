@@ -14,6 +14,7 @@ HX_LOCAL_STACK_FRAME(_hx_pos_4da882ff114ca894_77_isFunction,"Reflect","isFunctio
 HX_LOCAL_STACK_FRAME(_hx_pos_4da882ff114ca894_81_compare,"Reflect","compare",0xa2d92b54,"Reflect.compare","C:\\HaxeToolkit\\haxe\\std/cpp/_std/Reflect.hx",81,0x487b3827)
 HX_LOCAL_STACK_FRAME(_hx_pos_4da882ff114ca894_84_compareMethods,"Reflect","compareMethods",0x8b8ddd7e,"Reflect.compareMethods","C:\\HaxeToolkit\\haxe\\std/cpp/_std/Reflect.hx",84,0x487b3827)
 HX_LOCAL_STACK_FRAME(_hx_pos_4da882ff114ca894_93_isObject,"Reflect","isObject",0xd04960ba,"Reflect.isObject","C:\\HaxeToolkit\\haxe\\std/cpp/_std/Reflect.hx",93,0x487b3827)
+HX_LOCAL_STACK_FRAME(_hx_pos_4da882ff114ca894_102_isEnumValue,"Reflect","isEnumValue",0x97884d95,"Reflect.isEnumValue","C:\\HaxeToolkit\\haxe\\std/cpp/_std/Reflect.hx",102,0x487b3827)
 HX_LOCAL_STACK_FRAME(_hx_pos_4da882ff114ca894_127_makeVarArgs,"Reflect","makeVarArgs",0x978955c5,"Reflect.makeVarArgs","C:\\HaxeToolkit\\haxe\\std/cpp/_std/Reflect.hx",127,0x487b3827)
 
 void Reflect_obj::__construct() { }
@@ -132,6 +133,14 @@ HXLINE(  97)		return ((((t == 4) || (t == 8)) || (t == 3)) || (t == 5));
 
 STATIC_HX_DEFINE_DYNAMIC_FUNC1(Reflect_obj,isObject,return )
 
+bool Reflect_obj::isEnumValue( ::Dynamic v){
+            	HX_STACKFRAME(&_hx_pos_4da882ff114ca894_102_isEnumValue)
+HXDLIN( 102)		return (hx::IsNotNull( v ) && hx::IsEq( v->__GetType(),7 ));
+            	}
+
+
+STATIC_HX_DEFINE_DYNAMIC_FUNC1(Reflect_obj,isEnumValue,return )
+
  ::Dynamic Reflect_obj::makeVarArgs( ::Dynamic f){
             	HX_STACKFRAME(&_hx_pos_4da882ff114ca894_127_makeVarArgs)
 HXDLIN( 127)		return  ::__hxcpp_create_var_args(f);
@@ -167,6 +176,7 @@ bool Reflect_obj::__GetStatic(const ::String &inName, Dynamic &outValue, hx::Pro
 		if (HX_FIELD_EQ(inName,"isFunction") ) { outValue = isFunction_dyn(); return true; }
 		break;
 	case 11:
+		if (HX_FIELD_EQ(inName,"isEnumValue") ) { outValue = isEnumValue_dyn(); return true; }
 		if (HX_FIELD_EQ(inName,"makeVarArgs") ) { outValue = makeVarArgs_dyn(); return true; }
 		break;
 	case 14:
@@ -192,6 +202,7 @@ static ::String Reflect_obj_sStaticFields[] = {
 	HX_("compare",a5,18,69,83),
 	HX_("compareMethods",4d,ac,7b,37),
 	HX_("isObject",49,1a,a9,6d),
+	HX_("isEnumValue",66,b7,87,06),
 	HX_("makeVarArgs",96,bf,88,06),
 	::String(null())
 };

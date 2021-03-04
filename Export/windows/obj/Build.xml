@@ -58,6 +58,36 @@
    <depend name="include/lime/system/Endian.h"/>
    <depend name="include/openfl/utils/_Endian/Endian_Impl_.h"/>
   </file>
+  <file name="src/openfl/utils/_Dictionary/UtilsObjectMap.cpp" tags="haxe,release">
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/ObjectMap.h"/>
+   <depend name="include/haxe/iterators/MapKeyValueIterator.h"/>
+   <depend name="include/openfl/utils/_Dictionary/UtilsObjectMap.h"/>
+  </file>
+  <file name="src/openfl/utils/_Dictionary/FloatMap.cpp" tags="haxe,release">
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/iterators/MapKeyValueIterator.h"/>
+   <depend name="include/openfl/utils/_Dictionary/FloatMap.h"/>
+  </file>
+  <file name="src/openfl/utils/_Dictionary/ClassMap.cpp" tags="haxe,release">
+   <depend name="include/Type.h"/>
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/StringMap.h"/>
+   <depend name="include/haxe/iterators/MapKeyValueIterator.h"/>
+   <depend name="include/openfl/utils/_Dictionary/ClassMap.h"/>
+  </file>
+  <file name="src/openfl/utils/_Dictionary/Dictionary_Impl_.cpp" >
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/BalancedTree.h"/>
+   <depend name="include/haxe/ds/EnumValueMap.h"/>
+   <depend name="include/haxe/ds/IntMap.h"/>
+   <depend name="include/haxe/ds/ObjectMap.h"/>
+   <depend name="include/haxe/ds/StringMap.h"/>
+   <depend name="include/openfl/utils/_Dictionary/ClassMap.h"/>
+   <depend name="include/openfl/utils/_Dictionary/Dictionary_Impl_.h"/>
+   <depend name="include/openfl/utils/_Dictionary/FloatMap.h"/>
+   <depend name="include/openfl/utils/_Dictionary/UtilsObjectMap.h"/>
+  </file>
   <file name="src/openfl/utils/_CompressionAlgorithm/CompressionAlgorithm_Impl_.cpp" >
    <depend name="include/openfl/utils/_CompressionAlgorithm/CompressionAlgorithm_Impl_.h"/>
   </file>
@@ -599,11 +629,6 @@
    <depend name="include/openfl/geom/Matrix3D.h"/>
    <depend name="include/openfl/geom/Rectangle.h"/>
    <depend name="include/openfl/geom/Transform.h"/>
-  </file>
-  <file name="src/openfl/geom/Point.cpp" tags="haxe,release">
-   <depend name="include/lime/math/Vector2.h"/>
-   <depend name="include/lime/utils/ObjectPool.h"/>
-   <depend name="include/openfl/geom/Point.h"/>
   </file>
   <file name="src/openfl/geom/_Orientation3D/Orientation3D_Impl_.cpp" >
    <depend name="include/openfl/geom/_Orientation3D/Orientation3D_Impl_.h"/>
@@ -1215,6 +1240,51 @@
    <depend name="include/openfl/display/_internal/AbstractNoise.h"/>
    <depend name="include/openfl/display/_internal/PerlinNoise.h"/>
   </file>
+  <file name="src/openfl/display/_internal/FlashTilemap.cpp" >
+   <depend name="include/openfl/display/Bitmap.h"/>
+   <depend name="include/openfl/display/BitmapData.h"/>
+   <depend name="include/openfl/display/DisplayObject.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
+   <depend name="include/openfl/display/ITileContainer.h"/>
+   <depend name="include/openfl/display/Tile.h"/>
+   <depend name="include/openfl/display/TileContainer.h"/>
+   <depend name="include/openfl/display/Tilemap.h"/>
+   <depend name="include/openfl/display/Tileset.h"/>
+   <depend name="include/openfl/display/_internal/FlashTilemap.h"/>
+   <depend name="include/openfl/events/EventDispatcher.h"/>
+   <depend name="include/openfl/events/IEventDispatcher.h"/>
+   <depend name="include/openfl/geom/ColorTransform.h"/>
+   <depend name="include/openfl/geom/Matrix.h"/>
+   <depend name="include/openfl/geom/Point.h"/>
+   <depend name="include/openfl/geom/Rectangle.h"/>
+  </file>
+  <file name="src/openfl/geom/Point.cpp" tags="haxe,release">
+   <depend name="include/lime/math/Vector2.h"/>
+   <depend name="include/lime/utils/ObjectPool.h"/>
+   <depend name="include/openfl/geom/Point.h"/>
+  </file>
+  <file name="src/openfl/display/_internal/IDisplayObject.cpp" >
+   <depend name="include/openfl/display/_internal/IDisplayObject.h"/>
+  </file>
+  <file name="src/openfl/display/_internal/FlashRenderer.cpp" >
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/ObjectMap.h"/>
+   <depend name="include/lime/app/IModule.h"/>
+   <depend name="include/openfl/Lib.h"/>
+   <depend name="include/openfl/display/DisplayObject.h"/>
+   <depend name="include/openfl/display/DisplayObjectContainer.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
+   <depend name="include/openfl/display/InteractiveObject.h"/>
+   <depend name="include/openfl/display/MovieClip.h"/>
+   <depend name="include/openfl/display/Sprite.h"/>
+   <depend name="include/openfl/display/Stage.h"/>
+   <depend name="include/openfl/display/_internal/FlashRenderer.h"/>
+   <depend name="include/openfl/display/_internal/IDisplayObject.h"/>
+   <depend name="include/openfl/events/Event.h"/>
+   <depend name="include/openfl/events/EventDispatcher.h"/>
+   <depend name="include/openfl/events/IEventDispatcher.h"/>
+   <depend name="include/openfl/utils/_Dictionary/Dictionary_Impl_.h"/>
+  </file>
   <file name="src/openfl/display/_internal/DrawCommandType.cpp" >
    <depend name="include/openfl/display/_internal/DrawCommandType.h"/>
   </file>
@@ -1346,6 +1416,17 @@
    <depend name="include/openfl/display/_internal/DrawCommandReader.h"/>
    <depend name="include/openfl/display/_internal/DrawCommandType.h"/>
   </file>
+  <file name="src/openfl/display/_internal/DOMTilemap.cpp" >
+   <depend name="include/openfl/display/DOMRenderer.h"/>
+   <depend name="include/openfl/display/DisplayObject.h"/>
+   <depend name="include/openfl/display/DisplayObjectRenderer.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
+   <depend name="include/openfl/display/ITileContainer.h"/>
+   <depend name="include/openfl/display/Tilemap.h"/>
+   <depend name="include/openfl/display/_internal/DOMTilemap.h"/>
+   <depend name="include/openfl/events/EventDispatcher.h"/>
+   <depend name="include/openfl/events/IEventDispatcher.h"/>
+  </file>
   <file name="src/openfl/display/_internal/DOMTextField.cpp" >
    <depend name="include/EReg.h"/>
    <depend name="include/openfl/display/DOMRenderer.h"/>
@@ -1376,6 +1457,37 @@
    <depend name="include/openfl/display/_internal/DOMBitmap.h"/>
    <depend name="include/openfl/events/EventDispatcher.h"/>
    <depend name="include/openfl/events/IEventDispatcher.h"/>
+  </file>
+  <file name="src/openfl/display/_internal/Context3DTilemap.cpp" tags="haxe,release">
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/utils/ArrayBufferView.h"/>
+   <depend name="include/lime/utils/ObjectPool.h"/>
+   <depend name="include/openfl/display/BitmapData.h"/>
+   <depend name="include/openfl/display/DisplayObject.h"/>
+   <depend name="include/openfl/display/DisplayObjectRenderer.h"/>
+   <depend name="include/openfl/display/DisplayObjectShader.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
+   <depend name="include/openfl/display/ITileContainer.h"/>
+   <depend name="include/openfl/display/OpenGLRenderer.h"/>
+   <depend name="include/openfl/display/Shader.h"/>
+   <depend name="include/openfl/display/ShaderParameter_Float.h"/>
+   <depend name="include/openfl/display/Tile.h"/>
+   <depend name="include/openfl/display/TileContainer.h"/>
+   <depend name="include/openfl/display/Tilemap.h"/>
+   <depend name="include/openfl/display/Tileset.h"/>
+   <depend name="include/openfl/display/_Tileset/TileData.h"/>
+   <depend name="include/openfl/display/_internal/Context3DBuffer.h"/>
+   <depend name="include/openfl/display/_internal/Context3DElementType.h"/>
+   <depend name="include/openfl/display/_internal/Context3DTilemap.h"/>
+   <depend name="include/openfl/display3D/Context3D.h"/>
+   <depend name="include/openfl/display3D/IndexBuffer3D.h"/>
+   <depend name="include/openfl/display3D/VertexBuffer3D.h"/>
+   <depend name="include/openfl/events/EventDispatcher.h"/>
+   <depend name="include/openfl/events/IEventDispatcher.h"/>
+   <depend name="include/openfl/geom/ColorTransform.h"/>
+   <depend name="include/openfl/geom/Matrix.h"/>
+   <depend name="include/openfl/geom/Rectangle.h"/>
   </file>
   <file name="src/openfl/display/_internal/Context3DTextField.cpp"  tags="haxe,release" >
    <depend name="include/openfl/display/CairoRenderer.h"/>
@@ -1538,6 +1650,23 @@
    <depend name="include/openfl/geom/Matrix.h"/>
    <depend name="include/openfl/geom/Rectangle.h"/>
   </file>
+  <file name="src/openfl/display/_internal/CanvasTilemap.cpp" >
+   <depend name="include/openfl/display/BitmapData.h"/>
+   <depend name="include/openfl/display/CanvasRenderer.h"/>
+   <depend name="include/openfl/display/DisplayObject.h"/>
+   <depend name="include/openfl/display/DisplayObjectRenderer.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
+   <depend name="include/openfl/display/ITileContainer.h"/>
+   <depend name="include/openfl/display/Tile.h"/>
+   <depend name="include/openfl/display/TileContainer.h"/>
+   <depend name="include/openfl/display/Tilemap.h"/>
+   <depend name="include/openfl/display/Tileset.h"/>
+   <depend name="include/openfl/display/_internal/CanvasTilemap.h"/>
+   <depend name="include/openfl/events/EventDispatcher.h"/>
+   <depend name="include/openfl/events/IEventDispatcher.h"/>
+   <depend name="include/openfl/geom/Matrix.h"/>
+   <depend name="include/openfl/geom/Rectangle.h"/>
+  </file>
   <file name="src/openfl/display/_internal/CanvasTextField.cpp" >
    <depend name="include/openfl/display/CanvasRenderer.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
@@ -1583,6 +1712,28 @@
    <depend name="include/openfl/display/_internal/CanvasBitmap.h"/>
    <depend name="include/openfl/events/EventDispatcher.h"/>
    <depend name="include/openfl/events/IEventDispatcher.h"/>
+  </file>
+  <file name="src/openfl/display/_internal/CairoTilemap.cpp" tags="haxe,release">
+   <depend name="include/lime/graphics/cairo/Cairo.h"/>
+   <depend name="include/lime/graphics/cairo/_CairoPattern/CairoPattern_Impl_.h"/>
+   <depend name="include/lime/math/Matrix3.h"/>
+   <depend name="include/lime/utils/ObjectPool.h"/>
+   <depend name="include/openfl/display/BitmapData.h"/>
+   <depend name="include/openfl/display/CairoRenderer.h"/>
+   <depend name="include/openfl/display/DisplayObject.h"/>
+   <depend name="include/openfl/display/DisplayObjectRenderer.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
+   <depend name="include/openfl/display/ITileContainer.h"/>
+   <depend name="include/openfl/display/Tile.h"/>
+   <depend name="include/openfl/display/TileContainer.h"/>
+   <depend name="include/openfl/display/Tilemap.h"/>
+   <depend name="include/openfl/display/Tileset.h"/>
+   <depend name="include/openfl/display/_Tileset/TileData.h"/>
+   <depend name="include/openfl/display/_internal/CairoTilemap.h"/>
+   <depend name="include/openfl/events/EventDispatcher.h"/>
+   <depend name="include/openfl/events/IEventDispatcher.h"/>
+   <depend name="include/openfl/geom/Matrix.h"/>
+   <depend name="include/openfl/geom/Rectangle.h"/>
   </file>
   <file name="src/openfl/display/_internal/CairoTextField.cpp" tags="haxe,release">
    <depend name="include/Std.h"/>
@@ -1745,6 +1896,86 @@
    <depend name="include/openfl/errors/Error.h"/>
    <depend name="include/openfl/events/EventDispatcher.h"/>
    <depend name="include/openfl/events/IEventDispatcher.h"/>
+  </file>
+  <file name="src/openfl/display/_Tileset/TileData.cpp" tags="haxe,release">
+   <depend name="include/Std.h"/>
+   <depend name="include/openfl/display/BitmapData.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
+   <depend name="include/openfl/display/_Tileset/TileData.h"/>
+   <depend name="include/openfl/geom/Rectangle.h"/>
+  </file>
+  <file name="src/openfl/display/Tileset.cpp" tags="haxe,release">
+   <depend name="include/lime/utils/ObjectPool.h"/>
+   <depend name="include/openfl/_Vector/FloatVector.h"/>
+   <depend name="include/openfl/_Vector/IVector.h"/>
+   <depend name="include/openfl/display/BitmapData.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
+   <depend name="include/openfl/display/Tileset.h"/>
+   <depend name="include/openfl/display/_Tileset/TileData.h"/>
+   <depend name="include/openfl/geom/Rectangle.h"/>
+  </file>
+  <file name="src/openfl/display/Tilemap.cpp" tags="haxe,release">
+   <depend name="include/Std.h"/>
+   <depend name="include/lime/app/IModule.h"/>
+   <depend name="include/lime/graphics/cairo/Cairo.h"/>
+   <depend name="include/lime/graphics/cairo/_CairoPattern/CairoPattern_Impl_.h"/>
+   <depend name="include/lime/utils/ObjectPool.h"/>
+   <depend name="include/openfl/display/Bitmap.h"/>
+   <depend name="include/openfl/display/BitmapData.h"/>
+   <depend name="include/openfl/display/CairoRenderer.h"/>
+   <depend name="include/openfl/display/CanvasRenderer.h"/>
+   <depend name="include/openfl/display/DOMRenderer.h"/>
+   <depend name="include/openfl/display/DisplayObject.h"/>
+   <depend name="include/openfl/display/DisplayObjectContainer.h"/>
+   <depend name="include/openfl/display/DisplayObjectRenderer.h"/>
+   <depend name="include/openfl/display/Graphics.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
+   <depend name="include/openfl/display/ITileContainer.h"/>
+   <depend name="include/openfl/display/InteractiveObject.h"/>
+   <depend name="include/openfl/display/OpenGLRenderer.h"/>
+   <depend name="include/openfl/display/Stage.h"/>
+   <depend name="include/openfl/display/Tile.h"/>
+   <depend name="include/openfl/display/TileContainer.h"/>
+   <depend name="include/openfl/display/Tilemap.h"/>
+   <depend name="include/openfl/display/Tileset.h"/>
+   <depend name="include/openfl/display/_internal/CairoDisplayObject.h"/>
+   <depend name="include/openfl/display/_internal/CairoTilemap.h"/>
+   <depend name="include/openfl/display/_internal/Context3DBitmap.h"/>
+   <depend name="include/openfl/display/_internal/Context3DBuffer.h"/>
+   <depend name="include/openfl/display/_internal/Context3DShape.h"/>
+   <depend name="include/openfl/display/_internal/Context3DTilemap.h"/>
+   <depend name="include/openfl/display/_internal/DOMTilemap.h"/>
+   <depend name="include/openfl/display3D/Context3D.h"/>
+   <depend name="include/openfl/events/EventDispatcher.h"/>
+   <depend name="include/openfl/events/IEventDispatcher.h"/>
+   <depend name="include/openfl/filters/BitmapFilter.h"/>
+   <depend name="include/openfl/geom/Matrix.h"/>
+   <depend name="include/openfl/geom/Rectangle.h"/>
+  </file>
+  <file name="src/openfl/display/TileContainer.cpp" tags="haxe,release">
+   <depend name="include/lime/utils/ObjectPool.h"/>
+   <depend name="include/openfl/display/ITileContainer.h"/>
+   <depend name="include/openfl/display/Tile.h"/>
+   <depend name="include/openfl/display/TileContainer.h"/>
+   <depend name="include/openfl/geom/Matrix.h"/>
+   <depend name="include/openfl/geom/Rectangle.h"/>
+  </file>
+  <file name="src/openfl/display/Tile.cpp" tags="haxe,release">
+   <depend name="include/Std.h"/>
+   <depend name="include/lime/utils/ObjectPool.h"/>
+   <depend name="include/openfl/display/DisplayObject.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
+   <depend name="include/openfl/display/ITileContainer.h"/>
+   <depend name="include/openfl/display/Shader.h"/>
+   <depend name="include/openfl/display/Tile.h"/>
+   <depend name="include/openfl/display/TileContainer.h"/>
+   <depend name="include/openfl/display/Tilemap.h"/>
+   <depend name="include/openfl/display/Tileset.h"/>
+   <depend name="include/openfl/events/EventDispatcher.h"/>
+   <depend name="include/openfl/events/IEventDispatcher.h"/>
+   <depend name="include/openfl/geom/ColorTransform.h"/>
+   <depend name="include/openfl/geom/Matrix.h"/>
+   <depend name="include/openfl/geom/Rectangle.h"/>
   </file>
   <file name="src/openfl/display/_StageScaleMode/StageScaleMode_Impl_.cpp" >
    <depend name="include/openfl/display/_StageScaleMode/StageScaleMode_Impl_.h"/>
@@ -2172,6 +2403,10 @@
   </file>
   <file name="src/openfl/display/_InterpolationMethod/InterpolationMethod_Impl_.cpp" >
    <depend name="include/openfl/display/_InterpolationMethod/InterpolationMethod_Impl_.h"/>
+  </file>
+  <file name="src/openfl/display/ITileContainer.cpp" >
+   <depend name="include/openfl/display/ITileContainer.h"/>
+   <depend name="include/openfl/display/Tile.h"/>
   </file>
   <file name="src/openfl/display/GraphicsTrianglePath.cpp" tags="haxe,release">
    <depend name="include/openfl/_Vector/FloatVector.h"/>
@@ -4608,6 +4843,10 @@
    <depend name="include/haxe/io/Bytes.h"/>
    <depend name="include/haxe/zip/ExtraField.h"/>
   </file>
+  <file name="src/haxe/iterators/MapKeyValueIterator.cpp" >
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/iterators/MapKeyValueIterator.h"/>
+  </file>
   <file name="src/haxe/io/Path.cpp" >
    <depend name="include/haxe/io/Path.h"/>
   </file>
@@ -4666,6 +4905,7 @@
   <file name="src/haxe/ds/StringMap.cpp" >
    <depend name="include/haxe/IMap.h"/>
    <depend name="include/haxe/ds/StringMap.h"/>
+   <depend name="include/haxe/iterators/MapKeyValueIterator.h"/>
   </file>
   <file name="src/haxe/ds/_List/ListIterator.cpp" >
    <depend name="include/haxe/ds/_List/ListIterator.h"/>
@@ -4677,6 +4917,25 @@
   <file name="src/haxe/ds/IntMap.cpp" >
    <depend name="include/haxe/IMap.h"/>
    <depend name="include/haxe/ds/IntMap.h"/>
+   <depend name="include/haxe/iterators/MapKeyValueIterator.h"/>
+  </file>
+  <file name="src/haxe/ds/EnumValueMap.cpp" >
+   <depend name="include/Reflect.h"/>
+   <depend name="include/Std.h"/>
+   <depend name="include/Type.h"/>
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/BalancedTree.h"/>
+   <depend name="include/haxe/ds/EnumValueMap.h"/>
+  </file>
+  <file name="src/haxe/ds/TreeNode.cpp" >
+   <depend name="include/haxe/ds/TreeNode.h"/>
+  </file>
+  <file name="src/haxe/ds/BalancedTree.cpp" >
+   <depend name="include/Reflect.h"/>
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/BalancedTree.h"/>
+   <depend name="include/haxe/ds/TreeNode.h"/>
+   <depend name="include/haxe/iterators/MapKeyValueIterator.h"/>
   </file>
   <file name="src/haxe/ds/ArraySort.cpp" >
    <depend name="include/haxe/ds/ArraySort.h"/>
@@ -4834,10 +5093,28 @@
   <file name="src/Lambda.cpp" >
    <depend name="include/Lambda.h"/>
   </file>
+  <file name="src/GameLevel.cpp" >
+   <depend name="include/GameLevel.h"/>
+   <depend name="include/openfl/display/BitmapData.h"/>
+   <depend name="include/openfl/display/DisplayObject.h"/>
+   <depend name="include/openfl/display/DisplayObjectContainer.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
+   <depend name="include/openfl/display/ITileContainer.h"/>
+   <depend name="include/openfl/display/InteractiveObject.h"/>
+   <depend name="include/openfl/display/Sprite.h"/>
+   <depend name="include/openfl/display/Tile.h"/>
+   <depend name="include/openfl/display/Tilemap.h"/>
+   <depend name="include/openfl/display/Tileset.h"/>
+   <depend name="include/openfl/events/EventDispatcher.h"/>
+   <depend name="include/openfl/events/IEventDispatcher.h"/>
+   <depend name="include/openfl/geom/Rectangle.h"/>
+   <depend name="include/openfl/utils/Assets.h"/>
+  </file>
   <file name="src/Game.cpp" >
    <depend name="include/BackGround.h"/>
    <depend name="include/Button.h"/>
    <depend name="include/Game.h"/>
+   <depend name="include/GameLevel.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
    <depend name="include/openfl/display/DisplayObjectContainer.h"/>
    <depend name="include/openfl/display/IBitmapDrawable.h"/>
@@ -5032,6 +5309,7 @@
   <file name="src/haxe/ds/ObjectMap.cpp" >
    <depend name="include/haxe/IMap.h"/>
    <depend name="include/haxe/ds/ObjectMap.h"/>
+   <depend name="include/haxe/iterators/MapKeyValueIterator.h"/>
   </file>
   <file name="src/haxe/IMap.cpp" >
    <depend name="include/haxe/IMap.h"/>
@@ -5253,6 +5531,9 @@
    <depend name="include/haxe/lang/Iterator.h"/>
    <depend name="include/openfl/utils/_Object/Object_Impl_.h"/>
    <depend name="include/openfl/utils/_Endian/Endian_Impl_.h"/>
+   <depend name="include/openfl/utils/_Dictionary/UtilsObjectMap.h"/>
+   <depend name="include/openfl/utils/_Dictionary/FloatMap.h"/>
+   <depend name="include/openfl/utils/_Dictionary/ClassMap.h"/>
    <depend name="include/openfl/utils/_CompressionAlgorithm/CompressionAlgorithm_Impl_.h"/>
    <depend name="include/openfl/utils/ByteArrayData.h"/>
    <depend name="include/openfl/utils/_ByteArray/ByteArray_Impl_.h"/>
@@ -5290,7 +5571,6 @@
    <depend name="include/openfl/net/NetConnection.h"/>
    <depend name="include/openfl/media/SoundMixer.h"/>
    <depend name="include/openfl/media/SoundTransform.h"/>
-   <depend name="include/openfl/geom/Point.h"/>
    <depend name="include/openfl/geom/_Orientation3D/Orientation3D_Impl_.h"/>
    <depend name="include/openfl/geom/Matrix3D.h"/>
    <depend name="include/openfl/events/UncaughtErrorEvent.h"/>
@@ -5342,10 +5622,15 @@
    <depend name="include/openfl/display/_internal/ShaderBuffer.h"/>
    <depend name="include/openfl/display/_internal/SamplerState.h"/>
    <depend name="include/openfl/display/_internal/PerlinNoise.h"/>
+   <depend name="include/openfl/display/_internal/FlashTilemap.h"/>
+   <depend name="include/openfl/geom/Point.h"/>
+   <depend name="include/openfl/display/_internal/FlashRenderer.h"/>
    <depend name="include/openfl/display/_internal/DrawCommandReader.h"/>
+   <depend name="include/openfl/display/_internal/DOMTilemap.h"/>
    <depend name="include/openfl/display/_internal/DOMTextField.h"/>
    <depend name="include/openfl/display/_internal/DOMDisplayObject.h"/>
    <depend name="include/openfl/display/_internal/DOMBitmap.h"/>
+   <depend name="include/openfl/display/_internal/Context3DTilemap.h"/>
    <depend name="include/openfl/display/_internal/Context3DTextField.h"/>
    <depend name="include/openfl/display/_internal/Context3DShape.h"/>
    <depend name="include/openfl/display/_internal/Context3DMaskShader.h"/>
@@ -5355,10 +5640,12 @@
    <depend name="include/openfl/display/_internal/Context3DDisplayObject.h"/>
    <depend name="include/openfl/display/_internal/Context3DBuffer.h"/>
    <depend name="include/openfl/display/_internal/Context3DBitmap.h"/>
+   <depend name="include/openfl/display/_internal/CanvasTilemap.h"/>
    <depend name="include/openfl/display/_internal/CanvasTextField.h"/>
    <depend name="include/openfl/display/_internal/CanvasGraphics.h"/>
    <depend name="include/openfl/display/_internal/CanvasDisplayObject.h"/>
    <depend name="include/openfl/display/_internal/CanvasBitmap.h"/>
+   <depend name="include/openfl/display/_internal/CairoTilemap.h"/>
    <depend name="include/openfl/display/_internal/CairoTextField.h"/>
    <depend name="include/openfl/display/_internal/CairoShape.h"/>
    <depend name="include/openfl/display/_internal/CairoGraphics.h"/>
@@ -5368,6 +5655,8 @@
    <depend name="include/openfl/display/_internal/AbstractNoise.h"/>
    <depend name="include/openfl/display/Window.h"/>
    <depend name="include/openfl/display/_TriangleCulling/TriangleCulling_Impl_.h"/>
+   <depend name="include/openfl/display/_Tileset/TileData.h"/>
+   <depend name="include/openfl/display/Tile.h"/>
    <depend name="include/openfl/display/_StageScaleMode/StageScaleMode_Impl_.h"/>
    <depend name="include/openfl/display/_StageQuality/StageQuality_Impl_.h"/>
    <depend name="include/openfl/display/_StageDisplayState/StageDisplayState_Impl_.h"/>

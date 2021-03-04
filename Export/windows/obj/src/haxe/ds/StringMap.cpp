@@ -7,6 +7,9 @@
 #ifndef INCLUDED_haxe_ds_StringMap
 #include <haxe/ds/StringMap.h>
 #endif
+#ifndef INCLUDED_haxe_iterators_MapKeyValueIterator
+#include <haxe/iterators/MapKeyValueIterator.h>
+#endif
 
 HX_DEFINE_STACK_FRAME(_hx_pos_cdf59c2a6fa2817a_58_new,"haxe.ds.StringMap","new",0x0f13f0c6,"haxe.ds.StringMap.new","C:\\HaxeToolkit\\haxe\\std/cpp/_std/haxe/ds/StringMap.hx",58,0x969b5cf0)
 HX_LOCAL_STACK_FRAME(_hx_pos_cdf59c2a6fa2817a_61_set,"haxe.ds.StringMap","set",0x0f17bc08,"haxe.ds.StringMap.set","C:\\HaxeToolkit\\haxe\\std/cpp/_std/haxe/ds/StringMap.hx",61,0x969b5cf0)
@@ -15,6 +18,9 @@ HX_LOCAL_STACK_FRAME(_hx_pos_cdf59c2a6fa2817a_69_exists,"haxe.ds.StringMap","exi
 HX_LOCAL_STACK_FRAME(_hx_pos_cdf59c2a6fa2817a_73_remove,"haxe.ds.StringMap","remove",0x18083f9e,"haxe.ds.StringMap.remove","C:\\HaxeToolkit\\haxe\\std/cpp/_std/haxe/ds/StringMap.hx",73,0x969b5cf0)
 HX_LOCAL_STACK_FRAME(_hx_pos_cdf59c2a6fa2817a_76_keys,"haxe.ds.StringMap","keys",0x20631ace,"haxe.ds.StringMap.keys","C:\\HaxeToolkit\\haxe\\std/cpp/_std/haxe/ds/StringMap.hx",76,0x969b5cf0)
 HX_LOCAL_STACK_FRAME(_hx_pos_cdf59c2a6fa2817a_81_iterator,"haxe.ds.StringMap","iterator",0x40ccf7c8,"haxe.ds.StringMap.iterator","C:\\HaxeToolkit\\haxe\\std/cpp/_std/haxe/ds/StringMap.hx",81,0x969b5cf0)
+HX_LOCAL_STACK_FRAME(_hx_pos_cdf59c2a6fa2817a_87_keyValueIterator,"haxe.ds.StringMap","keyValueIterator",0x3fa9e53a,"haxe.ds.StringMap.keyValueIterator","C:\\HaxeToolkit\\haxe\\std/cpp/_std/haxe/ds/StringMap.hx",87,0x969b5cf0)
+HX_LOCAL_STACK_FRAME(_hx_pos_cdf59c2a6fa2817a_98_toString,"haxe.ds.StringMap","toString",0xe5a17e86,"haxe.ds.StringMap.toString","C:\\HaxeToolkit\\haxe\\std/cpp/_std/haxe/ds/StringMap.hx",98,0x969b5cf0)
+HX_LOCAL_STACK_FRAME(_hx_pos_cdf59c2a6fa2817a_103_clear,"haxe.ds.StringMap","clear",0x9fb0f773,"haxe.ds.StringMap.clear","C:\\HaxeToolkit\\haxe\\std/cpp/_std/haxe/ds/StringMap.hx",103,0x969b5cf0)
 namespace haxe{
 namespace ds{
 
@@ -38,9 +44,13 @@ bool StringMap_obj::_hx_isInstanceOf(int inClassId) {
 }
 
 static ::haxe::IMap_obj _hx_haxe_ds_StringMap__hx_haxe_IMap= {
+	(  ::Dynamic (hx::Object::*)( ::Dynamic))&::haxe::ds::StringMap_obj::get_dc94b8fa,
 	( void (hx::Object::*)( ::Dynamic, ::Dynamic))&::haxe::ds::StringMap_obj::set_41d0cb46,
 	( bool (hx::Object::*)( ::Dynamic))&::haxe::ds::StringMap_obj::exists_5889326f,
 	( bool (hx::Object::*)( ::Dynamic))&::haxe::ds::StringMap_obj::remove_5889326f,
+	(  ::Dynamic (hx::Object::*)())&::haxe::ds::StringMap_obj::keys,
+	(  ::Dynamic (hx::Object::*)())&::haxe::ds::StringMap_obj::iterator,
+	(  ::Dynamic (hx::Object::*)())&::haxe::ds::StringMap_obj::keyValueIterator,
 };
 
 bool StringMap_obj::remove_5889326f( ::Dynamic k) {
@@ -53,6 +63,10 @@ bool StringMap_obj::exists_5889326f( ::Dynamic k) {
 
 void StringMap_obj::set_41d0cb46( ::Dynamic k, ::Dynamic v) {
 			set(k,v);
+}
+
+ ::Dynamic StringMap_obj::get_dc94b8fa( ::Dynamic k) {
+			return get(k);
 }
 void *StringMap_obj::_hx_getInterface(int inHash) {
 	switch(inHash) {
@@ -115,6 +129,31 @@ HXLINE(  83)		return a->iterator();
 
 HX_DEFINE_DYNAMIC_FUNC0(StringMap_obj,iterator,return )
 
+ ::Dynamic StringMap_obj::keyValueIterator(){
+            	HX_GC_STACKFRAME(&_hx_pos_cdf59c2a6fa2817a_87_keyValueIterator)
+HXDLIN(  87)		return  ::haxe::iterators::MapKeyValueIterator_obj::__alloc( HX_CTX ,hx::ObjectPtr<OBJ_>(this));
+            	}
+
+
+HX_DEFINE_DYNAMIC_FUNC0(StringMap_obj,keyValueIterator,return )
+
+::String StringMap_obj::toString(){
+            	HX_STACKFRAME(&_hx_pos_cdf59c2a6fa2817a_98_toString)
+HXDLIN(  98)		return  ::__string_hash_to_string(this->h);
+            	}
+
+
+HX_DEFINE_DYNAMIC_FUNC0(StringMap_obj,toString,return )
+
+void StringMap_obj::clear(){
+            	HX_STACKFRAME(&_hx_pos_cdf59c2a6fa2817a_103_clear)
+HXDLIN( 103)		 ::__string_hash_clear(this->h);
+HXDLIN( 103)		return;
+            	}
+
+
+HX_DEFINE_DYNAMIC_FUNC0(StringMap_obj,clear,(void))
+
 
 hx::ObjectPtr< StringMap_obj > StringMap_obj::__new() {
 	hx::ObjectPtr< StringMap_obj > __this = new StringMap_obj();
@@ -158,12 +197,19 @@ hx::Val StringMap_obj::__Field(const ::String &inName,hx::PropertyAccess inCallP
 	case 4:
 		if (HX_FIELD_EQ(inName,"keys") ) { return hx::Val( keys_dyn() ); }
 		break;
+	case 5:
+		if (HX_FIELD_EQ(inName,"clear") ) { return hx::Val( clear_dyn() ); }
+		break;
 	case 6:
 		if (HX_FIELD_EQ(inName,"exists") ) { return hx::Val( exists_dyn() ); }
 		if (HX_FIELD_EQ(inName,"remove") ) { return hx::Val( remove_dyn() ); }
 		break;
 	case 8:
 		if (HX_FIELD_EQ(inName,"iterator") ) { return hx::Val( iterator_dyn() ); }
+		if (HX_FIELD_EQ(inName,"toString") ) { return hx::Val( toString_dyn() ); }
+		break;
+	case 16:
+		if (HX_FIELD_EQ(inName,"keyValueIterator") ) { return hx::Val( keyValueIterator_dyn() ); }
 	}
 	return super::__Field(inName,inCallProp);
 }
@@ -199,6 +245,9 @@ static ::String StringMap_obj_sMemberFields[] = {
 	HX_("remove",44,9c,88,04),
 	HX_("keys",f4,e1,06,47),
 	HX_("iterator",ee,49,9a,93),
+	HX_("keyValueIterator",60,cd,ee,4a),
+	HX_("toString",ac,d0,6e,38),
+	HX_("clear",8d,71,5b,48),
 	::String(null()) };
 
 hx::Class StringMap_obj::__mClass;

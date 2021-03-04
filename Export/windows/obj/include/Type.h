@@ -86,6 +86,9 @@ class HXCPP_CLASS_ATTRIBUTES Type_obj : public hx::Object
 		static  ::ValueType _hx_typeof( ::Dynamic v);
 		static ::Dynamic _hx_typeof_dyn();
 
+		static ::cpp::VirtualArray enumParameters( ::Dynamic e);
+		static ::Dynamic enumParameters_dyn();
+
 };
 
 

@@ -12,6 +12,7 @@
 HX_DECLARE_CLASS0(BackGround)
 HX_DECLARE_CLASS0(Button)
 HX_DECLARE_CLASS0(Game)
+HX_DECLARE_CLASS0(GameLevel)
 HX_DECLARE_CLASS2(openfl,display,DisplayObject)
 HX_DECLARE_CLASS2(openfl,display,DisplayObjectContainer)
 HX_DECLARE_CLASS2(openfl,display,IBitmapDrawable)
@@ -61,6 +62,7 @@ class HXCPP_CLASS_ATTRIBUTES Game_obj : public  ::openfl::display::Sprite_obj
 		 ::BackGround backGround;
 		 ::Button quitButton;
 		bool quitButtonIsPressed;
+		 ::GameLevel gameLevel;
 		void quitButtonClick( ::openfl::events::MouseEvent e);
 		::Dynamic quitButtonClick_dyn();
 
