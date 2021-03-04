@@ -11,6 +11,7 @@ class Game extends Sprite
     var quitButton:Button;
     var quitButtonIsPressed:Bool =false;
     var gameLevel:GameLevel;
+    var player:Player;
     public function new(width:Int, height:Int)
     {
         super();
@@ -25,6 +26,12 @@ class Game extends Sprite
           gameLevel = new GameLevel(sizeWidth,sizeHeight);
           addChild(gameLevel);
 
+
+          //PLayer
+        player = new Player();
+        player.x = 100;
+        player.y = Main.sizeHeight-160-player.height/2;
+        addChild(player);
           
         //quitButton
         quitButton = new Button(sizeWidth/2,sizeHeight/2,"QUIT");
@@ -59,5 +66,11 @@ class Game extends Sprite
     public function get_quitButtonIsPressed() 
     {
         return quitButtonIsPressed;    
+    }
+    public function update() 
+    {
+        player.move(); 
+        player.spriteAnimated(player.get_state());   
+        
     }
 }

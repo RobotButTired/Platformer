@@ -6,8 +6,8 @@ import openfl.display.Sprite;
 
 class Main extends Sprite
 {
-	var sizeWidth = 800;
-	var sizeHeight = 600;
+	public static var sizeWidth = 800;
+	public static var sizeHeight = 600;
 	var startScreen:StartScreen;
 	var rulesScreen:RulesScreen;
 	var game:Game;
@@ -46,13 +46,19 @@ class Main extends Sprite
 				addChild(game);
 			}
 		if(this.contains(game))
-			if(game.get_quitButtonIsPressed())
-				{
-					//trace(123);
-					removeChild(game);
-					addChild(startScreen);
-					game =null;
+			{
+				if(game.get_quitButtonIsPressed())
+					{
+						//trace(123);
+						removeChild(game);
+						addChild(startScreen);
+						game =null;
 
-				}
+					}
+					if(game != null)
+						{
+							game.update();
+						}
+			}
 	}
 }

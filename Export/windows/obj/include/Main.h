@@ -48,7 +48,9 @@ class HXCPP_CLASS_ATTRIBUTES Main_obj : public  ::openfl::display::Sprite_obj
 
 		HX_DO_RTTI_ALL;
 		hx::Val __Field(const ::String &inString, hx::PropertyAccess inCallProp);
+		static bool __GetStatic(const ::String &inString, Dynamic &outValue, hx::PropertyAccess inCallProp);
 		hx::Val __SetField(const ::String &inString,const hx::Val &inValue, hx::PropertyAccess inCallProp);
+		static bool __SetStatic(const ::String &inString, Dynamic &ioValue, hx::PropertyAccess inCallProp);
 		void __GetFields(Array< ::String> &outFields);
 		static void __register();
 		void __Mark(HX_MARK_PARAMS);
@@ -56,8 +58,9 @@ class HXCPP_CLASS_ATTRIBUTES Main_obj : public  ::openfl::display::Sprite_obj
 		bool _hx_isInstanceOf(int inClassId);
 		::String __ToString() const { return HX_("Main",59,64,2f,33); }
 
-		int sizeWidth;
-		int sizeHeight;
+		static void __boot();
+		static int sizeWidth;
+		static int sizeHeight;
 		 ::StartScreen startScreen;
 		 ::RulesScreen rulesScreen;
 		 ::Game game;

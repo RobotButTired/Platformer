@@ -67,6 +67,9 @@
 #ifndef INCLUDED_ValueType
 #include <ValueType.h>
 #endif
+#ifndef INCLUDED_State
+#include <State.h>
+#endif
 #ifndef INCLUDED_haxe_lang_Iterable
 #include <haxe/lang/Iterable.h>
 #endif
@@ -738,6 +741,9 @@
 #endif
 #ifndef INCLUDED_haxe_SysTools
 #include <haxe/SysTools.h>
+#endif
+#ifndef INCLUDED_Main
+#include <Main.h>
 #endif
 #ifndef INCLUDED_openfl_display_DisplayObject
 #include <openfl/display/DisplayObject.h>
@@ -1957,6 +1963,12 @@
 #ifndef INCLUDED_Reflect
 #include <Reflect.h>
 #endif
+#ifndef INCLUDED_Player
+#include <Player.h>
+#endif
+#ifndef INCLUDED_Unit
+#include <Unit.h>
+#endif
 #ifndef INCLUDED_ManifestResources
 #include <ManifestResources.h>
 #endif
@@ -1983,9 +1995,6 @@
 #endif
 #ifndef INCLUDED_DocumentClass
 #include <DocumentClass.h>
-#endif
-#ifndef INCLUDED_Main
-#include <Main.h>
 #endif
 #ifndef INCLUDED_openfl_display_Sprite
 #include <openfl/display/Sprite.h>
@@ -2055,6 +2064,7 @@ hx::RegisterResources( hx::GetResources() );
 ::haxe::io::Encoding_obj::__register();
 ::haxe::StackItem_obj::__register();
 ::ValueType_obj::__register();
+::State_obj::__register();
 ::haxe::lang::Iterable_obj::__register();
 ::haxe::lang::Iterator_obj::__register();
 ::openfl::utils::_Object::Object_Impl__obj::__register();
@@ -2279,6 +2289,7 @@ hx::RegisterResources( hx::GetResources() );
 ::haxe::Serializer_obj::__register();
 ::haxe::Log_obj::__register();
 ::haxe::SysTools_obj::__register();
+::Main_obj::__register();
 ::openfl::display::DisplayObject_obj::__register();
 ::openfl::_Vector::Vector_Impl__obj::__register();
 ::ApplicationMain_obj::__register();
@@ -2685,6 +2696,8 @@ hx::RegisterResources( hx::GetResources() );
 ::StartScreen_obj::__register();
 ::RulesScreen_obj::__register();
 ::Reflect_obj::__register();
+::Player_obj::__register();
+::Unit_obj::__register();
 ::ManifestResources_obj::__register();
 ::Lambda_obj::__register();
 ::GameLevel_obj::__register();
@@ -2694,7 +2707,6 @@ hx::RegisterResources( hx::GetResources() );
 ::Button_obj::__register();
 ::BackGround_obj::__register();
 ::DocumentClass_obj::__register();
-::Main_obj::__register();
 ::openfl::display::Sprite_obj::__register();
 ::openfl::display::DisplayObjectContainer_obj::__register();
 ::openfl::display::InteractiveObject_obj::__register();
@@ -2730,6 +2742,7 @@ hx::RegisterResources( hx::GetResources() );
 ::haxe::io::Encoding_obj::__boot();
 ::haxe::StackItem_obj::__boot();
 ::ValueType_obj::__boot();
+::State_obj::__boot();
 ::lime::_internal::backend::native::NativeApplication_obj::__init__();
 ::lime::app::Application_obj::__init__();
 ::ApplicationMain_obj::__init__();
@@ -2743,6 +2756,7 @@ hx::RegisterResources( hx::GetResources() );
 ::ApplicationMain_obj::__boot();
 ::openfl::_Vector::Vector_Impl__obj::__boot();
 ::openfl::display::DisplayObject_obj::__boot();
+::Main_obj::__boot();
 ::haxe::SysTools_obj::__boot();
 ::haxe::Serializer_obj::__boot();
 ::haxe::Timer_obj::__boot();

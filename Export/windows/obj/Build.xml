@@ -5082,6 +5082,45 @@
   <file name="src/Reflect.cpp" >
    <depend name="include/Reflect.h"/>
   </file>
+  <file name="src/Player.cpp" >
+   <depend name="include/Main.h"/>
+   <depend name="include/Player.h"/>
+   <depend name="include/State.h"/>
+   <depend name="include/Unit.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/lime/app/IModule.h"/>
+   <depend name="include/lime/system/System.h"/>
+   <depend name="include/openfl/Lib.h"/>
+   <depend name="include/openfl/display/Bitmap.h"/>
+   <depend name="include/openfl/display/BitmapData.h"/>
+   <depend name="include/openfl/display/DisplayObject.h"/>
+   <depend name="include/openfl/display/DisplayObjectContainer.h"/>
+   <depend name="include/openfl/display/Graphics.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
+   <depend name="include/openfl/display/InteractiveObject.h"/>
+   <depend name="include/openfl/display/MovieClip.h"/>
+   <depend name="include/openfl/display/Sprite.h"/>
+   <depend name="include/openfl/display/Stage.h"/>
+   <depend name="include/openfl/events/Event.h"/>
+   <depend name="include/openfl/events/EventDispatcher.h"/>
+   <depend name="include/openfl/events/IEventDispatcher.h"/>
+   <depend name="include/openfl/events/KeyboardEvent.h"/>
+   <depend name="include/openfl/geom/Rectangle.h"/>
+   <depend name="include/openfl/utils/Assets.h"/>
+  </file>
+  <file name="src/Unit.cpp" >
+   <depend name="include/Unit.h"/>
+   <depend name="include/openfl/display/DisplayObject.h"/>
+   <depend name="include/openfl/display/DisplayObjectContainer.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
+   <depend name="include/openfl/display/InteractiveObject.h"/>
+   <depend name="include/openfl/display/Sprite.h"/>
+   <depend name="include/openfl/events/EventDispatcher.h"/>
+   <depend name="include/openfl/events/IEventDispatcher.h"/>
+  </file>
+  <file name="src/State.cpp" >
+   <depend name="include/State.h"/>
+  </file>
   <file name="src/ManifestResources.cpp" >
    <depend name="include/ManifestResources.h"/>
    <depend name="include/Reflect.h"/>
@@ -5115,6 +5154,10 @@
    <depend name="include/Button.h"/>
    <depend name="include/Game.h"/>
    <depend name="include/GameLevel.h"/>
+   <depend name="include/Main.h"/>
+   <depend name="include/Player.h"/>
+   <depend name="include/State.h"/>
+   <depend name="include/Unit.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
    <depend name="include/openfl/display/DisplayObjectContainer.h"/>
    <depend name="include/openfl/display/IBitmapDrawable.h"/>
@@ -5527,6 +5570,7 @@
    <depend name="include/haxe/io/Encoding.h"/>
    <depend name="include/haxe/StackItem.h"/>
    <depend name="include/ValueType.h"/>
+   <depend name="include/State.h"/>
    <depend name="include/haxe/lang/Iterable.h"/>
    <depend name="include/haxe/lang/Iterator.h"/>
    <depend name="include/openfl/utils/_Object/Object_Impl_.h"/>
@@ -5751,6 +5795,7 @@
    <depend name="include/haxe/Serializer.h"/>
    <depend name="include/haxe/Log.h"/>
    <depend name="include/haxe/SysTools.h"/>
+   <depend name="include/Main.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
    <depend name="include/openfl/_Vector/Vector_Impl_.h"/>
    <depend name="include/ApplicationMain.h"/>

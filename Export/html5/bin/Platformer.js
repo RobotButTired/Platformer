@@ -870,9 +870,9 @@ ApplicationMain.create = function(config) {
 	ManifestResources.init(config);
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-		_this.setReserved("build","2");
+		_this.setReserved("build","3");
 	} else {
-		_this.h["build"] = "2";
+		_this.h["build"] = "3";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -4102,11 +4102,9 @@ openfl_display_Sprite.prototype = $extend(openfl_display_DisplayObjectContainer.
 	,__class__: openfl_display_Sprite
 });
 var Main = function() {
-	this.sizeHeight = 600;
-	this.sizeWidth = 800;
 	openfl_display_Sprite.call(this);
-	this.startScreen = new StartScreen(this.sizeWidth,this.sizeHeight,this);
-	this.rulesScreen = new RulesScreen(this.sizeWidth,this.sizeHeight);
+	this.startScreen = new StartScreen(Main.sizeWidth,Main.sizeHeight,this);
+	this.rulesScreen = new RulesScreen(Main.sizeWidth,Main.sizeHeight);
 	this.addChild(this.startScreen);
 	haxe_Log.trace(this.get_width() + " " + this.get_height(),{ fileName : "Source/Main.hx", lineNumber : 22, className : "Main", methodName : "new"});
 	this.addEventListener("enterFrame",$bind(this,this.update));
@@ -4129,7 +4127,7 @@ Main.prototype = $extend(openfl_display_Sprite.prototype,{
 		if(this.startScreen.get_startButtonIsPressed()) {
 			this.removeChild(this.startScreen);
 			this.startScreen.reset();
-			this.game = new Game(this.sizeWidth,this.sizeHeight);
+			this.game = new Game(Main.sizeWidth,Main.sizeHeight);
 			this.addChild(this.game);
 		}
 		if(this.contains(this.game)) {
@@ -4137,6 +4135,9 @@ Main.prototype = $extend(openfl_display_Sprite.prototype,{
 				this.removeChild(this.game);
 				this.addChild(this.startScreen);
 				this.game = null;
+			}
+			if(this.game != null) {
+				this.game.update();
 			}
 		}
 	}
@@ -4290,6 +4291,10 @@ var Game = function(width,height) {
 	this.addChild(this.backGround);
 	this.gameLevel = new GameLevel(this.sizeWidth,this.sizeHeight);
 	this.addChild(this.gameLevel);
+	this.player = new Player();
+	this.player.set_x(100);
+	this.player.set_y(Main.sizeHeight - 160 - this.player.get_height() / 2);
+	this.addChild(this.player);
 	this.quitButton = new Button(this.sizeWidth / 2,this.sizeHeight / 2,"QUIT");
 	this.quitButton.set_x(this.sizeWidth * 7 / 8);
 	this.quitButton.set_y(this.sizeHeight / 25);
@@ -4315,6 +4320,10 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 	}
 	,get_quitButtonIsPressed: function() {
 		return this.quitButtonIsPressed;
+	}
+	,update: function() {
+		this.player.move();
+		this.player.spriteAnimated(this.player.get_state());
 	}
 	,__class__: Game
 });
@@ -4455,7 +4464,7 @@ ManifestResources.init = function(config) {
 		ManifestResources.rootPath = "./";
 	}
 	var bundle;
-	var data = "{\"name\":null,\"assets\":\"aoy4:pathy35:assets%2FbackGround%2Fdesert_BG.pngy4:sizei40660y4:typey5:IMAGEy2:idR1y7:preloadtgoR0y40:assets%2FbackGround%2FgameOverScreen.pngR2i100976R3R4R5R7R6tgoR0y36:assets%2FbackGround%2FgameScreen.pngR2i448276R3R4R5R8R6tgoR0y37:assets%2FbackGround%2FrulesScreen.pngR2i81718R3R4R5R9R6tgoR0y37:assets%2FbackGround%2FstartScreen.pngR2i11036R3R4R5R10R6tgoR0y41:assets%2FCowboy%204%20HiRes%2FCowboy4.pngR2i6250R3R4R5R11R6tgoR0y61:assets%2FCowboy%204%20HiRes%2FCowboy4_idle%20with%20gun_0.pngR2i623R3R4R5R12R6tgoR0y61:assets%2FCowboy%204%20HiRes%2FCowboy4_idle%20with%20gun_1.pngR2i623R3R4R5R13R6tgoR0y61:assets%2FCowboy%204%20HiRes%2FCowboy4_idle%20with%20gun_2.pngR2i627R3R4R5R14R6tgoR0y61:assets%2FCowboy%204%20HiRes%2FCowboy4_idle%20with%20gun_3.pngR2i627R3R4R5R15R6tgoR0y64:assets%2FCowboy%204%20HiRes%2FCowboy4_idle%20without%20gun_0.pngR2i557R3R4R5R16R6tgoR0y64:assets%2FCowboy%204%20HiRes%2FCowboy4_idle%20without%20gun_1.pngR2i557R3R4R5R17R6tgoR0y64:assets%2FCowboy%204%20HiRes%2FCowboy4_idle%20without%20gun_2.pngR2i560R3R4R5R18R6tgoR0y64:assets%2FCowboy%204%20HiRes%2FCowboy4_idle%20without%20gun_3.pngR2i560R3R4R5R19R6tgoR0y61:assets%2FCowboy%204%20HiRes%2FCowboy4_jumo%20with%20gun_0.pngR2i627R3R4R5R20R6tgoR0y56:assets%2FCowboy%204%20HiRes%2FCowboy4_jump%20shoot_0.pngR2i626R3R4R5R21R6tgoR0y56:assets%2FCowboy%204%20HiRes%2FCowboy4_jump%20shoot_1.pngR2i808R3R4R5R22R6tgoR0y56:assets%2FCowboy%204%20HiRes%2FCowboy4_jump%20shoot_2.pngR2i778R3R4R5R23R6tgoR0y56:assets%2FCowboy%204%20HiRes%2FCowboy4_jump%20shoot_3.pngR2i767R3R4R5R24R6tgoR0y64:assets%2FCowboy%204%20HiRes%2FCowboy4_jump%20without%20gun_0.pngR2i560R3R4R5R25R6tgoR0y49:assets%2FCowboy%204%20HiRes%2FCowboy4_shoot_0.pngR2i630R3R4R5R26R6tgoR0y49:assets%2FCowboy%204%20HiRes%2FCowboy4_shoot_1.pngR2i817R3R4R5R27R6tgoR0y49:assets%2FCowboy%204%20HiRes%2FCowboy4_shoot_2.pngR2i788R3R4R5R28R6tgoR0y49:assets%2FCowboy%204%20HiRes%2FCowboy4_shoot_3.pngR2i774R3R4R5R29R6tgoR0y61:assets%2FCowboy%204%20HiRes%2FCowboy4_walk%20with%20gun_0.pngR2i628R3R4R5R30R6tgoR0y61:assets%2FCowboy%204%20HiRes%2FCowboy4_walk%20with%20gun_1.pngR2i610R3R4R5R31R6tgoR0y61:assets%2FCowboy%204%20HiRes%2FCowboy4_walk%20with%20gun_2.pngR2i630R3R4R5R32R6tgoR0y61:assets%2FCowboy%204%20HiRes%2FCowboy4_walk%20with%20gun_3.pngR2i610R3R4R5R33R6tgoR0y64:assets%2FCowboy%204%20HiRes%2FCowboy4_walk%20without%20gun_0.pngR2i551R3R4R5R34R6tgoR0y64:assets%2FCowboy%204%20HiRes%2FCowboy4_walk%20without%20gun_1.pngR2i513R3R4R5R35R6tgoR0y64:assets%2FCowboy%204%20HiRes%2FCowboy4_walk%20without%20gun_2.pngR2i541R3R4R5R36R6tgoR0y64:assets%2FCowboy%204%20HiRes%2FCowboy4_walk%20without%20gun_3.pngR2i513R3R4R5R37R6tgoR0y28:assets%2FtileMap%2Fgrass.pngR2i6766R3R4R5R38R6tgoR0y33:assets%2FtileMap%2FPixelAtlas.pngR2i5091R3R4R5R39R6tgh\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
+	var data = "{\"name\":null,\"assets\":\"aoy4:pathy35:assets%2FbackGround%2Fdesert_BG.pngy4:sizei40660y4:typey5:IMAGEy2:idR1y7:preloadtgoR0y40:assets%2FbackGround%2FgameOverScreen.pngR2i100976R3R4R5R7R6tgoR0y36:assets%2FbackGround%2FgameScreen.pngR2i448276R3R4R5R8R6tgoR0y37:assets%2FbackGround%2FrulesScreen.pngR2i81718R3R4R5R9R6tgoR0y37:assets%2FbackGround%2FstartScreen.pngR2i11036R3R4R5R10R6tgoR0y29:assets%2FCowboy%2FCowboy4.pngR2i6250R3R4R5R11R6tgoR0y49:assets%2FCowboy%2FCowboy4_idle%20with%20gun_1.pngR2i623R3R4R5R12R6tgoR0y49:assets%2FCowboy%2FCowboy4_idle%20with%20gun_2.pngR2i627R3R4R5R13R6tgoR0y49:assets%2FCowboy%2FCowboy4_idle%20with%20gun_3.pngR2i627R3R4R5R14R6tgoR0y52:assets%2FCowboy%2FCowboy4_idle%20without%20gun_0.pngR2i557R3R4R5R15R6tgoR0y52:assets%2FCowboy%2FCowboy4_idle%20without%20gun_1.pngR2i557R3R4R5R16R6tgoR0y52:assets%2FCowboy%2FCowboy4_idle%20without%20gun_2.pngR2i560R3R4R5R17R6tgoR0y52:assets%2FCowboy%2FCowboy4_idle%20without%20gun_3.pngR2i560R3R4R5R18R6tgoR0y45:assets%2FCowboy%2FCowboy4_idle_with_gun_0.pngR2i623R3R4R5R19R6tgoR0y49:assets%2FCowboy%2FCowboy4_jumo%20with%20gun_0.pngR2i627R3R4R5R20R6tgoR0y44:assets%2FCowboy%2FCowboy4_jump%20shoot_0.pngR2i626R3R4R5R21R6tgoR0y44:assets%2FCowboy%2FCowboy4_jump%20shoot_1.pngR2i808R3R4R5R22R6tgoR0y44:assets%2FCowboy%2FCowboy4_jump%20shoot_2.pngR2i778R3R4R5R23R6tgoR0y44:assets%2FCowboy%2FCowboy4_jump%20shoot_3.pngR2i767R3R4R5R24R6tgoR0y52:assets%2FCowboy%2FCowboy4_jump%20without%20gun_0.pngR2i560R3R4R5R25R6tgoR0y37:assets%2FCowboy%2FCowboy4_shoot_0.pngR2i630R3R4R5R26R6tgoR0y37:assets%2FCowboy%2FCowboy4_shoot_1.pngR2i817R3R4R5R27R6tgoR0y37:assets%2FCowboy%2FCowboy4_shoot_2.pngR2i788R3R4R5R28R6tgoR0y37:assets%2FCowboy%2FCowboy4_shoot_3.pngR2i774R3R4R5R29R6tgoR0y49:assets%2FCowboy%2FCowboy4_walk%20with%20gun_0.pngR2i628R3R4R5R30R6tgoR0y49:assets%2FCowboy%2FCowboy4_walk%20with%20gun_1.pngR2i610R3R4R5R31R6tgoR0y49:assets%2FCowboy%2FCowboy4_walk%20with%20gun_2.pngR2i630R3R4R5R32R6tgoR0y49:assets%2FCowboy%2FCowboy4_walk%20with%20gun_3.pngR2i610R3R4R5R33R6tgoR0y52:assets%2FCowboy%2FCowboy4_walk%20without%20gun_0.pngR2i551R3R4R5R34R6tgoR0y52:assets%2FCowboy%2FCowboy4_walk%20without%20gun_1.pngR2i513R3R4R5R35R6tgoR0y52:assets%2FCowboy%2FCowboy4_walk%20without%20gun_2.pngR2i541R3R4R5R36R6tgoR0y52:assets%2FCowboy%2FCowboy4_walk%20without%20gun_3.pngR2i513R3R4R5R37R6tgoR0y28:assets%2FtileMap%2Fgrass.pngR2i6766R3R4R5R38R6tgoR0y33:assets%2FtileMap%2FPixelAtlas.pngR2i5091R3R4R5R39R6tgh\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
 	var manifest = lime_utils_AssetManifest.parse(data,ManifestResources.rootPath);
 	var library = lime_utils_AssetLibrary.fromManifest(manifest);
 	lime_utils_Assets.registerLibrary("default",library);
@@ -4467,6 +4476,130 @@ ManifestResources.init = function(config) {
 	}
 };
 Math.__name__ = "Math";
+var State = $hxEnums["State"] = { __ename__ : "State", __constructs__ : ["idle","walk","jump"]
+	,idle: {_hx_index:0,__enum__:"State",toString:$estr}
+	,walk: {_hx_index:1,__enum__:"State",toString:$estr}
+	,jump: {_hx_index:2,__enum__:"State",toString:$estr}
+};
+var Unit = function() {
+	openfl_display_Sprite.call(this);
+};
+$hxClasses["Unit"] = Unit;
+Unit.__name__ = "Unit";
+Unit.__super__ = openfl_display_Sprite;
+Unit.prototype = $extend(openfl_display_Sprite.prototype,{
+	__class__: Unit
+});
+var Player = function() {
+	this.frameTime = 0.15;
+	this.state = State.idle;
+	this.directionRight = false;
+	this.directionLeft = false;
+	Unit.call(this);
+	this.idleWidthGun = [];
+	this.idleWidthGun.push(new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("assets/Cowboy/Cowboy4_idle_with_gun_0.png")));
+	this.idleWidthGun.push(new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("assets/Cowboy/Cowboy4_idle with gun_1.png")));
+	this.idleWidthGun.push(new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("assets/Cowboy/Cowboy4_idle with gun_2.png")));
+	this.idleWidthGun.push(new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("assets/Cowboy/Cowboy4_idle with gun_3.png")));
+	this.walkWithGun = [];
+	this.walkWithGun.push(new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("assets/Cowboy/Cowboy4_walk with gun_0.png")));
+	this.walkWithGun.push(new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("assets/Cowboy/Cowboy4_walk with gun_1.png")));
+	this.walkWithGun.push(new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("assets/Cowboy/Cowboy4_walk with gun_2.png")));
+	this.walkWithGun.push(new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("assets/Cowboy/Cowboy4_walk with gun_3.png")));
+	this.speed = 7.0;
+	this.hitBox = new openfl_geom_Rectangle(-15.,-17.5,30,35);
+	this.addChild(this.idleWidthGun[0]);
+	this.idleWidthGun[0].set_x(-15);
+	this.idleWidthGun[0].set_y(-40);
+	haxe_Log.trace(this.get_width() + " " + this.get_height(),{ fileName : "Source/Player.hx", lineNumber : 49, className : "Player", methodName : "new"});
+	this.drawHitBox();
+	this.ind = 0;
+	this.timeFlag = new Date().getTime() / 1000;
+	openfl_Lib.get_current().stage.addEventListener("keyDown",$bind(this,this.keyDownHandler));
+	openfl_Lib.get_current().stage.addEventListener("keyUp",$bind(this,this.keyUpHandler));
+};
+$hxClasses["Player"] = Player;
+Player.__name__ = "Player";
+Player.__super__ = Unit;
+Player.prototype = $extend(Unit.prototype,{
+	spriteAnimated: function(state) {
+		var spriteSheet;
+		switch(state._hx_index) {
+		case 0:
+			spriteSheet = this.idleWidthGun;
+			break;
+		case 1:
+			spriteSheet = this.walkWithGun;
+			break;
+		case 2:
+			spriteSheet = null;
+			break;
+		}
+		if(new Date().getTime() / 1000 - this.timeFlag >= this.frameTime) {
+			this.updateSprite(spriteSheet);
+			this.timeFlag = new Date().getTime() / 1000;
+		}
+	}
+	,updateSprite: function(spriteSheet) {
+		this.removeChildren();
+		if(this.ind == spriteSheet.length) {
+			this.ind = 0;
+		}
+		this.addChild(spriteSheet[this.ind]);
+		spriteSheet[this.ind].set_x(-15);
+		spriteSheet[this.ind].set_y(-40);
+		this.ind++;
+	}
+	,keyDownHandler: function(e) {
+		if(e.keyCode == 37 || e.keyCode == 65) {
+			this.directionLeft = true;
+		}
+		if(e.keyCode == 39 || e.keyCode == 68) {
+			this.directionRight = true;
+		}
+	}
+	,keyUpHandler: function(e) {
+		if(e.keyCode == 37 || e.keyCode == 65) {
+			this.directionLeft = false;
+		}
+		if(e.keyCode == 39 || e.keyCode == 68) {
+			this.directionRight = false;
+		}
+	}
+	,move: function() {
+		if(this.directionLeft) {
+			if(this.get_x() - this.hitBox.width / 2 >= 0) {
+				var _g = this;
+				_g.set_x(_g.get_x() - this.speed);
+			}
+			this.state = State.walk;
+			this.set_scaleX(-1.0);
+		}
+		if(this.directionRight) {
+			if(this.get_x() + this.hitBox.width / 2 <= Main.sizeWidth) {
+				var _g1 = this;
+				_g1.set_x(_g1.get_x() + this.speed);
+			}
+			this.state = State.walk;
+			this.set_scaleX(1.0);
+		}
+		if(this.directionLeft && this.directionRight) {
+			this.state = State.idle;
+		}
+		if(!this.directionLeft && !this.directionRight) {
+			this.state = State.idle;
+		}
+	}
+	,get_state: function() {
+		return this.state;
+	}
+	,drawHitBox: function() {
+		this.get_graphics().lineStyle(1,16711680);
+		this.get_graphics().drawRect(-15.,-17.5,30,35);
+		this.get_graphics().endFill();
+	}
+	,__class__: Player
+});
 var Reflect = function() { };
 $hxClasses["Reflect"] = Reflect;
 Reflect.__name__ = "Reflect";
@@ -23461,7 +23594,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 50363;
+	this.version = 414610;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
@@ -71779,6 +71912,8 @@ openfl_display_DisplayObject.__tempStack = new lime_utils_ObjectPool(function() 
 },function(stack) {
 	stack.set_length(0);
 });
+Main.sizeWidth = 800;
+Main.sizeHeight = 600;
 haxe_Serializer.USE_CACHE = false;
 haxe_Serializer.USE_ENUM_INDEX = false;
 haxe_Serializer.BASE64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%:";
