@@ -1,5 +1,8 @@
 package;
 
+import openfl.geom.Point;
+import openfl.display.Tile;
+import openfl.geom.Rectangle;
 import openfl.display.Sprite;
 import openfl.events.MouseEvent;
 
@@ -12,6 +15,7 @@ class Game extends Sprite
     var quitButtonIsPressed:Bool =false;
     var gameLevel:GameLevel;
     var player:Player;
+    var haveCollision:Bool = false;
     public function new(width:Int, height:Int)
     {
         super();
@@ -30,7 +34,7 @@ class Game extends Sprite
           //PLayer
         player = new Player();
         player.x = 100;
-        player.y = Main.sizeHeight-160-player.height/2;
+        player.y = 100;
         addChild(player);
           
         //quitButton
@@ -48,6 +52,10 @@ class Game extends Sprite
 
             
     }
+    /*public function get_haveCollision() 
+    {
+        return haveCollision;    
+    }*/
     public function quitButtonClick(e:MouseEvent) 
     {
         quitButtonIsPressed = true;
@@ -70,7 +78,68 @@ class Game extends Sprite
     public function update() 
     {
         player.move(); 
-        player.spriteAnimated(player.get_state());   
+        doCollisions(); 
+        playerJump();
+        player.spriteAnimated(player.get_state());  
         
+    }
+
+    public function checkCollisionWithTile(playerHitBox: Rectangle, tile:Tile):Bool
+    {
+        var hitBox = new Point();
+        hitBox = player.localToGlobal(new Point(playerHitBox.x,playerHitBox.y));  // координаты хитбокса игрока в глобальной системе координат
+            if(player.get_direction() == right)
+            {
+                if(hitBox.x + playerHitBox.width > tile.x &&                        // проверка коллизии с верхней стороной тайла и направлением игрока вправо
+                    hitBox.x  < tile.x +tile.width)
+                {
+                    if(hitBox.y + playerHitBox.height > tile.y && 
+                        hitBox.y  < tile.y)
+                        {
+                            //trace("Collision with tile! "+ tile.x);
+                            return true;
+                        }
+                }
+            }
+            else
+            {
+                if(hitBox.x  > tile.x &&                                            // проверка коллизии с верхней стороной тайла и направлением игрока влево
+                    hitBox.x - playerHitBox.width  < tile.x +tile.width)
+                {
+                    if(hitBox.y + playerHitBox.height > tile.y && 
+                        hitBox.y  < tile.y)
+                        {
+                           // trace("Collision with tile! "+ tile.x);
+                            return true;
+                        }
+                }
+            }
+            
+            return false;
+    }
+    public function doCollisions() 
+    {
+        haveCollision = false;
+        for(i in 0...gameLevel.tilemap.numTiles)
+        {
+            if(checkCollisionWithTile(player.get_hitBox(),gameLevel.tilemap.getTileAt(i)))
+            {
+                player.y  = gameLevel.tilemap.getTileAt(i).y - player.get_hitBox().height/2+2.5;
+                player.set_speedY(0.0);
+                haveCollision = true;
+            }
+            //trace(i);
+        }
+    }
+    public function playerJump()
+    {
+       // trace(player.get_jump()+" "+haveCollision);
+        if(player.get_jump() && haveCollision)
+            {
+                trace("jump");
+                player.set_speedY(player.get_speedY()-15.0);
+            }    
+        if(!haveCollision)
+            player.set_state(jump);
     }
 }

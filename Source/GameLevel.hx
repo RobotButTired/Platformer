@@ -17,7 +17,7 @@ class GameLevel extends Sprite
     var sizeWidth:Int;
     var sizeHeight:Int;
 
-    var tilemap:Tilemap;
+    public var tilemap:Tilemap;
     var bmpData:BitmapData;
     var tileset:Tileset;
     var IDs:Array<Int>;
@@ -45,6 +45,9 @@ class GameLevel extends Sprite
         this.IDs.push(ind3);
         this.IDs.push(ind4);
         addTiles();
+        trace(tilemap.numTiles);
+        trace(tilemap.getTileAt(0).x+" "+tilemap.getTileAt(0).y);
+        trace(tilemap.getTileAt(0).width);
        
        // trace(Lib.current.stage.stageWidth);
         
@@ -57,6 +60,7 @@ class GameLevel extends Sprite
                 {
                     if(i == 11)
                     {
+                        //if(j != 10)
                         tile = new Tile(this.IDs[0],j*sizeWidth/20,i*sizeHeight/15);
                     }
                     if(i == 12)
