@@ -9,6 +9,8 @@
 #ifndef INCLUDED_Unit
 #include <Unit.h>
 #endif
+HX_DECLARE_CLASS0(Direction)
+HX_DECLARE_CLASS0(Game)
 HX_DECLARE_CLASS0(Player)
 HX_DECLARE_CLASS0(State)
 HX_DECLARE_CLASS0(Unit)
@@ -60,13 +62,18 @@ class HXCPP_CLASS_ATTRIBUTES Player_obj : public  ::Unit_obj
 
 		::Array< ::Dynamic> idleWidthGun;
 		::Array< ::Dynamic> walkWithGun;
+		::Array< ::Dynamic> jumpWithGun;
 		bool directionLeft;
 		bool directionRight;
+		bool jump;
 		 ::openfl::geom::Rectangle hitBox;
 		 ::State state;
 		Float timeFlag;
 		Float frameTime;
 		int ind;
+		Float frameOfFire;
+		bool shooting;
+		Float shootingTime;
 		void spriteAnimated( ::State state);
 		::Dynamic spriteAnimated_dyn();
 
@@ -82,11 +89,32 @@ class HXCPP_CLASS_ATTRIBUTES Player_obj : public  ::Unit_obj
 		void move();
 		::Dynamic move_dyn();
 
+		void doShot( ::Game game);
+		::Dynamic doShot_dyn();
+
 		 ::State get_state();
 		::Dynamic get_state_dyn();
 
+		 ::Direction get_direction();
+		::Dynamic get_direction_dyn();
+
 		void drawHitBox();
 		::Dynamic drawHitBox_dyn();
+
+		 ::openfl::geom::Rectangle get_hitBox();
+		::Dynamic get_hitBox_dyn();
+
+		bool get_directionLeft();
+		::Dynamic get_directionLeft_dyn();
+
+		bool get_directionRight();
+		::Dynamic get_directionRight_dyn();
+
+		bool get_jump();
+		::Dynamic get_jump_dyn();
+
+		void set_state( ::State value);
+		::Dynamic set_state_dyn();
 
 };
 

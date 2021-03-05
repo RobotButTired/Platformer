@@ -9,8 +9,6 @@ import openfl.Assets;
 import openfl.display.Bitmap;
 
 enum State {idle; walk; jump;}
-enum Direction {left; right;}
-
 class Player extends Unit
 {
     var idleWidthGun:Array<Bitmap>;
@@ -19,15 +17,22 @@ class Player extends Unit
 
     var directionLeft:Bool = false;
     var directionRight:Bool = false;
-    var direction:Direction = right;
+    
     var jump:Bool = false;
     var hitBox(get, null):Rectangle;
 
     var state:State = idle;
 
-    var timeFlag:Float;
+    var timeFlag:Float;                 //временной флаг для анимации
+
     var frameTime:Float = 0.15;
     var ind:Int;
+
+    var frameOfFire:Float = 2;        //скорострельность
+    var shooting:Bool = false;          //тригер для стрельбы
+    var shootingTime:Float;             //временной флаг для стрельбы
+
+
     public function new() 
     {
         super();
@@ -63,6 +68,8 @@ class Player extends Unit
        //this.addChild(idleWidthGun[0]);  
         ind =0; 
         timeFlag = Timer.stamp();
+
+        shootingTime = Timer.stamp();
 
         Lib.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownHandler);
         Lib.current.stage.addEventListener(KeyboardEvent.KEY_UP, keyUpHandler);
@@ -104,30 +111,34 @@ class Player extends Unit
             if(e.keyCode == 37 || e.keyCode == 65)
             {
                 directionLeft = true;
+                direction = left;
                 //state = walk;
             }  
             if(e.keyCode == 39 || e.keyCode == 68)
             {
                 directionRight = true;
+                direction = right;
                 //state = walk;
             }
             if(e.keyCode == 38 || e.keyCode == 87)
                 jump = true;
+            if(e.keyCode == 32)
+                shooting = true;
     }
     public function keyUpHandler(e:KeyboardEvent) 
     {
         if(e.keyCode == 37 || e.keyCode == 65)
         {
             directionLeft = false;
-            direction = left;
         }  
         if(e.keyCode == 39 || e.keyCode == 68)
         {
             directionRight = false;
-            direction = right;
         }
         if(e.keyCode == 38 || e.keyCode == 87)
             jump = false;
+        if(e.keyCode == 32)
+            shooting = false;
     }
     public function move() 
     {
@@ -153,6 +164,33 @@ class Player extends Unit
         y += speedY;
 
     }
+
+    public function doShot(game:Game) 
+    {
+        if(Timer.stamp()- shootingTime >= 1/frameOfFire && shooting)
+            {
+                var bullet:Bullet;
+                if(game.spentBullets.length > 0)
+                    {
+                        trace(999999);
+                        game.bullets.push(game.spentBullets.pop());
+                        game.bullets[game.bullets.length-1].setBullet(this);
+                       // game.bullets.push(bullet);
+                        game.addChild(game.bullets[game.bullets.length-1]);
+                        shootingTime = Timer.stamp();
+                    }
+                    else
+                    {
+                        bullet = new Bullet(this);
+                        game.bullets.push(bullet);
+                        game.addChild(bullet);
+                        trace("Shot");
+                        shootingTime = Timer.stamp();
+                    }
+              
+            }
+    }
+
     public function get_state()
     {
         return state;    
@@ -169,6 +207,8 @@ class Player extends Unit
         graphics.drawRect(-hitBox.width/2,-hitBox.height/2,hitBox.width,hitBox.height);
         graphics.endFill();
     }
+
+  
 
     public function get_hitBox() 
     {

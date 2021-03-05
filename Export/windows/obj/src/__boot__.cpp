@@ -64,6 +64,9 @@
 #ifndef INCLUDED_haxe_StackItem
 #include <haxe/StackItem.h>
 #endif
+#ifndef INCLUDED_Direction
+#include <Direction.h>
+#endif
 #ifndef INCLUDED_ValueType
 #include <ValueType.h>
 #endif
@@ -1990,6 +1993,9 @@
 #ifndef INCLUDED_Button
 #include <Button.h>
 #endif
+#ifndef INCLUDED_Bullet
+#include <Bullet.h>
+#endif
 #ifndef INCLUDED_BackGround
 #include <BackGround.h>
 #endif
@@ -2063,6 +2069,7 @@ hx::RegisterResources( hx::GetResources() );
 ::haxe::io::Error_obj::__register();
 ::haxe::io::Encoding_obj::__register();
 ::haxe::StackItem_obj::__register();
+::Direction_obj::__register();
 ::ValueType_obj::__register();
 ::State_obj::__register();
 ::haxe::lang::Iterable_obj::__register();
@@ -2705,6 +2712,7 @@ hx::RegisterResources( hx::GetResources() );
 ::EReg_obj::__register();
 ::Date_obj::__register();
 ::Button_obj::__register();
+::Bullet_obj::__register();
 ::BackGround_obj::__register();
 ::DocumentClass_obj::__register();
 ::openfl::display::Sprite_obj::__register();
@@ -2741,6 +2749,7 @@ hx::RegisterResources( hx::GetResources() );
 ::haxe::io::Error_obj::__boot();
 ::haxe::io::Encoding_obj::__boot();
 ::haxe::StackItem_obj::__boot();
+::Direction_obj::__boot();
 ::ValueType_obj::__boot();
 ::State_obj::__boot();
 ::lime::_internal::backend::native::NativeApplication_obj::__init__();

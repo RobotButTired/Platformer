@@ -10,6 +10,7 @@
 #include <openfl/display/Sprite.h>
 #endif
 HX_DECLARE_CLASS0(BackGround)
+HX_DECLARE_CLASS0(Bullet)
 HX_DECLARE_CLASS0(Button)
 HX_DECLARE_CLASS0(Game)
 HX_DECLARE_CLASS0(GameLevel)
@@ -20,10 +21,12 @@ HX_DECLARE_CLASS2(openfl,display,DisplayObjectContainer)
 HX_DECLARE_CLASS2(openfl,display,IBitmapDrawable)
 HX_DECLARE_CLASS2(openfl,display,InteractiveObject)
 HX_DECLARE_CLASS2(openfl,display,Sprite)
+HX_DECLARE_CLASS2(openfl,display,Tile)
 HX_DECLARE_CLASS2(openfl,events,Event)
 HX_DECLARE_CLASS2(openfl,events,EventDispatcher)
 HX_DECLARE_CLASS2(openfl,events,IEventDispatcher)
 HX_DECLARE_CLASS2(openfl,events,MouseEvent)
+HX_DECLARE_CLASS2(openfl,geom,Rectangle)
 
 
 
@@ -66,6 +69,9 @@ class HXCPP_CLASS_ATTRIBUTES Game_obj : public  ::openfl::display::Sprite_obj
 		bool quitButtonIsPressed;
 		 ::GameLevel gameLevel;
 		 ::Player player;
+		bool haveCollision;
+		::Array< ::Dynamic> bullets;
+		::Array< ::Dynamic> spentBullets;
 		void quitButtonClick( ::openfl::events::MouseEvent e);
 		::Dynamic quitButtonClick_dyn();
 
@@ -80,6 +86,18 @@ class HXCPP_CLASS_ATTRIBUTES Game_obj : public  ::openfl::display::Sprite_obj
 
 		void update();
 		::Dynamic update_dyn();
+
+		bool checkCollisionWithTile( ::openfl::geom::Rectangle playerHitBox, ::openfl::display::Tile tile);
+		::Dynamic checkCollisionWithTile_dyn();
+
+		void doCollisions();
+		::Dynamic doCollisions_dyn();
+
+		void playerJump();
+		::Dynamic playerJump_dyn();
+
+		void bulletsMove();
+		::Dynamic bulletsMove_dyn();
 
 };
 

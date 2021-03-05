@@ -16,6 +16,9 @@ class Game extends Sprite
     var gameLevel:GameLevel;
     var player:Player;
     var haveCollision:Bool = false;
+
+    public var bullets:Array<Bullet>;          //массив пуль
+    public var spentBullets:Array<Bullet>;     //массив отработавших пуль
     public function new(width:Int, height:Int)
     {
         super();
@@ -29,6 +32,10 @@ class Game extends Sprite
           //GameLevel
           gameLevel = new GameLevel(sizeWidth,sizeHeight);
           addChild(gameLevel);
+
+          //Bullets
+          bullets = [];
+          spentBullets = [];
 
 
           //PLayer
@@ -81,7 +88,9 @@ class Game extends Sprite
         doCollisions(); 
         playerJump();
         player.spriteAnimated(player.get_state());  
-        
+        player.doShot(this);
+        bulletsMove();
+        trace(bullets.length+" "+spentBullets.length);
     }
 
     public function checkCollisionWithTile(playerHitBox: Rectangle, tile:Tile):Bool
@@ -141,5 +150,20 @@ class Game extends Sprite
             }    
         if(!haveCollision)
             player.set_state(jump);
+    }
+    public function bulletsMove() 
+    {
+        var i=0;
+        while(i < bullets.length)
+            {
+                bullets[i].move();
+                if(bullets[i].x-bullets[i].width/2 >= Main.sizeWidth || bullets[i].x+bullets[i].width/2 <= 0)
+                {
+                    removeChild(bullets[i]);
+                    spentBullets.push(bullets[i]);
+                    bullets.remove(bullets[i]);
+                }
+                i++;
+            }    
     }
 }

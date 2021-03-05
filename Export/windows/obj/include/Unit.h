@@ -9,6 +9,7 @@
 #ifndef INCLUDED_openfl_display_Sprite
 #include <openfl/display/Sprite.h>
 #endif
+HX_DECLARE_CLASS0(Direction)
 HX_DECLARE_CLASS0(Unit)
 HX_DECLARE_CLASS2(openfl,display,DisplayObject)
 HX_DECLARE_CLASS2(openfl,display,DisplayObjectContainer)
@@ -47,10 +48,21 @@ class HXCPP_CLASS_ATTRIBUTES Unit_obj : public  ::openfl::display::Sprite_obj
 		hx::Val __SetField(const ::String &inString,const hx::Val &inValue, hx::PropertyAccess inCallProp);
 		void __GetFields(Array< ::String> &outFields);
 		static void __register();
+		void __Mark(HX_MARK_PARAMS);
+		void __Visit(HX_VISIT_PARAMS);
 		bool _hx_isInstanceOf(int inClassId);
 		::String __ToString() const { return HX_("Unit",a4,f6,82,38); }
 
-		Float speed;
+		Float speedX;
+		Float speedY;
+		Float gravity;
+		 ::Direction direction;
+		Float get_speedY();
+		::Dynamic get_speedY_dyn();
+
+		void set_speedY(Float value);
+		::Dynamic set_speedY_dyn();
+
 };
 
 

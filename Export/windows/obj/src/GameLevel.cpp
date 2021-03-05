@@ -4,6 +4,9 @@
 #ifndef INCLUDED_GameLevel
 #include <GameLevel.h>
 #endif
+#ifndef INCLUDED_haxe_Log
+#include <haxe/Log.h>
+#endif
 #ifndef INCLUDED_openfl_display_BitmapData
 #include <openfl/display/BitmapData.h>
 #endif
@@ -48,7 +51,7 @@
 #endif
 
 HX_DEFINE_STACK_FRAME(_hx_pos_429e452b6bbe1ad4_26_new,"GameLevel","new",0x0984f604,"GameLevel.new","GameLevel.hx",26,0x295eb5ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_429e452b6bbe1ad4_55_addTiles,"GameLevel","addTiles",0x55a20b80,"GameLevel.addTiles","GameLevel.hx",55,0x295eb5ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_429e452b6bbe1ad4_58_addTiles,"GameLevel","addTiles",0x55a20b80,"GameLevel.addTiles","GameLevel.hx",58,0x295eb5ec)
 
 void GameLevel_obj::__construct(int width,int height){
             	HX_GC_STACKFRAME(&_hx_pos_429e452b6bbe1ad4_26_new)
@@ -73,6 +76,16 @@ HXLINE(  44)		this->IDs->push(ind21);
 HXLINE(  45)		this->IDs->push(ind31);
 HXLINE(  46)		this->IDs->push(ind41);
 HXLINE(  47)		this->addTiles();
+HXLINE(  48)		 ::Dynamic _hx_tmp = ::haxe::Log_obj::trace;
+HXDLIN(  48)		int _hx_tmp1 = this->tilemap->get_numTiles();
+HXDLIN(  48)		_hx_tmp(_hx_tmp1,hx::SourceInfo(HX_("Source/GameLevel.hx",c0,da,d9,8c),48,HX_("GameLevel",12,e4,50,49),HX_("new",60,d0,53,00)));
+HXLINE(  49)		 ::Dynamic _hx_tmp2 = ::haxe::Log_obj::trace;
+HXDLIN(  49)		::String _hx_tmp3 = (this->tilemap->getTileAt(0)->get_x() + HX_(" ",20,00,00,00));
+HXDLIN(  49)		::String _hx_tmp4 = (_hx_tmp3 + this->tilemap->getTileAt(0)->get_y());
+HXDLIN(  49)		_hx_tmp2(_hx_tmp4,hx::SourceInfo(HX_("Source/GameLevel.hx",c0,da,d9,8c),49,HX_("GameLevel",12,e4,50,49),HX_("new",60,d0,53,00)));
+HXLINE(  50)		 ::Dynamic _hx_tmp5 = ::haxe::Log_obj::trace;
+HXDLIN(  50)		Float _hx_tmp6 = this->tilemap->getTileAt(0)->get_width();
+HXDLIN(  50)		_hx_tmp5(_hx_tmp6,hx::SourceInfo(HX_("Source/GameLevel.hx",c0,da,d9,8c),50,HX_("GameLevel",12,e4,50,49),HX_("new",60,d0,53,00)));
             	}
 
 Dynamic GameLevel_obj::__CreateEmpty() { return new GameLevel_obj; }
@@ -107,32 +120,32 @@ bool GameLevel_obj::_hx_isInstanceOf(int inClassId) {
 }
 
 void GameLevel_obj::addTiles(){
-            	HX_GC_STACKFRAME(&_hx_pos_429e452b6bbe1ad4_55_addTiles)
-HXDLIN(  55)		int _g = 0;
-HXDLIN(  55)		while((_g < 15)){
-HXDLIN(  55)			_g = (_g + 1);
-HXDLIN(  55)			int i = (_g - 1);
-HXLINE(  56)			{
-HXLINE(  56)				int _g1 = 0;
-HXDLIN(  56)				while((_g1 < 20)){
-HXLINE(  56)					_g1 = (_g1 + 1);
-HXDLIN(  56)					int j = (_g1 - 1);
-HXLINE(  58)					if ((i == 11)) {
-HXLINE(  60)						this->tile =  ::openfl::display::Tile_obj::__alloc( HX_CTX ,this->IDs->__get(0),(( (Float)((j * this->sizeWidth)) ) / ( (Float)(20) )),(( (Float)((i * this->sizeHeight)) ) / ( (Float)(15) )),null(),null(),null(),null(),null());
+            	HX_GC_STACKFRAME(&_hx_pos_429e452b6bbe1ad4_58_addTiles)
+HXDLIN(  58)		int _g = 0;
+HXDLIN(  58)		while((_g < 15)){
+HXDLIN(  58)			_g = (_g + 1);
+HXDLIN(  58)			int i = (_g - 1);
+HXLINE(  59)			{
+HXLINE(  59)				int _g1 = 0;
+HXDLIN(  59)				while((_g1 < 20)){
+HXLINE(  59)					_g1 = (_g1 + 1);
+HXDLIN(  59)					int j = (_g1 - 1);
+HXLINE(  61)					if ((i == 11)) {
+HXLINE(  64)						this->tile =  ::openfl::display::Tile_obj::__alloc( HX_CTX ,this->IDs->__get(0),(( (Float)((j * this->sizeWidth)) ) / ( (Float)(20) )),(( (Float)((i * this->sizeHeight)) ) / ( (Float)(15) )),null(),null(),null(),null(),null());
             					}
-HXLINE(  62)					if ((i == 12)) {
-HXLINE(  64)						this->tile =  ::openfl::display::Tile_obj::__alloc( HX_CTX ,this->IDs->__get(1),(( (Float)((j * this->sizeWidth)) ) / ( (Float)(20) )),(( (Float)((i * this->sizeHeight)) ) / ( (Float)(15) )),null(),null(),null(),null(),null());
+HXLINE(  66)					if ((i == 12)) {
+HXLINE(  68)						this->tile =  ::openfl::display::Tile_obj::__alloc( HX_CTX ,this->IDs->__get(1),(( (Float)((j * this->sizeWidth)) ) / ( (Float)(20) )),(( (Float)((i * this->sizeHeight)) ) / ( (Float)(15) )),null(),null(),null(),null(),null());
             					}
-HXLINE(  66)					if ((i == 13)) {
-HXLINE(  68)						this->tile =  ::openfl::display::Tile_obj::__alloc( HX_CTX ,this->IDs->__get(2),(( (Float)((j * this->sizeWidth)) ) / ( (Float)(20) )),(( (Float)((i * this->sizeHeight)) ) / ( (Float)(15) )),null(),null(),null(),null(),null());
+HXLINE(  70)					if ((i == 13)) {
+HXLINE(  72)						this->tile =  ::openfl::display::Tile_obj::__alloc( HX_CTX ,this->IDs->__get(2),(( (Float)((j * this->sizeWidth)) ) / ( (Float)(20) )),(( (Float)((i * this->sizeHeight)) ) / ( (Float)(15) )),null(),null(),null(),null(),null());
             					}
-HXLINE(  70)					if ((i == 14)) {
-HXLINE(  72)						this->tile =  ::openfl::display::Tile_obj::__alloc( HX_CTX ,this->IDs->__get(3),(( (Float)((j * this->sizeWidth)) ) / ( (Float)(20) )),(( (Float)((i * this->sizeHeight)) ) / ( (Float)(15) )),null(),null(),null(),null(),null());
+HXLINE(  74)					if ((i == 14)) {
+HXLINE(  76)						this->tile =  ::openfl::display::Tile_obj::__alloc( HX_CTX ,this->IDs->__get(3),(( (Float)((j * this->sizeWidth)) ) / ( (Float)(20) )),(( (Float)((i * this->sizeHeight)) ) / ( (Float)(15) )),null(),null(),null(),null(),null());
             					}
-HXLINE(  74)					if ((i >= 11)) {
-HXLINE(  76)						this->tile->set_scaleX(((Float)1.25));
-HXLINE(  77)						this->tile->set_scaleY(((Float)1.25));
-HXLINE(  78)						this->tilemap->addTile(this->tile);
+HXLINE(  78)					if ((i >= 11)) {
+HXLINE(  80)						this->tile->set_scaleX(((Float)1.25));
+HXLINE(  81)						this->tile->set_scaleY(((Float)1.25));
+HXLINE(  82)						this->tilemap->addTile(this->tile);
             					}
             				}
             			}

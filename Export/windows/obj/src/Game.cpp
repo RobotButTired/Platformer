@@ -4,8 +4,14 @@
 #ifndef INCLUDED_BackGround
 #include <BackGround.h>
 #endif
+#ifndef INCLUDED_Bullet
+#include <Bullet.h>
+#endif
 #ifndef INCLUDED_Button
 #include <Button.h>
+#endif
+#ifndef INCLUDED_Direction
+#include <Direction.h>
 #endif
 #ifndef INCLUDED_Game
 #include <Game.h>
@@ -25,6 +31,9 @@
 #ifndef INCLUDED_Unit
 #include <Unit.h>
 #endif
+#ifndef INCLUDED_haxe_Log
+#include <haxe/Log.h>
+#endif
 #ifndef INCLUDED_openfl_display_DisplayObject
 #include <openfl/display/DisplayObject.h>
 #endif
@@ -34,11 +43,20 @@
 #ifndef INCLUDED_openfl_display_IBitmapDrawable
 #include <openfl/display/IBitmapDrawable.h>
 #endif
+#ifndef INCLUDED_openfl_display_ITileContainer
+#include <openfl/display/ITileContainer.h>
+#endif
 #ifndef INCLUDED_openfl_display_InteractiveObject
 #include <openfl/display/InteractiveObject.h>
 #endif
 #ifndef INCLUDED_openfl_display_Sprite
 #include <openfl/display/Sprite.h>
+#endif
+#ifndef INCLUDED_openfl_display_Tile
+#include <openfl/display/Tile.h>
+#endif
+#ifndef INCLUDED_openfl_display_Tilemap
+#include <openfl/display/Tilemap.h>
 #endif
 #ifndef INCLUDED_openfl_events_Event
 #include <openfl/events/Event.h>
@@ -52,37 +70,48 @@
 #ifndef INCLUDED_openfl_events_MouseEvent
 #include <openfl/events/MouseEvent.h>
 #endif
+#ifndef INCLUDED_openfl_geom_Point
+#include <openfl/geom/Point.h>
+#endif
+#ifndef INCLUDED_openfl_geom_Rectangle
+#include <openfl/geom/Rectangle.h>
+#endif
 
-HX_DEFINE_STACK_FRAME(_hx_pos_69efd8c9269cf369_6_new,"Game","new",0x79ba3204,"Game.new","Game.hx",6,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_53_quitButtonClick,"Game","quitButtonClick",0x3679e10b,"Game.quitButtonClick","Game.hx",53,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_56_quitButtonOver,"Game","quitButtonOver",0x51ad35f1,"Game.quitButtonOver","Game.hx",56,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_61_quitButtonOut,"Game","quitButtonOut",0x0f4a3e91,"Game.quitButtonOut","Game.hx",61,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_68_get_quitButtonIsPressed,"Game","get_quitButtonIsPressed",0x5edb1ab2,"Game.get_quitButtonIsPressed","Game.hx",68,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_71_update,"Game","update",0xfb78c2e5,"Game.update","Game.hx",71,0x56a4f9ec)
+HX_DEFINE_STACK_FRAME(_hx_pos_69efd8c9269cf369_9_new,"Game","new",0x79ba3204,"Game.new","Game.hx",9,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_68_quitButtonClick,"Game","quitButtonClick",0x3679e10b,"Game.quitButtonClick","Game.hx",68,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_71_quitButtonOver,"Game","quitButtonOver",0x51ad35f1,"Game.quitButtonOver","Game.hx",71,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_76_quitButtonOut,"Game","quitButtonOut",0x0f4a3e91,"Game.quitButtonOut","Game.hx",76,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_83_get_quitButtonIsPressed,"Game","get_quitButtonIsPressed",0x5edb1ab2,"Game.get_quitButtonIsPressed","Game.hx",83,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_86_update,"Game","update",0xfb78c2e5,"Game.update","Game.hx",86,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_97_checkCollisionWithTile,"Game","checkCollisionWithTile",0xb72889da,"Game.checkCollisionWithTile","Game.hx",97,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_130_doCollisions,"Game","doCollisions",0x0efb5d08,"Game.doCollisions","Game.hx",130,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_144_playerJump,"Game","playerJump",0x8a147bcb,"Game.playerJump","Game.hx",144,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_155_bulletsMove,"Game","bulletsMove",0x74d16946,"Game.bulletsMove","Game.hx",155,0x56a4f9ec)
 
 void Game_obj::__construct(int width,int height){
-            	HX_GC_STACKFRAME(&_hx_pos_69efd8c9269cf369_6_new)
-HXLINE(  12)		this->quitButtonIsPressed = false;
-HXLINE(  17)		super::__construct();
-HXLINE(  18)		this->sizeWidth = width;
-HXLINE(  19)		this->sizeHeight = height;
-HXLINE(  21)		this->backGround =  ::BackGround_obj::__alloc( HX_CTX ,HX_("gameScreen",fe,24,d3,89));
-HXLINE(  23)		this->addChild(this->backGround);
-HXLINE(  26)		this->gameLevel =  ::GameLevel_obj::__alloc( HX_CTX ,this->sizeWidth,this->sizeHeight);
-HXLINE(  27)		this->addChild(this->gameLevel);
-HXLINE(  31)		this->player =  ::Player_obj::__alloc( HX_CTX );
-HXLINE(  32)		this->player->set_x(( (Float)(100) ));
-HXLINE(  33)		 ::Player _hx_tmp = this->player;
-HXDLIN(  33)		int _hx_tmp1 = (::Main_obj::sizeHeight - 160);
-HXDLIN(  33)		_hx_tmp->set_y((( (Float)(_hx_tmp1) ) - (this->player->get_height() / ( (Float)(2) ))));
-HXLINE(  34)		this->addChild(this->player);
-HXLINE(  37)		this->quitButton =  ::Button_obj::__alloc( HX_CTX ,(( (Float)(this->sizeWidth) ) / ( (Float)(2) )),(( (Float)(this->sizeHeight) ) / ( (Float)(2) )),HX_("QUIT",cf,07,cb,35));
-HXLINE(  38)		this->quitButton->set_x((( (Float)((this->sizeWidth * 7)) ) / ( (Float)(8) )));
-HXLINE(  39)		this->quitButton->set_y((( (Float)(this->sizeHeight) ) / ( (Float)(25) )));
-HXLINE(  41)		this->addChild(this->quitButton);
-HXLINE(  43)		this->quitButton->addEventListener(HX_("mouseOver",19,4a,0d,f6),this->quitButtonOver_dyn(),null(),null(),null());
-HXLINE(  44)		this->quitButton->addEventListener(HX_("mouseOut",69,e7,1d,a4),this->quitButtonOut_dyn(),null(),null(),null());
-HXLINE(  45)		this->quitButton->addEventListener(HX_("mouseDown",27,b1,c2,ee),this->quitButtonClick_dyn(),null(),null(),null());
+            	HX_GC_STACKFRAME(&_hx_pos_69efd8c9269cf369_9_new)
+HXLINE(  18)		this->haveCollision = false;
+HXLINE(  15)		this->quitButtonIsPressed = false;
+HXLINE(  24)		super::__construct();
+HXLINE(  25)		this->sizeWidth = width;
+HXLINE(  26)		this->sizeHeight = height;
+HXLINE(  28)		this->backGround =  ::BackGround_obj::__alloc( HX_CTX ,HX_("gameScreen",fe,24,d3,89));
+HXLINE(  30)		this->addChild(this->backGround);
+HXLINE(  33)		this->gameLevel =  ::GameLevel_obj::__alloc( HX_CTX ,this->sizeWidth,this->sizeHeight);
+HXLINE(  34)		this->addChild(this->gameLevel);
+HXLINE(  37)		this->bullets = ::Array_obj< ::Dynamic>::__new(0);
+HXLINE(  38)		this->spentBullets = ::Array_obj< ::Dynamic>::__new(0);
+HXLINE(  42)		this->player =  ::Player_obj::__alloc( HX_CTX );
+HXLINE(  43)		this->player->set_x(( (Float)(100) ));
+HXLINE(  44)		this->player->set_y(( (Float)(100) ));
+HXLINE(  45)		this->addChild(this->player);
+HXLINE(  48)		this->quitButton =  ::Button_obj::__alloc( HX_CTX ,(( (Float)(this->sizeWidth) ) / ( (Float)(2) )),(( (Float)(this->sizeHeight) ) / ( (Float)(2) )),HX_("QUIT",cf,07,cb,35));
+HXLINE(  49)		this->quitButton->set_x((( (Float)((this->sizeWidth * 7)) ) / ( (Float)(8) )));
+HXLINE(  50)		this->quitButton->set_y((( (Float)(this->sizeHeight) ) / ( (Float)(25) )));
+HXLINE(  52)		this->addChild(this->quitButton);
+HXLINE(  54)		this->quitButton->addEventListener(HX_("mouseOver",19,4a,0d,f6),this->quitButtonOver_dyn(),null(),null(),null());
+HXLINE(  55)		this->quitButton->addEventListener(HX_("mouseOut",69,e7,1d,a4),this->quitButtonOut_dyn(),null(),null(),null());
+HXLINE(  56)		this->quitButton->addEventListener(HX_("mouseDown",27,b1,c2,ee),this->quitButtonClick_dyn(),null(),null(),null());
             	}
 
 Dynamic Game_obj::__CreateEmpty() { return new Game_obj; }
@@ -117,48 +146,189 @@ bool Game_obj::_hx_isInstanceOf(int inClassId) {
 }
 
 void Game_obj::quitButtonClick( ::openfl::events::MouseEvent e){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_53_quitButtonClick)
-HXDLIN(  53)		this->quitButtonIsPressed = true;
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_68_quitButtonClick)
+HXDLIN(  68)		this->quitButtonIsPressed = true;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC1(Game_obj,quitButtonClick,(void))
 
 void Game_obj::quitButtonOver( ::openfl::events::MouseEvent e){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_56_quitButtonOver)
-HXLINE(  57)		this->quitButton->set_scaleX(((Float)1.25));
-HXLINE(  58)		this->quitButton->set_scaleY(((Float)1.25));
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_71_quitButtonOver)
+HXLINE(  72)		this->quitButton->set_scaleX(((Float)1.25));
+HXLINE(  73)		this->quitButton->set_scaleY(((Float)1.25));
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC1(Game_obj,quitButtonOver,(void))
 
 void Game_obj::quitButtonOut( ::openfl::events::MouseEvent e){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_61_quitButtonOut)
-HXLINE(  62)		this->quitButton->set_scaleX(((Float)1.0));
-HXLINE(  63)		this->quitButton->set_scaleY(((Float)1.0));
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_76_quitButtonOut)
+HXLINE(  77)		this->quitButton->set_scaleX(((Float)1.0));
+HXLINE(  78)		this->quitButton->set_scaleY(((Float)1.0));
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC1(Game_obj,quitButtonOut,(void))
 
 bool Game_obj::get_quitButtonIsPressed(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_68_get_quitButtonIsPressed)
-HXDLIN(  68)		return this->quitButtonIsPressed;
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_83_get_quitButtonIsPressed)
+HXDLIN(  83)		return this->quitButtonIsPressed;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,get_quitButtonIsPressed,return )
 
 void Game_obj::update(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_71_update)
-HXLINE(  72)		this->player->move();
-HXLINE(  73)		 ::Player _hx_tmp = this->player;
-HXDLIN(  73)		_hx_tmp->spriteAnimated(this->player->get_state());
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_86_update)
+HXLINE(  87)		this->player->move();
+HXLINE(  88)		this->doCollisions();
+HXLINE(  89)		this->playerJump();
+HXLINE(  90)		 ::Player _hx_tmp = this->player;
+HXDLIN(  90)		_hx_tmp->spriteAnimated(this->player->get_state());
+HXLINE(  91)		this->player->doShot(hx::ObjectPtr<OBJ_>(this));
+HXLINE(  92)		this->bulletsMove();
+HXLINE(  93)		::haxe::Log_obj::trace(((this->bullets->length + HX_(" ",20,00,00,00)) + this->spentBullets->length),hx::SourceInfo(HX_("Source/Game.hx",98,05,24,39),93,HX_("Game",12,20,38,2f),HX_("update",09,86,05,87)));
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,update,(void))
+
+bool Game_obj::checkCollisionWithTile( ::openfl::geom::Rectangle playerHitBox, ::openfl::display::Tile tile){
+            	HX_GC_STACKFRAME(&_hx_pos_69efd8c9269cf369_97_checkCollisionWithTile)
+HXLINE(  98)		 ::openfl::geom::Point hitBox =  ::openfl::geom::Point_obj::__alloc( HX_CTX ,null(),null());
+HXLINE(  99)		 ::Player hitBox1 = this->player;
+HXDLIN(  99)		hitBox = hitBox1->localToGlobal( ::openfl::geom::Point_obj::__alloc( HX_CTX ,playerHitBox->x,playerHitBox->y));
+HXLINE( 100)		if (hx::IsEq( this->player->get_direction(),::Direction_obj::right_dyn() )) {
+HXLINE( 102)			bool _hx_tmp;
+HXDLIN( 102)			Float _hx_tmp1 = (hitBox->x + playerHitBox->width);
+HXDLIN( 102)			if ((_hx_tmp1 > tile->get_x())) {
+HXLINE( 103)				Float hitBox2 = hitBox->x;
+HXDLIN( 103)				Float _hx_tmp2 = tile->get_x();
+HXLINE( 102)				_hx_tmp = (hitBox2 < (_hx_tmp2 + tile->get_width()));
+            			}
+            			else {
+HXLINE( 102)				_hx_tmp = false;
+            			}
+HXDLIN( 102)			if (_hx_tmp) {
+HXLINE( 105)				bool _hx_tmp3;
+HXDLIN( 105)				Float _hx_tmp4 = (hitBox->y + playerHitBox->height);
+HXDLIN( 105)				if ((_hx_tmp4 > tile->get_y())) {
+HXLINE( 106)					Float hitBox3 = hitBox->y;
+HXLINE( 105)					_hx_tmp3 = (hitBox3 < tile->get_y());
+            				}
+            				else {
+HXLINE( 105)					_hx_tmp3 = false;
+            				}
+HXDLIN( 105)				if (_hx_tmp3) {
+HXLINE( 109)					return true;
+            				}
+            			}
+            		}
+            		else {
+HXLINE( 115)			bool _hx_tmp5;
+HXDLIN( 115)			Float hitBox4 = hitBox->x;
+HXDLIN( 115)			if ((hitBox4 > tile->get_x())) {
+HXLINE( 116)				Float _hx_tmp6 = (hitBox->x - playerHitBox->width);
+HXDLIN( 116)				Float _hx_tmp7 = tile->get_x();
+HXLINE( 115)				_hx_tmp5 = (_hx_tmp6 < (_hx_tmp7 + tile->get_width()));
+            			}
+            			else {
+HXLINE( 115)				_hx_tmp5 = false;
+            			}
+HXDLIN( 115)			if (_hx_tmp5) {
+HXLINE( 118)				bool _hx_tmp8;
+HXDLIN( 118)				Float _hx_tmp9 = (hitBox->y + playerHitBox->height);
+HXDLIN( 118)				if ((_hx_tmp9 > tile->get_y())) {
+HXLINE( 119)					Float hitBox5 = hitBox->y;
+HXLINE( 118)					_hx_tmp8 = (hitBox5 < tile->get_y());
+            				}
+            				else {
+HXLINE( 118)					_hx_tmp8 = false;
+            				}
+HXDLIN( 118)				if (_hx_tmp8) {
+HXLINE( 122)					return true;
+            				}
+            			}
+            		}
+HXLINE( 127)		return false;
+            	}
+
+
+HX_DEFINE_DYNAMIC_FUNC2(Game_obj,checkCollisionWithTile,return )
+
+void Game_obj::doCollisions(){
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_130_doCollisions)
+HXLINE( 131)		this->haveCollision = false;
+HXLINE( 132)		{
+HXLINE( 132)			int _g = 0;
+HXDLIN( 132)			int _g1 = this->gameLevel->tilemap->get_numTiles();
+HXDLIN( 132)			while((_g < _g1)){
+HXLINE( 132)				_g = (_g + 1);
+HXDLIN( 132)				int i = (_g - 1);
+HXLINE( 134)				 ::openfl::geom::Rectangle _hx_tmp = this->player->get_hitBox();
+HXDLIN( 134)				if (this->checkCollisionWithTile(_hx_tmp,this->gameLevel->tilemap->getTileAt(i))) {
+HXLINE( 136)					 ::Player _hx_tmp1 = this->player;
+HXDLIN( 136)					Float _hx_tmp2 = this->gameLevel->tilemap->getTileAt(i)->get_y();
+HXDLIN( 136)					_hx_tmp1->set_y(((_hx_tmp2 - (this->player->get_hitBox()->height / ( (Float)(2) ))) + ((Float)2.5)));
+HXLINE( 137)					this->player->set_speedY(((Float)0.0));
+HXLINE( 138)					this->haveCollision = true;
+            				}
+            			}
+            		}
+            	}
+
+
+HX_DEFINE_DYNAMIC_FUNC0(Game_obj,doCollisions,(void))
+
+void Game_obj::playerJump(){
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_144_playerJump)
+HXLINE( 146)		bool _hx_tmp;
+HXDLIN( 146)		if (this->player->get_jump()) {
+HXLINE( 146)			_hx_tmp = this->haveCollision;
+            		}
+            		else {
+HXLINE( 146)			_hx_tmp = false;
+            		}
+HXDLIN( 146)		if (_hx_tmp) {
+HXLINE( 148)			::haxe::Log_obj::trace(HX_("jump",ee,c4,69,46),hx::SourceInfo(HX_("Source/Game.hx",98,05,24,39),148,HX_("Game",12,20,38,2f),HX_("playerJump",ef,a0,2b,a9)));
+HXLINE( 149)			 ::Player _hx_tmp1 = this->player;
+HXDLIN( 149)			_hx_tmp1->set_speedY((this->player->get_speedY() - ((Float)15.0)));
+            		}
+HXLINE( 151)		if (!(this->haveCollision)) {
+HXLINE( 152)			this->player->set_state(::State_obj::jump_dyn());
+            		}
+            	}
+
+
+HX_DEFINE_DYNAMIC_FUNC0(Game_obj,playerJump,(void))
+
+void Game_obj::bulletsMove(){
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_155_bulletsMove)
+HXLINE( 156)		int i = 0;
+HXLINE( 157)		while((i < this->bullets->length)){
+HXLINE( 159)			this->bullets->__get(i).StaticCast<  ::Bullet >()->move();
+HXLINE( 160)			bool _hx_tmp;
+HXDLIN( 160)			Float _hx_tmp1 = this->bullets->__get(i).StaticCast<  ::Bullet >()->get_x();
+HXDLIN( 160)			Float _hx_tmp2 = (_hx_tmp1 - (this->bullets->__get(i).StaticCast<  ::Bullet >()->get_width() / ( (Float)(2) )));
+HXDLIN( 160)			if (!((_hx_tmp2 >= ::Main_obj::sizeWidth))) {
+HXLINE( 160)				Float _hx_tmp3 = this->bullets->__get(i).StaticCast<  ::Bullet >()->get_x();
+HXDLIN( 160)				_hx_tmp = ((_hx_tmp3 + (this->bullets->__get(i).StaticCast<  ::Bullet >()->get_width() / ( (Float)(2) ))) <= 0);
+            			}
+            			else {
+HXLINE( 160)				_hx_tmp = true;
+            			}
+HXDLIN( 160)			if (_hx_tmp) {
+HXLINE( 162)				this->removeChild(this->bullets->__get(i).StaticCast<  ::Bullet >());
+HXLINE( 163)				this->spentBullets->push(this->bullets->__get(i).StaticCast<  ::Bullet >());
+HXLINE( 164)				this->bullets->remove(this->bullets->__get(i).StaticCast<  ::Bullet >());
+            			}
+HXLINE( 166)			i = (i + 1);
+            		}
+            	}
+
+
+HX_DEFINE_DYNAMIC_FUNC0(Game_obj,bulletsMove,(void))
 
 
 hx::ObjectPtr< Game_obj > Game_obj::__new(int width,int height) {
@@ -188,6 +358,9 @@ void Game_obj::__Mark(HX_MARK_PARAMS)
 	HX_MARK_MEMBER_NAME(quitButtonIsPressed,"quitButtonIsPressed");
 	HX_MARK_MEMBER_NAME(gameLevel,"gameLevel");
 	HX_MARK_MEMBER_NAME(player,"player");
+	HX_MARK_MEMBER_NAME(haveCollision,"haveCollision");
+	HX_MARK_MEMBER_NAME(bullets,"bullets");
+	HX_MARK_MEMBER_NAME(spentBullets,"spentBullets");
 	 ::openfl::display::Sprite_obj::__Mark(HX_MARK_ARG);
 	HX_MARK_END_CLASS();
 }
@@ -201,6 +374,9 @@ void Game_obj::__Visit(HX_VISIT_PARAMS)
 	HX_VISIT_MEMBER_NAME(quitButtonIsPressed,"quitButtonIsPressed");
 	HX_VISIT_MEMBER_NAME(gameLevel,"gameLevel");
 	HX_VISIT_MEMBER_NAME(player,"player");
+	HX_VISIT_MEMBER_NAME(haveCollision,"haveCollision");
+	HX_VISIT_MEMBER_NAME(bullets,"bullets");
+	HX_VISIT_MEMBER_NAME(spentBullets,"spentBullets");
 	 ::openfl::display::Sprite_obj::__Visit(HX_VISIT_ARG);
 }
 
@@ -211,6 +387,9 @@ hx::Val Game_obj::__Field(const ::String &inName,hx::PropertyAccess inCallProp)
 		if (HX_FIELD_EQ(inName,"player") ) { return hx::Val( player ); }
 		if (HX_FIELD_EQ(inName,"update") ) { return hx::Val( update_dyn() ); }
 		break;
+	case 7:
+		if (HX_FIELD_EQ(inName,"bullets") ) { return hx::Val( bullets ); }
+		break;
 	case 9:
 		if (HX_FIELD_EQ(inName,"sizeWidth") ) { return hx::Val( sizeWidth ); }
 		if (HX_FIELD_EQ(inName,"gameLevel") ) { return hx::Val( gameLevel ); }
@@ -219,8 +398,17 @@ hx::Val Game_obj::__Field(const ::String &inName,hx::PropertyAccess inCallProp)
 		if (HX_FIELD_EQ(inName,"sizeHeight") ) { return hx::Val( sizeHeight ); }
 		if (HX_FIELD_EQ(inName,"backGround") ) { return hx::Val( backGround ); }
 		if (HX_FIELD_EQ(inName,"quitButton") ) { return hx::Val( quitButton ); }
+		if (HX_FIELD_EQ(inName,"playerJump") ) { return hx::Val( playerJump_dyn() ); }
+		break;
+	case 11:
+		if (HX_FIELD_EQ(inName,"bulletsMove") ) { return hx::Val( bulletsMove_dyn() ); }
+		break;
+	case 12:
+		if (HX_FIELD_EQ(inName,"spentBullets") ) { return hx::Val( spentBullets ); }
+		if (HX_FIELD_EQ(inName,"doCollisions") ) { return hx::Val( doCollisions_dyn() ); }
 		break;
 	case 13:
+		if (HX_FIELD_EQ(inName,"haveCollision") ) { return hx::Val( haveCollision ); }
 		if (HX_FIELD_EQ(inName,"quitButtonOut") ) { return hx::Val( quitButtonOut_dyn() ); }
 		break;
 	case 14:
@@ -231,6 +419,9 @@ hx::Val Game_obj::__Field(const ::String &inName,hx::PropertyAccess inCallProp)
 		break;
 	case 19:
 		if (HX_FIELD_EQ(inName,"quitButtonIsPressed") ) { return hx::Val( quitButtonIsPressed ); }
+		break;
+	case 22:
+		if (HX_FIELD_EQ(inName,"checkCollisionWithTile") ) { return hx::Val( checkCollisionWithTile_dyn() ); }
 		break;
 	case 23:
 		if (HX_FIELD_EQ(inName,"get_quitButtonIsPressed") ) { return hx::Val( get_quitButtonIsPressed_dyn() ); }
@@ -244,6 +435,9 @@ hx::Val Game_obj::__SetField(const ::String &inName,const hx::Val &inValue,hx::P
 	case 6:
 		if (HX_FIELD_EQ(inName,"player") ) { player=inValue.Cast<  ::Player >(); return inValue; }
 		break;
+	case 7:
+		if (HX_FIELD_EQ(inName,"bullets") ) { bullets=inValue.Cast< ::Array< ::Dynamic> >(); return inValue; }
+		break;
 	case 9:
 		if (HX_FIELD_EQ(inName,"sizeWidth") ) { sizeWidth=inValue.Cast< int >(); return inValue; }
 		if (HX_FIELD_EQ(inName,"gameLevel") ) { gameLevel=inValue.Cast<  ::GameLevel >(); return inValue; }
@@ -252,6 +446,12 @@ hx::Val Game_obj::__SetField(const ::String &inName,const hx::Val &inValue,hx::P
 		if (HX_FIELD_EQ(inName,"sizeHeight") ) { sizeHeight=inValue.Cast< int >(); return inValue; }
 		if (HX_FIELD_EQ(inName,"backGround") ) { backGround=inValue.Cast<  ::BackGround >(); return inValue; }
 		if (HX_FIELD_EQ(inName,"quitButton") ) { quitButton=inValue.Cast<  ::Button >(); return inValue; }
+		break;
+	case 12:
+		if (HX_FIELD_EQ(inName,"spentBullets") ) { spentBullets=inValue.Cast< ::Array< ::Dynamic> >(); return inValue; }
+		break;
+	case 13:
+		if (HX_FIELD_EQ(inName,"haveCollision") ) { haveCollision=inValue.Cast< bool >(); return inValue; }
 		break;
 	case 19:
 		if (HX_FIELD_EQ(inName,"quitButtonIsPressed") ) { quitButtonIsPressed=inValue.Cast< bool >(); return inValue; }
@@ -268,6 +468,9 @@ void Game_obj::__GetFields(Array< ::String> &outFields)
 	outFields->push(HX_("quitButtonIsPressed",77,e8,7a,c2));
 	outFields->push(HX_("gameLevel",32,04,7e,a7));
 	outFields->push(HX_("player",61,eb,b8,37));
+	outFields->push(HX_("haveCollision",ea,c8,af,00));
+	outFields->push(HX_("bullets",f1,67,ef,29));
+	outFields->push(HX_("spentBullets",23,da,85,4d));
 	super::__GetFields(outFields);
 };
 
@@ -280,6 +483,9 @@ static hx::StorageInfo Game_obj_sMemberStorageInfo[] = {
 	{hx::fsBool,(int)offsetof(Game_obj,quitButtonIsPressed),HX_("quitButtonIsPressed",77,e8,7a,c2)},
 	{hx::fsObject /*  ::GameLevel */ ,(int)offsetof(Game_obj,gameLevel),HX_("gameLevel",32,04,7e,a7)},
 	{hx::fsObject /*  ::Player */ ,(int)offsetof(Game_obj,player),HX_("player",61,eb,b8,37)},
+	{hx::fsBool,(int)offsetof(Game_obj,haveCollision),HX_("haveCollision",ea,c8,af,00)},
+	{hx::fsObject /* ::Array< ::Dynamic> */ ,(int)offsetof(Game_obj,bullets),HX_("bullets",f1,67,ef,29)},
+	{hx::fsObject /* ::Array< ::Dynamic> */ ,(int)offsetof(Game_obj,spentBullets),HX_("spentBullets",23,da,85,4d)},
 	{ hx::fsUnknown, 0, null()}
 };
 static hx::StaticInfo *Game_obj_sStaticStorageInfo = 0;
@@ -293,11 +499,18 @@ static ::String Game_obj_sMemberFields[] = {
 	HX_("quitButtonIsPressed",77,e8,7a,c2),
 	HX_("gameLevel",32,04,7e,a7),
 	HX_("player",61,eb,b8,37),
+	HX_("haveCollision",ea,c8,af,00),
+	HX_("bullets",f1,67,ef,29),
+	HX_("spentBullets",23,da,85,4d),
 	HX_("quitButtonClick",67,99,35,9d),
 	HX_("quitButtonOver",15,bd,27,d6),
 	HX_("quitButtonOut",ed,e7,43,c5),
 	HX_("get_quitButtonIsPressed",0e,8f,d0,ca),
 	HX_("update",09,86,05,87),
+	HX_("checkCollisionWithTile",fe,d4,f4,3d),
+	HX_("doCollisions",2c,13,01,7e),
+	HX_("playerJump",ef,a0,2b,a9),
+	HX_("bulletsMove",a2,c3,fa,89),
 	::String(null()) };
 
 hx::Class Game_obj::__mClass;
