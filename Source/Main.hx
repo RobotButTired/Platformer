@@ -1,7 +1,9 @@
 package;
 
+import haxe.Timer;
 import openfl.events.Event;
 import openfl.display.Sprite;
+
 
 
 class Main extends Sprite
@@ -10,55 +12,85 @@ class Main extends Sprite
 	public static var sizeHeight = 600;
 	var startScreen:StartScreen;
 	var rulesScreen:RulesScreen;
+	var gameOverScreen:GameOverScreen;
 	var game:Game;
+
+	var FPS:Int = 60;
+	var timeFlag:Float;
 	public function new()
 	{
 		super();
 		startScreen = new StartScreen(sizeWidth, sizeHeight, this);
 		rulesScreen = new RulesScreen(sizeWidth, sizeHeight);
+		gameOverScreen = new GameOverScreen();
+		
 		
 		addChild(startScreen);
 		
 		trace(this.width+" "+this.height);
 
 		addEventListener(Event.ENTER_FRAME, update);
+
+		timeFlag = Timer.stamp();
 	}
 
 	public function update(e:Event)
 	{
-		if(startScreen.get_rulesButtonIsPressed())
+		if(Timer.stamp() - timeFlag >= 1/FPS)
+		{
+			if(startScreen.get_rulesButtonIsPressed())
+				{
+					removeChild(startScreen);
+					startScreen.reset();
+					addChild(rulesScreen);
+				}
+			if(rulesScreen.get_backButtonIsPressed())
+				{
+					removeChild(rulesScreen);
+					rulesScreen.reset();
+					addChild(startScreen);
+				}
+			if(startScreen.get_startButtonIsPressed())
+				{
+					removeChild(startScreen);
+					startScreen.reset();
+					game = new Game(sizeWidth, sizeHeight);
+					addChild(game);
+				}
+			if(gameOverScreen.get_quitButtonIsPressed())
 			{
-				removeChild(startScreen);
-				startScreen.reset();
-				addChild(rulesScreen);
-			}
-		if(rulesScreen.get_backButtonIsPressed())
-			{
-				removeChild(rulesScreen);
-				rulesScreen.reset();
+				removeChild(gameOverScreen);
+				gameOverScreen.reset();
 				addChild(startScreen);
 			}
-		if(startScreen.get_startButtonIsPressed())
+			if(gameOverScreen.get_tryAgainButtonIsPressed())
 			{
-				removeChild(startScreen);
-				startScreen.reset();
+				removeChild(gameOverScreen);
+				gameOverScreen.reset();
 				game = new Game(sizeWidth, sizeHeight);
 				addChild(game);
 			}
-		if(this.contains(game))
-			{
-				if(game.get_quitButtonIsPressed())
+			if(this.contains(game))
+				{
+					if(game.get_quitButtonIsPressed())
 					{
-						//trace(123);
 						removeChild(game);
 						addChild(startScreen);
 						game =null;
-
+					}
+					else if(game.get_gameIsOver())
+					{
+						removeChild(game);
+						addChild(gameOverScreen);
+						game =null;
 					}
 					if(game != null)
 						{
 							game.update();
 						}
-			}
+				}
+			timeFlag = Timer.stamp();
+		}
+		
 	}
 }

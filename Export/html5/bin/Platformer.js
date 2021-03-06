@@ -870,9 +870,9 @@ ApplicationMain.create = function(config) {
 	ManifestResources.init(config);
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-		_this.setReserved("build","5");
+		_this.setReserved("build","6");
 	} else {
-		_this.h["build"] = "5";
+		_this.h["build"] = "6";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -4102,43 +4102,64 @@ openfl_display_Sprite.prototype = $extend(openfl_display_DisplayObjectContainer.
 	,__class__: openfl_display_Sprite
 });
 var Main = function() {
+	this.FPS = 60;
 	openfl_display_Sprite.call(this);
 	this.startScreen = new StartScreen(Main.sizeWidth,Main.sizeHeight,this);
 	this.rulesScreen = new RulesScreen(Main.sizeWidth,Main.sizeHeight);
+	this.gameOverScreen = new GameOverScreen();
 	this.addChild(this.startScreen);
-	haxe_Log.trace(this.get_width() + " " + this.get_height(),{ fileName : "Source/Main.hx", lineNumber : 22, className : "Main", methodName : "new"});
+	haxe_Log.trace(this.get_width() + " " + this.get_height(),{ fileName : "Source/Main.hx", lineNumber : 30, className : "Main", methodName : "new"});
 	this.addEventListener("enterFrame",$bind(this,this.update));
+	this.timeFlag = new Date().getTime() / 1000;
 };
 $hxClasses["Main"] = Main;
 Main.__name__ = "Main";
 Main.__super__ = openfl_display_Sprite;
 Main.prototype = $extend(openfl_display_Sprite.prototype,{
 	update: function(e) {
-		if(this.startScreen.get_rulesButtonIsPressed()) {
-			this.removeChild(this.startScreen);
-			this.startScreen.reset();
-			this.addChild(this.rulesScreen);
-		}
-		if(this.rulesScreen.get_backButtonIsPressed()) {
-			this.removeChild(this.rulesScreen);
-			this.rulesScreen.reset();
-			this.addChild(this.startScreen);
-		}
-		if(this.startScreen.get_startButtonIsPressed()) {
-			this.removeChild(this.startScreen);
-			this.startScreen.reset();
-			this.game = new Game(Main.sizeWidth,Main.sizeHeight);
-			this.addChild(this.game);
-		}
-		if(this.contains(this.game)) {
-			if(this.game.get_quitButtonIsPressed()) {
-				this.removeChild(this.game);
+		if(new Date().getTime() / 1000 - this.timeFlag >= 1 / this.FPS) {
+			if(this.startScreen.get_rulesButtonIsPressed()) {
+				this.removeChild(this.startScreen);
+				this.startScreen.reset();
+				this.addChild(this.rulesScreen);
+			}
+			if(this.rulesScreen.get_backButtonIsPressed()) {
+				this.removeChild(this.rulesScreen);
+				this.rulesScreen.reset();
 				this.addChild(this.startScreen);
-				this.game = null;
 			}
-			if(this.game != null) {
-				this.game.update();
+			if(this.startScreen.get_startButtonIsPressed()) {
+				this.removeChild(this.startScreen);
+				this.startScreen.reset();
+				this.game = new Game(Main.sizeWidth,Main.sizeHeight);
+				this.addChild(this.game);
 			}
+			if(this.gameOverScreen.get_quitButtonIsPressed()) {
+				this.removeChild(this.gameOverScreen);
+				this.gameOverScreen.reset();
+				this.addChild(this.startScreen);
+			}
+			if(this.gameOverScreen.get_tryAgainButtonIsPressed()) {
+				this.removeChild(this.gameOverScreen);
+				this.gameOverScreen.reset();
+				this.game = new Game(Main.sizeWidth,Main.sizeHeight);
+				this.addChild(this.game);
+			}
+			if(this.contains(this.game)) {
+				if(this.game.get_quitButtonIsPressed()) {
+					this.removeChild(this.game);
+					this.addChild(this.startScreen);
+					this.game = null;
+				} else if(this.game.get_gameIsOver()) {
+					this.removeChild(this.game);
+					this.addChild(this.gameOverScreen);
+					this.game = null;
+				}
+				if(this.game != null) {
+					this.game.update();
+				}
+			}
+			this.timeFlag = new Date().getTime() / 1000;
 		}
 	}
 	,__class__: Main
@@ -4182,13 +4203,20 @@ Bullet.prototype = $extend(openfl_display_Sprite.prototype,{
 	}
 	,setBullet: function(player) {
 		if(player.get_direction() == Direction.right) {
-			this.set_x(player.get_x() + 25.0);
+			this.set_x(player.get_x() + 10.0);
 			this.set_y(player.get_y());
 			this.speed = 20.0;
 		} else {
-			this.set_x(player.get_x() - 25.0);
+			this.set_x(player.get_x() - 10.0);
 			this.set_y(player.get_y());
 			this.speed = -20.0;
+		}
+	}
+	,checkCollisionWithEnemy: function(enemy) {
+		if(this.get_x() + this.get_width() / 2 > enemy.get_x() - enemy.get_width() / 2 && this.get_x() - this.get_width() / 2 < enemy.get_x() + enemy.get_width() / 2 && this.get_y() + this.get_height() / 2 > enemy.get_y() - enemy.get_height() / 2 && this.get_y() - this.get_height() / 2 < enemy.get_y() + enemy.get_height() / 2) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 	,__class__: Bullet
@@ -4310,7 +4338,66 @@ EReg.prototype = {
 	}
 	,__class__: EReg
 };
+var Unit = function() {
+	this.movingRight = false;
+	this.movingLeft = false;
+	this.direction = Direction.right;
+	this.gravity = 0.8;
+	this.speedY = 0.0;
+	openfl_display_Sprite.call(this);
+};
+$hxClasses["Unit"] = Unit;
+Unit.__name__ = "Unit";
+Unit.__super__ = openfl_display_Sprite;
+Unit.prototype = $extend(openfl_display_Sprite.prototype,{
+	get_speedY: function() {
+		return this.speedY;
+	}
+	,set_speedY: function(value) {
+		this.speedY = value;
+	}
+	,get_hitBox: function() {
+		return this.hitBox;
+	}
+	,__class__: Unit
+});
+var Enemy = function() {
+	Unit.call(this);
+	this.hitBox = new openfl_geom_Rectangle(-15.,-20.,30,40);
+	this.drawHitBox();
+	this.speedX = 1.5;
+};
+$hxClasses["Enemy"] = Enemy;
+Enemy.__name__ = "Enemy";
+Enemy.__super__ = Unit;
+Enemy.prototype = $extend(Unit.prototype,{
+	drawHitBox: function() {
+		this.get_graphics().lineStyle(3,65280);
+		this.get_graphics().drawRect(-this.get_hitBox().width / 2,-this.get_hitBox().height / 2,this.get_hitBox().width,this.get_hitBox().height);
+		this.get_graphics().endFill();
+	}
+	,move: function(player) {
+		if(this.get_y() + this.get_hitBox().height >= 440) {
+			this.set_y(440 - this.get_hitBox().height / 2);
+			this.speedY = 0.0;
+		}
+		if(player.get_x() < this.get_x()) {
+			var _g = this;
+			_g.set_x(_g.get_x() - this.speedX);
+		} else if(player.get_x() > this.get_x()) {
+			var _g1 = this;
+			_g1.set_x(_g1.get_x() + this.speedX);
+		}
+		this.speedY += this.gravity;
+		var _g2 = this;
+		_g2.set_y(_g2.get_y() + this.speedY);
+	}
+	,__class__: Enemy
+});
 var Game = function(width,height) {
+	this.spawnDelay = 2.0;
+	this.maxEnemies = 2;
+	this.gameIsOver = false;
 	this.haveCollision = false;
 	this.quitButtonIsPressed = false;
 	openfl_display_Sprite.call(this);
@@ -4326,6 +4413,9 @@ var Game = function(width,height) {
 	this.player.set_x(100);
 	this.player.set_y(100);
 	this.addChild(this.player);
+	this.enemies = [];
+	this.deadEnemies = [];
+	this.enemiesTimeFlag = new Date().getTime() / 1000;
 	this.quitButton = new Button(this.sizeWidth / 2,this.sizeHeight / 2,"QUIT");
 	this.quitButton.set_x(this.sizeWidth * 7 / 8);
 	this.quitButton.set_y(this.sizeHeight / 25);
@@ -4354,12 +4444,16 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 	}
 	,update: function() {
 		this.player.move();
-		this.doCollisions();
+		this.doCollisionsWithTiles();
+		this.doCollidionWithEnemies();
 		this.playerJump();
 		this.player.spriteAnimated(this.player.get_state());
 		this.player.doShot(this);
 		this.bulletsMove();
-		haxe_Log.trace(this.bullets.length + " " + this.spentBullets.length,{ fileName : "Source/Game.hx", lineNumber : 93, className : "Game", methodName : "update"});
+		this.generateEnemies();
+		this.moveEnemies();
+		this.doCollisionsWithBullet();
+		haxe_Log.trace(this.enemies.length + " " + this.deadEnemies.length,{ fileName : "Source/Game.hx", lineNumber : 112, className : "Game", methodName : "update"});
 	}
 	,checkCollisionWithTile: function(playerHitBox,tile) {
 		var hitBox = new openfl_geom_Point();
@@ -4377,7 +4471,7 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 		}
 		return false;
 	}
-	,doCollisions: function() {
+	,doCollisionsWithTiles: function() {
 		this.haveCollision = false;
 		var _g = 0;
 		var _g1 = this.gameLevel.tilemap.get_numTiles();
@@ -4392,7 +4486,7 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 	}
 	,playerJump: function() {
 		if(this.player.get_jump() && this.haveCollision) {
-			haxe_Log.trace("jump",{ fileName : "Source/Game.hx", lineNumber : 148, className : "Game", methodName : "playerJump"});
+			haxe_Log.trace("jump",{ fileName : "Source/Game.hx", lineNumber : 167, className : "Game", methodName : "playerJump"});
 			this.player.set_speedY(this.player.get_speedY() - 15.0);
 		}
 		if(!this.haveCollision) {
@@ -4409,6 +4503,68 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 				HxOverrides.remove(this.bullets,this.bullets[i]);
 			}
 			++i;
+		}
+	}
+	,generateEnemies: function() {
+		if(new Date().getTime() / 1000 - this.enemiesTimeFlag >= this.spawnDelay) {
+			if(this.enemies.length < this.maxEnemies) {
+				this.generateEnemy();
+			}
+			this.enemiesTimeFlag = new Date().getTime() / 1000;
+		}
+	}
+	,generateEnemy: function() {
+		var enemy;
+		if(this.deadEnemies.length > 0) {
+			enemy = this.deadEnemies.pop();
+		} else {
+			enemy = new Enemy();
+		}
+		enemy.set_y(100);
+		enemy.set_speedY(0.0);
+		this.enemies.push(enemy);
+		this.addChild(this.enemies[this.enemies.length - 1]);
+		if(Math.random() >= 0.5) {
+			enemy.set_x(800);
+		} else {
+			enemy.set_x(0);
+		}
+	}
+	,moveEnemies: function() {
+		var i = 0;
+		while(i < this.enemies.length) {
+			this.enemies[i].move(this.player);
+			++i;
+		}
+	}
+	,doCollisionsWithBullet: function() {
+		var b = 0;
+		while(b < this.bullets.length) {
+			var e = 0;
+			while(e < this.enemies.length) {
+				if(this.bullets[b].checkCollisionWithEnemy(this.enemies[e])) {
+					this.removeChild(this.bullets[b]);
+					this.spentBullets.push(this.bullets[b]);
+					HxOverrides.remove(this.bullets,this.bullets[b]);
+					this.removeChild(this.enemies[e]);
+					this.deadEnemies.push(this.enemies[e]);
+					HxOverrides.remove(this.enemies,this.enemies[e]);
+				}
+				++e;
+			}
+			++b;
+		}
+	}
+	,get_gameIsOver: function() {
+		return this.gameIsOver;
+	}
+	,doCollidionWithEnemies: function() {
+		var e = 0;
+		while(e < this.enemies.length) {
+			if(this.player.checkCollisionWithEnemy(this.enemies[e])) {
+				this.gameIsOver = true;
+			}
+			++e;
 		}
 	}
 	,__class__: Game
@@ -4467,6 +4623,65 @@ GameLevel.prototype = $extend(openfl_display_Sprite.prototype,{
 		}
 	}
 	,__class__: GameLevel
+});
+var GameOverScreen = function() {
+	this.tryAgainButtonIsPressed = false;
+	this.quitButtonIsPressed = false;
+	openfl_display_Sprite.call(this);
+	this.backGround = new BackGround("gameOverScreen");
+	this.addChild(this.backGround);
+	this.quitButton = new Button(Main.sizeWidth,Main.sizeHeight,"QUIT");
+	this.quitButton.set_x(Main.sizeWidth / 4);
+	this.quitButton.set_y(Main.sizeHeight * 5 / 6);
+	this.addChild(this.quitButton);
+	this.quitButton.addEventListener("mouseOver",$bind(this,this.quitButtonOver));
+	this.quitButton.addEventListener("mouseOut",$bind(this,this.quitButtonOut));
+	this.quitButton.addEventListener("mouseDown",$bind(this,this.quitButtonClick));
+	this.tryAgainButton = new Button(Main.sizeWidth,Main.sizeHeight,"TRY AGAIN");
+	this.tryAgainButton.set_x(Main.sizeWidth * 3 / 4);
+	this.tryAgainButton.set_y(Main.sizeHeight * 5 / 6);
+	this.addChild(this.tryAgainButton);
+	this.tryAgainButton.addEventListener("mouseOver",$bind(this,this.tryAgainButtononOver));
+	this.tryAgainButton.addEventListener("mouseOut",$bind(this,this.tryAgainButtonOut));
+	this.tryAgainButton.addEventListener("mouseDown",$bind(this,this.tryAgainButtonClick));
+};
+$hxClasses["GameOverScreen"] = GameOverScreen;
+GameOverScreen.__name__ = "GameOverScreen";
+GameOverScreen.__super__ = openfl_display_Sprite;
+GameOverScreen.prototype = $extend(openfl_display_Sprite.prototype,{
+	quitButtonOver: function(e) {
+		this.quitButton.set_scaleX(1.25);
+		this.quitButton.set_scaleY(1.25);
+	}
+	,quitButtonOut: function(e) {
+		this.quitButton.set_scaleX(1.0);
+		this.quitButton.set_scaleY(1.0);
+	}
+	,quitButtonClick: function(e) {
+		this.quitButtonIsPressed = true;
+	}
+	,get_quitButtonIsPressed: function() {
+		return this.quitButtonIsPressed;
+	}
+	,reset: function() {
+		this.quitButtonIsPressed = false;
+		this.tryAgainButtonIsPressed = false;
+	}
+	,tryAgainButtononOver: function(e) {
+		this.tryAgainButton.set_scaleX(1.25);
+		this.tryAgainButton.set_scaleY(1.25);
+	}
+	,tryAgainButtonOut: function(e) {
+		this.tryAgainButton.set_scaleX(1.0);
+		this.tryAgainButton.set_scaleY(1.0);
+	}
+	,tryAgainButtonClick: function(e) {
+		this.tryAgainButtonIsPressed = true;
+	}
+	,get_tryAgainButtonIsPressed: function() {
+		return this.tryAgainButtonIsPressed;
+	}
+	,__class__: GameOverScreen
 });
 var HxOverrides = function() { };
 $hxClasses["HxOverrides"] = HxOverrides;
@@ -4570,32 +4785,12 @@ var State = $hxEnums["State"] = { __ename__ : "State", __constructs__ : ["idle",
 	,walk: {_hx_index:1,__enum__:"State",toString:$estr}
 	,jump: {_hx_index:2,__enum__:"State",toString:$estr}
 };
-var Unit = function() {
-	this.direction = Direction.right;
-	this.gravity = 0.8;
-	this.speedY = 0.0;
-	openfl_display_Sprite.call(this);
-};
-$hxClasses["Unit"] = Unit;
-Unit.__name__ = "Unit";
-Unit.__super__ = openfl_display_Sprite;
-Unit.prototype = $extend(openfl_display_Sprite.prototype,{
-	get_speedY: function() {
-		return this.speedY;
-	}
-	,set_speedY: function(value) {
-		this.speedY = value;
-	}
-	,__class__: Unit
-});
 var Player = function() {
 	this.shooting = false;
-	this.frameOfFire = 2;
+	this.frameOfFire = 10;
 	this.frameTime = 0.15;
 	this.state = State.idle;
 	this.jump = false;
-	this.directionRight = false;
-	this.directionLeft = false;
 	Unit.call(this);
 	this.idleWidthGun = [];
 	this.idleWidthGun.push(new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("assets/Cowboy/Cowboy4_idle_with_gun_0.png")));
@@ -4618,13 +4813,15 @@ var Player = function() {
 	this.addChild(this.idleWidthGun[0]);
 	this.idleWidthGun[0].set_x(-15);
 	this.idleWidthGun[0].set_y(-40);
-	haxe_Log.trace(this.get_width() + " " + this.get_height(),{ fileName : "Source/Player.hx", lineNumber : 66, className : "Player", methodName : "new"});
+	haxe_Log.trace(this.get_width() + " " + this.get_height(),{ fileName : "Source/Player.hx", lineNumber : 64, className : "Player", methodName : "new"});
 	this.drawHitBox();
 	this.ind = 0;
 	this.timeFlag = new Date().getTime() / 1000;
 	this.shootingTime = new Date().getTime() / 1000;
 	openfl_Lib.get_current().stage.addEventListener("keyDown",$bind(this,this.keyDownHandler));
+	openfl_Lib.get_current().stage.addEventListener("mouseDown",$bind(this,this.mouseDownHandler));
 	openfl_Lib.get_current().stage.addEventListener("keyUp",$bind(this,this.keyUpHandler));
+	openfl_Lib.get_current().stage.addEventListener("mouseUp",$bind(this,this.mouseUpHandler));
 };
 $hxClasses["Player"] = Player;
 Player.__name__ = "Player";
@@ -4660,12 +4857,10 @@ Player.prototype = $extend(Unit.prototype,{
 	}
 	,keyDownHandler: function(e) {
 		if(e.keyCode == 37 || e.keyCode == 65) {
-			this.directionLeft = true;
-			this.direction = Direction.left;
+			this.movingLeft = true;
 		}
 		if(e.keyCode == 39 || e.keyCode == 68) {
-			this.directionRight = true;
-			this.direction = Direction.right;
+			this.movingRight = true;
 		}
 		if(e.keyCode == 38 || e.keyCode == 87) {
 			this.jump = true;
@@ -4674,12 +4869,15 @@ Player.prototype = $extend(Unit.prototype,{
 			this.shooting = true;
 		}
 	}
+	,mouseDownHandler: function(e) {
+		this.shooting = true;
+	}
 	,keyUpHandler: function(e) {
 		if(e.keyCode == 37 || e.keyCode == 65) {
-			this.directionLeft = false;
+			this.movingLeft = false;
 		}
 		if(e.keyCode == 39 || e.keyCode == 68) {
-			this.directionRight = false;
+			this.movingRight = false;
 		}
 		if(e.keyCode == 38 || e.keyCode == 87) {
 			this.jump = false;
@@ -4688,27 +4886,32 @@ Player.prototype = $extend(Unit.prototype,{
 			this.shooting = false;
 		}
 	}
+	,mouseUpHandler: function(e) {
+		this.shooting = false;
+	}
 	,move: function() {
-		if(this.directionLeft) {
+		if(this.movingLeft) {
 			if(this.get_x() - this.get_hitBox().width / 2 >= 0) {
 				var _g = this;
 				_g.set_x(_g.get_x() - this.speedX);
 			}
 			this.state = State.walk;
 			this.set_scaleX(-1.0);
+			this.direction = Direction.left;
 		}
-		if(this.directionRight) {
+		if(this.movingRight) {
 			if(this.get_x() + this.get_hitBox().width / 2 <= Main.sizeWidth) {
 				var _g1 = this;
 				_g1.set_x(_g1.get_x() + this.speedX);
 			}
 			this.state = State.walk;
 			this.set_scaleX(1.0);
+			this.direction = Direction.right;
 		}
-		if(this.directionLeft && this.directionRight) {
+		if(this.movingLeft && this.movingRight) {
 			this.state = State.idle;
 		}
-		if(!this.directionLeft && !this.directionRight) {
+		if(!this.movingLeft && !this.movingRight) {
 			this.state = State.idle;
 		}
 		this.speedY += this.gravity;
@@ -4719,7 +4922,7 @@ Player.prototype = $extend(Unit.prototype,{
 		if(new Date().getTime() / 1000 - this.shootingTime >= 1 / this.frameOfFire && this.shooting) {
 			var bullet;
 			if(game.spentBullets.length > 0) {
-				haxe_Log.trace(999999,{ fileName : "Source/Player.hx", lineNumber : 175, className : "Player", methodName : "doShot"});
+				haxe_Log.trace(999999,{ fileName : "Source/Player.hx", lineNumber : 181, className : "Player", methodName : "doShot"});
 				game.bullets.push(game.spentBullets.pop());
 				game.bullets[game.bullets.length - 1].setBullet(this);
 				game.addChild(game.bullets[game.bullets.length - 1]);
@@ -4728,9 +4931,16 @@ Player.prototype = $extend(Unit.prototype,{
 				bullet = new Bullet(this);
 				game.bullets.push(bullet);
 				game.addChild(bullet);
-				haxe_Log.trace("Shot",{ fileName : "Source/Player.hx", lineNumber : 187, className : "Player", methodName : "doShot"});
+				haxe_Log.trace("Shot",{ fileName : "Source/Player.hx", lineNumber : 193, className : "Player", methodName : "doShot"});
 				this.shootingTime = new Date().getTime() / 1000;
 			}
+		}
+	}
+	,checkCollisionWithEnemy: function(enemy) {
+		if(this.get_x() + this.get_hitBox().width / 2 > enemy.get_x() - enemy.get_hitBox().width / 2 && this.get_x() - this.get_hitBox().width / 2 < enemy.get_x() + enemy.get_hitBox().width / 2 && this.get_y() + this.get_hitBox().height / 2 > enemy.get_y() - enemy.get_hitBox().height / 2 && this.get_y() - this.get_hitBox().height / 2 < enemy.get_y() + enemy.get_hitBox().height / 2) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 	,get_state: function() {
@@ -4744,14 +4954,11 @@ Player.prototype = $extend(Unit.prototype,{
 		this.get_graphics().drawRect(-this.get_hitBox().width / 2,-this.get_hitBox().height / 2,this.get_hitBox().width,this.get_hitBox().height);
 		this.get_graphics().endFill();
 	}
-	,get_hitBox: function() {
-		return this.hitBox;
-	}
 	,get_directionLeft: function() {
-		return this.directionLeft;
+		return this.movingLeft;
 	}
 	,get_directionRight: function() {
-		return this.directionRight;
+		return this.movingRight;
 	}
 	,get_jump: function() {
 		return this.jump;
@@ -23759,7 +23966,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 673154;
+	this.version = 350661;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";

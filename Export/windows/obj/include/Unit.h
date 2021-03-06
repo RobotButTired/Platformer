@@ -18,6 +18,7 @@ HX_DECLARE_CLASS2(openfl,display,InteractiveObject)
 HX_DECLARE_CLASS2(openfl,display,Sprite)
 HX_DECLARE_CLASS2(openfl,events,EventDispatcher)
 HX_DECLARE_CLASS2(openfl,events,IEventDispatcher)
+HX_DECLARE_CLASS2(openfl,geom,Rectangle)
 
 
 
@@ -57,11 +58,17 @@ class HXCPP_CLASS_ATTRIBUTES Unit_obj : public  ::openfl::display::Sprite_obj
 		Float speedY;
 		Float gravity;
 		 ::Direction direction;
+		bool movingLeft;
+		bool movingRight;
+		 ::openfl::geom::Rectangle hitBox;
 		Float get_speedY();
 		::Dynamic get_speedY_dyn();
 
 		void set_speedY(Float value);
 		::Dynamic set_speedY_dyn();
+
+		 ::openfl::geom::Rectangle get_hitBox();
+		::Dynamic get_hitBox_dyn();
 
 };
 

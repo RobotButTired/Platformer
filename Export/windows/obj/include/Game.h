@@ -12,6 +12,7 @@
 HX_DECLARE_CLASS0(BackGround)
 HX_DECLARE_CLASS0(Bullet)
 HX_DECLARE_CLASS0(Button)
+HX_DECLARE_CLASS0(Enemy)
 HX_DECLARE_CLASS0(Game)
 HX_DECLARE_CLASS0(GameLevel)
 HX_DECLARE_CLASS0(Player)
@@ -70,8 +71,14 @@ class HXCPP_CLASS_ATTRIBUTES Game_obj : public  ::openfl::display::Sprite_obj
 		 ::GameLevel gameLevel;
 		 ::Player player;
 		bool haveCollision;
+		bool gameIsOver;
 		::Array< ::Dynamic> bullets;
 		::Array< ::Dynamic> spentBullets;
+		::Array< ::Dynamic> enemies;
+		::Array< ::Dynamic> deadEnemies;
+		int maxEnemies;
+		Float spawnDelay;
+		Float enemiesTimeFlag;
 		void quitButtonClick( ::openfl::events::MouseEvent e);
 		::Dynamic quitButtonClick_dyn();
 
@@ -90,14 +97,32 @@ class HXCPP_CLASS_ATTRIBUTES Game_obj : public  ::openfl::display::Sprite_obj
 		bool checkCollisionWithTile( ::openfl::geom::Rectangle playerHitBox, ::openfl::display::Tile tile);
 		::Dynamic checkCollisionWithTile_dyn();
 
-		void doCollisions();
-		::Dynamic doCollisions_dyn();
+		void doCollisionsWithTiles();
+		::Dynamic doCollisionsWithTiles_dyn();
 
 		void playerJump();
 		::Dynamic playerJump_dyn();
 
 		void bulletsMove();
 		::Dynamic bulletsMove_dyn();
+
+		void generateEnemies();
+		::Dynamic generateEnemies_dyn();
+
+		void generateEnemy();
+		::Dynamic generateEnemy_dyn();
+
+		void moveEnemies();
+		::Dynamic moveEnemies_dyn();
+
+		void doCollisionsWithBullet();
+		::Dynamic doCollisionsWithBullet_dyn();
+
+		bool get_gameIsOver();
+		::Dynamic get_gameIsOver_dyn();
+
+		void doCollidionWithEnemies();
+		::Dynamic doCollidionWithEnemies_dyn();
 
 };
 

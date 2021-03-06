@@ -28,17 +28,23 @@
 #ifndef INCLUDED_openfl_events_IEventDispatcher
 #include <openfl/events/IEventDispatcher.h>
 #endif
+#ifndef INCLUDED_openfl_geom_Rectangle
+#include <openfl/geom/Rectangle.h>
+#endif
 
-HX_DEFINE_STACK_FRAME(_hx_pos_39a55bac71d71c88_7_new,"Unit","new",0xc0a8b996,"Unit.new","Unit.hx",7,0x8bc50a9a)
-HX_LOCAL_STACK_FRAME(_hx_pos_39a55bac71d71c88_21_get_speedY,"Unit","get_speedY",0x5830b845,"Unit.get_speedY","Unit.hx",21,0x8bc50a9a)
-HX_LOCAL_STACK_FRAME(_hx_pos_39a55bac71d71c88_25_set_speedY,"Unit","set_speedY",0x5bae56b9,"Unit.set_speedY","Unit.hx",25,0x8bc50a9a)
+HX_DEFINE_STACK_FRAME(_hx_pos_39a55bac71d71c88_8_new,"Unit","new",0xc0a8b996,"Unit.new","Unit.hx",8,0x8bc50a9a)
+HX_LOCAL_STACK_FRAME(_hx_pos_39a55bac71d71c88_27_get_speedY,"Unit","get_speedY",0x5830b845,"Unit.get_speedY","Unit.hx",27,0x8bc50a9a)
+HX_LOCAL_STACK_FRAME(_hx_pos_39a55bac71d71c88_31_set_speedY,"Unit","set_speedY",0x5bae56b9,"Unit.set_speedY","Unit.hx",31,0x8bc50a9a)
+HX_LOCAL_STACK_FRAME(_hx_pos_39a55bac71d71c88_36_get_hitBox,"Unit","get_hitBox",0xf4455ecb,"Unit.get_hitBox","Unit.hx",36,0x8bc50a9a)
 
 void Unit_obj::__construct(){
-            	HX_STACKFRAME(&_hx_pos_39a55bac71d71c88_7_new)
-HXLINE(  12)		this->direction = ::Direction_obj::right_dyn();
-HXLINE(  11)		this->gravity = ((Float)0.8);
-HXLINE(  10)		this->speedY = ((Float)0.0);
-HXLINE(  15)		super::__construct();
+            	HX_STACKFRAME(&_hx_pos_39a55bac71d71c88_8_new)
+HXLINE(  16)		this->movingRight = false;
+HXLINE(  15)		this->movingLeft = false;
+HXLINE(  13)		this->direction = ::Direction_obj::right_dyn();
+HXLINE(  12)		this->gravity = ((Float)0.8);
+HXLINE(  11)		this->speedY = ((Float)0.0);
+HXLINE(  21)		super::__construct();
             	}
 
 Dynamic Unit_obj::__CreateEmpty() { return new Unit_obj; }
@@ -73,20 +79,28 @@ bool Unit_obj::_hx_isInstanceOf(int inClassId) {
 }
 
 Float Unit_obj::get_speedY(){
-            	HX_STACKFRAME(&_hx_pos_39a55bac71d71c88_21_get_speedY)
-HXDLIN(  21)		return this->speedY;
+            	HX_STACKFRAME(&_hx_pos_39a55bac71d71c88_27_get_speedY)
+HXDLIN(  27)		return this->speedY;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(Unit_obj,get_speedY,return )
 
 void Unit_obj::set_speedY(Float value){
-            	HX_STACKFRAME(&_hx_pos_39a55bac71d71c88_25_set_speedY)
-HXDLIN(  25)		this->speedY = value;
+            	HX_STACKFRAME(&_hx_pos_39a55bac71d71c88_31_set_speedY)
+HXDLIN(  31)		this->speedY = value;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC1(Unit_obj,set_speedY,(void))
+
+ ::openfl::geom::Rectangle Unit_obj::get_hitBox(){
+            	HX_STACKFRAME(&_hx_pos_39a55bac71d71c88_36_get_hitBox)
+HXDLIN(  36)		return this->hitBox;
+            	}
+
+
+HX_DEFINE_DYNAMIC_FUNC0(Unit_obj,get_hitBox,return )
 
 
 hx::ObjectPtr< Unit_obj > Unit_obj::__new() {
@@ -113,6 +127,9 @@ void Unit_obj::__Mark(HX_MARK_PARAMS)
 	HX_MARK_MEMBER_NAME(speedY,"speedY");
 	HX_MARK_MEMBER_NAME(gravity,"gravity");
 	HX_MARK_MEMBER_NAME(direction,"direction");
+	HX_MARK_MEMBER_NAME(movingLeft,"movingLeft");
+	HX_MARK_MEMBER_NAME(movingRight,"movingRight");
+	HX_MARK_MEMBER_NAME(hitBox,"hitBox");
 	 ::openfl::display::Sprite_obj::__Mark(HX_MARK_ARG);
 	HX_MARK_END_CLASS();
 }
@@ -123,6 +140,9 @@ void Unit_obj::__Visit(HX_VISIT_PARAMS)
 	HX_VISIT_MEMBER_NAME(speedY,"speedY");
 	HX_VISIT_MEMBER_NAME(gravity,"gravity");
 	HX_VISIT_MEMBER_NAME(direction,"direction");
+	HX_VISIT_MEMBER_NAME(movingLeft,"movingLeft");
+	HX_VISIT_MEMBER_NAME(movingRight,"movingRight");
+	HX_VISIT_MEMBER_NAME(hitBox,"hitBox");
 	 ::openfl::display::Sprite_obj::__Visit(HX_VISIT_ARG);
 }
 
@@ -132,6 +152,7 @@ hx::Val Unit_obj::__Field(const ::String &inName,hx::PropertyAccess inCallProp)
 	case 6:
 		if (HX_FIELD_EQ(inName,"speedX") ) { return hx::Val( speedX ); }
 		if (HX_FIELD_EQ(inName,"speedY") ) { return hx::Val( speedY ); }
+		if (HX_FIELD_EQ(inName,"hitBox") ) { return hx::Val( inCallProp == hx::paccAlways ? get_hitBox() : hitBox ); }
 		break;
 	case 7:
 		if (HX_FIELD_EQ(inName,"gravity") ) { return hx::Val( gravity ); }
@@ -140,8 +161,13 @@ hx::Val Unit_obj::__Field(const ::String &inName,hx::PropertyAccess inCallProp)
 		if (HX_FIELD_EQ(inName,"direction") ) { return hx::Val( direction ); }
 		break;
 	case 10:
+		if (HX_FIELD_EQ(inName,"movingLeft") ) { return hx::Val( movingLeft ); }
 		if (HX_FIELD_EQ(inName,"get_speedY") ) { return hx::Val( get_speedY_dyn() ); }
 		if (HX_FIELD_EQ(inName,"set_speedY") ) { return hx::Val( set_speedY_dyn() ); }
+		if (HX_FIELD_EQ(inName,"get_hitBox") ) { return hx::Val( get_hitBox_dyn() ); }
+		break;
+	case 11:
+		if (HX_FIELD_EQ(inName,"movingRight") ) { return hx::Val( movingRight ); }
 	}
 	return super::__Field(inName,inCallProp);
 }
@@ -152,12 +178,19 @@ hx::Val Unit_obj::__SetField(const ::String &inName,const hx::Val &inValue,hx::P
 	case 6:
 		if (HX_FIELD_EQ(inName,"speedX") ) { speedX=inValue.Cast< Float >(); return inValue; }
 		if (HX_FIELD_EQ(inName,"speedY") ) { speedY=inValue.Cast< Float >(); return inValue; }
+		if (HX_FIELD_EQ(inName,"hitBox") ) { hitBox=inValue.Cast<  ::openfl::geom::Rectangle >(); return inValue; }
 		break;
 	case 7:
 		if (HX_FIELD_EQ(inName,"gravity") ) { gravity=inValue.Cast< Float >(); return inValue; }
 		break;
 	case 9:
 		if (HX_FIELD_EQ(inName,"direction") ) { direction=inValue.Cast<  ::Direction >(); return inValue; }
+		break;
+	case 10:
+		if (HX_FIELD_EQ(inName,"movingLeft") ) { movingLeft=inValue.Cast< bool >(); return inValue; }
+		break;
+	case 11:
+		if (HX_FIELD_EQ(inName,"movingRight") ) { movingRight=inValue.Cast< bool >(); return inValue; }
 	}
 	return super::__SetField(inName,inValue,inCallProp);
 }
@@ -168,6 +201,9 @@ void Unit_obj::__GetFields(Array< ::String> &outFields)
 	outFields->push(HX_("speedY",f2,fe,fa,ba));
 	outFields->push(HX_("gravity",4e,6e,ff,77));
 	outFields->push(HX_("direction",3f,62,40,10));
+	outFields->push(HX_("movingLeft",b5,85,00,3e));
+	outFields->push(HX_("movingRight",6e,86,81,79));
+	outFields->push(HX_("hitBox",78,a5,0f,57));
 	super::__GetFields(outFields);
 };
 
@@ -177,6 +213,9 @@ static hx::StorageInfo Unit_obj_sMemberStorageInfo[] = {
 	{hx::fsFloat,(int)offsetof(Unit_obj,speedY),HX_("speedY",f2,fe,fa,ba)},
 	{hx::fsFloat,(int)offsetof(Unit_obj,gravity),HX_("gravity",4e,6e,ff,77)},
 	{hx::fsObject /*  ::Direction */ ,(int)offsetof(Unit_obj,direction),HX_("direction",3f,62,40,10)},
+	{hx::fsBool,(int)offsetof(Unit_obj,movingLeft),HX_("movingLeft",b5,85,00,3e)},
+	{hx::fsBool,(int)offsetof(Unit_obj,movingRight),HX_("movingRight",6e,86,81,79)},
+	{hx::fsObject /*  ::openfl::geom::Rectangle */ ,(int)offsetof(Unit_obj,hitBox),HX_("hitBox",78,a5,0f,57)},
 	{ hx::fsUnknown, 0, null()}
 };
 static hx::StaticInfo *Unit_obj_sStaticStorageInfo = 0;
@@ -187,8 +226,12 @@ static ::String Unit_obj_sMemberFields[] = {
 	HX_("speedY",f2,fe,fa,ba),
 	HX_("gravity",4e,6e,ff,77),
 	HX_("direction",3f,62,40,10),
+	HX_("movingLeft",b5,85,00,3e),
+	HX_("movingRight",6e,86,81,79),
+	HX_("hitBox",78,a5,0f,57),
 	HX_("get_speedY",bb,6e,82,ab),
 	HX_("set_speedY",2f,0d,00,af),
+	HX_("get_hitBox",41,15,97,47),
 	::String(null()) };
 
 hx::Class Unit_obj::__mClass;

@@ -23,15 +23,26 @@ class Bullet extends Sprite
     {
         if(player.get_direction() == right)
             {
-                x= player.x + 25.0;
+                x= player.x + 10.0;
                 y = player.y;
                 speed = 20.0;
             } 
         else
             {
-                x = player.x - 25.0;
+                x = player.x - 10.0;
                 y = player.y;
                 speed = -20.0;
             }
+    }
+
+    public function checkCollisionWithEnemy(enemy:Enemy):Bool
+    {
+        if(x + width/2 > enemy.x-enemy.width/2 && x - width/2 < enemy.x + enemy.width/2 &&
+            y + height/2 > enemy.y - enemy.height/2 && y - height/2 < enemy.y + enemy.height/2)
+            {
+                return true;
+            }
+            else 
+                return false;
     }
 }

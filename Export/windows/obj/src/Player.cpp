@@ -7,6 +7,9 @@
 #ifndef INCLUDED_Direction
 #include <Direction.h>
 #endif
+#ifndef INCLUDED_Enemy
+#include <Enemy.h>
+#endif
 #ifndef INCLUDED_Game
 #include <Game.h>
 #endif
@@ -76,6 +79,9 @@
 #ifndef INCLUDED_openfl_events_KeyboardEvent
 #include <openfl/events/KeyboardEvent.h>
 #endif
+#ifndef INCLUDED_openfl_events_MouseEvent
+#include <openfl/events/MouseEvent.h>
+#endif
 #ifndef INCLUDED_openfl_geom_Rectangle
 #include <openfl/geom/Rectangle.h>
 #endif
@@ -83,91 +89,93 @@
 #include <openfl/utils/Assets.h>
 #endif
 
-HX_DEFINE_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_12_new,"Player","new",0x8d5554f3,"Player.new","Player.hx",12,0xa27fc9dd)
+HX_DEFINE_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_13_new,"Player","new",0x8d5554f3,"Player.new","Player.hx",13,0xa27fc9dd)
 HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_78_spriteAnimated,"Player","spriteAnimated",0x4e3e0615,"Player.spriteAnimated","Player.hx",78,0xa27fc9dd)
 HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_98_updateSprite,"Player","updateSprite",0xdeca53fb,"Player.updateSprite","Player.hx",98,0xa27fc9dd)
 HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_110_keyDownHandler,"Player","keyDownHandler",0xbd594276,"Player.keyDownHandler","Player.hx",110,0xa27fc9dd)
+HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_126_mouseDownHandler,"Player","mouseDownHandler",0xc71e84f0,"Player.mouseDownHandler","Player.hx",126,0xa27fc9dd)
 HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_129_keyUpHandler,"Player","keyUpHandler",0x74c73e1d,"Player.keyUpHandler","Player.hx",129,0xa27fc9dd)
-HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_144_move,"Player","move",0x1cb35f1e,"Player.move","Player.hx",144,0xa27fc9dd)
-HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_170_doShot,"Player","doShot",0x8749d372,"Player.doShot","Player.hx",170,0xa27fc9dd)
-HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_196_get_state,"Player","get_state",0x7d84873b,"Player.get_state","Player.hx",196,0xa27fc9dd)
-HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_200_get_direction,"Player","get_direction",0xb8ea5069,"Player.get_direction","Player.hx",200,0xa27fc9dd)
-HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_205_drawHitBox,"Player","drawHitBox",0xf8c1a469,"Player.drawHitBox","Player.hx",205,0xa27fc9dd)
-HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_215_get_hitBox,"Player","get_hitBox",0xa785990e,"Player.get_hitBox","Player.hx",215,0xa27fc9dd)
-HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_220_get_directionLeft,"Player","get_directionLeft",0x2bee6d10,"Player.get_directionLeft","Player.hx",220,0xa27fc9dd)
-HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_224_get_directionRight,"Player","get_directionRight",0xbbbe0eb3,"Player.get_directionRight","Player.hx",224,0xa27fc9dd)
-HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_228_get_jump,"Player","get_jump",0x579a8704,"Player.get_jump","Player.hx",228,0xa27fc9dd)
-HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_232_set_state,"Player","set_state",0x60d57347,"Player.set_state","Player.hx",232,0xa27fc9dd)
+HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_145_mouseUpHandler,"Player","mouseUpHandler",0x897d0e17,"Player.mouseUpHandler","Player.hx",145,0xa27fc9dd)
+HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_148_move,"Player","move",0x1cb35f1e,"Player.move","Player.hx",148,0xa27fc9dd)
+HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_176_doShot,"Player","doShot",0x8749d372,"Player.doShot","Player.hx",176,0xa27fc9dd)
+HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_202_checkCollisionWithEnemy,"Player","checkCollisionWithEnemy",0xb252fe8b,"Player.checkCollisionWithEnemy","Player.hx",202,0xa27fc9dd)
+HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_213_get_state,"Player","get_state",0x7d84873b,"Player.get_state","Player.hx",213,0xa27fc9dd)
+HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_217_get_direction,"Player","get_direction",0xb8ea5069,"Player.get_direction","Player.hx",217,0xa27fc9dd)
+HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_222_drawHitBox,"Player","drawHitBox",0xf8c1a469,"Player.drawHitBox","Player.hx",222,0xa27fc9dd)
+HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_232_get_directionLeft,"Player","get_directionLeft",0x2bee6d10,"Player.get_directionLeft","Player.hx",232,0xa27fc9dd)
+HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_236_get_directionRight,"Player","get_directionRight",0xbbbe0eb3,"Player.get_directionRight","Player.hx",236,0xa27fc9dd)
+HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_240_get_jump,"Player","get_jump",0x579a8704,"Player.get_jump","Player.hx",240,0xa27fc9dd)
+HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_244_set_state,"Player","set_state",0x60d57347,"Player.set_state","Player.hx",244,0xa27fc9dd)
 
 void Player_obj::__construct(){
-            	HX_GC_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_12_new)
-HXLINE(  32)		this->shooting = false;
-HXLINE(  31)		this->frameOfFire = ((Float)2);
-HXLINE(  28)		this->frameTime = ((Float)0.15);
-HXLINE(  24)		this->state = ::State_obj::idle_dyn();
-HXLINE(  21)		this->jump = false;
-HXLINE(  19)		this->directionRight = false;
-HXLINE(  18)		this->directionLeft = false;
-HXLINE(  38)		super::__construct();
-HXLINE(  39)		this->idleWidthGun = ::Array_obj< ::Dynamic>::__new(0);
-HXLINE(  40)		::Array< ::Dynamic> _hx_tmp = this->idleWidthGun;
-HXDLIN(  40)		_hx_tmp->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_idle_with_gun_0.png",10,6b,ab,d2),null()),null(),null()));
-HXLINE(  41)		::Array< ::Dynamic> _hx_tmp1 = this->idleWidthGun;
-HXDLIN(  41)		_hx_tmp1->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_idle with gun_1.png",31,2f,d2,69),null()),null(),null()));
-HXLINE(  42)		::Array< ::Dynamic> _hx_tmp2 = this->idleWidthGun;
-HXDLIN(  42)		_hx_tmp2->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_idle with gun_2.png",b2,c3,38,fd),null()),null(),null()));
-HXLINE(  43)		::Array< ::Dynamic> _hx_tmp3 = this->idleWidthGun;
-HXDLIN(  43)		_hx_tmp3->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_idle with gun_3.png",33,58,9f,90),null()),null(),null()));
-HXLINE(  45)		this->walkWithGun = ::Array_obj< ::Dynamic>::__new(0);
-HXLINE(  46)		::Array< ::Dynamic> _hx_tmp4 = this->walkWithGun;
-HXDLIN(  46)		_hx_tmp4->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_walk with gun_0.png",5b,e0,17,91),null()),null(),null()));
-HXLINE(  47)		::Array< ::Dynamic> _hx_tmp5 = this->walkWithGun;
-HXDLIN(  47)		_hx_tmp5->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_walk with gun_1.png",dc,74,7e,24),null()),null(),null()));
-HXLINE(  48)		::Array< ::Dynamic> _hx_tmp6 = this->walkWithGun;
-HXDLIN(  48)		_hx_tmp6->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_walk with gun_2.png",5d,09,e5,b7),null()),null(),null()));
-HXLINE(  49)		::Array< ::Dynamic> _hx_tmp7 = this->walkWithGun;
-HXDLIN(  49)		_hx_tmp7->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_walk with gun_3.png",de,9d,4b,4b),null()),null(),null()));
-HXLINE(  51)		this->jumpWithGun = ::Array_obj< ::Dynamic>::__new(0);
-HXLINE(  52)		::Array< ::Dynamic> _hx_tmp8 = this->jumpWithGun;
-HXDLIN(  52)		_hx_tmp8->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_jump with gun_0.png",16,22,21,26),null()),null(),null()));
-HXLINE(  53)		::Array< ::Dynamic> _hx_tmp9 = this->jumpWithGun;
-HXDLIN(  53)		_hx_tmp9->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_jump with gun_0.png",16,22,21,26),null()),null(),null()));
-HXLINE(  54)		::Array< ::Dynamic> _hx_tmp10 = this->jumpWithGun;
-HXDLIN(  54)		_hx_tmp10->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_jump with gun_0.png",16,22,21,26),null()),null(),null()));
-HXLINE(  55)		::Array< ::Dynamic> _hx_tmp11 = this->jumpWithGun;
-HXDLIN(  55)		_hx_tmp11->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_jump with gun_0.png",16,22,21,26),null()),null(),null()));
-HXLINE(  57)		this->speedX = ((Float)5.0);
-HXLINE(  58)		this->speedY = ((Float)0.0);
-HXLINE(  59)		this->hitBox =  ::openfl::geom::Rectangle_obj::__alloc( HX_CTX ,((Float)-10.),((Float)-17.5),20,30);
-HXLINE(  63)		this->addChild(this->idleWidthGun->__get(0).StaticCast<  ::openfl::display::Bitmap >());
-HXLINE(  64)		this->idleWidthGun->__get(0).StaticCast<  ::openfl::display::Bitmap >()->set_x(( (Float)(-15) ));
-HXLINE(  65)		this->idleWidthGun->__get(0).StaticCast<  ::openfl::display::Bitmap >()->set_y(( (Float)(-40) ));
-HXLINE(  66)		 ::Dynamic _hx_tmp12 = ::haxe::Log_obj::trace;
-HXDLIN(  66)		::String _hx_tmp13 = (this->get_width() + HX_(" ",20,00,00,00));
-HXDLIN(  66)		::String _hx_tmp14 = (_hx_tmp13 + this->get_height());
-HXDLIN(  66)		_hx_tmp12(_hx_tmp14,hx::SourceInfo(HX_("Source/Player.hx",89,18,9a,6b),66,HX_("Player",81,5f,4d,6c),HX_("new",60,d0,53,00)));
-HXLINE(  67)		this->drawHitBox();
-HXLINE(  69)		this->ind = 0;
-HXLINE(  70)		int timer = ::lime::_hx_system::System_obj::getTimer();
-HXDLIN(  70)		Float _hx_tmp15;
-HXDLIN(  70)		if ((timer > 0)) {
-HXLINE(  70)			_hx_tmp15 = (( (Float)(timer) ) / ( (Float)(1000) ));
+            	HX_GC_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_13_new)
+HXLINE(  30)		this->shooting = false;
+HXLINE(  29)		this->frameOfFire = ((Float)10);
+HXLINE(  26)		this->frameTime = ((Float)0.15);
+HXLINE(  22)		this->state = ::State_obj::idle_dyn();
+HXLINE(  19)		this->jump = false;
+HXLINE(  36)		super::__construct();
+HXLINE(  37)		this->idleWidthGun = ::Array_obj< ::Dynamic>::__new(0);
+HXLINE(  38)		::Array< ::Dynamic> _hx_tmp = this->idleWidthGun;
+HXDLIN(  38)		_hx_tmp->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_idle_with_gun_0.png",10,6b,ab,d2),null()),null(),null()));
+HXLINE(  39)		::Array< ::Dynamic> _hx_tmp1 = this->idleWidthGun;
+HXDLIN(  39)		_hx_tmp1->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_idle with gun_1.png",31,2f,d2,69),null()),null(),null()));
+HXLINE(  40)		::Array< ::Dynamic> _hx_tmp2 = this->idleWidthGun;
+HXDLIN(  40)		_hx_tmp2->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_idle with gun_2.png",b2,c3,38,fd),null()),null(),null()));
+HXLINE(  41)		::Array< ::Dynamic> _hx_tmp3 = this->idleWidthGun;
+HXDLIN(  41)		_hx_tmp3->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_idle with gun_3.png",33,58,9f,90),null()),null(),null()));
+HXLINE(  43)		this->walkWithGun = ::Array_obj< ::Dynamic>::__new(0);
+HXLINE(  44)		::Array< ::Dynamic> _hx_tmp4 = this->walkWithGun;
+HXDLIN(  44)		_hx_tmp4->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_walk with gun_0.png",5b,e0,17,91),null()),null(),null()));
+HXLINE(  45)		::Array< ::Dynamic> _hx_tmp5 = this->walkWithGun;
+HXDLIN(  45)		_hx_tmp5->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_walk with gun_1.png",dc,74,7e,24),null()),null(),null()));
+HXLINE(  46)		::Array< ::Dynamic> _hx_tmp6 = this->walkWithGun;
+HXDLIN(  46)		_hx_tmp6->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_walk with gun_2.png",5d,09,e5,b7),null()),null(),null()));
+HXLINE(  47)		::Array< ::Dynamic> _hx_tmp7 = this->walkWithGun;
+HXDLIN(  47)		_hx_tmp7->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_walk with gun_3.png",de,9d,4b,4b),null()),null(),null()));
+HXLINE(  49)		this->jumpWithGun = ::Array_obj< ::Dynamic>::__new(0);
+HXLINE(  50)		::Array< ::Dynamic> _hx_tmp8 = this->jumpWithGun;
+HXDLIN(  50)		_hx_tmp8->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_jump with gun_0.png",16,22,21,26),null()),null(),null()));
+HXLINE(  51)		::Array< ::Dynamic> _hx_tmp9 = this->jumpWithGun;
+HXDLIN(  51)		_hx_tmp9->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_jump with gun_0.png",16,22,21,26),null()),null(),null()));
+HXLINE(  52)		::Array< ::Dynamic> _hx_tmp10 = this->jumpWithGun;
+HXDLIN(  52)		_hx_tmp10->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_jump with gun_0.png",16,22,21,26),null()),null(),null()));
+HXLINE(  53)		::Array< ::Dynamic> _hx_tmp11 = this->jumpWithGun;
+HXDLIN(  53)		_hx_tmp11->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_jump with gun_0.png",16,22,21,26),null()),null(),null()));
+HXLINE(  55)		this->speedX = ((Float)5.0);
+HXLINE(  56)		this->speedY = ((Float)0.0);
+HXLINE(  57)		this->hitBox =  ::openfl::geom::Rectangle_obj::__alloc( HX_CTX ,((Float)-10.),((Float)-17.5),20,30);
+HXLINE(  61)		this->addChild(this->idleWidthGun->__get(0).StaticCast<  ::openfl::display::Bitmap >());
+HXLINE(  62)		this->idleWidthGun->__get(0).StaticCast<  ::openfl::display::Bitmap >()->set_x(( (Float)(-15) ));
+HXLINE(  63)		this->idleWidthGun->__get(0).StaticCast<  ::openfl::display::Bitmap >()->set_y(( (Float)(-40) ));
+HXLINE(  64)		 ::Dynamic _hx_tmp12 = ::haxe::Log_obj::trace;
+HXDLIN(  64)		::String _hx_tmp13 = (this->get_width() + HX_(" ",20,00,00,00));
+HXDLIN(  64)		::String _hx_tmp14 = (_hx_tmp13 + this->get_height());
+HXDLIN(  64)		_hx_tmp12(_hx_tmp14,hx::SourceInfo(HX_("Source/Player.hx",89,18,9a,6b),64,HX_("Player",81,5f,4d,6c),HX_("new",60,d0,53,00)));
+HXLINE(  65)		this->drawHitBox();
+HXLINE(  67)		this->ind = 0;
+HXLINE(  68)		int timer = ::lime::_hx_system::System_obj::getTimer();
+HXDLIN(  68)		Float _hx_tmp15;
+HXDLIN(  68)		if ((timer > 0)) {
+HXLINE(  68)			_hx_tmp15 = (( (Float)(timer) ) / ( (Float)(1000) ));
             		}
             		else {
-HXLINE(  70)			_hx_tmp15 = ( (Float)(0) );
+HXLINE(  68)			_hx_tmp15 = ( (Float)(0) );
             		}
-HXDLIN(  70)		this->timeFlag = _hx_tmp15;
-HXLINE(  72)		int timer1 = ::lime::_hx_system::System_obj::getTimer();
-HXDLIN(  72)		Float _hx_tmp16;
-HXDLIN(  72)		if ((timer1 > 0)) {
-HXLINE(  72)			_hx_tmp16 = (( (Float)(timer1) ) / ( (Float)(1000) ));
+HXDLIN(  68)		this->timeFlag = _hx_tmp15;
+HXLINE(  70)		int timer1 = ::lime::_hx_system::System_obj::getTimer();
+HXDLIN(  70)		Float _hx_tmp16;
+HXDLIN(  70)		if ((timer1 > 0)) {
+HXLINE(  70)			_hx_tmp16 = (( (Float)(timer1) ) / ( (Float)(1000) ));
             		}
             		else {
-HXLINE(  72)			_hx_tmp16 = ( (Float)(0) );
+HXLINE(  70)			_hx_tmp16 = ( (Float)(0) );
             		}
-HXDLIN(  72)		this->shootingTime = _hx_tmp16;
-HXLINE(  74)		::openfl::Lib_obj::get_current()->stage->addEventListener(HX_("keyDown",a1,69,47,9c),this->keyDownHandler_dyn(),null(),null(),null());
-HXLINE(  75)		::openfl::Lib_obj::get_current()->stage->addEventListener(HX_("keyUp",da,b9,fe,de),this->keyUpHandler_dyn(),null(),null(),null());
+HXDLIN(  70)		this->shootingTime = _hx_tmp16;
+HXLINE(  72)		::openfl::Lib_obj::get_current()->stage->addEventListener(HX_("keyDown",a1,69,47,9c),this->keyDownHandler_dyn(),null(),null(),null());
+HXLINE(  73)		::openfl::Lib_obj::get_current()->stage->addEventListener(HX_("mouseDown",27,b1,c2,ee),this->mouseDownHandler_dyn(),null(),null(),null());
+HXLINE(  74)		::openfl::Lib_obj::get_current()->stage->addEventListener(HX_("keyUp",da,b9,fe,de),this->keyUpHandler_dyn(),null(),null(),null());
+HXLINE(  75)		::openfl::Lib_obj::get_current()->stage->addEventListener(HX_("mouseUp",e0,f3,72,c0),this->mouseUpHandler_dyn(),null(),null(),null());
             	}
 
 Dynamic Player_obj::__CreateEmpty() { return new Player_obj; }
@@ -268,37 +276,43 @@ HXLINE( 111)			_hx_tmp = (e->keyCode == 65);
 HXLINE( 111)			_hx_tmp = true;
             		}
 HXDLIN( 111)		if (_hx_tmp) {
-HXLINE( 113)			this->directionLeft = true;
-HXLINE( 114)			this->direction = ::Direction_obj::left_dyn();
+HXLINE( 113)			this->movingLeft = true;
             		}
-HXLINE( 117)		bool _hx_tmp1;
-HXDLIN( 117)		if ((e->keyCode != 39)) {
-HXLINE( 117)			_hx_tmp1 = (e->keyCode == 68);
-            		}
-            		else {
-HXLINE( 117)			_hx_tmp1 = true;
-            		}
-HXDLIN( 117)		if (_hx_tmp1) {
-HXLINE( 119)			this->directionRight = true;
-HXLINE( 120)			this->direction = ::Direction_obj::right_dyn();
-            		}
-HXLINE( 123)		bool _hx_tmp2;
-HXDLIN( 123)		if ((e->keyCode != 38)) {
-HXLINE( 123)			_hx_tmp2 = (e->keyCode == 87);
+HXLINE( 115)		bool _hx_tmp1;
+HXDLIN( 115)		if ((e->keyCode != 39)) {
+HXLINE( 115)			_hx_tmp1 = (e->keyCode == 68);
             		}
             		else {
-HXLINE( 123)			_hx_tmp2 = true;
+HXLINE( 115)			_hx_tmp1 = true;
             		}
-HXDLIN( 123)		if (_hx_tmp2) {
-HXLINE( 124)			this->jump = true;
+HXDLIN( 115)		if (_hx_tmp1) {
+HXLINE( 117)			this->movingRight = true;
             		}
-HXLINE( 125)		if ((e->keyCode == 32)) {
-HXLINE( 126)			this->shooting = true;
+HXLINE( 119)		bool _hx_tmp2;
+HXDLIN( 119)		if ((e->keyCode != 38)) {
+HXLINE( 119)			_hx_tmp2 = (e->keyCode == 87);
+            		}
+            		else {
+HXLINE( 119)			_hx_tmp2 = true;
+            		}
+HXDLIN( 119)		if (_hx_tmp2) {
+HXLINE( 120)			this->jump = true;
+            		}
+HXLINE( 121)		if ((e->keyCode == 32)) {
+HXLINE( 122)			this->shooting = true;
             		}
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC1(Player_obj,keyDownHandler,(void))
+
+void Player_obj::mouseDownHandler( ::openfl::events::MouseEvent e){
+            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_126_mouseDownHandler)
+HXDLIN( 126)		this->shooting = true;
+            	}
+
+
+HX_DEFINE_DYNAMIC_FUNC1(Player_obj,mouseDownHandler,(void))
 
 void Player_obj::keyUpHandler( ::openfl::events::KeyboardEvent e){
             	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_129_keyUpHandler)
@@ -310,7 +324,7 @@ HXLINE( 130)			_hx_tmp = (e->keyCode == 65);
 HXLINE( 130)			_hx_tmp = true;
             		}
 HXDLIN( 130)		if (_hx_tmp) {
-HXLINE( 132)			this->directionLeft = false;
+HXLINE( 132)			this->movingLeft = false;
             		}
 HXLINE( 134)		bool _hx_tmp1;
 HXDLIN( 134)		if ((e->keyCode != 39)) {
@@ -320,7 +334,7 @@ HXLINE( 134)			_hx_tmp1 = (e->keyCode == 68);
 HXLINE( 134)			_hx_tmp1 = true;
             		}
 HXDLIN( 134)		if (_hx_tmp1) {
-HXLINE( 136)			this->directionRight = false;
+HXLINE( 136)			this->movingRight = false;
             		}
 HXLINE( 138)		bool _hx_tmp2;
 HXDLIN( 138)		if ((e->keyCode != 38)) {
@@ -340,55 +354,65 @@ HXLINE( 141)			this->shooting = false;
 
 HX_DEFINE_DYNAMIC_FUNC1(Player_obj,keyUpHandler,(void))
 
+void Player_obj::mouseUpHandler( ::openfl::events::MouseEvent e){
+            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_145_mouseUpHandler)
+HXDLIN( 145)		this->shooting = false;
+            	}
+
+
+HX_DEFINE_DYNAMIC_FUNC1(Player_obj,mouseUpHandler,(void))
+
 void Player_obj::move(){
-            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_144_move)
-HXLINE( 145)		if (this->directionLeft) {
-HXLINE( 147)			Float _hx_tmp = this->get_x();
-HXDLIN( 147)			if (((_hx_tmp - (this->get_hitBox()->width / ( (Float)(2) ))) >= 0)) {
-HXLINE( 148)				 ::Player _g = hx::ObjectPtr<OBJ_>(this);
-HXDLIN( 148)				Float _hx_tmp1 = _g->get_x();
-HXDLIN( 148)				_g->set_x((_hx_tmp1 - this->speedX));
+            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_148_move)
+HXLINE( 149)		if (this->movingLeft) {
+HXLINE( 151)			Float _hx_tmp = this->get_x();
+HXDLIN( 151)			if (((_hx_tmp - (this->get_hitBox()->width / ( (Float)(2) ))) >= 0)) {
+HXLINE( 152)				 ::Player _g = hx::ObjectPtr<OBJ_>(this);
+HXDLIN( 152)				Float _hx_tmp1 = _g->get_x();
+HXDLIN( 152)				_g->set_x((_hx_tmp1 - this->speedX));
             			}
-HXLINE( 149)			this->state = ::State_obj::walk_dyn();
-HXLINE( 150)			this->set_scaleX(((Float)-1.0));
+HXLINE( 153)			this->state = ::State_obj::walk_dyn();
+HXLINE( 154)			this->set_scaleX(((Float)-1.0));
+HXLINE( 155)			this->direction = ::Direction_obj::left_dyn();
             		}
-HXLINE( 152)		if (this->directionRight) {
-HXLINE( 154)			Float _hx_tmp2 = this->get_x();
-HXDLIN( 154)			Float _hx_tmp3 = (_hx_tmp2 + (this->get_hitBox()->width / ( (Float)(2) )));
-HXDLIN( 154)			if ((_hx_tmp3 <= ::Main_obj::sizeWidth)) {
-HXLINE( 155)				 ::Player _g1 = hx::ObjectPtr<OBJ_>(this);
-HXDLIN( 155)				Float _hx_tmp4 = _g1->get_x();
-HXDLIN( 155)				_g1->set_x((_hx_tmp4 + this->speedX));
+HXLINE( 157)		if (this->movingRight) {
+HXLINE( 159)			Float _hx_tmp2 = this->get_x();
+HXDLIN( 159)			Float _hx_tmp3 = (_hx_tmp2 + (this->get_hitBox()->width / ( (Float)(2) )));
+HXDLIN( 159)			if ((_hx_tmp3 <= ::Main_obj::sizeWidth)) {
+HXLINE( 160)				 ::Player _g1 = hx::ObjectPtr<OBJ_>(this);
+HXDLIN( 160)				Float _hx_tmp4 = _g1->get_x();
+HXDLIN( 160)				_g1->set_x((_hx_tmp4 + this->speedX));
             			}
-HXLINE( 156)			this->state = ::State_obj::walk_dyn();
-HXLINE( 157)			this->set_scaleX(((Float)1.0));
+HXLINE( 161)			this->state = ::State_obj::walk_dyn();
+HXLINE( 162)			this->set_scaleX(((Float)1.0));
+HXLINE( 163)			this->direction = ::Direction_obj::right_dyn();
             		}
-HXLINE( 159)		bool _hx_tmp5;
-HXDLIN( 159)		if (this->directionLeft) {
-HXLINE( 159)			_hx_tmp5 = this->directionRight;
+HXLINE( 165)		bool _hx_tmp5;
+HXDLIN( 165)		if (this->movingLeft) {
+HXLINE( 165)			_hx_tmp5 = this->movingRight;
             		}
             		else {
-HXLINE( 159)			_hx_tmp5 = false;
+HXLINE( 165)			_hx_tmp5 = false;
             		}
-HXDLIN( 159)		if (_hx_tmp5) {
-HXLINE( 160)			this->state = ::State_obj::idle_dyn();
+HXDLIN( 165)		if (_hx_tmp5) {
+HXLINE( 166)			this->state = ::State_obj::idle_dyn();
             		}
-HXLINE( 161)		bool _hx_tmp6;
-HXDLIN( 161)		if (!(this->directionLeft)) {
-HXLINE( 161)			_hx_tmp6 = !(this->directionRight);
+HXLINE( 167)		bool _hx_tmp6;
+HXDLIN( 167)		if (!(this->movingLeft)) {
+HXLINE( 167)			_hx_tmp6 = !(this->movingRight);
             		}
             		else {
-HXLINE( 161)			_hx_tmp6 = false;
+HXLINE( 167)			_hx_tmp6 = false;
             		}
-HXDLIN( 161)		if (_hx_tmp6) {
-HXLINE( 162)			this->state = ::State_obj::idle_dyn();
+HXDLIN( 167)		if (_hx_tmp6) {
+HXLINE( 168)			this->state = ::State_obj::idle_dyn();
             		}
-HXLINE( 163)		 ::Player _hx_tmp7 = hx::ObjectPtr<OBJ_>(this);
-HXDLIN( 163)		_hx_tmp7->speedY = (_hx_tmp7->speedY + this->gravity);
-HXLINE( 164)		{
-HXLINE( 164)			 ::Player _g2 = hx::ObjectPtr<OBJ_>(this);
-HXDLIN( 164)			Float _hx_tmp8 = _g2->get_y();
-HXDLIN( 164)			_g2->set_y((_hx_tmp8 + this->speedY));
+HXLINE( 169)		 ::Player _hx_tmp7 = hx::ObjectPtr<OBJ_>(this);
+HXDLIN( 169)		_hx_tmp7->speedY = (_hx_tmp7->speedY + this->gravity);
+HXLINE( 170)		{
+HXLINE( 170)			 ::Player _g2 = hx::ObjectPtr<OBJ_>(this);
+HXDLIN( 170)			Float _hx_tmp8 = _g2->get_y();
+HXDLIN( 170)			_g2->set_y((_hx_tmp8 + this->speedY));
             		}
             	}
 
@@ -396,54 +420,54 @@ HXDLIN( 164)			_g2->set_y((_hx_tmp8 + this->speedY));
 HX_DEFINE_DYNAMIC_FUNC0(Player_obj,move,(void))
 
 void Player_obj::doShot( ::Game game){
-            	HX_GC_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_170_doShot)
-HXDLIN( 170)		bool _hx_tmp;
-HXDLIN( 170)		int timer = ::lime::_hx_system::System_obj::getTimer();
-HXDLIN( 170)		Float _hx_tmp1;
-HXDLIN( 170)		if ((timer > 0)) {
-HXDLIN( 170)			_hx_tmp1 = (( (Float)(timer) ) / ( (Float)(1000) ));
+            	HX_GC_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_176_doShot)
+HXDLIN( 176)		bool _hx_tmp;
+HXDLIN( 176)		int timer = ::lime::_hx_system::System_obj::getTimer();
+HXDLIN( 176)		Float _hx_tmp1;
+HXDLIN( 176)		if ((timer > 0)) {
+HXDLIN( 176)			_hx_tmp1 = (( (Float)(timer) ) / ( (Float)(1000) ));
             		}
             		else {
-HXDLIN( 170)			_hx_tmp1 = ( (Float)(0) );
+HXDLIN( 176)			_hx_tmp1 = ( (Float)(0) );
             		}
-HXDLIN( 170)		if (((_hx_tmp1 - this->shootingTime) >= (( (Float)(1) ) / this->frameOfFire))) {
-HXDLIN( 170)			_hx_tmp = this->shooting;
+HXDLIN( 176)		if (((_hx_tmp1 - this->shootingTime) >= (( (Float)(1) ) / this->frameOfFire))) {
+HXDLIN( 176)			_hx_tmp = this->shooting;
             		}
             		else {
-HXDLIN( 170)			_hx_tmp = false;
+HXDLIN( 176)			_hx_tmp = false;
             		}
-HXDLIN( 170)		if (_hx_tmp) {
-HXLINE( 172)			 ::Bullet bullet;
-HXLINE( 173)			if ((game->spentBullets->length > 0)) {
-HXLINE( 175)				::haxe::Log_obj::trace(999999,hx::SourceInfo(HX_("Source/Player.hx",89,18,9a,6b),175,HX_("Player",81,5f,4d,6c),HX_("doShot",25,7a,56,1c)));
-HXLINE( 176)				::Array< ::Dynamic> game1 = game->bullets;
-HXDLIN( 176)				game1->push(game->spentBullets->pop().StaticCast<  ::Bullet >());
-HXLINE( 177)				game->bullets->__get((game->bullets->length - 1)).StaticCast<  ::Bullet >()->setBullet(hx::ObjectPtr<OBJ_>(this));
-HXLINE( 179)				game->addChild(game->bullets->__get((game->bullets->length - 1)).StaticCast<  ::Bullet >());
-HXLINE( 180)				int timer1 = ::lime::_hx_system::System_obj::getTimer();
-HXDLIN( 180)				Float _hx_tmp2;
-HXDLIN( 180)				if ((timer1 > 0)) {
-HXLINE( 180)					_hx_tmp2 = (( (Float)(timer1) ) / ( (Float)(1000) ));
+HXDLIN( 176)		if (_hx_tmp) {
+HXLINE( 178)			 ::Bullet bullet;
+HXLINE( 179)			if ((game->spentBullets->length > 0)) {
+HXLINE( 181)				::haxe::Log_obj::trace(999999,hx::SourceInfo(HX_("Source/Player.hx",89,18,9a,6b),181,HX_("Player",81,5f,4d,6c),HX_("doShot",25,7a,56,1c)));
+HXLINE( 182)				::Array< ::Dynamic> game1 = game->bullets;
+HXDLIN( 182)				game1->push(game->spentBullets->pop().StaticCast<  ::Bullet >());
+HXLINE( 183)				game->bullets->__get((game->bullets->length - 1)).StaticCast<  ::Bullet >()->setBullet(hx::ObjectPtr<OBJ_>(this));
+HXLINE( 185)				game->addChild(game->bullets->__get((game->bullets->length - 1)).StaticCast<  ::Bullet >());
+HXLINE( 186)				int timer1 = ::lime::_hx_system::System_obj::getTimer();
+HXDLIN( 186)				Float _hx_tmp2;
+HXDLIN( 186)				if ((timer1 > 0)) {
+HXLINE( 186)					_hx_tmp2 = (( (Float)(timer1) ) / ( (Float)(1000) ));
             				}
             				else {
-HXLINE( 180)					_hx_tmp2 = ( (Float)(0) );
+HXLINE( 186)					_hx_tmp2 = ( (Float)(0) );
             				}
-HXDLIN( 180)				this->shootingTime = _hx_tmp2;
+HXDLIN( 186)				this->shootingTime = _hx_tmp2;
             			}
             			else {
-HXLINE( 184)				bullet =  ::Bullet_obj::__alloc( HX_CTX ,hx::ObjectPtr<OBJ_>(this));
-HXLINE( 185)				game->bullets->push(bullet);
-HXLINE( 186)				game->addChild(bullet);
-HXLINE( 187)				::haxe::Log_obj::trace(HX_("Shot",1a,01,2c,37),hx::SourceInfo(HX_("Source/Player.hx",89,18,9a,6b),187,HX_("Player",81,5f,4d,6c),HX_("doShot",25,7a,56,1c)));
-HXLINE( 188)				int timer2 = ::lime::_hx_system::System_obj::getTimer();
-HXDLIN( 188)				Float _hx_tmp3;
-HXDLIN( 188)				if ((timer2 > 0)) {
-HXLINE( 188)					_hx_tmp3 = (( (Float)(timer2) ) / ( (Float)(1000) ));
+HXLINE( 190)				bullet =  ::Bullet_obj::__alloc( HX_CTX ,hx::ObjectPtr<OBJ_>(this));
+HXLINE( 191)				game->bullets->push(bullet);
+HXLINE( 192)				game->addChild(bullet);
+HXLINE( 193)				::haxe::Log_obj::trace(HX_("Shot",1a,01,2c,37),hx::SourceInfo(HX_("Source/Player.hx",89,18,9a,6b),193,HX_("Player",81,5f,4d,6c),HX_("doShot",25,7a,56,1c)));
+HXLINE( 194)				int timer2 = ::lime::_hx_system::System_obj::getTimer();
+HXDLIN( 194)				Float _hx_tmp3;
+HXDLIN( 194)				if ((timer2 > 0)) {
+HXLINE( 194)					_hx_tmp3 = (( (Float)(timer2) ) / ( (Float)(1000) ));
             				}
             				else {
-HXLINE( 188)					_hx_tmp3 = ( (Float)(0) );
+HXLINE( 194)					_hx_tmp3 = ( (Float)(0) );
             				}
-HXDLIN( 188)				this->shootingTime = _hx_tmp3;
+HXDLIN( 194)				this->shootingTime = _hx_tmp3;
             			}
             		}
             	}
@@ -451,71 +475,110 @@ HXDLIN( 188)				this->shootingTime = _hx_tmp3;
 
 HX_DEFINE_DYNAMIC_FUNC1(Player_obj,doShot,(void))
 
+bool Player_obj::checkCollisionWithEnemy( ::Enemy enemy){
+            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_202_checkCollisionWithEnemy)
+HXDLIN( 202)		bool _hx_tmp;
+HXDLIN( 202)		bool _hx_tmp1;
+HXDLIN( 202)		bool _hx_tmp2;
+HXDLIN( 202)		Float _hx_tmp3 = this->get_x();
+HXDLIN( 202)		Float _hx_tmp4 = (_hx_tmp3 + (this->get_hitBox()->width / ( (Float)(2) )));
+HXDLIN( 202)		Float _hx_tmp5 = enemy->get_x();
+HXDLIN( 202)		if ((_hx_tmp4 > (_hx_tmp5 - (enemy->get_hitBox()->width / ( (Float)(2) ))))) {
+HXDLIN( 202)			Float _hx_tmp6 = this->get_x();
+HXDLIN( 202)			Float _hx_tmp7 = (_hx_tmp6 - (this->get_hitBox()->width / ( (Float)(2) )));
+HXDLIN( 202)			Float _hx_tmp8 = enemy->get_x();
+HXDLIN( 202)			_hx_tmp2 = (_hx_tmp7 < (_hx_tmp8 + (enemy->get_hitBox()->width / ( (Float)(2) ))));
+            		}
+            		else {
+HXDLIN( 202)			_hx_tmp2 = false;
+            		}
+HXDLIN( 202)		if (_hx_tmp2) {
+HXLINE( 203)			Float _hx_tmp9 = this->get_y();
+HXDLIN( 203)			Float _hx_tmp10 = (_hx_tmp9 + (this->get_hitBox()->height / ( (Float)(2) )));
+HXDLIN( 203)			Float _hx_tmp11 = enemy->get_y();
+HXLINE( 202)			_hx_tmp1 = (_hx_tmp10 > (_hx_tmp11 - (enemy->get_hitBox()->height / ( (Float)(2) ))));
+            		}
+            		else {
+HXDLIN( 202)			_hx_tmp1 = false;
+            		}
+HXDLIN( 202)		if (_hx_tmp1) {
+HXLINE( 203)			Float _hx_tmp12 = this->get_y();
+HXDLIN( 203)			Float _hx_tmp13 = (_hx_tmp12 - (this->get_hitBox()->height / ( (Float)(2) )));
+HXDLIN( 203)			Float _hx_tmp14 = enemy->get_y();
+HXLINE( 202)			_hx_tmp = (_hx_tmp13 < (_hx_tmp14 + (enemy->get_hitBox()->height / ( (Float)(2) ))));
+            		}
+            		else {
+HXDLIN( 202)			_hx_tmp = false;
+            		}
+HXDLIN( 202)		if (_hx_tmp) {
+HXLINE( 205)			return true;
+            		}
+            		else {
+HXLINE( 208)			return false;
+            		}
+HXLINE( 202)		return false;
+            	}
+
+
+HX_DEFINE_DYNAMIC_FUNC1(Player_obj,checkCollisionWithEnemy,return )
+
  ::State Player_obj::get_state(){
-            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_196_get_state)
-HXDLIN( 196)		return this->state;
+            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_213_get_state)
+HXDLIN( 213)		return this->state;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(Player_obj,get_state,return )
 
  ::Direction Player_obj::get_direction(){
-            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_200_get_direction)
-HXDLIN( 200)		return this->direction;
+            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_217_get_direction)
+HXDLIN( 217)		return this->direction;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(Player_obj,get_direction,return )
 
 void Player_obj::drawHitBox(){
-            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_205_drawHitBox)
-HXLINE( 206)		this->get_graphics()->lineStyle(1,16711680,null(),null(),null(),null(),null(),null());
-HXLINE( 207)		 ::openfl::display::Graphics _hx_tmp = this->get_graphics();
-HXDLIN( 207)		Float _hx_tmp1 = (-(this->get_hitBox()->width) / ( (Float)(2) ));
-HXDLIN( 207)		Float _hx_tmp2 = (-(this->get_hitBox()->height) / ( (Float)(2) ));
-HXDLIN( 207)		Float _hx_tmp3 = this->get_hitBox()->width;
-HXDLIN( 207)		_hx_tmp->drawRect(_hx_tmp1,_hx_tmp2,_hx_tmp3,this->get_hitBox()->height);
-HXLINE( 208)		this->get_graphics()->endFill();
+            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_222_drawHitBox)
+HXLINE( 223)		this->get_graphics()->lineStyle(1,16711680,null(),null(),null(),null(),null(),null());
+HXLINE( 224)		 ::openfl::display::Graphics _hx_tmp = this->get_graphics();
+HXDLIN( 224)		Float _hx_tmp1 = (-(this->get_hitBox()->width) / ( (Float)(2) ));
+HXDLIN( 224)		Float _hx_tmp2 = (-(this->get_hitBox()->height) / ( (Float)(2) ));
+HXDLIN( 224)		Float _hx_tmp3 = this->get_hitBox()->width;
+HXDLIN( 224)		_hx_tmp->drawRect(_hx_tmp1,_hx_tmp2,_hx_tmp3,this->get_hitBox()->height);
+HXLINE( 225)		this->get_graphics()->endFill();
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(Player_obj,drawHitBox,(void))
 
- ::openfl::geom::Rectangle Player_obj::get_hitBox(){
-            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_215_get_hitBox)
-HXDLIN( 215)		return this->hitBox;
-            	}
-
-
-HX_DEFINE_DYNAMIC_FUNC0(Player_obj,get_hitBox,return )
-
 bool Player_obj::get_directionLeft(){
-            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_220_get_directionLeft)
-HXDLIN( 220)		return this->directionLeft;
+            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_232_get_directionLeft)
+HXDLIN( 232)		return this->movingLeft;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(Player_obj,get_directionLeft,return )
 
 bool Player_obj::get_directionRight(){
-            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_224_get_directionRight)
-HXDLIN( 224)		return this->directionRight;
+            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_236_get_directionRight)
+HXDLIN( 236)		return this->movingRight;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(Player_obj,get_directionRight,return )
 
 bool Player_obj::get_jump(){
-            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_228_get_jump)
-HXDLIN( 228)		return this->jump;
+            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_240_get_jump)
+HXDLIN( 240)		return this->jump;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(Player_obj,get_jump,return )
 
 void Player_obj::set_state( ::State value){
-            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_232_set_state)
-HXDLIN( 232)		this->state = value;
+            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_244_set_state)
+HXDLIN( 244)		this->state = value;
             	}
 
 
@@ -545,10 +608,7 @@ void Player_obj::__Mark(HX_MARK_PARAMS)
 	HX_MARK_MEMBER_NAME(idleWidthGun,"idleWidthGun");
 	HX_MARK_MEMBER_NAME(walkWithGun,"walkWithGun");
 	HX_MARK_MEMBER_NAME(jumpWithGun,"jumpWithGun");
-	HX_MARK_MEMBER_NAME(directionLeft,"directionLeft");
-	HX_MARK_MEMBER_NAME(directionRight,"directionRight");
 	HX_MARK_MEMBER_NAME(jump,"jump");
-	HX_MARK_MEMBER_NAME(hitBox,"hitBox");
 	HX_MARK_MEMBER_NAME(state,"state");
 	HX_MARK_MEMBER_NAME(timeFlag,"timeFlag");
 	HX_MARK_MEMBER_NAME(frameTime,"frameTime");
@@ -565,10 +625,7 @@ void Player_obj::__Visit(HX_VISIT_PARAMS)
 	HX_VISIT_MEMBER_NAME(idleWidthGun,"idleWidthGun");
 	HX_VISIT_MEMBER_NAME(walkWithGun,"walkWithGun");
 	HX_VISIT_MEMBER_NAME(jumpWithGun,"jumpWithGun");
-	HX_VISIT_MEMBER_NAME(directionLeft,"directionLeft");
-	HX_VISIT_MEMBER_NAME(directionRight,"directionRight");
 	HX_VISIT_MEMBER_NAME(jump,"jump");
-	HX_VISIT_MEMBER_NAME(hitBox,"hitBox");
 	HX_VISIT_MEMBER_NAME(state,"state");
 	HX_VISIT_MEMBER_NAME(timeFlag,"timeFlag");
 	HX_VISIT_MEMBER_NAME(frameTime,"frameTime");
@@ -593,7 +650,6 @@ hx::Val Player_obj::__Field(const ::String &inName,hx::PropertyAccess inCallProp
 		if (HX_FIELD_EQ(inName,"state") ) { return hx::Val( state ); }
 		break;
 	case 6:
-		if (HX_FIELD_EQ(inName,"hitBox") ) { return hx::Val( inCallProp == hx::paccAlways ? get_hitBox() : hitBox ); }
 		if (HX_FIELD_EQ(inName,"doShot") ) { return hx::Val( doShot_dyn() ); }
 		break;
 	case 8:
@@ -608,7 +664,6 @@ hx::Val Player_obj::__Field(const ::String &inName,hx::PropertyAccess inCallProp
 		break;
 	case 10:
 		if (HX_FIELD_EQ(inName,"drawHitBox") ) { return hx::Val( drawHitBox_dyn() ); }
-		if (HX_FIELD_EQ(inName,"get_hitBox") ) { return hx::Val( get_hitBox_dyn() ); }
 		break;
 	case 11:
 		if (HX_FIELD_EQ(inName,"walkWithGun") ) { return hx::Val( walkWithGun ); }
@@ -622,19 +677,24 @@ hx::Val Player_obj::__Field(const ::String &inName,hx::PropertyAccess inCallProp
 		if (HX_FIELD_EQ(inName,"keyUpHandler") ) { return hx::Val( keyUpHandler_dyn() ); }
 		break;
 	case 13:
-		if (HX_FIELD_EQ(inName,"directionLeft") ) { return hx::Val( directionLeft ); }
 		if (HX_FIELD_EQ(inName,"get_direction") ) { return hx::Val( get_direction_dyn() ); }
 		break;
 	case 14:
-		if (HX_FIELD_EQ(inName,"directionRight") ) { return hx::Val( directionRight ); }
 		if (HX_FIELD_EQ(inName,"spriteAnimated") ) { return hx::Val( spriteAnimated_dyn() ); }
 		if (HX_FIELD_EQ(inName,"keyDownHandler") ) { return hx::Val( keyDownHandler_dyn() ); }
+		if (HX_FIELD_EQ(inName,"mouseUpHandler") ) { return hx::Val( mouseUpHandler_dyn() ); }
+		break;
+	case 16:
+		if (HX_FIELD_EQ(inName,"mouseDownHandler") ) { return hx::Val( mouseDownHandler_dyn() ); }
 		break;
 	case 17:
 		if (HX_FIELD_EQ(inName,"get_directionLeft") ) { return hx::Val( get_directionLeft_dyn() ); }
 		break;
 	case 18:
 		if (HX_FIELD_EQ(inName,"get_directionRight") ) { return hx::Val( get_directionRight_dyn() ); }
+		break;
+	case 23:
+		if (HX_FIELD_EQ(inName,"checkCollisionWithEnemy") ) { return hx::Val( checkCollisionWithEnemy_dyn() ); }
 	}
 	return super::__Field(inName,inCallProp);
 }
@@ -651,9 +711,6 @@ hx::Val Player_obj::__SetField(const ::String &inName,const hx::Val &inValue,hx:
 	case 5:
 		if (HX_FIELD_EQ(inName,"state") ) { state=inValue.Cast<  ::State >(); return inValue; }
 		break;
-	case 6:
-		if (HX_FIELD_EQ(inName,"hitBox") ) { hitBox=inValue.Cast<  ::openfl::geom::Rectangle >(); return inValue; }
-		break;
 	case 8:
 		if (HX_FIELD_EQ(inName,"timeFlag") ) { timeFlag=inValue.Cast< Float >(); return inValue; }
 		if (HX_FIELD_EQ(inName,"shooting") ) { shooting=inValue.Cast< bool >(); return inValue; }
@@ -669,12 +726,6 @@ hx::Val Player_obj::__SetField(const ::String &inName,const hx::Val &inValue,hx:
 	case 12:
 		if (HX_FIELD_EQ(inName,"idleWidthGun") ) { idleWidthGun=inValue.Cast< ::Array< ::Dynamic> >(); return inValue; }
 		if (HX_FIELD_EQ(inName,"shootingTime") ) { shootingTime=inValue.Cast< Float >(); return inValue; }
-		break;
-	case 13:
-		if (HX_FIELD_EQ(inName,"directionLeft") ) { directionLeft=inValue.Cast< bool >(); return inValue; }
-		break;
-	case 14:
-		if (HX_FIELD_EQ(inName,"directionRight") ) { directionRight=inValue.Cast< bool >(); return inValue; }
 	}
 	return super::__SetField(inName,inValue,inCallProp);
 }
@@ -684,10 +735,7 @@ void Player_obj::__GetFields(Array< ::String> &outFields)
 	outFields->push(HX_("idleWidthGun",4e,2f,a1,30));
 	outFields->push(HX_("walkWithGun",11,46,3d,d6));
 	outFields->push(HX_("jumpWithGun",cc,d4,b0,41));
-	outFields->push(HX_("directionLeft",e6,21,e1,ed));
-	outFields->push(HX_("directionRight",1d,95,29,ae));
 	outFields->push(HX_("jump",ee,c4,69,46));
-	outFields->push(HX_("hitBox",78,a5,0f,57));
 	outFields->push(HX_("state",11,76,0b,84));
 	outFields->push(HX_("timeFlag",59,8e,1f,e4));
 	outFields->push(HX_("frameTime",da,8a,7d,3a));
@@ -703,10 +751,7 @@ static hx::StorageInfo Player_obj_sMemberStorageInfo[] = {
 	{hx::fsObject /* ::Array< ::Dynamic> */ ,(int)offsetof(Player_obj,idleWidthGun),HX_("idleWidthGun",4e,2f,a1,30)},
 	{hx::fsObject /* ::Array< ::Dynamic> */ ,(int)offsetof(Player_obj,walkWithGun),HX_("walkWithGun",11,46,3d,d6)},
 	{hx::fsObject /* ::Array< ::Dynamic> */ ,(int)offsetof(Player_obj,jumpWithGun),HX_("jumpWithGun",cc,d4,b0,41)},
-	{hx::fsBool,(int)offsetof(Player_obj,directionLeft),HX_("directionLeft",e6,21,e1,ed)},
-	{hx::fsBool,(int)offsetof(Player_obj,directionRight),HX_("directionRight",1d,95,29,ae)},
 	{hx::fsBool,(int)offsetof(Player_obj,jump),HX_("jump",ee,c4,69,46)},
-	{hx::fsObject /*  ::openfl::geom::Rectangle */ ,(int)offsetof(Player_obj,hitBox),HX_("hitBox",78,a5,0f,57)},
 	{hx::fsObject /*  ::State */ ,(int)offsetof(Player_obj,state),HX_("state",11,76,0b,84)},
 	{hx::fsFloat,(int)offsetof(Player_obj,timeFlag),HX_("timeFlag",59,8e,1f,e4)},
 	{hx::fsFloat,(int)offsetof(Player_obj,frameTime),HX_("frameTime",da,8a,7d,3a)},
@@ -723,10 +768,7 @@ static ::String Player_obj_sMemberFields[] = {
 	HX_("idleWidthGun",4e,2f,a1,30),
 	HX_("walkWithGun",11,46,3d,d6),
 	HX_("jumpWithGun",cc,d4,b0,41),
-	HX_("directionLeft",e6,21,e1,ed),
-	HX_("directionRight",1d,95,29,ae),
 	HX_("jump",ee,c4,69,46),
-	HX_("hitBox",78,a5,0f,57),
 	HX_("state",11,76,0b,84),
 	HX_("timeFlag",59,8e,1f,e4),
 	HX_("frameTime",da,8a,7d,3a),
@@ -737,13 +779,15 @@ static ::String Player_obj_sMemberFields[] = {
 	HX_("spriteAnimated",c8,17,2d,d8),
 	HX_("updateSprite",ee,82,59,c3),
 	HX_("keyDownHandler",29,54,48,47),
+	HX_("mouseDownHandler",63,a9,3b,f8),
 	HX_("keyUpHandler",10,6d,56,59),
+	HX_("mouseUpHandler",ca,1f,6c,13),
 	HX_("move",11,e3,60,48),
 	HX_("doShot",25,7a,56,1c),
+	HX_("checkCollisionWithEnemy",78,9e,8b,58),
 	HX_("get_state",68,d2,b4,c7),
 	HX_("get_direction",16,36,a4,d1),
 	HX_("drawHitBox",9c,20,d3,98),
-	HX_("get_hitBox",41,15,97,47),
 	HX_("get_directionLeft",3d,2d,51,f4),
 	HX_("get_directionRight",e6,75,c3,49),
 	HX_("get_jump",77,80,24,c6),

@@ -10,6 +10,7 @@
 #include <openfl/display/Sprite.h>
 #endif
 HX_DECLARE_CLASS0(Bullet)
+HX_DECLARE_CLASS0(Enemy)
 HX_DECLARE_CLASS0(Player)
 HX_DECLARE_CLASS0(Unit)
 HX_DECLARE_CLASS2(openfl,display,DisplayObject)
@@ -58,6 +59,9 @@ class HXCPP_CLASS_ATTRIBUTES Bullet_obj : public  ::openfl::display::Sprite_obj
 
 		void setBullet( ::Player player);
 		::Dynamic setBullet_dyn();
+
+		bool checkCollisionWithEnemy( ::Enemy enemy);
+		::Dynamic checkCollisionWithEnemy_dyn();
 
 };
 

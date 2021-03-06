@@ -7,6 +7,9 @@
 #ifndef INCLUDED_Direction
 #include <Direction.h>
 #endif
+#ifndef INCLUDED_Enemy
+#include <Enemy.h>
+#endif
 #ifndef INCLUDED_Player
 #include <Player.h>
 #endif
@@ -41,6 +44,7 @@
 HX_DEFINE_STACK_FRAME(_hx_pos_916b41f5f19492cb_9_new,"Bullet","new",0xf3208054,"Bullet.new","Bullet.hx",9,0xb42ce59c)
 HX_LOCAL_STACK_FRAME(_hx_pos_916b41f5f19492cb_20_move,"Bullet","move",0xc8ae289d,"Bullet.move","Bullet.hx",20,0xb42ce59c)
 HX_LOCAL_STACK_FRAME(_hx_pos_916b41f5f19492cb_24_setBullet,"Bullet","setBullet",0x16a72678,"Bullet.setBullet","Bullet.hx",24,0xb42ce59c)
+HX_LOCAL_STACK_FRAME(_hx_pos_916b41f5f19492cb_40_checkCollisionWithEnemy,"Bullet","checkCollisionWithEnemy",0x7bc7806c,"Bullet.checkCollisionWithEnemy","Bullet.hx",40,0xb42ce59c)
 
 void Bullet_obj::__construct( ::Player player){
             	HX_STACKFRAME(&_hx_pos_916b41f5f19492cb_9_new)
@@ -95,12 +99,12 @@ HX_DEFINE_DYNAMIC_FUNC0(Bullet_obj,move,(void))
 void Bullet_obj::setBullet( ::Player player){
             	HX_STACKFRAME(&_hx_pos_916b41f5f19492cb_24_setBullet)
 HXDLIN(  24)		if (hx::IsEq( player->get_direction(),::Direction_obj::right_dyn() )) {
-HXLINE(  26)			this->set_x((player->get_x() + ((Float)25.0)));
+HXLINE(  26)			this->set_x((player->get_x() + ((Float)10.0)));
 HXLINE(  27)			this->set_y(player->get_y());
 HXLINE(  28)			this->speed = ((Float)20.0);
             		}
             		else {
-HXLINE(  32)			this->set_x((player->get_x() - ((Float)25.0)));
+HXLINE(  32)			this->set_x((player->get_x() - ((Float)10.0)));
 HXLINE(  33)			this->set_y(player->get_y());
 HXLINE(  34)			this->speed = ((Float)-20.0);
             		}
@@ -108,6 +112,53 @@ HXLINE(  34)			this->speed = ((Float)-20.0);
 
 
 HX_DEFINE_DYNAMIC_FUNC1(Bullet_obj,setBullet,(void))
+
+bool Bullet_obj::checkCollisionWithEnemy( ::Enemy enemy){
+            	HX_STACKFRAME(&_hx_pos_916b41f5f19492cb_40_checkCollisionWithEnemy)
+HXDLIN(  40)		bool _hx_tmp;
+HXDLIN(  40)		bool _hx_tmp1;
+HXDLIN(  40)		bool _hx_tmp2;
+HXDLIN(  40)		Float _hx_tmp3 = this->get_x();
+HXDLIN(  40)		Float _hx_tmp4 = (_hx_tmp3 + (this->get_width() / ( (Float)(2) )));
+HXDLIN(  40)		Float _hx_tmp5 = enemy->get_x();
+HXDLIN(  40)		if ((_hx_tmp4 > (_hx_tmp5 - (enemy->get_width() / ( (Float)(2) ))))) {
+HXDLIN(  40)			Float _hx_tmp6 = this->get_x();
+HXDLIN(  40)			Float _hx_tmp7 = (_hx_tmp6 - (this->get_width() / ( (Float)(2) )));
+HXDLIN(  40)			Float _hx_tmp8 = enemy->get_x();
+HXDLIN(  40)			_hx_tmp2 = (_hx_tmp7 < (_hx_tmp8 + (enemy->get_width() / ( (Float)(2) ))));
+            		}
+            		else {
+HXDLIN(  40)			_hx_tmp2 = false;
+            		}
+HXDLIN(  40)		if (_hx_tmp2) {
+HXLINE(  41)			Float _hx_tmp9 = this->get_y();
+HXDLIN(  41)			Float _hx_tmp10 = (_hx_tmp9 + (this->get_height() / ( (Float)(2) )));
+HXDLIN(  41)			Float _hx_tmp11 = enemy->get_y();
+HXLINE(  40)			_hx_tmp1 = (_hx_tmp10 > (_hx_tmp11 - (enemy->get_height() / ( (Float)(2) ))));
+            		}
+            		else {
+HXDLIN(  40)			_hx_tmp1 = false;
+            		}
+HXDLIN(  40)		if (_hx_tmp1) {
+HXLINE(  41)			Float _hx_tmp12 = this->get_y();
+HXDLIN(  41)			Float _hx_tmp13 = (_hx_tmp12 - (this->get_height() / ( (Float)(2) )));
+HXDLIN(  41)			Float _hx_tmp14 = enemy->get_y();
+HXLINE(  40)			_hx_tmp = (_hx_tmp13 < (_hx_tmp14 + (enemy->get_height() / ( (Float)(2) ))));
+            		}
+            		else {
+HXDLIN(  40)			_hx_tmp = false;
+            		}
+HXDLIN(  40)		if (_hx_tmp) {
+HXLINE(  43)			return true;
+            		}
+            		else {
+HXLINE(  46)			return false;
+            		}
+HXLINE(  40)		return false;
+            	}
+
+
+HX_DEFINE_DYNAMIC_FUNC1(Bullet_obj,checkCollisionWithEnemy,return )
 
 
 hx::ObjectPtr< Bullet_obj > Bullet_obj::__new( ::Player player) {
@@ -138,6 +189,9 @@ hx::Val Bullet_obj::__Field(const ::String &inName,hx::PropertyAccess inCallProp
 		break;
 	case 9:
 		if (HX_FIELD_EQ(inName,"setBullet") ) { return hx::Val( setBullet_dyn() ); }
+		break;
+	case 23:
+		if (HX_FIELD_EQ(inName,"checkCollisionWithEnemy") ) { return hx::Val( checkCollisionWithEnemy_dyn() ); }
 	}
 	return super::__Field(inName,inCallProp);
 }
@@ -169,6 +223,7 @@ static ::String Bullet_obj_sMemberFields[] = {
 	HX_("speed",87,97,69,81),
 	HX_("move",11,e3,60,48),
 	HX_("setBullet",84,07,38,34),
+	HX_("checkCollisionWithEnemy",78,9e,8b,58),
 	::String(null()) };
 
 hx::Class Bullet_obj::__mClass;

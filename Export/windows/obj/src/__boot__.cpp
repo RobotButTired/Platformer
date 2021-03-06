@@ -1969,20 +1969,26 @@
 #ifndef INCLUDED_Player
 #include <Player.h>
 #endif
-#ifndef INCLUDED_Unit
-#include <Unit.h>
-#endif
 #ifndef INCLUDED_ManifestResources
 #include <ManifestResources.h>
 #endif
 #ifndef INCLUDED_Lambda
 #include <Lambda.h>
 #endif
+#ifndef INCLUDED_GameOverScreen
+#include <GameOverScreen.h>
+#endif
 #ifndef INCLUDED_GameLevel
 #include <GameLevel.h>
 #endif
 #ifndef INCLUDED_Game
 #include <Game.h>
+#endif
+#ifndef INCLUDED_Enemy
+#include <Enemy.h>
+#endif
+#ifndef INCLUDED_Unit
+#include <Unit.h>
 #endif
 #ifndef INCLUDED_EReg
 #include <EReg.h>
@@ -2704,11 +2710,13 @@ hx::RegisterResources( hx::GetResources() );
 ::RulesScreen_obj::__register();
 ::Reflect_obj::__register();
 ::Player_obj::__register();
-::Unit_obj::__register();
 ::ManifestResources_obj::__register();
 ::Lambda_obj::__register();
+::GameOverScreen_obj::__register();
 ::GameLevel_obj::__register();
 ::Game_obj::__register();
+::Enemy_obj::__register();
+::Unit_obj::__register();
 ::EReg_obj::__register();
 ::Date_obj::__register();
 ::Button_obj::__register();

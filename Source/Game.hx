@@ -1,5 +1,6 @@
 package;
 
+import haxe.Timer;
 import openfl.geom.Point;
 import openfl.display.Tile;
 import openfl.geom.Rectangle;
@@ -16,9 +17,17 @@ class Game extends Sprite
     var gameLevel:GameLevel;
     var player:Player;
     var haveCollision:Bool = false;
+    var gameIsOver(get,null):Bool = false;
 
     public var bullets:Array<Bullet>;          //массив пуль
     public var spentBullets:Array<Bullet>;     //массив отработавших пуль
+
+    var enemies:Array<Enemy>;                   //массив врагов
+    var deadEnemies:Array<Enemy>;               //массив убитых врагов
+    var maxEnemies:Int = 2;                         //максимальное число врагов на поле
+    var spawnDelay:Float = 2.0;                       //промежуток времени, через который появляются враги
+    var enemiesTimeFlag:Float;                  //временной флаг для генерации врагов
+
     public function new(width:Int, height:Int)
     {
         super();
@@ -43,6 +52,12 @@ class Game extends Sprite
         player.x = 100;
         player.y = 100;
         addChild(player);
+
+        //Enemies
+        enemies = [];
+        deadEnemies = [];
+        enemiesTimeFlag = Timer.stamp();
+
           
         //quitButton
         quitButton = new Button(sizeWidth/2,sizeHeight/2,"QUIT");
@@ -85,12 +100,16 @@ class Game extends Sprite
     public function update() 
     {
         player.move(); 
-        doCollisions(); 
+        doCollisionsWithTiles(); 
+        doCollidionWithEnemies();
         playerJump();
         player.spriteAnimated(player.get_state());  
         player.doShot(this);
         bulletsMove();
-        trace(bullets.length+" "+spentBullets.length);
+        generateEnemies();
+        moveEnemies();
+        doCollisionsWithBullet();
+        trace(enemies.length+" "+deadEnemies.length);
     }
 
     public function checkCollisionWithTile(playerHitBox: Rectangle, tile:Tile):Bool
@@ -126,7 +145,7 @@ class Game extends Sprite
             
             return false;
     }
-    public function doCollisions() 
+    public function doCollisionsWithTiles() 
     {
         haveCollision = false;
         for(i in 0...gameLevel.tilemap.numTiles)
@@ -165,5 +184,94 @@ class Game extends Sprite
                 }
                 i++;
             }    
+    }
+
+    public function generateEnemies() 
+    {
+        if(Timer.stamp()- enemiesTimeFlag >= spawnDelay)
+        {
+            if(enemies.length < maxEnemies)
+            {
+                generateEnemy();
+            }
+            enemiesTimeFlag = Timer.stamp();
+        }
+    }
+
+    public function generateEnemy() 
+    {
+        var enemy:Enemy;
+        if(deadEnemies.length > 0)
+        {
+            enemy = deadEnemies.pop();
+        }
+        else
+        {
+            enemy = new Enemy();
+        }
+        enemy.y = 100;
+        enemy.set_speedY(0.0);
+        enemies.push(enemy);
+        addChild(enemies[enemies.length-1]);
+        if(Math.random() >= 0.5)
+            {
+                enemy.x = 800;
+            }
+            else
+            {
+                enemy.x = 0;
+            } 
+        
+    }
+
+    public function moveEnemies() 
+    {
+        var i=0;
+        while(i < enemies.length)
+        {
+            enemies[i].move(player);
+            i++;
+        }    
+    }
+
+    public function doCollisionsWithBullet() 
+    {
+        var b =0;
+        while(b < bullets.length)
+        {
+            var e =0;
+            while(e < enemies.length)
+            {
+                if(bullets[b].checkCollisionWithEnemy(enemies[e]))
+                {
+                    removeChild(bullets[b]);
+                    spentBullets.push(bullets[b]);
+                    bullets.remove(bullets[b]);
+                    removeChild(enemies[e]);
+                    deadEnemies.push(enemies[e]);
+                    enemies.remove(enemies[e]);
+                }
+                e++;
+            }
+            b++;
+        } 
+    }
+    
+    public function get_gameIsOver() 
+    {
+        return gameIsOver;    
+    }
+
+    public function doCollidionWithEnemies() 
+    {
+        var e = 0;
+        while(e< enemies.length)
+        {
+            if(player.checkCollisionWithEnemy(enemies[e]))
+            {
+                gameIsOver = true;
+            }
+            e++;
+        }    
     }
 }

@@ -10,6 +10,7 @@
 #include <openfl/display/Sprite.h>
 #endif
 HX_DECLARE_CLASS0(Game)
+HX_DECLARE_CLASS0(GameOverScreen)
 HX_DECLARE_CLASS0(Main)
 HX_DECLARE_CLASS0(RulesScreen)
 HX_DECLARE_CLASS0(StartScreen)
@@ -63,7 +64,10 @@ class HXCPP_CLASS_ATTRIBUTES Main_obj : public  ::openfl::display::Sprite_obj
 		static int sizeHeight;
 		 ::StartScreen startScreen;
 		 ::RulesScreen rulesScreen;
+		 ::GameOverScreen gameOverScreen;
 		 ::Game game;
+		int FPS;
+		Float timeFlag;
 		void update( ::openfl::events::Event e);
 		::Dynamic update_dyn();
 

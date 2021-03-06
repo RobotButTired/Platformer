@@ -10,6 +10,7 @@
 #include <Unit.h>
 #endif
 HX_DECLARE_CLASS0(Direction)
+HX_DECLARE_CLASS0(Enemy)
 HX_DECLARE_CLASS0(Game)
 HX_DECLARE_CLASS0(Player)
 HX_DECLARE_CLASS0(State)
@@ -24,7 +25,7 @@ HX_DECLARE_CLASS2(openfl,events,Event)
 HX_DECLARE_CLASS2(openfl,events,EventDispatcher)
 HX_DECLARE_CLASS2(openfl,events,IEventDispatcher)
 HX_DECLARE_CLASS2(openfl,events,KeyboardEvent)
-HX_DECLARE_CLASS2(openfl,geom,Rectangle)
+HX_DECLARE_CLASS2(openfl,events,MouseEvent)
 
 
 
@@ -63,10 +64,7 @@ class HXCPP_CLASS_ATTRIBUTES Player_obj : public  ::Unit_obj
 		::Array< ::Dynamic> idleWidthGun;
 		::Array< ::Dynamic> walkWithGun;
 		::Array< ::Dynamic> jumpWithGun;
-		bool directionLeft;
-		bool directionRight;
 		bool jump;
-		 ::openfl::geom::Rectangle hitBox;
 		 ::State state;
 		Float timeFlag;
 		Float frameTime;
@@ -83,14 +81,23 @@ class HXCPP_CLASS_ATTRIBUTES Player_obj : public  ::Unit_obj
 		void keyDownHandler( ::openfl::events::KeyboardEvent e);
 		::Dynamic keyDownHandler_dyn();
 
+		void mouseDownHandler( ::openfl::events::MouseEvent e);
+		::Dynamic mouseDownHandler_dyn();
+
 		void keyUpHandler( ::openfl::events::KeyboardEvent e);
 		::Dynamic keyUpHandler_dyn();
+
+		void mouseUpHandler( ::openfl::events::MouseEvent e);
+		::Dynamic mouseUpHandler_dyn();
 
 		void move();
 		::Dynamic move_dyn();
 
 		void doShot( ::Game game);
 		::Dynamic doShot_dyn();
+
+		bool checkCollisionWithEnemy( ::Enemy enemy);
+		::Dynamic checkCollisionWithEnemy_dyn();
 
 		 ::State get_state();
 		::Dynamic get_state_dyn();
@@ -100,9 +107,6 @@ class HXCPP_CLASS_ATTRIBUTES Player_obj : public  ::Unit_obj
 
 		void drawHitBox();
 		::Dynamic drawHitBox_dyn();
-
-		 ::openfl::geom::Rectangle get_hitBox();
-		::Dynamic get_hitBox_dyn();
 
 		bool get_directionLeft();
 		::Dynamic get_directionLeft_dyn();

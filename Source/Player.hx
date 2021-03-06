@@ -1,5 +1,6 @@
 package;
 
+import openfl.events.MouseEvent;
 import openfl.display.Sprite;
 import openfl.geom.Rectangle;
 import openfl.Lib;
@@ -15,11 +16,8 @@ class Player extends Unit
     var walkWithGun:Array<Bitmap>;
     var jumpWithGun:Array<Bitmap>;
 
-    var directionLeft:Bool = false;
-    var directionRight:Bool = false;
-    
     var jump:Bool = false;
-    var hitBox(get, null):Rectangle;
+  
 
     var state:State = idle;
 
@@ -28,7 +26,7 @@ class Player extends Unit
     var frameTime:Float = 0.15;
     var ind:Int;
 
-    var frameOfFire:Float = 2;        //скорострельность
+    var frameOfFire:Float = 10;        //скорострельность
     var shooting:Bool = false;          //тригер для стрельбы
     var shootingTime:Float;             //временной флаг для стрельбы
 
@@ -72,7 +70,9 @@ class Player extends Unit
         shootingTime = Timer.stamp();
 
         Lib.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownHandler);
+        Lib.current.stage.addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
         Lib.current.stage.addEventListener(KeyboardEvent.KEY_UP, keyUpHandler);
+        Lib.current.stage.addEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
     }
     public function spriteAnimated(state:State) 
     {
@@ -110,55 +110,61 @@ class Player extends Unit
     {
             if(e.keyCode == 37 || e.keyCode == 65)
             {
-                directionLeft = true;
-                direction = left;
-                //state = walk;
+                movingLeft = true;
             }  
             if(e.keyCode == 39 || e.keyCode == 68)
             {
-                directionRight = true;
-                direction = right;
-                //state = walk;
+                movingRight = true;
             }
             if(e.keyCode == 38 || e.keyCode == 87)
                 jump = true;
             if(e.keyCode == 32)
                 shooting = true;
     }
+    public function mouseDownHandler(e:MouseEvent) 
+    {
+        shooting = true;
+    }
     public function keyUpHandler(e:KeyboardEvent) 
     {
         if(e.keyCode == 37 || e.keyCode == 65)
         {
-            directionLeft = false;
+            movingLeft = false;
         }  
         if(e.keyCode == 39 || e.keyCode == 68)
         {
-            directionRight = false;
+            movingRight = false;
         }
         if(e.keyCode == 38 || e.keyCode == 87)
             jump = false;
         if(e.keyCode == 32)
             shooting = false;
     }
+    public function mouseUpHandler(e:MouseEvent) 
+    {
+        shooting = false;    
+    }
     public function move() 
     {
-        if(directionLeft )
+        if(movingLeft )
             {
                 if(x-hitBox.width/2 >= 0)
                     x -= speedX;
                 state = walk;
                 scaleX = -1.0;
+                direction = left;
             }
-        if(directionRight)
+        if(movingRight)
             {
                 if(x+hitBox.width/2 <= Main.sizeWidth)
                     x += speedX;    
                 state = walk;
                 scaleX = 1.0;
+                direction = right;
             }
-        if(directionLeft && directionRight)
+        if(movingLeft && movingRight)
             state = idle;
-        if(!directionLeft && !directionRight)
+        if(!movingLeft && !movingRight)
             state = idle;
         speedY += gravity;
         y += speedY;
@@ -191,6 +197,17 @@ class Player extends Unit
             }
     }
 
+    public function checkCollisionWithEnemy(enemy:Enemy):Bool
+    {
+        if(x + hitBox.width/2 > enemy.x-enemy.hitBox.width/2 && x - hitBox.width/2 < enemy.x + enemy.hitBox.width/2 &&
+            y + hitBox.height/2 > enemy.y - enemy.hitBox.height/2 && y - hitBox.height/2 < enemy.y + enemy.hitBox.height/2)
+            {
+                return true;
+            }
+            else 
+                return false;
+    }
+
     public function get_state()
     {
         return state;    
@@ -210,18 +227,13 @@ class Player extends Unit
 
   
 
-    public function get_hitBox() 
-    {
-        return this.hitBox;
-    }
-
     public function get_directionLeft() 
     {
-        return directionLeft;    
+        return movingLeft;    
     }
     public function get_directionRight() 
     {
-        return directionRight;    
+        return movingRight;    
     }
     public function get_jump() 
     {
