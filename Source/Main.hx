@@ -8,14 +8,14 @@ import openfl.display.Sprite;
 
 class Main extends Sprite
 {
-	public static var sizeWidth = 800;
+	public static  var sizeWidth = 800;
 	public static var sizeHeight = 600;
 	var startScreen:StartScreen;
 	var rulesScreen:RulesScreen;
 	var gameOverScreen:GameOverScreen;
 	var game:Game;
 
-	var FPS:Int = 60;
+	static var FPS(get,null):Int = 60;
 	var timeFlag:Float;
 	public function new()
 	{
@@ -81,6 +81,7 @@ class Main extends Sprite
 					else if(game.get_gameIsOver())
 					{
 						removeChild(game);
+						gameOverScreen.pointsField.text = Std.string(game.get_gamePoints());
 						addChild(gameOverScreen);
 						game =null;
 					}
@@ -92,5 +93,10 @@ class Main extends Sprite
 			timeFlag = Timer.stamp();
 		}
 		
+	}
+
+	public static function get_FPS() 
+	{
+		return FPS;
 	}
 }

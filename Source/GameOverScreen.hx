@@ -1,5 +1,6 @@
 package;
 
+import openfl.text.TextField;
 import openfl.events.MouseEvent;
 import openfl.display.Sprite;
 
@@ -9,6 +10,8 @@ class GameOverScreen extends Sprite
     var quitButtonIsPressed:Bool = false;
     var tryAgainButton:Button;
     var tryAgainButtonIsPressed:Bool = false;
+
+    public var pointsField:TextField;
 
     var backGround:BackGround;
     public function new() 
@@ -32,6 +35,15 @@ class GameOverScreen extends Sprite
         tryAgainButton.addEventListener(MouseEvent.MOUSE_OVER, tryAgainButtononOver);
         tryAgainButton.addEventListener(MouseEvent.MOUSE_OUT, tryAgainButtonOut);
         tryAgainButton.addEventListener(MouseEvent.MOUSE_DOWN, tryAgainButtonClick);
+
+        pointsField = new TextField();
+        pointsField.text = Std.string(0);
+        pointsField.x  = Main.sizeWidth/2;
+        pointsField.y = Main.sizeHeight/2;
+        pointsField.scaleX = 4.0;
+        pointsField.scaleY = 4.0;
+        pointsField.mouseEnabled = false;
+        addChild(pointsField);
         
     }
 

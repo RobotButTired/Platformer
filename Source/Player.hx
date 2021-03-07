@@ -26,9 +26,10 @@ class Player extends Unit
     var frameTime:Float = 0.15;
     var ind:Int;
 
-    var frameOfFire:Float = 10;        //скорострельность
+    var frameOfFire:Float = 0.5;        //скорострельность
     var shooting:Bool = false;          //тригер для стрельбы
-    var shootingTime:Float;             //временной флаг для стрельбы
+   // var shootingTime:Float;             //временной флаг для стрельбы
+   var counter:Int = 0;
 
 
     public function new() 
@@ -67,7 +68,7 @@ class Player extends Unit
         ind =0; 
         timeFlag = Timer.stamp();
 
-        shootingTime = Timer.stamp();
+        //shootingTime = Timer.stamp();
 
         Lib.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownHandler);
         Lib.current.stage.addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
@@ -173,7 +174,8 @@ class Player extends Unit
 
     public function doShot(game:Game) 
     {
-        if(Timer.stamp()- shootingTime >= 1/frameOfFire && shooting)
+        //if(Timer.stamp()- shootingTime >= 1/frameOfFire && shooting)
+        if(counter >= Main.get_FPS() / frameOfFire && shooting)
             {
                 var bullet:Bullet;
                 if(game.spentBullets.length > 0)
@@ -183,7 +185,8 @@ class Player extends Unit
                         game.bullets[game.bullets.length-1].setBullet(this);
                        // game.bullets.push(bullet);
                         game.addChild(game.bullets[game.bullets.length-1]);
-                        shootingTime = Timer.stamp();
+                       // shootingTime = Timer.stamp();
+                       counter = 0;
                     }
                     else
                     {
@@ -191,10 +194,13 @@ class Player extends Unit
                         game.bullets.push(bullet);
                         game.addChild(bullet);
                         trace("Shot");
-                        shootingTime = Timer.stamp();
+                        //shootingTime = Timer.stamp();
+                        counter = 0;
                     }
               
             }
+        else
+            ++counter;
     }
 
     public function checkCollisionWithEnemy(enemy:Enemy):Bool
@@ -243,5 +249,14 @@ class Player extends Unit
     {
         state = value;    
     }
+   /* public function set_shootingTime(value:Float):Float
+    {
+        shootingTime = value;
+        return shootingTime;
+    }
+    public function get_shootingTime() 
+    {
+        return shootingTime;    
+    }*/
     
 }

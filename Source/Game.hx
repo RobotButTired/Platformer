@@ -1,5 +1,8 @@
 package;
 
+import openfl.text.TextField;
+import openfl.events.KeyboardEvent;
+import openfl.Lib;
 import haxe.Timer;
 import openfl.geom.Point;
 import openfl.display.Tile;
@@ -14,10 +17,14 @@ class Game extends Sprite
     var backGround:BackGround;
     var quitButton:Button;
     var quitButtonIsPressed:Bool =false;
+    var pauseIsPressed:Bool = false;
     var gameLevel:GameLevel;
     var player:Player;
     var haveCollision:Bool = false;
     var gameIsOver(get,null):Bool = false;
+
+    var gamePoints:Int = 0;
+    var pointsField:TextField;
 
     public var bullets:Array<Bullet>;          //массив пуль
     public var spentBullets:Array<Bullet>;     //массив отработавших пуль
@@ -25,8 +32,9 @@ class Game extends Sprite
     var enemies:Array<Enemy>;                   //массив врагов
     var deadEnemies:Array<Enemy>;               //массив убитых врагов
     var maxEnemies:Int = 2;                         //максимальное число врагов на поле
-    var spawnDelay:Float = 2.0;                       //промежуток времени, через который появляются враги
-    var enemiesTimeFlag:Float;                  //временной флаг для генерации врагов
+    var spawnDelay:Float = 1.0;                       //промежуток времени, через который появляются враги
+  //  var enemiesTimeFlag:Float;                  //временной флаг для генерации врагов
+    var counter:Int =0;
 
     public function new(width:Int, height:Int)
     {
@@ -56,7 +64,17 @@ class Game extends Sprite
         //Enemies
         enemies = [];
         deadEnemies = [];
-        enemiesTimeFlag = Timer.stamp();
+       // enemiesTimeFlag = Timer.stamp();
+
+        // PointsField
+        pointsField = new TextField();
+        pointsField.text = Std.string(gamePoints);
+        pointsField.x  = Main.sizeWidth/2;
+        pointsField.y = 0;
+        pointsField.scaleX = 2.0;
+        pointsField.scaleY = 2.0;
+        pointsField.mouseEnabled = false;
+        addChild(pointsField);
 
           
         //quitButton
@@ -69,6 +87,7 @@ class Game extends Sprite
         quitButton.addEventListener(MouseEvent.MOUSE_OVER, quitButtonOver);
         quitButton.addEventListener(MouseEvent.MOUSE_OUT, quitButtonOut);
         quitButton.addEventListener(MouseEvent.MOUSE_DOWN, quitButtonClick);
+        Lib.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, pause);
 
       
 
@@ -78,6 +97,17 @@ class Game extends Sprite
     {
         return haveCollision;    
     }*/
+
+    public function pause(e:KeyboardEvent) 
+    {
+        if(e.keyCode == 120)
+        {
+            if(!pauseIsPressed)
+                pauseIsPressed = true;
+            else 
+                pauseIsPressed = false;
+        }
+    }
     public function quitButtonClick(e:MouseEvent) 
     {
         quitButtonIsPressed = true;
@@ -99,17 +129,26 @@ class Game extends Sprite
     }
     public function update() 
     {
-        player.move(); 
-        doCollisionsWithTiles(); 
-        doCollidionWithEnemies();
-        playerJump();
-        player.spriteAnimated(player.get_state());  
-        player.doShot(this);
-        bulletsMove();
-        generateEnemies();
-        moveEnemies();
-        doCollisionsWithBullet();
-        trace(enemies.length+" "+deadEnemies.length);
+        if(!pauseIsPressed)
+        {
+            player.move(); 
+            doCollisionsWithTiles(); 
+            doCollidionWithEnemies();
+            playerJump();
+            player.spriteAnimated(player.get_state());  
+            player.doShot(this);
+            bulletsMove();
+            generateEnemies();
+            moveEnemies();
+            doCollisionsWithBullet();
+        }
+        else 
+        {
+            //enemiesTimeFlag += Timer.stamp() - enemiesTimeFlag;
+           // player.set_shootingTime(player.get_shootingTime() + (Timer.stamp() - player.get_shootingTime()));
+        }
+        //trace(enemies.length+" "+deadEnemies.length);
+       // trace(pauseIsPressed);
     }
 
     public function checkCollisionWithTile(playerHitBox: Rectangle, tile:Tile):Bool
@@ -188,14 +227,18 @@ class Game extends Sprite
 
     public function generateEnemies() 
     {
-        if(Timer.stamp()- enemiesTimeFlag >= spawnDelay)
+       // if(Timer.stamp()- enemiesTimeFlag >= spawnDelay)
+        if(counter >= Main.get_FPS()* spawnDelay)
         {
             if(enemies.length < maxEnemies)
             {
                 generateEnemy();
             }
-            enemiesTimeFlag = Timer.stamp();
+            counter =0;
+            //enemiesTimeFlag = Timer.stamp();
         }
+        else
+            ++counter;
     }
 
     public function generateEnemy() 
@@ -248,6 +291,8 @@ class Game extends Sprite
                     spentBullets.push(bullets[b]);
                     bullets.remove(bullets[b]);
                     removeChild(enemies[e]);
+                    ++gamePoints;
+                    pointsField.text = Std.string(gamePoints);
                     deadEnemies.push(enemies[e]);
                     enemies.remove(enemies[e]);
                 }
@@ -260,6 +305,10 @@ class Game extends Sprite
     public function get_gameIsOver() 
     {
         return gameIsOver;    
+    }
+    public function get_gamePoints() 
+    {
+        return gamePoints;    
     }
 
     public function doCollidionWithEnemies() 
