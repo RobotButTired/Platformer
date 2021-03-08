@@ -26,7 +26,7 @@ class Player extends Unit
     var frameTime:Float = 0.15;
     var ind:Int;
 
-    var frameOfFire:Float = 2;        //скорострельность
+    var frameOfFire:Float = 0.75;        //скорострельность
     var shooting:Bool = false;          //тригер для стрельбы
    // var shootingTime:Float;             //временной флаг для стрельбы
    var counter:Int = 0;

@@ -36,7 +36,7 @@ class Game extends Sprite
 
     var enemies:Array<Enemy>;                   //массив врагов
     var deadEnemies:Array<Enemy>;               //массив убитых врагов
-    var maxEnemies:Int = 2;                         //максимальное число врагов на поле
+    var maxEnemies:Int = 4;                         //максимальное число врагов на поле
     var spawnDelay:Float = 1.0;                       //промежуток времени, через который появляются враги
   //  var enemiesTimeFlag:Float;                  //временной флаг для генерации врагов
     var counter:Int =0;
@@ -323,6 +323,8 @@ class Game extends Sprite
                     pointsField.text = Std.string(gamePoints);
                     deadEnemies.push(enemies[e]);
                     enemies.remove(enemies[e]);
+                    b--;
+                    break;
                 }
                 e++;
             }
@@ -356,7 +358,10 @@ class Game extends Sprite
     {
         if(Bonus.bonusIsUsed)
         {
-            Bonus.doBonus(player,enemies,deadEnemies, bullets);
+            if(Bonus.get_bonusType() == slow)
+                Bonus.doBonusSlow(player,enemies,deadEnemies, bullets);
+            else if(Bonus.get_bonusType()== destroy)
+                doBonusDestroy();
         }    
     }
    /* public function bonusDebuf()
@@ -380,4 +385,21 @@ class Game extends Sprite
             addChild(bonus);
         }
     }
+        public function doBonusDestroy() 
+        {
+            var e =0;
+            while(e < enemies.length)
+            {
+                {
+                    removeChild(enemies[e]);
+                    ++gamePoints;
+                    pointsField.text = Std.string(gamePoints);
+                    deadEnemies.push(enemies[e]);
+                    enemies.remove(enemies[e]);
+                }
+                //e++;
+            }
+                Bonus.haveBonus = false;
+                Bonus.bonusIsUsed = false;
+        }
 }

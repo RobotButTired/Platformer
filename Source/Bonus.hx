@@ -2,15 +2,21 @@ package;
 
 import openfl.geom.Rectangle;
 
+enum BonusType{slow;destroy;}
 class Bonus extends Unit
 {
 
     static var counter:Int = 0;            //счетчик времени действия бонуса
     public static var bonusIsUsed:Bool = false;
     public static var haveBonus:Bool = false;
+    static var bonusType(get, null):BonusType;
     public function new() 
     {
         super();
+        if(Math.random() < 0.5)
+            bonusType = destroy;
+        else
+            bonusType = slow;
         counter = 0;
         hitBox = new Rectangle(-25/2,-25/2,25,25);
         drawHitBox();
@@ -18,7 +24,11 @@ class Bonus extends Unit
 
     public function drawHitBox() 
     {
-        graphics.lineStyle(3,0x00FFFF); 
+        if(bonusType == slow)
+            graphics.lineStyle(3,0x00FFFF); 
+        else 
+            graphics.lineStyle(3,0x000000); 
+
         graphics.drawRect(-hitBox.width/2,-hitBox.height/2,hitBox.width,hitBox.height);   
         graphics.endFill();
     }
@@ -49,7 +59,7 @@ class Bonus extends Unit
             return false;
     }
 
-    public static function doBonus(player:Player, enemies:Array<Enemy>,deadEnemies:Array<Enemy>, bullets:Array<Bullet>) 
+    public static function doBonusSlow(player:Player, enemies:Array<Enemy>,deadEnemies:Array<Enemy>, bullets:Array<Bullet>) 
     {
         if(counter == 0)
         {
@@ -122,6 +132,12 @@ class Bonus extends Unit
         counter++;
       // trace(counter);
     }
+    public static function get_bonusType() 
+    {
+        return bonusType;    
+    }
+
+
    /* public static function resetBonus(player:Player, enemies:Array<Enemy>, bullets:Array<Bullet>) 
     {
        
