@@ -7,7 +7,7 @@ enum Direction {left; right;}
 
 class Unit extends Sprite
 {
-    var speedX:Float;
+    var speedX:Float = 0.0;
     var speedY:Float = 0.0;
     var gravity:Float = 0.8;
     var direction:Direction = right;

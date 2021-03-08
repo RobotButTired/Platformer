@@ -870,9 +870,9 @@ ApplicationMain.create = function(config) {
 	ManifestResources.init(config);
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-		_this.setReserved("build","7");
+		_this.setReserved("build","8");
 	} else {
-		_this.h["build"] = "7";
+		_this.h["build"] = "8";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -4189,6 +4189,84 @@ BackGround.__super__ = openfl_display_Sprite;
 BackGround.prototype = $extend(openfl_display_Sprite.prototype,{
 	__class__: BackGround
 });
+var Unit = function() {
+	this.movingRight = false;
+	this.movingLeft = false;
+	this.direction = Direction.right;
+	this.gravity = 0.8;
+	this.speedY = 0.0;
+	this.speedX = 0.0;
+	openfl_display_Sprite.call(this);
+};
+$hxClasses["Unit"] = Unit;
+Unit.__name__ = "Unit";
+Unit.__super__ = openfl_display_Sprite;
+Unit.prototype = $extend(openfl_display_Sprite.prototype,{
+	get_speedY: function() {
+		return this.speedY;
+	}
+	,set_speedY: function(value) {
+		this.speedY = value;
+	}
+	,get_hitBox: function() {
+		return this.hitBox;
+	}
+	,__class__: Unit
+});
+var Bonus = function() {
+	Unit.call(this);
+	this.hitBox = new openfl_geom_Rectangle(-12.5,-12.5,25,25);
+	this.drawHitBox();
+};
+$hxClasses["Bonus"] = Bonus;
+Bonus.__name__ = "Bonus";
+Bonus.doBonus = function(player,enemies,bullets) {
+	if(Bonus.counter == 0) {
+		player.speedX *= 0.5;
+		player.speedY *= 0.5;
+		player.gravity *= 0.25;
+		Game.jumpPower *= 0.50;
+	} else if(Bonus.counter >= Main.get_FPS() * 3.0) {
+		player.speedX *= 2.0;
+		player.speedY *= 2.0;
+		player.gravity /= 0.25;
+		Game.jumpPower /= 0.50;
+		Bonus.bonusIsUsed = false;
+		Bonus.counter = -1;
+	}
+	++Bonus.counter;
+	haxe_Log.trace(Bonus.counter,{ fileName : "Source/Bonus.hx", lineNumber : 75, className : "Bonus", methodName : "doBonus"});
+};
+Bonus.__super__ = Unit;
+Bonus.prototype = $extend(Unit.prototype,{
+	drawHitBox: function() {
+		this.get_graphics().lineStyle(3,65535);
+		this.get_graphics().drawRect(-this.get_hitBox().width / 2,-this.get_hitBox().height / 2,this.get_hitBox().width,this.get_hitBox().height);
+		this.get_graphics().endFill();
+	}
+	,fall: function() {
+		var _g = this;
+		_g.set_y(_g.get_y() + this.speedY);
+		this.speedY += this.gravity;
+		if(this.get_y() + this.get_hitBox().height / 2 > 440) {
+			if(Math.abs(this.speedY) <= 2.0) {
+				this.set_y(440 - this.get_hitBox().height / 2);
+				this.speedY = 0.0;
+			} else {
+				this.speedY = -Math.abs(this.speedY * 0.6);
+			}
+		}
+	}
+	,checkCollisionWithPlayer: function(player) {
+		if(this.get_x() + this.get_hitBox().width / 2 > player.get_x() - player.get_hitBox().width / 2 && this.get_x() - this.get_hitBox().width / 2 < player.get_x() + player.get_width() / 2 && this.get_y() + this.get_hitBox().height / 2 > player.get_y() - player.get_height() / 2 && this.get_y() - this.get_hitBox().height / 2 < player.get_y() + player.get_height() / 2) {
+			Bonus.bonusIsUsed = true;
+			return true;
+		} else {
+			return false;
+		}
+	}
+	,__class__: Bonus
+});
 var Bullet = function(player) {
 	openfl_display_Sprite.call(this);
 	this.get_graphics().beginFill(255);
@@ -4221,6 +4299,12 @@ Bullet.prototype = $extend(openfl_display_Sprite.prototype,{
 		} else {
 			return false;
 		}
+	}
+	,get_speed: function() {
+		return this.speed;
+	}
+	,set_speed: function(value) {
+		return this.speed = value;
 	}
 	,__class__: Bullet
 });
@@ -4341,29 +4425,6 @@ EReg.prototype = {
 	}
 	,__class__: EReg
 };
-var Unit = function() {
-	this.movingRight = false;
-	this.movingLeft = false;
-	this.direction = Direction.right;
-	this.gravity = 0.8;
-	this.speedY = 0.0;
-	openfl_display_Sprite.call(this);
-};
-$hxClasses["Unit"] = Unit;
-Unit.__name__ = "Unit";
-Unit.__super__ = openfl_display_Sprite;
-Unit.prototype = $extend(openfl_display_Sprite.prototype,{
-	get_speedY: function() {
-		return this.speedY;
-	}
-	,set_speedY: function(value) {
-		this.speedY = value;
-	}
-	,get_hitBox: function() {
-		return this.hitBox;
-	}
-	,__class__: Unit
-});
 var Enemy = function() {
 	Unit.call(this);
 	this.hitBox = new openfl_geom_Rectangle(-15.,-20.,30,40);
@@ -4398,7 +4459,8 @@ Enemy.prototype = $extend(Unit.prototype,{
 	,__class__: Enemy
 });
 var Game = function(width,height) {
-	this.spawnDelay = 5.0;
+	this.counter = 0;
+	this.spawnDelay = 1.0;
 	this.maxEnemies = 2;
 	this.gamePoints = 0;
 	this.gameIsOver = false;
@@ -4420,7 +4482,10 @@ var Game = function(width,height) {
 	this.addChild(this.player);
 	this.enemies = [];
 	this.deadEnemies = [];
-	this.enemiesTimeFlag = new Date().getTime() / 1000;
+	this.bonus = new Bonus();
+	this.bonus.set_x(Main.sizeWidth / 2);
+	this.bonus.set_y(Main.sizeHeight / 4);
+	this.addChild(this.bonus);
 	this.pointsField = new openfl_text_TextField();
 	this.pointsField.set_text(Std.string(this.gamePoints));
 	this.pointsField.set_x(Main.sizeWidth / 2);
@@ -4470,15 +4535,21 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 			this.player.move();
 			this.doCollisionsWithTiles();
 			this.doCollidionWithEnemies();
-			this.playerJump();
+			this.playerJump(Game.jumpPower);
 			this.player.spriteAnimated(this.player.get_state());
 			this.player.doShot(this);
 			this.bulletsMove();
 			this.generateEnemies();
 			this.moveEnemies();
 			this.doCollisionsWithBullet();
-		} else {
-			this.enemiesTimeFlag += new Date().getTime() / 1000 - this.enemiesTimeFlag;
+			if(this.contains(this.bonus)) {
+				this.bonus.fall();
+				if(this.bonus.checkCollisionWithPlayer(this.player)) {
+					this.removeChild(this.bonus);
+					this.bonus = null;
+				}
+			}
+			this.bonusBuf();
 		}
 	}
 	,checkCollisionWithTile: function(playerHitBox,tile) {
@@ -4510,10 +4581,10 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 			}
 		}
 	}
-	,playerJump: function() {
+	,playerJump: function(jumpPower) {
 		if(this.player.get_jump() && this.haveCollision) {
-			haxe_Log.trace("jump",{ fileName : "Source/Game.hx", lineNumber : 205, className : "Game", methodName : "playerJump"});
-			this.player.set_speedY(this.player.get_speedY() - 15.0);
+			haxe_Log.trace("jump",{ fileName : "Source/Game.hx", lineNumber : 227, className : "Game", methodName : "playerJump"});
+			this.player.set_speedY(this.player.get_speedY() - jumpPower);
 		}
 		if(!this.haveCollision) {
 			this.player.set_state(State.jump);
@@ -4532,11 +4603,13 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 		}
 	}
 	,generateEnemies: function() {
-		if(new Date().getTime() / 1000 - this.enemiesTimeFlag >= this.spawnDelay) {
+		if(this.counter >= Main.get_FPS() * this.spawnDelay) {
 			if(this.enemies.length < this.maxEnemies) {
 				this.generateEnemy();
 			}
-			this.enemiesTimeFlag = new Date().getTime() / 1000;
+			this.counter = 0;
+		} else {
+			++this.counter;
 		}
 	}
 	,generateEnemy: function() {
@@ -4596,6 +4669,11 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 				this.gameIsOver = true;
 			}
 			++e;
+		}
+	}
+	,bonusBuf: function() {
+		if(Bonus.bonusIsUsed) {
+			Bonus.doBonus(this.player,this.enemies,this.bullets);
 		}
 	}
 	,__class__: Game
@@ -4827,7 +4905,7 @@ var State = $hxEnums["State"] = { __ename__ : "State", __constructs__ : ["idle",
 var Player = function() {
 	this.counter = 0;
 	this.shooting = false;
-	this.frameOfFire = 0.2;
+	this.frameOfFire = 0.5;
 	this.frameTime = 0.15;
 	this.state = State.idle;
 	this.jump = false;
@@ -4973,9 +5051,9 @@ Player.prototype = $extend(Unit.prototype,{
 				haxe_Log.trace("Shot",{ fileName : "Source/Player.hx", lineNumber : 196, className : "Player", methodName : "doShot"});
 				this.counter = 0;
 			}
+		} else {
+			++this.counter;
 		}
-		haxe_Log.trace(this.counter,{ fileName : "Source/Player.hx", lineNumber : 202, className : "Player", methodName : "doShot"});
-		++this.counter;
 	}
 	,checkCollisionWithEnemy: function(enemy) {
 		if(this.get_x() + this.get_hitBox().width / 2 > enemy.get_x() - enemy.get_hitBox().width / 2 && this.get_x() - this.get_hitBox().width / 2 < enemy.get_x() + enemy.get_hitBox().width / 2 && this.get_y() + this.get_hitBox().height / 2 > enemy.get_y() - enemy.get_hitBox().height / 2 && this.get_y() - this.get_hitBox().height / 2 < enemy.get_y() + enemy.get_hitBox().height / 2) {
@@ -22411,6 +22489,49 @@ lime_net__$HTTPRequest_$openfl_$utils_$ByteArray.prototype = $extend(lime_net__$
 	}
 	,__class__: lime_net__$HTTPRequest_$openfl_$utils_$ByteArray
 });
+var lime_system_BackgroundWorker = function() {
+	this.onProgress = new lime_app__$Event_$Dynamic_$Void();
+	this.onError = new lime_app__$Event_$Dynamic_$Void();
+	this.onComplete = new lime_app__$Event_$Dynamic_$Void();
+	this.doWork = new lime_app__$Event_$Dynamic_$Void();
+};
+$hxClasses["lime.system.BackgroundWorker"] = lime_system_BackgroundWorker;
+lime_system_BackgroundWorker.__name__ = "lime.system.BackgroundWorker";
+lime_system_BackgroundWorker.prototype = {
+	cancel: function() {
+		this.canceled = true;
+	}
+	,run: function(message) {
+		this.canceled = false;
+		this.completed = false;
+		this.__runMessage = message;
+		this.__doWork();
+	}
+	,sendComplete: function(message) {
+		this.completed = true;
+		if(!this.canceled) {
+			this.canceled = true;
+			this.onComplete.dispatch(message);
+		}
+	}
+	,sendError: function(message) {
+		if(!this.canceled) {
+			this.canceled = true;
+			this.onError.dispatch(message);
+		}
+	}
+	,sendProgress: function(message) {
+		if(!this.canceled) {
+			this.onProgress.dispatch(message);
+		}
+	}
+	,__doWork: function() {
+		this.doWork.dispatch(this.__runMessage);
+	}
+	,__update: function(deltaTime) {
+	}
+	,__class__: lime_system_BackgroundWorker
+};
 var lime_system_CFFI = function() { };
 $hxClasses["lime.system.CFFI"] = lime_system_CFFI;
 lime_system_CFFI.__name__ = "lime.system.CFFI";
@@ -24007,7 +24128,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 170716;
+	this.version = 244087;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
@@ -72328,6 +72449,9 @@ openfl_display_DisplayObject.__tempStack = new lime_utils_ObjectPool(function() 
 Main.sizeWidth = 800;
 Main.sizeHeight = 600;
 Main.FPS = 60;
+Bonus.counter = 0;
+Bonus.bonusIsUsed = false;
+Game.jumpPower = 15.0;
 haxe_Serializer.USE_CACHE = false;
 haxe_Serializer.USE_ENUM_INDEX = false;
 haxe_Serializer.BASE64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%:";
@@ -73158,6 +73282,8 @@ lime_media_openal_ALC.EXTENSIONS = 4102;
 lime_media_openal_ALC.ENUMERATE_ALL_EXT = 1;
 lime_media_openal_ALC.DEFAULT_ALL_DEVICES_SPECIFIER = 4114;
 lime_media_openal_ALC.ALL_DEVICES_SPECIFIER = 4115;
+lime_system_BackgroundWorker.MESSAGE_COMPLETE = "__COMPLETE__";
+lime_system_BackgroundWorker.MESSAGE_ERROR = "__ERROR__";
 lime_system_Clipboard.onUpdate = new lime_app__$Event_$Void_$Void();
 lime_system_Sensor.sensorByID = new haxe_ds_IntMap();
 lime_system_Sensor.sensors = [];

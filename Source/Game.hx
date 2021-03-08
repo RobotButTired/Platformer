@@ -1,5 +1,6 @@
 package;
 
+import lime.system.BackgroundWorker;
 import openfl.text.TextField;
 import openfl.events.KeyboardEvent;
 import openfl.Lib;
@@ -21,7 +22,11 @@ class Game extends Sprite
     var gameLevel:GameLevel;
     var player:Player;
     var haveCollision:Bool = false;
+    public static var jumpPower:Float;           //сила прыжка
+
     var gameIsOver(get,null):Bool = false;
+
+    var bonus:Bonus;
 
     var gamePoints:Int = 0;
     var pointsField:TextField;
@@ -56,6 +61,7 @@ class Game extends Sprite
 
 
           //PLayer
+          jumpPower = 15.0;
         player = new Player();
         player.x = 100;
         player.y = 100;
@@ -65,6 +71,14 @@ class Game extends Sprite
         enemies = [];
         deadEnemies = [];
        // enemiesTimeFlag = Timer.stamp();
+
+       //Bonus
+       Bonus.bonusIsUsed = false;
+       Bonus.haveBonus = false;
+       /* bonus = new Bonus();
+       bonus.x = Main.sizeWidth/2;
+       bonus.y = Main.sizeHeight/4;
+       addChild(bonus);*/
 
         // PointsField
         pointsField = new TextField();
@@ -131,16 +145,29 @@ class Game extends Sprite
     {
         if(!pauseIsPressed)
         {
+            bonusBuf();
             player.move(); 
             doCollisionsWithTiles(); 
             doCollidionWithEnemies();
-            playerJump();
+            playerJump(jumpPower);
             player.spriteAnimated(player.get_state());  
             player.doShot(this);
+
             bulletsMove();
             generateEnemies();
             moveEnemies();
             doCollisionsWithBullet();
+            //bonusDebuf();
+
+            if(this.contains(bonus))
+                {
+                    bonus.fall();
+                   if(bonus.checkCollisionWithPlayer(player))
+                    {
+                        removeChild(bonus);
+                        bonus = null;
+                    }
+                }
         }
         else 
         {
@@ -198,13 +225,13 @@ class Game extends Sprite
             //trace(i);
         }
     }
-    public function playerJump()
+    public function playerJump(jumpPower:Float)
     {
        // trace(player.get_jump()+" "+haveCollision);
         if(player.get_jump() && haveCollision)
             {
                 trace("jump");
-                player.set_speedY(player.get_speedY()-15.0);
+                player.set_speedY(player.get_speedY()-jumpPower);
             }    
         if(!haveCollision)
             player.set_state(jump);
@@ -291,6 +318,7 @@ class Game extends Sprite
                     spentBullets.push(bullets[b]);
                     bullets.remove(bullets[b]);
                     removeChild(enemies[e]);
+                    spawnBonus(enemies[e]);
                     ++gamePoints;
                     pointsField.text = Std.string(gamePoints);
                     deadEnemies.push(enemies[e]);
@@ -322,5 +350,34 @@ class Game extends Sprite
             }
             e++;
         }    
+    }
+
+    public function bonusBuf()
+    {
+        if(Bonus.bonusIsUsed)
+        {
+            Bonus.doBonus(player,enemies,deadEnemies, bullets);
+        }    
+    }
+   /* public function bonusDebuf()
+        {
+            if(Bonus.bonusIsUsed)
+            {
+                Bonus.resetBonus(player,enemies, bullets);
+            }    
+        }*/
+
+    public function spawnBonus(enemy:Enemy) 
+    {
+        if(!Bonus.bonusIsUsed && !Bonus.haveBonus && Math.random() < 0.05)
+        {
+            Bonus.bonusIsUsed = false;
+            Bonus.haveBonus = true;
+            bonus = new Bonus();
+            bonus.set_speedY(-10.0);
+            bonus.x = enemy.x;
+            bonus.y = enemy.y;
+            addChild(bonus);
+        }
     }
 }

@@ -12,6 +12,12 @@ class Enemy extends Unit
         hitBox = new Rectangle(-30/2,-40/2,30,40);
         drawHitBox();
         speedX = 1.5;
+        if(Bonus.bonusIsUsed)
+            {
+                speedY *= 0.25;
+                speedX = 1.5*0.25;
+                gravity *= 0.25;
+            }
         
     }
 

@@ -4,7 +4,7 @@ import openfl.display.Sprite;
 
 class Bullet extends Sprite
 {
-    var speed:Float;
+    public  var speed:Float;
     public function new(player:Player)
     {
         super();
@@ -26,12 +26,16 @@ class Bullet extends Sprite
                 x= player.x + 10.0;
                 y = player.y;
                 speed = 20.0;
+                if(Bonus.bonusIsUsed)
+                    speed = 5.0;
             } 
         else
             {
                 x = player.x - 10.0;
                 y = player.y;
                 speed = -20.0;
+                if(Bonus.bonusIsUsed)
+                    speed = -5.0;
             }
     }
 
@@ -44,5 +48,13 @@ class Bullet extends Sprite
             }
             else 
                 return false;
+    }
+    public function get_speed() 
+    {
+        return speed;    
+    }
+    public function set_speed(value:Float)
+    {
+        speed = value;    
     }
 }
