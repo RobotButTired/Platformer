@@ -64,6 +64,9 @@
 #ifndef INCLUDED_haxe_StackItem
 #include <haxe/StackItem.h>
 #endif
+#ifndef INCLUDED_CollisionDirection
+#include <CollisionDirection.h>
+#endif
 #ifndef INCLUDED_Direction
 #include <Direction.h>
 #endif
@@ -750,6 +753,9 @@
 #endif
 #ifndef INCLUDED_haxe_SysTools
 #include <haxe/SysTools.h>
+#endif
+#ifndef INCLUDED_Game
+#include <Game.h>
 #endif
 #ifndef INCLUDED_Bonus
 #include <Bonus.h>
@@ -1990,9 +1996,6 @@
 #ifndef INCLUDED_GameLevel
 #include <GameLevel.h>
 #endif
-#ifndef INCLUDED_Game
-#include <Game.h>
-#endif
 #ifndef INCLUDED_Enemy
 #include <Enemy.h>
 #endif
@@ -2084,6 +2087,7 @@ hx::RegisterResources( hx::GetResources() );
 ::haxe::io::Error_obj::__register();
 ::haxe::io::Encoding_obj::__register();
 ::haxe::StackItem_obj::__register();
+::CollisionDirection_obj::__register();
 ::Direction_obj::__register();
 ::ValueType_obj::__register();
 ::State_obj::__register();
@@ -2313,6 +2317,7 @@ hx::RegisterResources( hx::GetResources() );
 ::haxe::Serializer_obj::__register();
 ::haxe::Log_obj::__register();
 ::haxe::SysTools_obj::__register();
+::Game_obj::__register();
 ::Bonus_obj::__register();
 ::Main_obj::__register();
 ::openfl::display::DisplayObject_obj::__register();
@@ -2726,7 +2731,6 @@ hx::RegisterResources( hx::GetResources() );
 ::Lambda_obj::__register();
 ::GameOverScreen_obj::__register();
 ::GameLevel_obj::__register();
-::Game_obj::__register();
 ::Enemy_obj::__register();
 ::EReg_obj::__register();
 ::Date_obj::__register();
@@ -2769,6 +2773,7 @@ hx::RegisterResources( hx::GetResources() );
 ::haxe::io::Error_obj::__boot();
 ::haxe::io::Encoding_obj::__boot();
 ::haxe::StackItem_obj::__boot();
+::CollisionDirection_obj::__boot();
 ::Direction_obj::__boot();
 ::ValueType_obj::__boot();
 ::State_obj::__boot();
@@ -2788,6 +2793,7 @@ hx::RegisterResources( hx::GetResources() );
 ::openfl::display::DisplayObject_obj::__boot();
 ::Main_obj::__boot();
 ::Bonus_obj::__boot();
+::Game_obj::__boot();
 ::haxe::SysTools_obj::__boot();
 ::haxe::Serializer_obj::__boot();
 ::haxe::Timer_obj::__boot();

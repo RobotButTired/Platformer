@@ -9,6 +9,7 @@
 #ifndef INCLUDED_openfl_display_Sprite
 #include <openfl/display/Sprite.h>
 #endif
+HX_DECLARE_CLASS0(CollisionDirection)
 HX_DECLARE_CLASS0(Direction)
 HX_DECLARE_CLASS0(Unit)
 HX_DECLARE_CLASS2(openfl,display,DisplayObject)
@@ -58,6 +59,7 @@ class HXCPP_CLASS_ATTRIBUTES Unit_obj : public  ::openfl::display::Sprite_obj
 		Float speedY;
 		Float gravity;
 		 ::Direction direction;
+		 ::CollisionDirection collisionDirection;
 		bool movingLeft;
 		bool movingRight;
 		 ::openfl::geom::Rectangle hitBox;
@@ -69,6 +71,21 @@ class HXCPP_CLASS_ATTRIBUTES Unit_obj : public  ::openfl::display::Sprite_obj
 
 		 ::openfl::geom::Rectangle get_hitBox();
 		::Dynamic get_hitBox_dyn();
+
+		bool checkCollisionWithTile(int tileType,Float tileX,Float tileY);
+		::Dynamic checkCollisionWithTile_dyn();
+
+		 ::CollisionDirection directionDefinition(Float tileX,Float tileY);
+		::Dynamic directionDefinition_dyn();
+
+		void doCollisionWithTile( ::CollisionDirection direction,Float tileX,Float tileY);
+		::Dynamic doCollisionWithTile_dyn();
+
+		virtual void doCollisionsWithTiles(::Array< ::Dynamic> level);
+		::Dynamic doCollisionsWithTiles_dyn();
+
+		 ::CollisionDirection get_collisionDirection();
+		::Dynamic get_collisionDirection_dyn();
 
 };
 

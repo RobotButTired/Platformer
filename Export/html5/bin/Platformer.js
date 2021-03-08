@@ -870,9 +870,9 @@ ApplicationMain.create = function(config) {
 	ManifestResources.init(config);
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-		_this.setReserved("build","10");
+		_this.setReserved("build","11");
 	} else {
-		_this.h["build"] = "10";
+		_this.h["build"] = "11";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -4215,6 +4215,78 @@ Unit.prototype = $extend(openfl_display_Sprite.prototype,{
 	,get_hitBox: function() {
 		return this.hitBox;
 	}
+	,checkCollisionWithTile: function(tileType,tileX,tileY) {
+		if(tileType > 0 && tileType < 5) {
+			var tileWidth = Main.sizeWidth / 20;
+			var tileHeight = Main.sizeHeight / 15;
+			if(this.get_x() + this.get_hitBox().width / 2 > tileX && this.get_x() - this.get_hitBox().width / 2 < tileX + tileWidth && this.get_y() + this.get_hitBox().height / 2 > tileY && this.get_y() - this.get_hitBox().height / 2 < tileY + tileHeight) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+	,directionDefinition: function(tileX,tileY) {
+		var tileWidth = Main.sizeWidth / 20;
+		var tileHeight = Main.sizeHeight / 15;
+		var up = 0.0;
+		var down = 0.0;
+		var left = 0.0;
+		var right = 0.0;
+		left = this.get_x() + this.get_hitBox().width / 2 - tileX;
+		up = this.get_y() + this.get_hitBox().height / 2 - tileY;
+		right = tileX + tileWidth - (this.get_x() - this.get_hitBox().width / 2);
+		down = tileY + tileHeight - (this.get_y() - this.get_hitBox().height / 2);
+		if(left <= up && left <= right && left <= down) {
+			return CollisionDirection.left;
+		} else if(up <= left && up <= right && up <= down) {
+			return CollisionDirection.up;
+		} else if(right <= left && right <= up && right <= down) {
+			return CollisionDirection.right;
+		} else if(down <= left && down <= up && down <= right) {
+			return CollisionDirection.down;
+		} else {
+			return CollisionDirection.up;
+		}
+	}
+	,doCollisionWithTile: function(direction,tileX,tileY) {
+		var tileWidth = Main.sizeWidth / 20;
+		var tileHeight = Main.sizeHeight / 15;
+		if(this.get_collisionDirection() == CollisionDirection.up) {
+			this.set_y(tileY - this.get_hitBox().height / 2);
+			this.speedY = 0.0;
+		} else if(this.get_collisionDirection() == CollisionDirection.down) {
+			this.set_y(tileY + tileHeight + this.get_hitBox().height / 2);
+			this.speedY = 0.0;
+		} else if(this.get_collisionDirection() == CollisionDirection.left) {
+			this.set_x(tileX - this.get_hitBox().width / 2);
+		} else if(this.get_collisionDirection() == CollisionDirection.right) {
+			this.set_x(tileX + tileWidth + this.get_hitBox().width / 2);
+		}
+	}
+	,doCollisionsWithTiles: function(level) {
+		var tileWidth = Main.sizeWidth / 20;
+		var tileHeight = Main.sizeHeight / 15;
+		var _g = 0;
+		var _g1 = level.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var _g2 = 0;
+			var _g11 = level[i].length;
+			while(_g2 < _g11) {
+				var j = _g2++;
+				if(this.checkCollisionWithTile(level[i][j],j * tileWidth,i * tileHeight)) {
+					this.collisionDirection = this.directionDefinition(j * tileWidth,i * tileHeight);
+					this.doCollisionWithTile(this.get_collisionDirection(),j * tileWidth,i * tileHeight);
+				}
+			}
+		}
+	}
+	,get_collisionDirection: function() {
+		return this.collisionDirection;
+	}
 	,__class__: Unit
 });
 var Bonus = function() {
@@ -4301,16 +4373,28 @@ Bonus.prototype = $extend(Unit.prototype,{
 		this.get_graphics().drawRect(-this.get_hitBox().width / 2,-this.get_hitBox().height / 2,this.get_hitBox().width,this.get_hitBox().height);
 		this.get_graphics().endFill();
 	}
-	,fall: function() {
+	,fall: function(level) {
+		var tileWidth = Main.sizeWidth / 20;
+		var tileHeight = Main.sizeHeight / 15;
 		var _g = this;
 		_g.set_y(_g.get_y() + this.speedY);
 		this.speedY += this.gravity;
-		if(this.get_y() + this.get_hitBox().height / 2 > 440) {
-			if(Math.abs(this.speedY) <= 2.0) {
-				this.set_y(440 - this.get_hitBox().height / 2);
-				this.speedY = 0.0;
-			} else {
-				this.speedY = -Math.abs(this.speedY * 0.6);
+		var _g1 = 0;
+		var _g11 = level.length;
+		while(_g1 < _g11) {
+			var i = _g1++;
+			var _g2 = 0;
+			var _g12 = level[i].length;
+			while(_g2 < _g12) {
+				var j = _g2++;
+				if(this.checkCollisionWithTile(level[i][j],j * tileWidth,i * tileHeight)) {
+					if(Math.abs(this.speedY) <= 2.0) {
+						this.set_y(i * tileHeight - this.get_hitBox().height / 2);
+						this.speedY = 0.0;
+					} else {
+						this.speedY = -Math.abs(this.speedY * 0.6);
+					}
+				}
 			}
 		}
 	}
@@ -4508,11 +4592,7 @@ Enemy.prototype = $extend(Unit.prototype,{
 		this.get_graphics().drawRect(-this.get_hitBox().width / 2,-this.get_hitBox().height / 2,this.get_hitBox().width,this.get_hitBox().height);
 		this.get_graphics().endFill();
 	}
-	,move: function(player) {
-		if(this.get_y() + this.get_hitBox().height >= 440) {
-			this.set_y(440 - this.get_hitBox().height / 2);
-			this.speedY = 0.0;
-		}
+	,move: function(player,level) {
 		if(player.get_x() < this.get_x()) {
 			var _g = this;
 			_g.set_x(_g.get_x() - this.speedX);
@@ -4523,6 +4603,7 @@ Enemy.prototype = $extend(Unit.prototype,{
 		this.speedY += this.gravity;
 		var _g2 = this;
 		_g2.set_y(_g2.get_y() + this.speedY);
+		this.doCollisionsWithTiles(level);
 	}
 	,__class__: Enemy
 });
@@ -4532,7 +4613,6 @@ var Game = function(width,height) {
 	this.maxEnemies = 4;
 	this.gamePoints = 0;
 	this.gameIsOver = false;
-	this.haveCollision = false;
 	this.pauseIsPressed = false;
 	this.quitButtonIsPressed = false;
 	openfl_display_Sprite.call(this);
@@ -4547,7 +4627,7 @@ var Game = function(width,height) {
 	Game.jumpPower = 15.0;
 	this.player = new Player();
 	this.player.set_x(100);
-	this.player.set_y(100);
+	this.player.set_y(Main.sizeHeight / 2);
 	this.addChild(this.player);
 	this.enemies = [];
 	this.deadEnemies = [];
@@ -4601,7 +4681,7 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 		if(!this.pauseIsPressed) {
 			this.bonusBuf();
 			this.player.move();
-			this.doCollisionsWithTiles();
+			this.player.doCollisionsWithTilesForPLayer(this.gameLevel.level);
 			this.doCollidionWithEnemies();
 			this.playerJump(Game.jumpPower);
 			this.player.spriteAnimated(this.player.get_state());
@@ -4611,7 +4691,7 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 			this.moveEnemies();
 			this.doCollisionsWithBullet();
 			if(this.contains(this.bonus)) {
-				this.bonus.fall();
+				this.bonus.fall(this.gameLevel.level);
 				if(this.bonus.checkCollisionWithPlayer(this.player)) {
 					this.removeChild(this.bonus);
 					this.bonus = null;
@@ -4636,7 +4716,7 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 		return false;
 	}
 	,doCollisionsWithTiles: function() {
-		this.haveCollision = false;
+		Game.haveCollision = false;
 		var _g = 0;
 		var _g1 = this.gameLevel.tilemap.get_numTiles();
 		while(_g < _g1) {
@@ -4644,16 +4724,16 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 			if(this.checkCollisionWithTile(this.player.get_hitBox(),this.gameLevel.tilemap.getTileAt(i))) {
 				this.player.set_y(this.gameLevel.tilemap.getTileAt(i).get_y() - this.player.get_hitBox().height / 2 + 2.5);
 				this.player.set_speedY(0.0);
-				this.haveCollision = true;
+				Game.haveCollision = true;
 			}
 		}
 	}
 	,playerJump: function(jumpPower) {
-		if(this.player.get_jump() && this.haveCollision) {
-			haxe_Log.trace("jump",{ fileName : "Source/Game.hx", lineNumber : 233, className : "Game", methodName : "playerJump"});
+		if(this.player.get_jump() && Game.haveCollision && this.player.get_collisionDirection() == CollisionDirection.up) {
+			haxe_Log.trace("jump",{ fileName : "Source/Game.hx", lineNumber : 234, className : "Game", methodName : "playerJump"});
 			this.player.set_speedY(this.player.get_speedY() - jumpPower);
 		}
-		if(!this.haveCollision) {
+		if(!Game.haveCollision) {
 			this.player.set_state(State.jump);
 		}
 	}
@@ -4699,7 +4779,7 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 	,moveEnemies: function() {
 		var i = 0;
 		while(i < this.enemies.length) {
-			this.enemies[i].move(this.player);
+			this.enemies[i].move(this.player,this.gameLevel.level);
 			++i;
 		}
 	}
@@ -4751,7 +4831,7 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 		}
 	}
 	,spawnBonus: function(enemy) {
-		if(!Bonus.bonusIsUsed && !Bonus.haveBonus && Math.random() < 0.05) {
+		if(!Bonus.bonusIsUsed && !Bonus.haveBonus && Math.random() < 0.08) {
 			Bonus.bonusIsUsed = false;
 			Bonus.haveBonus = true;
 			this.bonus = new Bonus();
@@ -4783,7 +4863,7 @@ var GameLevel = function(width,height) {
 	this.tileset = new openfl_display_Tileset(this.bmpData);
 	this.tilemap = new openfl_display_Tilemap(this.sizeWidth,this.sizeHeight,this.tileset);
 	this.addChild(this.tilemap);
-	this.level = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,9,9,5,6,9,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,2,2,2,2,1,1,1,1,1,1,1,1],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]];
+	this.level = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,0,0],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[2,1,0,0,0,0,0,9,8,5,6,9,0,0,0,0,1,1,1,1],[2,2,1,1,1,1,1,2,2,2,2,2,1,1,1,1,2,2,2,2],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]];
 	var ind1 = this.tileset.addRect(new openfl_geom_Rectangle(0,0,32,32));
 	var ind2 = this.tileset.addRect(new openfl_geom_Rectangle(32,0,32,32));
 	var ind3 = this.tileset.addRect(new openfl_geom_Rectangle(64,0,32,32));
@@ -5169,6 +5249,35 @@ Player.prototype = $extend(Unit.prototype,{
 		this.get_graphics().lineStyle(1,16711680);
 		this.get_graphics().drawRect(-this.get_hitBox().width / 2,-this.get_hitBox().height / 2,this.get_hitBox().width,this.get_hitBox().height);
 		this.get_graphics().endFill();
+	}
+	,doCollisionsWithTilesForPLayer: function(level) {
+		Game.haveCollision = false;
+		if(this.direction == Direction.left) {
+			this.set_scaleX(1.0);
+			this.doCollisionsWithTiles(level);
+			this.set_scaleX(-1.0);
+		} else {
+			this.doCollisionsWithTiles(level);
+		}
+	}
+	,doCollisionsWithTiles: function(level) {
+		var tileWidth = Main.sizeWidth / 20;
+		var tileHeight = Main.sizeHeight / 15;
+		var _g = 0;
+		var _g1 = level.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var _g2 = 0;
+			var _g11 = level[i].length;
+			while(_g2 < _g11) {
+				var j = _g2++;
+				if(this.checkCollisionWithTile(level[i][j],j * tileWidth,i * tileHeight)) {
+					Game.haveCollision = true;
+					this.collisionDirection = this.directionDefinition(j * tileWidth,i * tileHeight);
+					this.doCollisionWithTile(this.get_collisionDirection(),j * tileWidth,i * tileHeight);
+				}
+			}
+		}
 	}
 	,get_directionLeft: function() {
 		return this.movingLeft;
@@ -5605,6 +5714,12 @@ _$UInt_UInt_$Impl_$.toFloat = function(this1) {
 var Direction = $hxEnums["Direction"] = { __ename__ : "Direction", __constructs__ : ["left","right"]
 	,left: {_hx_index:0,__enum__:"Direction",toString:$estr}
 	,right: {_hx_index:1,__enum__:"Direction",toString:$estr}
+};
+var CollisionDirection = $hxEnums["CollisionDirection"] = { __ename__ : "CollisionDirection", __constructs__ : ["up","down","left","right"]
+	,up: {_hx_index:0,__enum__:"CollisionDirection",toString:$estr}
+	,down: {_hx_index:1,__enum__:"CollisionDirection",toString:$estr}
+	,left: {_hx_index:2,__enum__:"CollisionDirection",toString:$estr}
+	,right: {_hx_index:3,__enum__:"CollisionDirection",toString:$estr}
 };
 var haxe_StackItem = $hxEnums["haxe.StackItem"] = { __ename__ : "haxe.StackItem", __constructs__ : ["CFunction","Module","FilePos","Method","LocalFunction"]
 	,CFunction: {_hx_index:0,__enum__:"haxe.StackItem",toString:$estr}
@@ -24225,7 +24340,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 12518;
+	this.version = 302504;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
@@ -72549,6 +72664,7 @@ Main.FPS = 60;
 Bonus.counter = 0;
 Bonus.bonusIsUsed = false;
 Bonus.haveBonus = false;
+Game.haveCollision = false;
 haxe_Serializer.USE_CACHE = false;
 haxe_Serializer.USE_ENUM_INDEX = false;
 haxe_Serializer.BASE64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%:";

@@ -60,9 +60,9 @@
 HX_DEFINE_STACK_FRAME(_hx_pos_b245e5f9face90c2_14_new,"Bonus","new",0x2ae722f1,"Bonus.new","Bonus.hx",14,0x6c1a459f)
 HX_LOCAL_STACK_FRAME(_hx_pos_b245e5f9face90c2_26_drawHitBox,"Bonus","drawHitBox",0xc4c0b22b,"Bonus.drawHitBox","Bonus.hx",26,0x6c1a459f)
 HX_LOCAL_STACK_FRAME(_hx_pos_b245e5f9face90c2_36_fall,"Bonus","fall",0x5a0aa8ca,"Bonus.fall","Bonus.hx",36,0x6c1a459f)
-HX_LOCAL_STACK_FRAME(_hx_pos_b245e5f9face90c2_52_checkCollisionWithPlayer,"Bonus","checkCollisionWithPlayer",0x6cda9700,"Bonus.checkCollisionWithPlayer","Bonus.hx",52,0x6c1a459f)
-HX_LOCAL_STACK_FRAME(_hx_pos_b245e5f9face90c2_63_doBonusSlow,"Bonus","doBonusSlow",0x3e7836c6,"Bonus.doBonusSlow","Bonus.hx",63,0x6c1a459f)
-HX_LOCAL_STACK_FRAME(_hx_pos_b245e5f9face90c2_137_get_bonusType,"Bonus","get_bonusType",0xe04726a1,"Bonus.get_bonusType","Bonus.hx",137,0x6c1a459f)
+HX_LOCAL_STACK_FRAME(_hx_pos_b245e5f9face90c2_70_checkCollisionWithPlayer,"Bonus","checkCollisionWithPlayer",0x6cda9700,"Bonus.checkCollisionWithPlayer","Bonus.hx",70,0x6c1a459f)
+HX_LOCAL_STACK_FRAME(_hx_pos_b245e5f9face90c2_81_doBonusSlow,"Bonus","doBonusSlow",0x3e7836c6,"Bonus.doBonusSlow","Bonus.hx",81,0x6c1a459f)
+HX_LOCAL_STACK_FRAME(_hx_pos_b245e5f9face90c2_155_get_bonusType,"Bonus","get_bonusType",0xe04726a1,"Bonus.get_bonusType","Bonus.hx",155,0x6c1a459f)
 HX_LOCAL_STACK_FRAME(_hx_pos_b245e5f9face90c2_9_boot,"Bonus","boot",0x57707081,"Bonus.boot","Bonus.hx",9,0x6c1a459f)
 HX_LOCAL_STACK_FRAME(_hx_pos_b245e5f9face90c2_10_boot,"Bonus","boot",0x57707081,"Bonus.boot","Bonus.hx",10,0x6c1a459f)
 HX_LOCAL_STACK_FRAME(_hx_pos_b245e5f9face90c2_11_boot,"Bonus","boot",0x57707081,"Bonus.boot","Bonus.hx",11,0x6c1a459f)
@@ -131,73 +131,90 @@ HXLINE(  33)		this->get_graphics()->endFill();
 
 HX_DEFINE_DYNAMIC_FUNC0(Bonus_obj,drawHitBox,(void))
 
-void Bonus_obj::fall(){
+void Bonus_obj::fall(::Array< ::Dynamic> level){
             	HX_STACKFRAME(&_hx_pos_b245e5f9face90c2_36_fall)
-HXLINE(  37)		{
-HXLINE(  37)			 ::Bonus _g = hx::ObjectPtr<OBJ_>(this);
-HXDLIN(  37)			Float _hx_tmp = _g->get_y();
-HXDLIN(  37)			_g->set_y((_hx_tmp + this->speedY));
+HXLINE(  37)		Float tileWidth = (( (Float)(::Main_obj::sizeWidth) ) / ( (Float)(20) ));
+HXLINE(  38)		Float tileHeight = (( (Float)(::Main_obj::sizeHeight) ) / ( (Float)(15) ));
+HXLINE(  39)		{
+HXLINE(  39)			 ::Bonus _g = hx::ObjectPtr<OBJ_>(this);
+HXDLIN(  39)			Float _hx_tmp = _g->get_y();
+HXDLIN(  39)			_g->set_y((_hx_tmp + this->speedY));
             		}
-HXLINE(  38)		 ::Bonus _hx_tmp1 = hx::ObjectPtr<OBJ_>(this);
-HXDLIN(  38)		_hx_tmp1->speedY = (_hx_tmp1->speedY + this->gravity);
-HXLINE(  39)		Float _hx_tmp2 = this->get_y();
-HXDLIN(  39)		if (((_hx_tmp2 + (this->get_hitBox()->height / ( (Float)(2) ))) > 440)) {
-HXLINE(  41)			if ((::Math_obj::abs(this->speedY) <= ((Float)2.0))) {
-HXLINE(  43)				this->set_y((( (Float)(440) ) - (this->get_hitBox()->height / ( (Float)(2) ))));
-HXLINE(  44)				this->speedY = ((Float)0.0);
-            			}
-            			else {
-HXLINE(  47)				this->speedY = -(::Math_obj::abs((this->speedY * ((Float)0.6))));
+HXLINE(  40)		 ::Bonus _hx_tmp1 = hx::ObjectPtr<OBJ_>(this);
+HXDLIN(  40)		_hx_tmp1->speedY = (_hx_tmp1->speedY + this->gravity);
+HXLINE(  41)		{
+HXLINE(  41)			int _g1 = 0;
+HXDLIN(  41)			int _g11 = level->length;
+HXDLIN(  41)			while((_g1 < _g11)){
+HXLINE(  41)				_g1 = (_g1 + 1);
+HXDLIN(  41)				int i = (_g1 - 1);
+HXLINE(  43)				{
+HXLINE(  43)					int _g2 = 0;
+HXDLIN(  43)					int _g12 = level->__get(i).StaticCast< ::Array< int > >()->length;
+HXDLIN(  43)					while((_g2 < _g12)){
+HXLINE(  43)						_g2 = (_g2 + 1);
+HXDLIN(  43)						int j = (_g2 - 1);
+HXLINE(  45)						if (this->checkCollisionWithTile(level->__get(i).StaticCast< ::Array< int > >()->__get(j),(( (Float)(j) ) * tileWidth),(( (Float)(i) ) * tileHeight))) {
+HXLINE(  47)							if ((::Math_obj::abs(this->speedY) <= ((Float)2.0))) {
+HXLINE(  49)								this->set_y(((( (Float)(i) ) * tileHeight) - (this->get_hitBox()->height / ( (Float)(2) ))));
+HXLINE(  50)								this->speedY = ((Float)0.0);
+            							}
+            							else {
+HXLINE(  53)								this->speedY = -(::Math_obj::abs((this->speedY * ((Float)0.6))));
+            							}
+            						}
+            					}
+            				}
             			}
             		}
             	}
 
 
-HX_DEFINE_DYNAMIC_FUNC0(Bonus_obj,fall,(void))
+HX_DEFINE_DYNAMIC_FUNC1(Bonus_obj,fall,(void))
 
 bool Bonus_obj::checkCollisionWithPlayer( ::Player player){
-            	HX_STACKFRAME(&_hx_pos_b245e5f9face90c2_52_checkCollisionWithPlayer)
-HXDLIN(  52)		bool _hx_tmp;
-HXDLIN(  52)		bool _hx_tmp1;
-HXDLIN(  52)		bool _hx_tmp2;
-HXDLIN(  52)		Float _hx_tmp3 = this->get_x();
-HXDLIN(  52)		Float _hx_tmp4 = (_hx_tmp3 + (this->get_hitBox()->width / ( (Float)(2) )));
-HXDLIN(  52)		Float _hx_tmp5 = player->get_x();
-HXDLIN(  52)		if ((_hx_tmp4 > (_hx_tmp5 - (player->get_hitBox()->width / ( (Float)(2) ))))) {
-HXDLIN(  52)			Float _hx_tmp6 = this->get_x();
-HXDLIN(  52)			Float _hx_tmp7 = (_hx_tmp6 - (this->get_hitBox()->width / ( (Float)(2) )));
-HXDLIN(  52)			Float _hx_tmp8 = player->get_x();
-HXDLIN(  52)			_hx_tmp2 = (_hx_tmp7 < (_hx_tmp8 + (player->get_width() / ( (Float)(2) ))));
+            	HX_STACKFRAME(&_hx_pos_b245e5f9face90c2_70_checkCollisionWithPlayer)
+HXDLIN(  70)		bool _hx_tmp;
+HXDLIN(  70)		bool _hx_tmp1;
+HXDLIN(  70)		bool _hx_tmp2;
+HXDLIN(  70)		Float _hx_tmp3 = this->get_x();
+HXDLIN(  70)		Float _hx_tmp4 = (_hx_tmp3 + (this->get_hitBox()->width / ( (Float)(2) )));
+HXDLIN(  70)		Float _hx_tmp5 = player->get_x();
+HXDLIN(  70)		if ((_hx_tmp4 > (_hx_tmp5 - (player->get_hitBox()->width / ( (Float)(2) ))))) {
+HXDLIN(  70)			Float _hx_tmp6 = this->get_x();
+HXDLIN(  70)			Float _hx_tmp7 = (_hx_tmp6 - (this->get_hitBox()->width / ( (Float)(2) )));
+HXDLIN(  70)			Float _hx_tmp8 = player->get_x();
+HXDLIN(  70)			_hx_tmp2 = (_hx_tmp7 < (_hx_tmp8 + (player->get_width() / ( (Float)(2) ))));
             		}
             		else {
-HXDLIN(  52)			_hx_tmp2 = false;
+HXDLIN(  70)			_hx_tmp2 = false;
             		}
-HXDLIN(  52)		if (_hx_tmp2) {
-HXLINE(  53)			Float _hx_tmp9 = this->get_y();
-HXDLIN(  53)			Float _hx_tmp10 = (_hx_tmp9 + (this->get_hitBox()->height / ( (Float)(2) )));
-HXDLIN(  53)			Float _hx_tmp11 = player->get_y();
-HXLINE(  52)			_hx_tmp1 = (_hx_tmp10 > (_hx_tmp11 - (player->get_height() / ( (Float)(2) ))));
-            		}
-            		else {
-HXDLIN(  52)			_hx_tmp1 = false;
-            		}
-HXDLIN(  52)		if (_hx_tmp1) {
-HXLINE(  53)			Float _hx_tmp12 = this->get_y();
-HXDLIN(  53)			Float _hx_tmp13 = (_hx_tmp12 - (this->get_hitBox()->height / ( (Float)(2) )));
-HXDLIN(  53)			Float _hx_tmp14 = player->get_y();
-HXLINE(  52)			_hx_tmp = (_hx_tmp13 < (_hx_tmp14 + (player->get_height() / ( (Float)(2) ))));
+HXDLIN(  70)		if (_hx_tmp2) {
+HXLINE(  71)			Float _hx_tmp9 = this->get_y();
+HXDLIN(  71)			Float _hx_tmp10 = (_hx_tmp9 + (this->get_hitBox()->height / ( (Float)(2) )));
+HXDLIN(  71)			Float _hx_tmp11 = player->get_y();
+HXLINE(  70)			_hx_tmp1 = (_hx_tmp10 > (_hx_tmp11 - (player->get_height() / ( (Float)(2) ))));
             		}
             		else {
-HXDLIN(  52)			_hx_tmp = false;
+HXDLIN(  70)			_hx_tmp1 = false;
             		}
-HXDLIN(  52)		if (_hx_tmp) {
-HXLINE(  55)			::Bonus_obj::bonusIsUsed = true;
-HXLINE(  56)			return true;
+HXDLIN(  70)		if (_hx_tmp1) {
+HXLINE(  71)			Float _hx_tmp12 = this->get_y();
+HXDLIN(  71)			Float _hx_tmp13 = (_hx_tmp12 - (this->get_hitBox()->height / ( (Float)(2) )));
+HXDLIN(  71)			Float _hx_tmp14 = player->get_y();
+HXLINE(  70)			_hx_tmp = (_hx_tmp13 < (_hx_tmp14 + (player->get_height() / ( (Float)(2) ))));
             		}
             		else {
-HXLINE(  59)			return false;
+HXDLIN(  70)			_hx_tmp = false;
             		}
-HXLINE(  52)		return false;
+HXDLIN(  70)		if (_hx_tmp) {
+HXLINE(  73)			::Bonus_obj::bonusIsUsed = true;
+HXLINE(  74)			return true;
+            		}
+            		else {
+HXLINE(  77)			return false;
+            		}
+HXLINE(  70)		return false;
             	}
 
 
@@ -212,94 +229,94 @@ bool Bonus_obj::haveBonus;
  ::BonusType Bonus_obj::bonusType;
 
 void Bonus_obj::doBonusSlow( ::Player player,::Array< ::Dynamic> enemies,::Array< ::Dynamic> deadEnemies,::Array< ::Dynamic> bullets){
-            	HX_STACKFRAME(&_hx_pos_b245e5f9face90c2_63_doBonusSlow)
-HXLINE(  64)		if ((::Bonus_obj::counter == 0)) {
-HXLINE(  66)			 ::Player player1 = player;
-HXDLIN(  66)			player1->speedX = (player1->speedX * ((Float)0.5));
-HXLINE(  67)			 ::Player player2 = player;
-HXDLIN(  67)			player2->speedY = (player2->speedY * ((Float)0.5));
-HXLINE(  68)			 ::Player player3 = player;
-HXDLIN(  68)			player3->gravity = (player3->gravity * ((Float)0.25));
-HXLINE(  69)			 ::Dynamic _hx_tmp = hx::ClassOf< ::Game >();
-HXDLIN(  69)			::Game_obj::jumpPower = (::Game_obj::jumpPower * ((Float)0.50));
-HXLINE(  70)			int b = 0;
-HXLINE(  71)			while((b < bullets->length)){
-HXLINE(  73)				Float _hx_tmp1 = (bullets->__get(b).StaticCast<  ::Bullet >()->get_speed() * ((Float)0.25));
-HXDLIN(  73)				bullets->__get(b).StaticCast<  ::Bullet >()->set_speed(_hx_tmp1);
-HXLINE(  74)				b = (b + 1);
+            	HX_STACKFRAME(&_hx_pos_b245e5f9face90c2_81_doBonusSlow)
+HXLINE(  82)		if ((::Bonus_obj::counter == 0)) {
+HXLINE(  84)			 ::Player player1 = player;
+HXDLIN(  84)			player1->speedX = (player1->speedX * ((Float)0.5));
+HXLINE(  85)			 ::Player player2 = player;
+HXDLIN(  85)			player2->speedY = (player2->speedY * ((Float)0.5));
+HXLINE(  86)			 ::Player player3 = player;
+HXDLIN(  86)			player3->gravity = (player3->gravity * ((Float)0.25));
+HXLINE(  87)			 ::Dynamic _hx_tmp = hx::ClassOf< ::Game >();
+HXDLIN(  87)			::Game_obj::jumpPower = (::Game_obj::jumpPower * ((Float)0.50));
+HXLINE(  88)			int b = 0;
+HXLINE(  89)			while((b < bullets->length)){
+HXLINE(  91)				Float _hx_tmp1 = (bullets->__get(b).StaticCast<  ::Bullet >()->get_speed() * ((Float)0.25));
+HXDLIN(  91)				bullets->__get(b).StaticCast<  ::Bullet >()->set_speed(_hx_tmp1);
+HXLINE(  92)				b = (b + 1);
             			}
-HXLINE(  77)			int e = 0;
-HXLINE(  78)			while((e < enemies->length)){
-HXLINE(  80)				 ::Enemy enemies1 = enemies->__get(e).StaticCast<  ::Enemy >();
-HXDLIN(  80)				enemies1->speedX = (enemies1->speedX * ((Float)0.25));
-HXLINE(  81)				 ::Enemy enemies2 = enemies->__get(e).StaticCast<  ::Enemy >();
-HXDLIN(  81)				enemies2->speedY = (enemies2->speedY * ((Float)0.25));
-HXLINE(  82)				 ::Enemy enemies3 = enemies->__get(e).StaticCast<  ::Enemy >();
-HXDLIN(  82)				enemies3->gravity = (enemies3->gravity * ((Float)0.25));
-HXLINE(  83)				e = (e + 1);
+HXLINE(  95)			int e = 0;
+HXLINE(  96)			while((e < enemies->length)){
+HXLINE(  98)				 ::Enemy enemies1 = enemies->__get(e).StaticCast<  ::Enemy >();
+HXDLIN(  98)				enemies1->speedX = (enemies1->speedX * ((Float)0.25));
+HXLINE(  99)				 ::Enemy enemies2 = enemies->__get(e).StaticCast<  ::Enemy >();
+HXDLIN(  99)				enemies2->speedY = (enemies2->speedY * ((Float)0.25));
+HXLINE( 100)				 ::Enemy enemies3 = enemies->__get(e).StaticCast<  ::Enemy >();
+HXDLIN( 100)				enemies3->gravity = (enemies3->gravity * ((Float)0.25));
+HXLINE( 101)				e = (e + 1);
             			}
-HXLINE(  85)			e = 0;
-HXLINE(  86)			while((e < deadEnemies->length)){
-HXLINE(  88)				 ::Enemy deadEnemies1 = deadEnemies->__get(e).StaticCast<  ::Enemy >();
-HXDLIN(  88)				deadEnemies1->speedX = (deadEnemies1->speedX * ((Float)0.25));
-HXLINE(  89)				 ::Enemy deadEnemies2 = deadEnemies->__get(e).StaticCast<  ::Enemy >();
-HXDLIN(  89)				deadEnemies2->speedY = (deadEnemies2->speedY * ((Float)0.25));
-HXLINE(  90)				 ::Enemy deadEnemies3 = deadEnemies->__get(e).StaticCast<  ::Enemy >();
-HXDLIN(  90)				deadEnemies3->gravity = (deadEnemies3->gravity * ((Float)0.25));
-HXLINE(  91)				e = (e + 1);
+HXLINE( 103)			e = 0;
+HXLINE( 104)			while((e < deadEnemies->length)){
+HXLINE( 106)				 ::Enemy deadEnemies1 = deadEnemies->__get(e).StaticCast<  ::Enemy >();
+HXDLIN( 106)				deadEnemies1->speedX = (deadEnemies1->speedX * ((Float)0.25));
+HXLINE( 107)				 ::Enemy deadEnemies2 = deadEnemies->__get(e).StaticCast<  ::Enemy >();
+HXDLIN( 107)				deadEnemies2->speedY = (deadEnemies2->speedY * ((Float)0.25));
+HXLINE( 108)				 ::Enemy deadEnemies3 = deadEnemies->__get(e).StaticCast<  ::Enemy >();
+HXDLIN( 108)				deadEnemies3->gravity = (deadEnemies3->gravity * ((Float)0.25));
+HXLINE( 109)				e = (e + 1);
             			}
             		}
             		else {
-HXLINE(  97)			int _hx_tmp2 = ::Bonus_obj::counter;
-HXDLIN(  97)			if ((_hx_tmp2 >= (( (Float)(::Main_obj::get_FPS()) ) * ((Float)10.0)))) {
-HXLINE(  99)				 ::Player player4 = player;
-HXDLIN(  99)				player4->speedX = (player4->speedX * ((Float)2.0));
-HXLINE( 100)				 ::Player player5 = player;
-HXDLIN( 100)				player5->speedY = (player5->speedY * ((Float)2.0));
-HXLINE( 101)				 ::Player player6 = player;
-HXDLIN( 101)				player6->gravity = (player6->gravity / ((Float)0.25));
-HXLINE( 102)				 ::Dynamic _hx_tmp3 = hx::ClassOf< ::Game >();
-HXDLIN( 102)				::Game_obj::jumpPower = (::Game_obj::jumpPower / ((Float)0.50));
-HXLINE( 103)				int b1 = 0;
-HXLINE( 104)				while((b1 < bullets->length)){
-HXLINE( 106)					Float _hx_tmp4 = (bullets->__get(b1).StaticCast<  ::Bullet >()->get_speed() / ((Float)0.25));
-HXDLIN( 106)					bullets->__get(b1).StaticCast<  ::Bullet >()->set_speed(_hx_tmp4);
-HXLINE( 107)					b1 = (b1 + 1);
+HXLINE( 115)			int _hx_tmp2 = ::Bonus_obj::counter;
+HXDLIN( 115)			if ((_hx_tmp2 >= (( (Float)(::Main_obj::get_FPS()) ) * ((Float)10.0)))) {
+HXLINE( 117)				 ::Player player4 = player;
+HXDLIN( 117)				player4->speedX = (player4->speedX * ((Float)2.0));
+HXLINE( 118)				 ::Player player5 = player;
+HXDLIN( 118)				player5->speedY = (player5->speedY * ((Float)2.0));
+HXLINE( 119)				 ::Player player6 = player;
+HXDLIN( 119)				player6->gravity = (player6->gravity / ((Float)0.25));
+HXLINE( 120)				 ::Dynamic _hx_tmp3 = hx::ClassOf< ::Game >();
+HXDLIN( 120)				::Game_obj::jumpPower = (::Game_obj::jumpPower / ((Float)0.50));
+HXLINE( 121)				int b1 = 0;
+HXLINE( 122)				while((b1 < bullets->length)){
+HXLINE( 124)					Float _hx_tmp4 = (bullets->__get(b1).StaticCast<  ::Bullet >()->get_speed() / ((Float)0.25));
+HXDLIN( 124)					bullets->__get(b1).StaticCast<  ::Bullet >()->set_speed(_hx_tmp4);
+HXLINE( 125)					b1 = (b1 + 1);
             				}
-HXLINE( 109)				int e1 = 0;
-HXLINE( 110)				while((e1 < enemies->length)){
-HXLINE( 112)					 ::Enemy enemies4 = enemies->__get(e1).StaticCast<  ::Enemy >();
-HXDLIN( 112)					enemies4->speedX = (enemies4->speedX / ((Float)0.25));
-HXLINE( 113)					 ::Enemy enemies5 = enemies->__get(e1).StaticCast<  ::Enemy >();
-HXDLIN( 113)					enemies5->speedY = (enemies5->speedY / ((Float)0.25));
-HXLINE( 114)					 ::Enemy enemies6 = enemies->__get(e1).StaticCast<  ::Enemy >();
-HXDLIN( 114)					enemies6->gravity = (enemies6->gravity / ((Float)0.25));
-HXLINE( 115)					e1 = (e1 + 1);
+HXLINE( 127)				int e1 = 0;
+HXLINE( 128)				while((e1 < enemies->length)){
+HXLINE( 130)					 ::Enemy enemies4 = enemies->__get(e1).StaticCast<  ::Enemy >();
+HXDLIN( 130)					enemies4->speedX = (enemies4->speedX / ((Float)0.25));
+HXLINE( 131)					 ::Enemy enemies5 = enemies->__get(e1).StaticCast<  ::Enemy >();
+HXDLIN( 131)					enemies5->speedY = (enemies5->speedY / ((Float)0.25));
+HXLINE( 132)					 ::Enemy enemies6 = enemies->__get(e1).StaticCast<  ::Enemy >();
+HXDLIN( 132)					enemies6->gravity = (enemies6->gravity / ((Float)0.25));
+HXLINE( 133)					e1 = (e1 + 1);
             				}
-HXLINE( 117)				e1 = 0;
-HXLINE( 118)				while((e1 < deadEnemies->length)){
-HXLINE( 120)					 ::Enemy deadEnemies4 = deadEnemies->__get(e1).StaticCast<  ::Enemy >();
-HXDLIN( 120)					deadEnemies4->speedX = (deadEnemies4->speedX / ((Float)0.25));
-HXLINE( 121)					 ::Enemy deadEnemies5 = deadEnemies->__get(e1).StaticCast<  ::Enemy >();
-HXDLIN( 121)					deadEnemies5->speedY = (deadEnemies5->speedY / ((Float)0.25));
-HXLINE( 122)					 ::Enemy deadEnemies6 = deadEnemies->__get(e1).StaticCast<  ::Enemy >();
-HXDLIN( 122)					deadEnemies6->gravity = (deadEnemies6->gravity / ((Float)0.25));
-HXLINE( 123)					e1 = (e1 + 1);
+HXLINE( 135)				e1 = 0;
+HXLINE( 136)				while((e1 < deadEnemies->length)){
+HXLINE( 138)					 ::Enemy deadEnemies4 = deadEnemies->__get(e1).StaticCast<  ::Enemy >();
+HXDLIN( 138)					deadEnemies4->speedX = (deadEnemies4->speedX / ((Float)0.25));
+HXLINE( 139)					 ::Enemy deadEnemies5 = deadEnemies->__get(e1).StaticCast<  ::Enemy >();
+HXDLIN( 139)					deadEnemies5->speedY = (deadEnemies5->speedY / ((Float)0.25));
+HXLINE( 140)					 ::Enemy deadEnemies6 = deadEnemies->__get(e1).StaticCast<  ::Enemy >();
+HXDLIN( 140)					deadEnemies6->gravity = (deadEnemies6->gravity / ((Float)0.25));
+HXLINE( 141)					e1 = (e1 + 1);
             				}
-HXLINE( 126)				::Bonus_obj::bonusIsUsed = false;
-HXLINE( 127)				::Bonus_obj::haveBonus = false;
-HXLINE( 128)				::Bonus_obj::counter = -1;
+HXLINE( 144)				::Bonus_obj::bonusIsUsed = false;
+HXLINE( 145)				::Bonus_obj::haveBonus = false;
+HXLINE( 146)				::Bonus_obj::counter = -1;
             			}
             		}
-HXLINE( 132)		::Bonus_obj::counter++;
+HXLINE( 150)		::Bonus_obj::counter++;
             	}
 
 
 STATIC_HX_DEFINE_DYNAMIC_FUNC4(Bonus_obj,doBonusSlow,(void))
 
  ::BonusType Bonus_obj::get_bonusType(){
-            	HX_STACKFRAME(&_hx_pos_b245e5f9face90c2_137_get_bonusType)
-HXDLIN( 137)		return ::Bonus_obj::bonusType;
+            	HX_STACKFRAME(&_hx_pos_b245e5f9face90c2_155_get_bonusType)
+HXDLIN( 155)		return ::Bonus_obj::bonusType;
             	}
 
 

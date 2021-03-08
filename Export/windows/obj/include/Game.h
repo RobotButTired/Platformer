@@ -68,6 +68,8 @@ class HXCPP_CLASS_ATTRIBUTES Game_obj : public  ::openfl::display::Sprite_obj
 		bool _hx_isInstanceOf(int inClassId);
 		::String __ToString() const { return HX_("Game",12,20,38,2f); }
 
+		static void __boot();
+		static bool haveCollision;
 		static Float jumpPower;
 		int sizeWidth;
 		int sizeHeight;
@@ -77,7 +79,6 @@ class HXCPP_CLASS_ATTRIBUTES Game_obj : public  ::openfl::display::Sprite_obj
 		bool pauseIsPressed;
 		 ::GameLevel gameLevel;
 		 ::Player player;
-		bool haveCollision;
 		bool gameIsOver;
 		 ::Bonus bonus;
 		int gamePoints;

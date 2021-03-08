@@ -5028,6 +5028,9 @@
   <file name="src/cpp/Lib.cpp" >
    <depend name="include/cpp/Lib.h"/>
   </file>
+  <file name="src/CollisionDirection.cpp" >
+   <depend name="include/CollisionDirection.h"/>
+  </file>
   <file name="src/Direction.cpp" >
    <depend name="include/Direction.h"/>
   </file>
@@ -5096,6 +5099,7 @@
   </file>
   <file name="src/Player.cpp" >
    <depend name="include/Bullet.h"/>
+   <depend name="include/CollisionDirection.h"/>
    <depend name="include/Direction.h"/>
    <depend name="include/Enemy.h"/>
    <depend name="include/Game.h"/>
@@ -5180,6 +5184,7 @@
    <depend name="include/BonusType.h"/>
    <depend name="include/Bullet.h"/>
    <depend name="include/Button.h"/>
+   <depend name="include/CollisionDirection.h"/>
    <depend name="include/Direction.h"/>
    <depend name="include/Enemy.h"/>
    <depend name="include/Game.h"/>
@@ -5283,7 +5288,9 @@
    <depend name="include/openfl/geom/Rectangle.h"/>
   </file>
   <file name="src/Unit.cpp" >
+   <depend name="include/CollisionDirection.h"/>
    <depend name="include/Direction.h"/>
+   <depend name="include/Main.h"/>
    <depend name="include/Unit.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
    <depend name="include/openfl/display/DisplayObjectContainer.h"/>
@@ -5681,6 +5688,7 @@
    <depend name="include/haxe/io/Error.h"/>
    <depend name="include/haxe/io/Encoding.h"/>
    <depend name="include/haxe/StackItem.h"/>
+   <depend name="include/CollisionDirection.h"/>
    <depend name="include/Direction.h"/>
    <depend name="include/ValueType.h"/>
    <depend name="include/State.h"/>
@@ -5910,6 +5918,7 @@
    <depend name="include/haxe/Serializer.h"/>
    <depend name="include/haxe/Log.h"/>
    <depend name="include/haxe/SysTools.h"/>
+   <depend name="include/Game.h"/>
    <depend name="include/Bonus.h"/>
    <depend name="include/Main.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>

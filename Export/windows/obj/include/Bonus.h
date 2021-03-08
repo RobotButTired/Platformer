@@ -69,7 +69,7 @@ class HXCPP_CLASS_ATTRIBUTES Bonus_obj : public  ::Unit_obj
 		void drawHitBox();
 		::Dynamic drawHitBox_dyn();
 
-		void fall();
+		void fall(::Array< ::Dynamic> level);
 		::Dynamic fall_dyn();
 
 		bool checkCollisionWithPlayer( ::Player player);

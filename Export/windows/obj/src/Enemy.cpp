@@ -105,38 +105,34 @@ HXLINE(  28)		this->get_graphics()->endFill();
 
 HX_DEFINE_DYNAMIC_FUNC0(Enemy_obj,drawHitBox,(void))
 
-void Enemy_obj::move( ::Player player){
+void Enemy_obj::move( ::Player player,::Array< ::Dynamic> level){
             	HX_STACKFRAME(&_hx_pos_c595a05c1c7a687d_32_move)
-HXLINE(  33)		Float _hx_tmp = this->get_y();
-HXDLIN(  33)		if (((_hx_tmp + this->get_hitBox()->height) >= 440)) {
-HXLINE(  35)			this->set_y((( (Float)(440) ) - (this->get_hitBox()->height / ( (Float)(2) ))));
-HXLINE(  36)			this->speedY = ((Float)0.0);
-            		}
-HXLINE(  38)		Float _hx_tmp1 = player->get_x();
-HXDLIN(  38)		if ((_hx_tmp1 < this->get_x())) {
+HXLINE(  38)		Float _hx_tmp = player->get_x();
+HXDLIN(  38)		if ((_hx_tmp < this->get_x())) {
 HXLINE(  39)			 ::Enemy _g = hx::ObjectPtr<OBJ_>(this);
-HXDLIN(  39)			Float _hx_tmp2 = _g->get_x();
-HXDLIN(  39)			_g->set_x((_hx_tmp2 - this->speedX));
+HXDLIN(  39)			Float _hx_tmp1 = _g->get_x();
+HXDLIN(  39)			_g->set_x((_hx_tmp1 - this->speedX));
             		}
             		else {
-HXLINE(  40)			Float _hx_tmp3 = player->get_x();
-HXDLIN(  40)			if ((_hx_tmp3 > this->get_x())) {
+HXLINE(  40)			Float _hx_tmp2 = player->get_x();
+HXDLIN(  40)			if ((_hx_tmp2 > this->get_x())) {
 HXLINE(  41)				 ::Enemy _g1 = hx::ObjectPtr<OBJ_>(this);
-HXDLIN(  41)				Float _hx_tmp4 = _g1->get_x();
-HXDLIN(  41)				_g1->set_x((_hx_tmp4 + this->speedX));
+HXDLIN(  41)				Float _hx_tmp3 = _g1->get_x();
+HXDLIN(  41)				_g1->set_x((_hx_tmp3 + this->speedX));
             			}
             		}
-HXLINE(  42)		 ::Enemy _hx_tmp5 = hx::ObjectPtr<OBJ_>(this);
-HXDLIN(  42)		_hx_tmp5->speedY = (_hx_tmp5->speedY + this->gravity);
+HXLINE(  42)		 ::Enemy _hx_tmp4 = hx::ObjectPtr<OBJ_>(this);
+HXDLIN(  42)		_hx_tmp4->speedY = (_hx_tmp4->speedY + this->gravity);
 HXLINE(  43)		{
 HXLINE(  43)			 ::Enemy _g2 = hx::ObjectPtr<OBJ_>(this);
-HXDLIN(  43)			Float _hx_tmp6 = _g2->get_y();
-HXDLIN(  43)			_g2->set_y((_hx_tmp6 + this->speedY));
+HXDLIN(  43)			Float _hx_tmp5 = _g2->get_y();
+HXDLIN(  43)			_g2->set_y((_hx_tmp5 + this->speedY));
             		}
+HXLINE(  44)		this->doCollisionsWithTiles(level);
             	}
 
 
-HX_DEFINE_DYNAMIC_FUNC1(Enemy_obj,move,(void))
+HX_DEFINE_DYNAMIC_FUNC2(Enemy_obj,move,(void))
 
 
 hx::ObjectPtr< Enemy_obj > Enemy_obj::__new() {

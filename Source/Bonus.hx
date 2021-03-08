@@ -32,11 +32,29 @@ class Bonus extends Unit
         graphics.drawRect(-hitBox.width/2,-hitBox.height/2,hitBox.width,hitBox.height);   
         graphics.endFill();
     }
-    public function fall() 
+    public function fall(level:Array<Array<Int>>) 
     {
+        var tileWidth = Main.sizeWidth/20;
+        var tileHeight = Main.sizeHeight/15;
         y += speedY;
         speedY += gravity;
-        if(y + hitBox.height/2 > 440)
+        for(i in 0...level.length)
+        {
+            for(j in 0...level[i].length)
+            {
+                if(checkCollisionWithTile(level[i][j], j*tileWidth, i*tileHeight))
+                {
+                    if(Math.abs(speedY) <= 2.0)
+                        {
+                            y = i*tileHeight- hitBox.height/2;
+                            speedY = 0.0;
+                        }
+                        else 
+                            speedY = -Math.abs(speedY*0.6);
+                }
+            }
+        }
+        /*if(y + hitBox.height/2 > 440)
         {
            if(Math.abs(speedY) <= 2.0)
             {
@@ -45,7 +63,7 @@ class Bonus extends Unit
             }
             else 
                 speedY = -Math.abs(speedY*0.6);
-        }    
+        }    */
     }
     public function checkCollisionWithPlayer(player:Player):Bool 
     {

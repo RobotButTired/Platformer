@@ -231,6 +231,38 @@ class Player extends Unit
         graphics.endFill();
     }
 
+    public function doCollisionsWithTilesForPLayer(level:Array<Array<Int>>) 
+    {
+        Game.haveCollision = false;
+       if(direction == left)
+        {
+            scaleX = 1.0;
+            this.doCollisionsWithTiles(level);
+            scaleX = -1.0;
+        }
+        else
+            this.doCollisionsWithTiles(level);
+    }
+
+    public override function doCollisionsWithTiles(level:Array<Array<Int>>) 
+        {
+            var tileWidth = Main.sizeWidth/20;
+            var tileHeight = Main.sizeHeight/15;
+           // var direction:CollisionDirection;
+            for(i in 0...level.length)
+            {
+                for(j in 0...level[i].length)
+                {
+                    if(checkCollisionWithTile(level[i][j], j * tileWidth, i * tileHeight))
+                    {
+                        Game.haveCollision = true;
+                        collisionDirection = directionDefinition(j * tileWidth, i * tileHeight);
+                        doCollisionWithTile(collisionDirection, j * tileWidth, i * tileHeight);
+                    }
+                }
+            }
+        }
+
   
 
     public function get_directionLeft() 
@@ -249,6 +281,7 @@ class Player extends Unit
     {
         state = value;    
     }
+
    /* public function set_shootingTime(value:Float):Float
     {
         shootingTime = value;

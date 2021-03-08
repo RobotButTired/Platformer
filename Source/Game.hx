@@ -21,7 +21,7 @@ class Game extends Sprite
     var pauseIsPressed:Bool = false;
     var gameLevel:GameLevel;
     var player:Player;
-    var haveCollision:Bool = false;
+    public static var haveCollision:Bool = false;
     public static var jumpPower:Float;           //сила прыжка
 
     var gameIsOver(get,null):Bool = false;
@@ -64,7 +64,7 @@ class Game extends Sprite
           jumpPower = 15.0;
         player = new Player();
         player.x = 100;
-        player.y = 100;
+        player.y = Main.sizeHeight/2;
         addChild(player);
 
         //Enemies
@@ -147,7 +147,8 @@ class Game extends Sprite
         {
             bonusBuf();
             player.move(); 
-            doCollisionsWithTiles(); 
+           // doCollisionsWithTiles(); 
+            player.doCollisionsWithTilesForPLayer(gameLevel.level);
             doCollidionWithEnemies();
             playerJump(jumpPower);
             player.spriteAnimated(player.get_state());  
@@ -161,7 +162,7 @@ class Game extends Sprite
 
             if(this.contains(bonus))
                 {
-                    bonus.fall();
+                    bonus.fall(gameLevel.level);
                    if(bonus.checkCollisionWithPlayer(player))
                     {
                         removeChild(bonus);
@@ -228,7 +229,7 @@ class Game extends Sprite
     public function playerJump(jumpPower:Float)
     {
        // trace(player.get_jump()+" "+haveCollision);
-        if(player.get_jump() && haveCollision)
+        if(player.get_jump() && haveCollision && player.get_collisionDirection() == up)
             {
                 trace("jump");
                 player.set_speedY(player.get_speedY()-jumpPower);
@@ -299,7 +300,7 @@ class Game extends Sprite
         var i=0;
         while(i < enemies.length)
         {
-            enemies[i].move(player);
+            enemies[i].move(player, gameLevel.level);
             i++;
         }    
     }
@@ -374,7 +375,7 @@ class Game extends Sprite
 
     public function spawnBonus(enemy:Enemy) 
     {
-        if(!Bonus.bonusIsUsed && !Bonus.haveBonus && Math.random() < 0.05)
+        if(!Bonus.bonusIsUsed && !Bonus.haveBonus && Math.random() < 0.08)
         {
             Bonus.bonusIsUsed = false;
             Bonus.haveBonus = true;

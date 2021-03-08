@@ -53,7 +53,7 @@ class HXCPP_CLASS_ATTRIBUTES Enemy_obj : public  ::Unit_obj
 		void drawHitBox();
 		::Dynamic drawHitBox_dyn();
 
-		void move( ::Player player);
+		void move( ::Player player,::Array< ::Dynamic> level);
 		::Dynamic move_dyn();
 
 };

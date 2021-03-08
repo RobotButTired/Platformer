@@ -108,6 +108,11 @@ class HXCPP_CLASS_ATTRIBUTES Player_obj : public  ::Unit_obj
 		void drawHitBox();
 		::Dynamic drawHitBox_dyn();
 
+		void doCollisionsWithTilesForPLayer(::Array< ::Dynamic> level);
+		::Dynamic doCollisionsWithTilesForPLayer_dyn();
+
+		void doCollisionsWithTiles(::Array< ::Dynamic> level);
+
 		bool get_directionLeft();
 		::Dynamic get_directionLeft_dyn();
 

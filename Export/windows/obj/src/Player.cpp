@@ -4,6 +4,9 @@
 #ifndef INCLUDED_Bullet
 #include <Bullet.h>
 #endif
+#ifndef INCLUDED_CollisionDirection
+#include <CollisionDirection.h>
+#endif
 #ifndef INCLUDED_Direction
 #include <Direction.h>
 #endif
@@ -102,10 +105,12 @@ HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_208_checkCollisionWithEnemy,"Playe
 HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_219_get_state,"Player","get_state",0x7d84873b,"Player.get_state","Player.hx",219,0xa27fc9dd)
 HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_223_get_direction,"Player","get_direction",0xb8ea5069,"Player.get_direction","Player.hx",223,0xa27fc9dd)
 HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_228_drawHitBox,"Player","drawHitBox",0xf8c1a469,"Player.drawHitBox","Player.hx",228,0xa27fc9dd)
-HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_238_get_directionLeft,"Player","get_directionLeft",0x2bee6d10,"Player.get_directionLeft","Player.hx",238,0xa27fc9dd)
-HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_242_get_directionRight,"Player","get_directionRight",0xbbbe0eb3,"Player.get_directionRight","Player.hx",242,0xa27fc9dd)
-HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_246_get_jump,"Player","get_jump",0x579a8704,"Player.get_jump","Player.hx",246,0xa27fc9dd)
-HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_250_set_state,"Player","set_state",0x60d57347,"Player.set_state","Player.hx",250,0xa27fc9dd)
+HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_235_doCollisionsWithTilesForPLayer,"Player","doCollisionsWithTilesForPLayer",0xbf5c6024,"Player.doCollisionsWithTilesForPLayer","Player.hx",235,0xa27fc9dd)
+HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_248_doCollisionsWithTiles,"Player","doCollisionsWithTiles",0x89bb8e26,"Player.doCollisionsWithTiles","Player.hx",248,0xa27fc9dd)
+HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_270_get_directionLeft,"Player","get_directionLeft",0x2bee6d10,"Player.get_directionLeft","Player.hx",270,0xa27fc9dd)
+HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_274_get_directionRight,"Player","get_directionRight",0xbbbe0eb3,"Player.get_directionRight","Player.hx",274,0xa27fc9dd)
+HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_278_get_jump,"Player","get_jump",0x579a8704,"Player.get_jump","Player.hx",278,0xa27fc9dd)
+HX_LOCAL_STACK_FRAME(_hx_pos_9d6b32c958ffa4d3_282_set_state,"Player","set_state",0x60d57347,"Player.set_state","Player.hx",282,0xa27fc9dd)
 
 void Player_obj::__construct(){
             	HX_GC_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_13_new)
@@ -525,33 +530,77 @@ HXLINE( 231)		this->get_graphics()->endFill();
 
 HX_DEFINE_DYNAMIC_FUNC0(Player_obj,drawHitBox,(void))
 
+void Player_obj::doCollisionsWithTilesForPLayer(::Array< ::Dynamic> level){
+            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_235_doCollisionsWithTilesForPLayer)
+HXLINE( 236)		::Game_obj::haveCollision = false;
+HXLINE( 237)		if (hx::IsEq( this->direction,::Direction_obj::left_dyn() )) {
+HXLINE( 239)			this->set_scaleX(((Float)1.0));
+HXLINE( 240)			this->doCollisionsWithTiles(level);
+HXLINE( 241)			this->set_scaleX(((Float)-1.0));
+            		}
+            		else {
+HXLINE( 244)			this->doCollisionsWithTiles(level);
+            		}
+            	}
+
+
+HX_DEFINE_DYNAMIC_FUNC1(Player_obj,doCollisionsWithTilesForPLayer,(void))
+
+void Player_obj::doCollisionsWithTiles(::Array< ::Dynamic> level){
+            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_248_doCollisionsWithTiles)
+HXLINE( 249)		Float tileWidth = (( (Float)(::Main_obj::sizeWidth) ) / ( (Float)(20) ));
+HXLINE( 250)		Float tileHeight = (( (Float)(::Main_obj::sizeHeight) ) / ( (Float)(15) ));
+HXLINE( 252)		{
+HXLINE( 252)			int _g = 0;
+HXDLIN( 252)			int _g1 = level->length;
+HXDLIN( 252)			while((_g < _g1)){
+HXLINE( 252)				_g = (_g + 1);
+HXDLIN( 252)				int i = (_g - 1);
+HXLINE( 254)				{
+HXLINE( 254)					int _g2 = 0;
+HXDLIN( 254)					int _g11 = level->__get(i).StaticCast< ::Array< int > >()->length;
+HXDLIN( 254)					while((_g2 < _g11)){
+HXLINE( 254)						_g2 = (_g2 + 1);
+HXDLIN( 254)						int j = (_g2 - 1);
+HXLINE( 256)						if (this->checkCollisionWithTile(level->__get(i).StaticCast< ::Array< int > >()->__get(j),(( (Float)(j) ) * tileWidth),(( (Float)(i) ) * tileHeight))) {
+HXLINE( 258)							::Game_obj::haveCollision = true;
+HXLINE( 259)							this->collisionDirection = this->directionDefinition((( (Float)(j) ) * tileWidth),(( (Float)(i) ) * tileHeight));
+HXLINE( 260)							this->doCollisionWithTile(this->get_collisionDirection(),(( (Float)(j) ) * tileWidth),(( (Float)(i) ) * tileHeight));
+            						}
+            					}
+            				}
+            			}
+            		}
+            	}
+
+
 bool Player_obj::get_directionLeft(){
-            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_238_get_directionLeft)
-HXDLIN( 238)		return this->movingLeft;
+            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_270_get_directionLeft)
+HXDLIN( 270)		return this->movingLeft;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(Player_obj,get_directionLeft,return )
 
 bool Player_obj::get_directionRight(){
-            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_242_get_directionRight)
-HXDLIN( 242)		return this->movingRight;
+            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_274_get_directionRight)
+HXDLIN( 274)		return this->movingRight;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(Player_obj,get_directionRight,return )
 
 bool Player_obj::get_jump(){
-            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_246_get_jump)
-HXDLIN( 246)		return this->jump;
+            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_278_get_jump)
+HXDLIN( 278)		return this->jump;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(Player_obj,get_jump,return )
 
 void Player_obj::set_state( ::State value){
-            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_250_set_state)
-HXDLIN( 250)		this->state = value;
+            	HX_STACKFRAME(&_hx_pos_9d6b32c958ffa4d3_282_set_state)
+HXDLIN( 282)		this->state = value;
             	}
 
 
@@ -668,8 +717,14 @@ hx::Val Player_obj::__Field(const ::String &inName,hx::PropertyAccess inCallProp
 	case 18:
 		if (HX_FIELD_EQ(inName,"get_directionRight") ) { return hx::Val( get_directionRight_dyn() ); }
 		break;
+	case 21:
+		if (HX_FIELD_EQ(inName,"doCollisionsWithTiles") ) { return hx::Val( doCollisionsWithTiles_dyn() ); }
+		break;
 	case 23:
 		if (HX_FIELD_EQ(inName,"checkCollisionWithEnemy") ) { return hx::Val( checkCollisionWithEnemy_dyn() ); }
+		break;
+	case 30:
+		if (HX_FIELD_EQ(inName,"doCollisionsWithTilesForPLayer") ) { return hx::Val( doCollisionsWithTilesForPLayer_dyn() ); }
 	}
 	return super::__Field(inName,inCallProp);
 }
@@ -765,6 +820,8 @@ static ::String Player_obj_sMemberFields[] = {
 	HX_("get_state",68,d2,b4,c7),
 	HX_("get_direction",16,36,a4,d1),
 	HX_("drawHitBox",9c,20,d3,98),
+	HX_("doCollisionsWithTilesForPLayer",d7,47,b9,18),
+	HX_("doCollisionsWithTiles",d3,68,86,03),
 	HX_("get_directionLeft",3d,2d,51,f4),
 	HX_("get_directionRight",e6,75,c3,49),
 	HX_("get_jump",77,80,24,c6),

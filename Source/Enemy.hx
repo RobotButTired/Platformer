@@ -28,21 +28,20 @@ class Enemy extends Unit
         graphics.endFill();
     }
 
-    public function move (player:Player) 
+    public function move (player:Player, level:Array<Array<Int>>) 
     {
-        if(y + hitBox.height >= 440)
+       /* if(y + hitBox.height >= 440)
             {
                 y = 440-hitBox.height/2;
                 speedY = 0.0;
-            }
+            }*/
         if(player.x < x)
             x -= speedX;
         else if(player.x > x)
             x += speedX;
         speedY += gravity;
         y += speedY;
-
-        
+        doCollisionsWithTiles(level);
     }
 
 }
