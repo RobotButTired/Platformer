@@ -4,6 +4,9 @@
 #ifndef INCLUDED_GameLevel
 #include <GameLevel.h>
 #endif
+#ifndef INCLUDED_Main
+#include <Main.h>
+#endif
 #ifndef INCLUDED_haxe_Log
 #include <haxe/Log.h>
 #endif
@@ -50,42 +53,96 @@
 #include <openfl/utils/Assets.h>
 #endif
 
-HX_DEFINE_STACK_FRAME(_hx_pos_429e452b6bbe1ad4_26_new,"GameLevel","new",0x0984f604,"GameLevel.new","GameLevel.hx",26,0x295eb5ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_429e452b6bbe1ad4_58_addTiles,"GameLevel","addTiles",0x55a20b80,"GameLevel.addTiles","GameLevel.hx",58,0x295eb5ec)
+HX_DEFINE_STACK_FRAME(_hx_pos_429e452b6bbe1ad4_27_new,"GameLevel","new",0x0984f604,"GameLevel.new","GameLevel.hx",27,0x295eb5ec)
+static const int _hx_array_data_4950e412_1[] = {
+	(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,
+};
+static const int _hx_array_data_4950e412_2[] = {
+	(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,
+};
+static const int _hx_array_data_4950e412_3[] = {
+	(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,
+};
+static const int _hx_array_data_4950e412_4[] = {
+	(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,
+};
+static const int _hx_array_data_4950e412_5[] = {
+	(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,
+};
+static const int _hx_array_data_4950e412_6[] = {
+	(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,
+};
+static const int _hx_array_data_4950e412_7[] = {
+	(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,
+};
+static const int _hx_array_data_4950e412_8[] = {
+	(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,
+};
+static const int _hx_array_data_4950e412_9[] = {
+	(int)0,(int)0,(int)0,(int)0,(int)1,(int)1,(int)1,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,
+};
+static const int _hx_array_data_4950e412_10[] = {
+	(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,
+};
+static const int _hx_array_data_4950e412_11[] = {
+	(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)9,(int)8,(int)5,(int)6,(int)9,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,(int)0,
+};
+static const int _hx_array_data_4950e412_12[] = {
+	(int)1,(int)1,(int)1,(int)1,(int)1,(int)1,(int)1,(int)2,(int)2,(int)2,(int)2,(int)2,(int)1,(int)1,(int)1,(int)1,(int)1,(int)1,(int)1,(int)1,
+};
+static const int _hx_array_data_4950e412_13[] = {
+	(int)2,(int)2,(int)2,(int)2,(int)2,(int)2,(int)2,(int)2,(int)2,(int)2,(int)2,(int)2,(int)2,(int)2,(int)2,(int)2,(int)2,(int)2,(int)2,(int)2,
+};
+static const int _hx_array_data_4950e412_14[] = {
+	(int)3,(int)3,(int)3,(int)3,(int)3,(int)3,(int)3,(int)3,(int)3,(int)3,(int)3,(int)3,(int)3,(int)3,(int)3,(int)3,(int)3,(int)3,(int)3,(int)3,
+};
+static const int _hx_array_data_4950e412_15[] = {
+	(int)4,(int)4,(int)4,(int)4,(int)4,(int)4,(int)4,(int)4,(int)4,(int)4,(int)4,(int)4,(int)4,(int)4,(int)4,(int)4,(int)4,(int)4,(int)4,(int)4,
+};
+HX_LOCAL_STACK_FRAME(_hx_pos_429e452b6bbe1ad4_88_addTiles,"GameLevel","addTiles",0x55a20b80,"GameLevel.addTiles","GameLevel.hx",88,0x295eb5ec)
 
 void GameLevel_obj::__construct(int width,int height){
-            	HX_GC_STACKFRAME(&_hx_pos_429e452b6bbe1ad4_26_new)
-HXLINE(  27)		super::__construct();
-HXLINE(  28)		this->sizeWidth = width;
-HXLINE(  29)		this->sizeHeight = height;
-HXLINE(  31)		this->bmpData = ::openfl::utils::Assets_obj::getBitmapData(HX_("assets/tileMap/PixelAtlas.png",2d,58,a3,27),null());
-HXLINE(  33)		this->tileset =  ::openfl::display::Tileset_obj::__alloc( HX_CTX ,this->bmpData,null());
-HXLINE(  34)		this->tilemap =  ::openfl::display::Tilemap_obj::__alloc( HX_CTX ,this->sizeWidth,this->sizeHeight,this->tileset,null());
-HXLINE(  35)		this->addChild(this->tilemap);
-HXLINE(  37)		 ::openfl::display::Tileset ind1 = this->tileset;
-HXDLIN(  37)		int ind11 = ind1->addRect( ::openfl::geom::Rectangle_obj::__alloc( HX_CTX ,0,0,32,32));
-HXLINE(  38)		 ::openfl::display::Tileset ind2 = this->tileset;
-HXDLIN(  38)		int ind21 = ind2->addRect( ::openfl::geom::Rectangle_obj::__alloc( HX_CTX ,32,0,32,32));
-HXLINE(  39)		 ::openfl::display::Tileset ind3 = this->tileset;
-HXDLIN(  39)		int ind31 = ind3->addRect( ::openfl::geom::Rectangle_obj::__alloc( HX_CTX ,64,0,32,32));
-HXLINE(  40)		 ::openfl::display::Tileset ind4 = this->tileset;
-HXDLIN(  40)		int ind41 = ind4->addRect( ::openfl::geom::Rectangle_obj::__alloc( HX_CTX ,96,0,32,32));
-HXLINE(  42)		this->IDs = ::Array_obj< int >::__new(0);
-HXLINE(  43)		this->IDs->push(ind11);
-HXLINE(  44)		this->IDs->push(ind21);
-HXLINE(  45)		this->IDs->push(ind31);
-HXLINE(  46)		this->IDs->push(ind41);
-HXLINE(  47)		this->addTiles();
-HXLINE(  48)		 ::Dynamic _hx_tmp = ::haxe::Log_obj::trace;
-HXDLIN(  48)		int _hx_tmp1 = this->tilemap->get_numTiles();
-HXDLIN(  48)		_hx_tmp(_hx_tmp1,hx::SourceInfo(HX_("Source/GameLevel.hx",c0,da,d9,8c),48,HX_("GameLevel",12,e4,50,49),HX_("new",60,d0,53,00)));
-HXLINE(  49)		 ::Dynamic _hx_tmp2 = ::haxe::Log_obj::trace;
-HXDLIN(  49)		::String _hx_tmp3 = (this->tilemap->getTileAt(0)->get_x() + HX_(" ",20,00,00,00));
-HXDLIN(  49)		::String _hx_tmp4 = (_hx_tmp3 + this->tilemap->getTileAt(0)->get_y());
-HXDLIN(  49)		_hx_tmp2(_hx_tmp4,hx::SourceInfo(HX_("Source/GameLevel.hx",c0,da,d9,8c),49,HX_("GameLevel",12,e4,50,49),HX_("new",60,d0,53,00)));
-HXLINE(  50)		 ::Dynamic _hx_tmp5 = ::haxe::Log_obj::trace;
-HXDLIN(  50)		Float _hx_tmp6 = this->tilemap->getTileAt(0)->get_width();
-HXDLIN(  50)		_hx_tmp5(_hx_tmp6,hx::SourceInfo(HX_("Source/GameLevel.hx",c0,da,d9,8c),50,HX_("GameLevel",12,e4,50,49),HX_("new",60,d0,53,00)));
+            	HX_GC_STACKFRAME(&_hx_pos_429e452b6bbe1ad4_27_new)
+HXLINE(  28)		super::__construct();
+HXLINE(  29)		this->sizeWidth = width;
+HXLINE(  30)		this->sizeHeight = height;
+HXLINE(  32)		this->bmpData = ::openfl::utils::Assets_obj::getBitmapData(HX_("assets/tileMap/PixelAtlas.png",2d,58,a3,27),null());
+HXLINE(  34)		this->tileset =  ::openfl::display::Tileset_obj::__alloc( HX_CTX ,this->bmpData,null());
+HXLINE(  35)		this->tilemap =  ::openfl::display::Tilemap_obj::__alloc( HX_CTX ,this->sizeWidth,this->sizeHeight,this->tileset,null());
+HXLINE(  36)		this->addChild(this->tilemap);
+HXLINE(  39)		this->level = ::Array_obj< ::Dynamic>::__new(15)->init(0,::Array_obj< int >::fromData( _hx_array_data_4950e412_1,20))->init(1,::Array_obj< int >::fromData( _hx_array_data_4950e412_2,20))->init(2,::Array_obj< int >::fromData( _hx_array_data_4950e412_3,20))->init(3,::Array_obj< int >::fromData( _hx_array_data_4950e412_4,20))->init(4,::Array_obj< int >::fromData( _hx_array_data_4950e412_5,20))->init(5,::Array_obj< int >::fromData( _hx_array_data_4950e412_6,20))->init(6,::Array_obj< int >::fromData( _hx_array_data_4950e412_7,20))->init(7,::Array_obj< int >::fromData( _hx_array_data_4950e412_8,20))->init(8,::Array_obj< int >::fromData( _hx_array_data_4950e412_9,20))->init(9,::Array_obj< int >::fromData( _hx_array_data_4950e412_10,20))->init(10,::Array_obj< int >::fromData( _hx_array_data_4950e412_11,20))->init(11,::Array_obj< int >::fromData( _hx_array_data_4950e412_12,20))->init(12,::Array_obj< int >::fromData( _hx_array_data_4950e412_13,20))->init(13,::Array_obj< int >::fromData( _hx_array_data_4950e412_14,20))->init(14,::Array_obj< int >::fromData( _hx_array_data_4950e412_15,20));
+HXLINE(  55)		 ::openfl::display::Tileset ind1 = this->tileset;
+HXDLIN(  55)		int ind11 = ind1->addRect( ::openfl::geom::Rectangle_obj::__alloc( HX_CTX ,0,0,32,32));
+HXLINE(  56)		 ::openfl::display::Tileset ind2 = this->tileset;
+HXDLIN(  56)		int ind21 = ind2->addRect( ::openfl::geom::Rectangle_obj::__alloc( HX_CTX ,32,0,32,32));
+HXLINE(  57)		 ::openfl::display::Tileset ind3 = this->tileset;
+HXDLIN(  57)		int ind31 = ind3->addRect( ::openfl::geom::Rectangle_obj::__alloc( HX_CTX ,64,0,32,32));
+HXLINE(  58)		 ::openfl::display::Tileset ind4 = this->tileset;
+HXDLIN(  58)		int ind41 = ind4->addRect( ::openfl::geom::Rectangle_obj::__alloc( HX_CTX ,96,0,32,32));
+HXLINE(  59)		 ::openfl::display::Tileset ind5 = this->tileset;
+HXDLIN(  59)		int ind51 = ind5->addRect( ::openfl::geom::Rectangle_obj::__alloc( HX_CTX ,96,96,32,32));
+HXLINE(  60)		 ::openfl::display::Tileset ind6 = this->tileset;
+HXDLIN(  60)		int ind61 = ind6->addRect( ::openfl::geom::Rectangle_obj::__alloc( HX_CTX ,0,128,32,32));
+HXLINE(  61)		 ::openfl::display::Tileset ind7 = this->tileset;
+HXDLIN(  61)		int ind71 = ind7->addRect( ::openfl::geom::Rectangle_obj::__alloc( HX_CTX ,32,128,32,32));
+HXLINE(  62)		 ::openfl::display::Tileset ind8 = this->tileset;
+HXDLIN(  62)		int ind81 = ind8->addRect( ::openfl::geom::Rectangle_obj::__alloc( HX_CTX ,64,128,32,32));
+HXLINE(  63)		 ::openfl::display::Tileset ind9 = this->tileset;
+HXDLIN(  63)		int ind91 = ind9->addRect( ::openfl::geom::Rectangle_obj::__alloc( HX_CTX ,96,128,32,32));
+HXLINE(  65)		this->IDs = ::Array_obj< int >::__new(0);
+HXLINE(  66)		this->IDs->push(ind11);
+HXLINE(  67)		this->IDs->push(ind21);
+HXLINE(  68)		this->IDs->push(ind31);
+HXLINE(  69)		this->IDs->push(ind41);
+HXLINE(  70)		this->IDs->push(ind51);
+HXLINE(  71)		this->IDs->push(ind61);
+HXLINE(  72)		this->IDs->push(ind71);
+HXLINE(  73)		this->IDs->push(ind81);
+HXLINE(  74)		this->IDs->push(ind91);
+HXLINE(  75)		this->addTiles();
+HXLINE(  76)		 ::Dynamic _hx_tmp = ::haxe::Log_obj::trace;
+HXDLIN(  76)		int _hx_tmp1 = this->tilemap->get_numTiles();
+HXDLIN(  76)		_hx_tmp(_hx_tmp1,hx::SourceInfo(HX_("Source/GameLevel.hx",c0,da,d9,8c),76,HX_("GameLevel",12,e4,50,49),HX_("new",60,d0,53,00)));
             	}
 
 Dynamic GameLevel_obj::__CreateEmpty() { return new GameLevel_obj; }
@@ -120,32 +177,23 @@ bool GameLevel_obj::_hx_isInstanceOf(int inClassId) {
 }
 
 void GameLevel_obj::addTiles(){
-            	HX_GC_STACKFRAME(&_hx_pos_429e452b6bbe1ad4_58_addTiles)
-HXDLIN(  58)		int _g = 0;
-HXDLIN(  58)		while((_g < 15)){
-HXDLIN(  58)			_g = (_g + 1);
-HXDLIN(  58)			int i = (_g - 1);
-HXLINE(  59)			{
-HXLINE(  59)				int _g1 = 0;
-HXDLIN(  59)				while((_g1 < 20)){
-HXLINE(  59)					_g1 = (_g1 + 1);
-HXDLIN(  59)					int j = (_g1 - 1);
-HXLINE(  61)					if ((i == 11)) {
-HXLINE(  64)						this->tile =  ::openfl::display::Tile_obj::__alloc( HX_CTX ,this->IDs->__get(0),(( (Float)((j * this->sizeWidth)) ) / ( (Float)(20) )),(( (Float)((i * this->sizeHeight)) ) / ( (Float)(15) )),null(),null(),null(),null(),null());
-            					}
-HXLINE(  66)					if ((i == 12)) {
-HXLINE(  68)						this->tile =  ::openfl::display::Tile_obj::__alloc( HX_CTX ,this->IDs->__get(1),(( (Float)((j * this->sizeWidth)) ) / ( (Float)(20) )),(( (Float)((i * this->sizeHeight)) ) / ( (Float)(15) )),null(),null(),null(),null(),null());
-            					}
-HXLINE(  70)					if ((i == 13)) {
-HXLINE(  72)						this->tile =  ::openfl::display::Tile_obj::__alloc( HX_CTX ,this->IDs->__get(2),(( (Float)((j * this->sizeWidth)) ) / ( (Float)(20) )),(( (Float)((i * this->sizeHeight)) ) / ( (Float)(15) )),null(),null(),null(),null(),null());
-            					}
-HXLINE(  74)					if ((i == 14)) {
-HXLINE(  76)						this->tile =  ::openfl::display::Tile_obj::__alloc( HX_CTX ,this->IDs->__get(3),(( (Float)((j * this->sizeWidth)) ) / ( (Float)(20) )),(( (Float)((i * this->sizeHeight)) ) / ( (Float)(15) )),null(),null(),null(),null(),null());
-            					}
-HXLINE(  78)					if ((i >= 11)) {
-HXLINE(  80)						this->tile->set_scaleX(((Float)1.25));
-HXLINE(  81)						this->tile->set_scaleY(((Float)1.25));
-HXLINE(  82)						this->tilemap->addTile(this->tile);
+            	HX_GC_STACKFRAME(&_hx_pos_429e452b6bbe1ad4_88_addTiles)
+HXDLIN(  88)		int _g = 0;
+HXDLIN(  88)		int _g1 = this->level->length;
+HXDLIN(  88)		while((_g < _g1)){
+HXDLIN(  88)			_g = (_g + 1);
+HXDLIN(  88)			int i = (_g - 1);
+HXLINE(  90)			{
+HXLINE(  90)				int _g2 = 0;
+HXDLIN(  90)				int _g11 = this->level->__get(i).StaticCast< ::Array< int > >()->length;
+HXDLIN(  90)				while((_g2 < _g11)){
+HXLINE(  90)					_g2 = (_g2 + 1);
+HXDLIN(  90)					int j = (_g2 - 1);
+HXLINE(  92)					if ((this->level->__get(i).StaticCast< ::Array< int > >()->__get(j) != 0)) {
+HXLINE(  94)						this->tile =  ::openfl::display::Tile_obj::__alloc( HX_CTX ,this->IDs->__get((this->level->__get(i).StaticCast< ::Array< int > >()->__get(j) - 1)),(( (Float)((j * ::Main_obj::sizeWidth)) ) / ( (Float)(20) )),(( (Float)((i * ::Main_obj::sizeHeight)) ) / ( (Float)(15) )),null(),null(),null(),null(),null());
+HXLINE(  95)						this->tile->set_scaleX(((Float)1.25));
+HXLINE(  96)						this->tile->set_scaleY(((Float)1.25));
+HXLINE(  97)						this->tilemap->addTile(this->tile);
             					}
             				}
             			}
@@ -183,6 +231,7 @@ void GameLevel_obj::__Mark(HX_MARK_PARAMS)
 	HX_MARK_MEMBER_NAME(tileset,"tileset");
 	HX_MARK_MEMBER_NAME(IDs,"IDs");
 	HX_MARK_MEMBER_NAME(tile,"tile");
+	HX_MARK_MEMBER_NAME(level,"level");
 	 ::openfl::display::Sprite_obj::__Mark(HX_MARK_ARG);
 	HX_MARK_END_CLASS();
 }
@@ -196,6 +245,7 @@ void GameLevel_obj::__Visit(HX_VISIT_PARAMS)
 	HX_VISIT_MEMBER_NAME(tileset,"tileset");
 	HX_VISIT_MEMBER_NAME(IDs,"IDs");
 	HX_VISIT_MEMBER_NAME(tile,"tile");
+	HX_VISIT_MEMBER_NAME(level,"level");
 	 ::openfl::display::Sprite_obj::__Visit(HX_VISIT_ARG);
 }
 
@@ -207,6 +257,9 @@ hx::Val GameLevel_obj::__Field(const ::String &inName,hx::PropertyAccess inCallP
 		break;
 	case 4:
 		if (HX_FIELD_EQ(inName,"tile") ) { return hx::Val( tile ); }
+		break;
+	case 5:
+		if (HX_FIELD_EQ(inName,"level") ) { return hx::Val( level ); }
 		break;
 	case 7:
 		if (HX_FIELD_EQ(inName,"tilemap") ) { return hx::Val( tilemap ); }
@@ -234,6 +287,9 @@ hx::Val GameLevel_obj::__SetField(const ::String &inName,const hx::Val &inValue,
 	case 4:
 		if (HX_FIELD_EQ(inName,"tile") ) { tile=inValue.Cast<  ::openfl::display::Tile >(); return inValue; }
 		break;
+	case 5:
+		if (HX_FIELD_EQ(inName,"level") ) { level=inValue.Cast< ::Array< ::Dynamic> >(); return inValue; }
+		break;
 	case 7:
 		if (HX_FIELD_EQ(inName,"tilemap") ) { tilemap=inValue.Cast<  ::openfl::display::Tilemap >(); return inValue; }
 		if (HX_FIELD_EQ(inName,"bmpData") ) { bmpData=inValue.Cast<  ::openfl::display::BitmapData >(); return inValue; }
@@ -257,6 +313,7 @@ void GameLevel_obj::__GetFields(Array< ::String> &outFields)
 	outFields->push(HX_("tileset",34,81,93,45));
 	outFields->push(HX_("IDs",38,a0,37,00));
 	outFields->push(HX_("tile",2e,cb,fc,4c));
+	outFields->push(HX_("level",84,15,63,72));
 	super::__GetFields(outFields);
 };
 
@@ -269,6 +326,7 @@ static hx::StorageInfo GameLevel_obj_sMemberStorageInfo[] = {
 	{hx::fsObject /*  ::openfl::display::Tileset */ ,(int)offsetof(GameLevel_obj,tileset),HX_("tileset",34,81,93,45)},
 	{hx::fsObject /* ::Array< int > */ ,(int)offsetof(GameLevel_obj,IDs),HX_("IDs",38,a0,37,00)},
 	{hx::fsObject /*  ::openfl::display::Tile */ ,(int)offsetof(GameLevel_obj,tile),HX_("tile",2e,cb,fc,4c)},
+	{hx::fsObject /* ::Array< ::Dynamic> */ ,(int)offsetof(GameLevel_obj,level),HX_("level",84,15,63,72)},
 	{ hx::fsUnknown, 0, null()}
 };
 static hx::StaticInfo *GameLevel_obj_sStaticStorageInfo = 0;
@@ -282,6 +340,7 @@ static ::String GameLevel_obj_sMemberFields[] = {
 	HX_("tileset",34,81,93,45),
 	HX_("IDs",38,a0,37,00),
 	HX_("tile",2e,cb,fc,4c),
+	HX_("level",84,15,63,72),
 	HX_("addTiles",a4,23,92,89),
 	::String(null()) };
 

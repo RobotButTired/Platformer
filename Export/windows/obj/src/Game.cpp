@@ -8,6 +8,12 @@
 #ifndef INCLUDED_BackGround
 #include <BackGround.h>
 #endif
+#ifndef INCLUDED_Bonus
+#include <Bonus.h>
+#endif
+#ifndef INCLUDED_BonusType
+#include <BonusType.h>
+#endif
 #ifndef INCLUDED_Bullet
 #include <Bullet.h>
 #endif
@@ -35,14 +41,20 @@
 #ifndef INCLUDED_State
 #include <State.h>
 #endif
+#ifndef INCLUDED_Std
+#include <Std.h>
+#endif
 #ifndef INCLUDED_Unit
 #include <Unit.h>
 #endif
 #ifndef INCLUDED_haxe_Log
 #include <haxe/Log.h>
 #endif
-#ifndef INCLUDED_lime_system_System
-#include <lime/system/System.h>
+#ifndef INCLUDED_lime_app_IModule
+#include <lime/app/IModule.h>
+#endif
+#ifndef INCLUDED_openfl_Lib
+#include <openfl/Lib.h>
 #endif
 #ifndef INCLUDED_openfl_display_DisplayObject
 #include <openfl/display/DisplayObject.h>
@@ -59,8 +71,14 @@
 #ifndef INCLUDED_openfl_display_InteractiveObject
 #include <openfl/display/InteractiveObject.h>
 #endif
+#ifndef INCLUDED_openfl_display_MovieClip
+#include <openfl/display/MovieClip.h>
+#endif
 #ifndef INCLUDED_openfl_display_Sprite
 #include <openfl/display/Sprite.h>
+#endif
+#ifndef INCLUDED_openfl_display_Stage
+#include <openfl/display/Stage.h>
 #endif
 #ifndef INCLUDED_openfl_display_Tile
 #include <openfl/display/Tile.h>
@@ -77,6 +95,9 @@
 #ifndef INCLUDED_openfl_events_IEventDispatcher
 #include <openfl/events/IEventDispatcher.h>
 #endif
+#ifndef INCLUDED_openfl_events_KeyboardEvent
+#include <openfl/events/KeyboardEvent.h>
+#endif
 #ifndef INCLUDED_openfl_events_MouseEvent
 #include <openfl/events/MouseEvent.h>
 #endif
@@ -86,62 +107,77 @@
 #ifndef INCLUDED_openfl_geom_Rectangle
 #include <openfl/geom/Rectangle.h>
 #endif
+#ifndef INCLUDED_openfl_text_TextField
+#include <openfl/text/TextField.h>
+#endif
 
-HX_DEFINE_STACK_FRAME(_hx_pos_69efd8c9269cf369_10_new,"Game","new",0x79ba3204,"Game.new","Game.hx",10,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_83_quitButtonClick,"Game","quitButtonClick",0x3679e10b,"Game.quitButtonClick","Game.hx",83,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_86_quitButtonOver,"Game","quitButtonOver",0x51ad35f1,"Game.quitButtonOver","Game.hx",86,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_91_quitButtonOut,"Game","quitButtonOut",0x0f4a3e91,"Game.quitButtonOut","Game.hx",91,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_98_get_quitButtonIsPressed,"Game","get_quitButtonIsPressed",0x5edb1ab2,"Game.get_quitButtonIsPressed","Game.hx",98,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_101_update,"Game","update",0xfb78c2e5,"Game.update","Game.hx",101,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_116_checkCollisionWithTile,"Game","checkCollisionWithTile",0xb72889da,"Game.checkCollisionWithTile","Game.hx",116,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_149_doCollisionsWithTiles,"Game","doCollisionsWithTiles",0xff7a0377,"Game.doCollisionsWithTiles","Game.hx",149,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_163_playerJump,"Game","playerJump",0x8a147bcb,"Game.playerJump","Game.hx",163,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_174_bulletsMove,"Game","bulletsMove",0x74d16946,"Game.bulletsMove","Game.hx",174,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_191_generateEnemies,"Game","generateEnemies",0x480cf995,"Game.generateEnemies","Game.hx",191,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_202_generateEnemy,"Game","generateEnemy",0x60fe3977,"Game.generateEnemy","Game.hx",202,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_228_moveEnemies,"Game","moveEnemies",0x96614739,"Game.moveEnemies","Game.hx",228,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_238_doCollisionsWithBullet,"Game","doCollisionsWithBullet",0x41b0c010,"Game.doCollisionsWithBullet","Game.hx",238,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_262_get_gameIsOver,"Game","get_gameIsOver",0x9b104115,"Game.get_gameIsOver","Game.hx",262,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_266_doCollidionWithEnemies,"Game","doCollidionWithEnemies",0x085f8ba6,"Game.doCollidionWithEnemies","Game.hx",266,0x56a4f9ec)
+HX_DEFINE_STACK_FRAME(_hx_pos_69efd8c9269cf369_14_new,"Game","new",0x79ba3204,"Game.new","Game.hx",14,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_117_pause,"Game","pause",0x2654e99a,"Game.pause","Game.hx",117,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_127_quitButtonClick,"Game","quitButtonClick",0x3679e10b,"Game.quitButtonClick","Game.hx",127,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_130_quitButtonOver,"Game","quitButtonOver",0x51ad35f1,"Game.quitButtonOver","Game.hx",130,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_135_quitButtonOut,"Game","quitButtonOut",0x0f4a3e91,"Game.quitButtonOut","Game.hx",135,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_142_get_quitButtonIsPressed,"Game","get_quitButtonIsPressed",0x5edb1ab2,"Game.get_quitButtonIsPressed","Game.hx",142,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_146_update,"Game","update",0xfb78c2e5,"Game.update","Game.hx",146,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_182_checkCollisionWithTile,"Game","checkCollisionWithTile",0xb72889da,"Game.checkCollisionWithTile","Game.hx",182,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_215_doCollisionsWithTiles,"Game","doCollisionsWithTiles",0xff7a0377,"Game.doCollisionsWithTiles","Game.hx",215,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_229_playerJump,"Game","playerJump",0x8a147bcb,"Game.playerJump","Game.hx",229,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_240_bulletsMove,"Game","bulletsMove",0x74d16946,"Game.bulletsMove","Game.hx",240,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_258_generateEnemies,"Game","generateEnemies",0x480cf995,"Game.generateEnemies","Game.hx",258,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_272_generateEnemy,"Game","generateEnemy",0x60fe3977,"Game.generateEnemy","Game.hx",272,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_298_moveEnemies,"Game","moveEnemies",0x96614739,"Game.moveEnemies","Game.hx",298,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_308_doCollisionsWithBullet,"Game","doCollisionsWithBullet",0x41b0c010,"Game.doCollisionsWithBullet","Game.hx",308,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_337_get_gameIsOver,"Game","get_gameIsOver",0x9b104115,"Game.get_gameIsOver","Game.hx",337,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_341_get_gamePoints,"Game","get_gamePoints",0x2b1efcda,"Game.get_gamePoints","Game.hx",341,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_345_doCollidionWithEnemies,"Game","doCollidionWithEnemies",0x085f8ba6,"Game.doCollidionWithEnemies","Game.hx",345,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_359_bonusBuf,"Game","bonusBuf",0x77d8edb0,"Game.bonusBuf","Game.hx",359,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_377_spawnBonus,"Game","spawnBonus",0xd1f89d40,"Game.spawnBonus","Game.hx",377,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_389_doBonusDestroy,"Game","doBonusDestroy",0x45505122,"Game.doBonusDestroy","Game.hx",389,0x56a4f9ec)
 
 void Game_obj::__construct(int width,int height){
-            	HX_GC_STACKFRAME(&_hx_pos_69efd8c9269cf369_10_new)
-HXLINE(  28)		this->spawnDelay = ((Float)2.0);
-HXLINE(  27)		this->maxEnemies = 2;
-HXLINE(  20)		this->gameIsOver = false;
-HXLINE(  19)		this->haveCollision = false;
-HXLINE(  16)		this->quitButtonIsPressed = false;
-HXLINE(  33)		super::__construct();
-HXLINE(  34)		this->sizeWidth = width;
-HXLINE(  35)		this->sizeHeight = height;
-HXLINE(  37)		this->backGround =  ::BackGround_obj::__alloc( HX_CTX ,HX_("gameScreen",fe,24,d3,89));
-HXLINE(  39)		this->addChild(this->backGround);
-HXLINE(  42)		this->gameLevel =  ::GameLevel_obj::__alloc( HX_CTX ,this->sizeWidth,this->sizeHeight);
-HXLINE(  43)		this->addChild(this->gameLevel);
-HXLINE(  46)		this->bullets = ::Array_obj< ::Dynamic>::__new(0);
-HXLINE(  47)		this->spentBullets = ::Array_obj< ::Dynamic>::__new(0);
-HXLINE(  51)		this->player =  ::Player_obj::__alloc( HX_CTX );
-HXLINE(  52)		this->player->set_x(( (Float)(100) ));
-HXLINE(  53)		this->player->set_y(( (Float)(100) ));
-HXLINE(  54)		this->addChild(this->player);
-HXLINE(  57)		this->enemies = ::Array_obj< ::Dynamic>::__new(0);
-HXLINE(  58)		this->deadEnemies = ::Array_obj< ::Dynamic>::__new(0);
-HXLINE(  59)		int timer = ::lime::_hx_system::System_obj::getTimer();
-HXDLIN(  59)		Float _hx_tmp;
-HXDLIN(  59)		if ((timer > 0)) {
-HXLINE(  59)			_hx_tmp = (( (Float)(timer) ) / ( (Float)(1000) ));
-            		}
-            		else {
-HXLINE(  59)			_hx_tmp = ( (Float)(0) );
-            		}
-HXDLIN(  59)		this->enemiesTimeFlag = _hx_tmp;
-HXLINE(  63)		this->quitButton =  ::Button_obj::__alloc( HX_CTX ,(( (Float)(this->sizeWidth) ) / ( (Float)(2) )),(( (Float)(this->sizeHeight) ) / ( (Float)(2) )),HX_("QUIT",cf,07,cb,35));
-HXLINE(  64)		this->quitButton->set_x((( (Float)((this->sizeWidth * 7)) ) / ( (Float)(8) )));
-HXLINE(  65)		this->quitButton->set_y((( (Float)(this->sizeHeight) ) / ( (Float)(25) )));
-HXLINE(  67)		this->addChild(this->quitButton);
-HXLINE(  69)		this->quitButton->addEventListener(HX_("mouseOver",19,4a,0d,f6),this->quitButtonOver_dyn(),null(),null(),null());
-HXLINE(  70)		this->quitButton->addEventListener(HX_("mouseOut",69,e7,1d,a4),this->quitButtonOut_dyn(),null(),null(),null());
-HXLINE(  71)		this->quitButton->addEventListener(HX_("mouseDown",27,b1,c2,ee),this->quitButtonClick_dyn(),null(),null(),null());
+            	HX_GC_STACKFRAME(&_hx_pos_69efd8c9269cf369_14_new)
+HXLINE(  42)		this->counter = 0;
+HXLINE(  40)		this->spawnDelay = ((Float)1.0);
+HXLINE(  39)		this->maxEnemies = 4;
+HXLINE(  31)		this->gamePoints = 0;
+HXLINE(  27)		this->gameIsOver = false;
+HXLINE(  24)		this->haveCollision = false;
+HXLINE(  21)		this->pauseIsPressed = false;
+HXLINE(  20)		this->quitButtonIsPressed = false;
+HXLINE(  46)		super::__construct();
+HXLINE(  47)		this->sizeWidth = width;
+HXLINE(  48)		this->sizeHeight = height;
+HXLINE(  50)		this->backGround =  ::BackGround_obj::__alloc( HX_CTX ,HX_("gameScreen",fe,24,d3,89));
+HXLINE(  52)		this->addChild(this->backGround);
+HXLINE(  55)		this->gameLevel =  ::GameLevel_obj::__alloc( HX_CTX ,this->sizeWidth,this->sizeHeight);
+HXLINE(  56)		this->addChild(this->gameLevel);
+HXLINE(  59)		this->bullets = ::Array_obj< ::Dynamic>::__new(0);
+HXLINE(  60)		this->spentBullets = ::Array_obj< ::Dynamic>::__new(0);
+HXLINE(  64)		::Game_obj::jumpPower = ((Float)15.0);
+HXLINE(  65)		this->player =  ::Player_obj::__alloc( HX_CTX );
+HXLINE(  66)		this->player->set_x(( (Float)(100) ));
+HXLINE(  67)		this->player->set_y(( (Float)(100) ));
+HXLINE(  68)		this->addChild(this->player);
+HXLINE(  71)		this->enemies = ::Array_obj< ::Dynamic>::__new(0);
+HXLINE(  72)		this->deadEnemies = ::Array_obj< ::Dynamic>::__new(0);
+HXLINE(  76)		::Bonus_obj::bonusIsUsed = false;
+HXLINE(  77)		::Bonus_obj::haveBonus = false;
+HXLINE(  84)		this->pointsField =  ::openfl::text::TextField_obj::__alloc( HX_CTX );
+HXLINE(  85)		 ::openfl::text::TextField _hx_tmp = this->pointsField;
+HXDLIN(  85)		_hx_tmp->set_text(::Std_obj::string(this->gamePoints));
+HXLINE(  86)		this->pointsField->set_x((( (Float)(::Main_obj::sizeWidth) ) / ( (Float)(2) )));
+HXLINE(  87)		this->pointsField->set_y(( (Float)(0) ));
+HXLINE(  88)		this->pointsField->set_scaleX(((Float)2.0));
+HXLINE(  89)		this->pointsField->set_scaleY(((Float)2.0));
+HXLINE(  90)		this->pointsField->mouseEnabled = false;
+HXLINE(  91)		this->addChild(this->pointsField);
+HXLINE(  95)		this->quitButton =  ::Button_obj::__alloc( HX_CTX ,(( (Float)(this->sizeWidth) ) / ( (Float)(2) )),(( (Float)(this->sizeHeight) ) / ( (Float)(2) )),HX_("QUIT",cf,07,cb,35));
+HXLINE(  96)		this->quitButton->set_x((( (Float)((this->sizeWidth * 7)) ) / ( (Float)(8) )));
+HXLINE(  97)		this->quitButton->set_y((( (Float)(this->sizeHeight) ) / ( (Float)(25) )));
+HXLINE(  99)		this->addChild(this->quitButton);
+HXLINE( 101)		this->quitButton->addEventListener(HX_("mouseOver",19,4a,0d,f6),this->quitButtonOver_dyn(),null(),null(),null());
+HXLINE( 102)		this->quitButton->addEventListener(HX_("mouseOut",69,e7,1d,a4),this->quitButtonOut_dyn(),null(),null(),null());
+HXLINE( 103)		this->quitButton->addEventListener(HX_("mouseDown",27,b1,c2,ee),this->quitButtonClick_dyn(),null(),null(),null());
+HXLINE( 104)		::openfl::Lib_obj::get_current()->stage->addEventListener(HX_("keyDown",a1,69,47,9c),this->pause_dyn(),null(),null(),null());
             	}
 
 Dynamic Game_obj::__CreateEmpty() { return new Game_obj; }
@@ -175,138 +211,162 @@ bool Game_obj::_hx_isInstanceOf(int inClassId) {
 	}
 }
 
+void Game_obj::pause( ::openfl::events::KeyboardEvent e){
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_117_pause)
+HXDLIN( 117)		if ((e->keyCode == 120)) {
+HXLINE( 119)			if (!(this->pauseIsPressed)) {
+HXLINE( 120)				this->pauseIsPressed = true;
+            			}
+            			else {
+HXLINE( 122)				this->pauseIsPressed = false;
+            			}
+            		}
+            	}
+
+
+HX_DEFINE_DYNAMIC_FUNC1(Game_obj,pause,(void))
+
 void Game_obj::quitButtonClick( ::openfl::events::MouseEvent e){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_83_quitButtonClick)
-HXDLIN(  83)		this->quitButtonIsPressed = true;
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_127_quitButtonClick)
+HXDLIN( 127)		this->quitButtonIsPressed = true;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC1(Game_obj,quitButtonClick,(void))
 
 void Game_obj::quitButtonOver( ::openfl::events::MouseEvent e){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_86_quitButtonOver)
-HXLINE(  87)		this->quitButton->set_scaleX(((Float)1.25));
-HXLINE(  88)		this->quitButton->set_scaleY(((Float)1.25));
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_130_quitButtonOver)
+HXLINE( 131)		this->quitButton->set_scaleX(((Float)1.25));
+HXLINE( 132)		this->quitButton->set_scaleY(((Float)1.25));
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC1(Game_obj,quitButtonOver,(void))
 
 void Game_obj::quitButtonOut( ::openfl::events::MouseEvent e){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_91_quitButtonOut)
-HXLINE(  92)		this->quitButton->set_scaleX(((Float)1.0));
-HXLINE(  93)		this->quitButton->set_scaleY(((Float)1.0));
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_135_quitButtonOut)
+HXLINE( 136)		this->quitButton->set_scaleX(((Float)1.0));
+HXLINE( 137)		this->quitButton->set_scaleY(((Float)1.0));
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC1(Game_obj,quitButtonOut,(void))
 
 bool Game_obj::get_quitButtonIsPressed(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_98_get_quitButtonIsPressed)
-HXDLIN(  98)		return this->quitButtonIsPressed;
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_142_get_quitButtonIsPressed)
+HXDLIN( 142)		return this->quitButtonIsPressed;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,get_quitButtonIsPressed,return )
 
 void Game_obj::update(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_101_update)
-HXLINE( 102)		this->player->move();
-HXLINE( 103)		this->doCollisionsWithTiles();
-HXLINE( 104)		this->doCollidionWithEnemies();
-HXLINE( 105)		this->playerJump();
-HXLINE( 106)		 ::Player _hx_tmp = this->player;
-HXDLIN( 106)		_hx_tmp->spriteAnimated(this->player->get_state());
-HXLINE( 107)		this->player->doShot(hx::ObjectPtr<OBJ_>(this));
-HXLINE( 108)		this->bulletsMove();
-HXLINE( 109)		this->generateEnemies();
-HXLINE( 110)		this->moveEnemies();
-HXLINE( 111)		this->doCollisionsWithBullet();
-HXLINE( 112)		::haxe::Log_obj::trace(((this->enemies->length + HX_(" ",20,00,00,00)) + this->deadEnemies->length),hx::SourceInfo(HX_("Source/Game.hx",98,05,24,39),112,HX_("Game",12,20,38,2f),HX_("update",09,86,05,87)));
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_146_update)
+HXDLIN( 146)		if (!(this->pauseIsPressed)) {
+HXLINE( 148)			this->bonusBuf();
+HXLINE( 149)			this->player->move();
+HXLINE( 150)			this->doCollisionsWithTiles();
+HXLINE( 151)			this->doCollidionWithEnemies();
+HXLINE( 152)			this->playerJump(::Game_obj::jumpPower);
+HXLINE( 153)			 ::Player _hx_tmp = this->player;
+HXDLIN( 153)			_hx_tmp->spriteAnimated(this->player->get_state());
+HXLINE( 154)			this->player->doShot(hx::ObjectPtr<OBJ_>(this));
+HXLINE( 156)			this->bulletsMove();
+HXLINE( 157)			this->generateEnemies();
+HXLINE( 158)			this->moveEnemies();
+HXLINE( 159)			this->doCollisionsWithBullet();
+HXLINE( 162)			if (this->contains(this->bonus)) {
+HXLINE( 164)				this->bonus->fall();
+HXLINE( 165)				if (this->bonus->checkCollisionWithPlayer(this->player)) {
+HXLINE( 167)					this->removeChild(this->bonus);
+HXLINE( 168)					this->bonus = null();
+            				}
+            			}
+            		}
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,update,(void))
 
 bool Game_obj::checkCollisionWithTile( ::openfl::geom::Rectangle playerHitBox, ::openfl::display::Tile tile){
-            	HX_GC_STACKFRAME(&_hx_pos_69efd8c9269cf369_116_checkCollisionWithTile)
-HXLINE( 117)		 ::openfl::geom::Point hitBox =  ::openfl::geom::Point_obj::__alloc( HX_CTX ,null(),null());
-HXLINE( 118)		 ::Player hitBox1 = this->player;
-HXDLIN( 118)		hitBox = hitBox1->localToGlobal( ::openfl::geom::Point_obj::__alloc( HX_CTX ,playerHitBox->x,playerHitBox->y));
-HXLINE( 119)		if (hx::IsEq( this->player->get_direction(),::Direction_obj::right_dyn() )) {
-HXLINE( 121)			bool _hx_tmp;
-HXDLIN( 121)			Float _hx_tmp1 = (hitBox->x + playerHitBox->width);
-HXDLIN( 121)			if ((_hx_tmp1 > tile->get_x())) {
-HXLINE( 122)				Float hitBox2 = hitBox->x;
-HXDLIN( 122)				Float _hx_tmp2 = tile->get_x();
-HXLINE( 121)				_hx_tmp = (hitBox2 < (_hx_tmp2 + tile->get_width()));
+            	HX_GC_STACKFRAME(&_hx_pos_69efd8c9269cf369_182_checkCollisionWithTile)
+HXLINE( 183)		 ::openfl::geom::Point hitBox =  ::openfl::geom::Point_obj::__alloc( HX_CTX ,null(),null());
+HXLINE( 184)		 ::Player hitBox1 = this->player;
+HXDLIN( 184)		hitBox = hitBox1->localToGlobal( ::openfl::geom::Point_obj::__alloc( HX_CTX ,playerHitBox->x,playerHitBox->y));
+HXLINE( 185)		if (hx::IsEq( this->player->get_direction(),::Direction_obj::right_dyn() )) {
+HXLINE( 187)			bool _hx_tmp;
+HXDLIN( 187)			Float _hx_tmp1 = (hitBox->x + playerHitBox->width);
+HXDLIN( 187)			if ((_hx_tmp1 > tile->get_x())) {
+HXLINE( 188)				Float hitBox2 = hitBox->x;
+HXDLIN( 188)				Float _hx_tmp2 = tile->get_x();
+HXLINE( 187)				_hx_tmp = (hitBox2 < (_hx_tmp2 + tile->get_width()));
             			}
             			else {
-HXLINE( 121)				_hx_tmp = false;
+HXLINE( 187)				_hx_tmp = false;
             			}
-HXDLIN( 121)			if (_hx_tmp) {
-HXLINE( 124)				bool _hx_tmp3;
-HXDLIN( 124)				Float _hx_tmp4 = (hitBox->y + playerHitBox->height);
-HXDLIN( 124)				if ((_hx_tmp4 > tile->get_y())) {
-HXLINE( 125)					Float hitBox3 = hitBox->y;
-HXLINE( 124)					_hx_tmp3 = (hitBox3 < tile->get_y());
+HXDLIN( 187)			if (_hx_tmp) {
+HXLINE( 190)				bool _hx_tmp3;
+HXDLIN( 190)				Float _hx_tmp4 = (hitBox->y + playerHitBox->height);
+HXDLIN( 190)				if ((_hx_tmp4 > tile->get_y())) {
+HXLINE( 191)					Float hitBox3 = hitBox->y;
+HXLINE( 190)					_hx_tmp3 = (hitBox3 < tile->get_y());
             				}
             				else {
-HXLINE( 124)					_hx_tmp3 = false;
+HXLINE( 190)					_hx_tmp3 = false;
             				}
-HXDLIN( 124)				if (_hx_tmp3) {
-HXLINE( 128)					return true;
+HXDLIN( 190)				if (_hx_tmp3) {
+HXLINE( 194)					return true;
             				}
             			}
             		}
             		else {
-HXLINE( 134)			bool _hx_tmp5;
-HXDLIN( 134)			Float hitBox4 = hitBox->x;
-HXDLIN( 134)			if ((hitBox4 > tile->get_x())) {
-HXLINE( 135)				Float _hx_tmp6 = (hitBox->x - playerHitBox->width);
-HXDLIN( 135)				Float _hx_tmp7 = tile->get_x();
-HXLINE( 134)				_hx_tmp5 = (_hx_tmp6 < (_hx_tmp7 + tile->get_width()));
+HXLINE( 200)			bool _hx_tmp5;
+HXDLIN( 200)			Float hitBox4 = hitBox->x;
+HXDLIN( 200)			if ((hitBox4 > tile->get_x())) {
+HXLINE( 201)				Float _hx_tmp6 = (hitBox->x - playerHitBox->width);
+HXDLIN( 201)				Float _hx_tmp7 = tile->get_x();
+HXLINE( 200)				_hx_tmp5 = (_hx_tmp6 < (_hx_tmp7 + tile->get_width()));
             			}
             			else {
-HXLINE( 134)				_hx_tmp5 = false;
+HXLINE( 200)				_hx_tmp5 = false;
             			}
-HXDLIN( 134)			if (_hx_tmp5) {
-HXLINE( 137)				bool _hx_tmp8;
-HXDLIN( 137)				Float _hx_tmp9 = (hitBox->y + playerHitBox->height);
-HXDLIN( 137)				if ((_hx_tmp9 > tile->get_y())) {
-HXLINE( 138)					Float hitBox5 = hitBox->y;
-HXLINE( 137)					_hx_tmp8 = (hitBox5 < tile->get_y());
+HXDLIN( 200)			if (_hx_tmp5) {
+HXLINE( 203)				bool _hx_tmp8;
+HXDLIN( 203)				Float _hx_tmp9 = (hitBox->y + playerHitBox->height);
+HXDLIN( 203)				if ((_hx_tmp9 > tile->get_y())) {
+HXLINE( 204)					Float hitBox5 = hitBox->y;
+HXLINE( 203)					_hx_tmp8 = (hitBox5 < tile->get_y());
             				}
             				else {
-HXLINE( 137)					_hx_tmp8 = false;
+HXLINE( 203)					_hx_tmp8 = false;
             				}
-HXDLIN( 137)				if (_hx_tmp8) {
-HXLINE( 141)					return true;
+HXDLIN( 203)				if (_hx_tmp8) {
+HXLINE( 207)					return true;
             				}
             			}
             		}
-HXLINE( 146)		return false;
+HXLINE( 212)		return false;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC2(Game_obj,checkCollisionWithTile,return )
 
 void Game_obj::doCollisionsWithTiles(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_149_doCollisionsWithTiles)
-HXLINE( 150)		this->haveCollision = false;
-HXLINE( 151)		{
-HXLINE( 151)			int _g = 0;
-HXDLIN( 151)			int _g1 = this->gameLevel->tilemap->get_numTiles();
-HXDLIN( 151)			while((_g < _g1)){
-HXLINE( 151)				_g = (_g + 1);
-HXDLIN( 151)				int i = (_g - 1);
-HXLINE( 153)				 ::openfl::geom::Rectangle _hx_tmp = this->player->get_hitBox();
-HXDLIN( 153)				if (this->checkCollisionWithTile(_hx_tmp,this->gameLevel->tilemap->getTileAt(i))) {
-HXLINE( 155)					 ::Player _hx_tmp1 = this->player;
-HXDLIN( 155)					Float _hx_tmp2 = this->gameLevel->tilemap->getTileAt(i)->get_y();
-HXDLIN( 155)					_hx_tmp1->set_y(((_hx_tmp2 - (this->player->get_hitBox()->height / ( (Float)(2) ))) + ((Float)2.5)));
-HXLINE( 156)					this->player->set_speedY(((Float)0.0));
-HXLINE( 157)					this->haveCollision = true;
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_215_doCollisionsWithTiles)
+HXLINE( 216)		this->haveCollision = false;
+HXLINE( 217)		{
+HXLINE( 217)			int _g = 0;
+HXDLIN( 217)			int _g1 = this->gameLevel->tilemap->get_numTiles();
+HXDLIN( 217)			while((_g < _g1)){
+HXLINE( 217)				_g = (_g + 1);
+HXDLIN( 217)				int i = (_g - 1);
+HXLINE( 219)				 ::openfl::geom::Rectangle _hx_tmp = this->player->get_hitBox();
+HXDLIN( 219)				if (this->checkCollisionWithTile(_hx_tmp,this->gameLevel->tilemap->getTileAt(i))) {
+HXLINE( 221)					 ::Player _hx_tmp1 = this->player;
+HXDLIN( 221)					Float _hx_tmp2 = this->gameLevel->tilemap->getTileAt(i)->get_y();
+HXDLIN( 221)					_hx_tmp1->set_y(((_hx_tmp2 - (this->player->get_hitBox()->height / ( (Float)(2) ))) + ((Float)2.5)));
+HXLINE( 222)					this->player->set_speedY(((Float)0.0));
+HXLINE( 223)					this->haveCollision = true;
             				}
             			}
             		}
@@ -315,49 +375,49 @@ HXLINE( 157)					this->haveCollision = true;
 
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,doCollisionsWithTiles,(void))
 
-void Game_obj::playerJump(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_163_playerJump)
-HXLINE( 165)		bool _hx_tmp;
-HXDLIN( 165)		if (this->player->get_jump()) {
-HXLINE( 165)			_hx_tmp = this->haveCollision;
+void Game_obj::playerJump(Float jumpPower){
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_229_playerJump)
+HXLINE( 231)		bool _hx_tmp;
+HXDLIN( 231)		if (this->player->get_jump()) {
+HXLINE( 231)			_hx_tmp = this->haveCollision;
             		}
             		else {
-HXLINE( 165)			_hx_tmp = false;
+HXLINE( 231)			_hx_tmp = false;
             		}
-HXDLIN( 165)		if (_hx_tmp) {
-HXLINE( 167)			::haxe::Log_obj::trace(HX_("jump",ee,c4,69,46),hx::SourceInfo(HX_("Source/Game.hx",98,05,24,39),167,HX_("Game",12,20,38,2f),HX_("playerJump",ef,a0,2b,a9)));
-HXLINE( 168)			 ::Player _hx_tmp1 = this->player;
-HXDLIN( 168)			_hx_tmp1->set_speedY((this->player->get_speedY() - ((Float)15.0)));
+HXDLIN( 231)		if (_hx_tmp) {
+HXLINE( 233)			::haxe::Log_obj::trace(HX_("jump",ee,c4,69,46),hx::SourceInfo(HX_("Source/Game.hx",98,05,24,39),233,HX_("Game",12,20,38,2f),HX_("playerJump",ef,a0,2b,a9)));
+HXLINE( 234)			 ::Player _hx_tmp1 = this->player;
+HXDLIN( 234)			_hx_tmp1->set_speedY((this->player->get_speedY() - jumpPower));
             		}
-HXLINE( 170)		if (!(this->haveCollision)) {
-HXLINE( 171)			this->player->set_state(::State_obj::jump_dyn());
+HXLINE( 236)		if (!(this->haveCollision)) {
+HXLINE( 237)			this->player->set_state(::State_obj::jump_dyn());
             		}
             	}
 
 
-HX_DEFINE_DYNAMIC_FUNC0(Game_obj,playerJump,(void))
+HX_DEFINE_DYNAMIC_FUNC1(Game_obj,playerJump,(void))
 
 void Game_obj::bulletsMove(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_174_bulletsMove)
-HXLINE( 175)		int i = 0;
-HXLINE( 176)		while((i < this->bullets->length)){
-HXLINE( 178)			this->bullets->__get(i).StaticCast<  ::Bullet >()->move();
-HXLINE( 179)			bool _hx_tmp;
-HXDLIN( 179)			Float _hx_tmp1 = this->bullets->__get(i).StaticCast<  ::Bullet >()->get_x();
-HXDLIN( 179)			Float _hx_tmp2 = (_hx_tmp1 - (this->bullets->__get(i).StaticCast<  ::Bullet >()->get_width() / ( (Float)(2) )));
-HXDLIN( 179)			if (!((_hx_tmp2 >= ::Main_obj::sizeWidth))) {
-HXLINE( 179)				Float _hx_tmp3 = this->bullets->__get(i).StaticCast<  ::Bullet >()->get_x();
-HXDLIN( 179)				_hx_tmp = ((_hx_tmp3 + (this->bullets->__get(i).StaticCast<  ::Bullet >()->get_width() / ( (Float)(2) ))) <= 0);
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_240_bulletsMove)
+HXLINE( 241)		int i = 0;
+HXLINE( 242)		while((i < this->bullets->length)){
+HXLINE( 244)			this->bullets->__get(i).StaticCast<  ::Bullet >()->move();
+HXLINE( 245)			bool _hx_tmp;
+HXDLIN( 245)			Float _hx_tmp1 = this->bullets->__get(i).StaticCast<  ::Bullet >()->get_x();
+HXDLIN( 245)			Float _hx_tmp2 = (_hx_tmp1 - (this->bullets->__get(i).StaticCast<  ::Bullet >()->get_width() / ( (Float)(2) )));
+HXDLIN( 245)			if (!((_hx_tmp2 >= ::Main_obj::sizeWidth))) {
+HXLINE( 245)				Float _hx_tmp3 = this->bullets->__get(i).StaticCast<  ::Bullet >()->get_x();
+HXDLIN( 245)				_hx_tmp = ((_hx_tmp3 + (this->bullets->__get(i).StaticCast<  ::Bullet >()->get_width() / ( (Float)(2) ))) <= 0);
             			}
             			else {
-HXLINE( 179)				_hx_tmp = true;
+HXLINE( 245)				_hx_tmp = true;
             			}
-HXDLIN( 179)			if (_hx_tmp) {
-HXLINE( 181)				this->removeChild(this->bullets->__get(i).StaticCast<  ::Bullet >());
-HXLINE( 182)				this->spentBullets->push(this->bullets->__get(i).StaticCast<  ::Bullet >());
-HXLINE( 183)				this->bullets->remove(this->bullets->__get(i).StaticCast<  ::Bullet >());
+HXDLIN( 245)			if (_hx_tmp) {
+HXLINE( 247)				this->removeChild(this->bullets->__get(i).StaticCast<  ::Bullet >());
+HXLINE( 248)				this->spentBullets->push(this->bullets->__get(i).StaticCast<  ::Bullet >());
+HXLINE( 249)				this->bullets->remove(this->bullets->__get(i).StaticCast<  ::Bullet >());
             			}
-HXLINE( 185)			i = (i + 1);
+HXLINE( 251)			i = (i + 1);
             		}
             	}
 
@@ -365,28 +425,17 @@ HXLINE( 185)			i = (i + 1);
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,bulletsMove,(void))
 
 void Game_obj::generateEnemies(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_191_generateEnemies)
-HXDLIN( 191)		int timer = ::lime::_hx_system::System_obj::getTimer();
-HXDLIN( 191)		Float _hx_tmp;
-HXDLIN( 191)		if ((timer > 0)) {
-HXDLIN( 191)			_hx_tmp = (( (Float)(timer) ) / ( (Float)(1000) ));
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_258_generateEnemies)
+HXDLIN( 258)		int _hx_tmp = this->counter;
+HXDLIN( 258)		int _hx_tmp1 = ::Main_obj::get_FPS();
+HXDLIN( 258)		if ((_hx_tmp >= (( (Float)(_hx_tmp1) ) * this->spawnDelay))) {
+HXLINE( 260)			if ((this->enemies->length < this->maxEnemies)) {
+HXLINE( 262)				this->generateEnemy();
+            			}
+HXLINE( 264)			this->counter = 0;
             		}
             		else {
-HXDLIN( 191)			_hx_tmp = ( (Float)(0) );
-            		}
-HXDLIN( 191)		if (((_hx_tmp - this->enemiesTimeFlag) >= this->spawnDelay)) {
-HXLINE( 193)			if ((this->enemies->length < this->maxEnemies)) {
-HXLINE( 195)				this->generateEnemy();
-            			}
-HXLINE( 197)			int timer1 = ::lime::_hx_system::System_obj::getTimer();
-HXDLIN( 197)			Float _hx_tmp1;
-HXDLIN( 197)			if ((timer1 > 0)) {
-HXLINE( 197)				_hx_tmp1 = (( (Float)(timer1) ) / ( (Float)(1000) ));
-            			}
-            			else {
-HXLINE( 197)				_hx_tmp1 = ( (Float)(0) );
-            			}
-HXDLIN( 197)			this->enemiesTimeFlag = _hx_tmp1;
+HXLINE( 268)			++this->counter;
             		}
             	}
 
@@ -394,23 +443,23 @@ HXDLIN( 197)			this->enemiesTimeFlag = _hx_tmp1;
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,generateEnemies,(void))
 
 void Game_obj::generateEnemy(){
-            	HX_GC_STACKFRAME(&_hx_pos_69efd8c9269cf369_202_generateEnemy)
-HXLINE( 203)		 ::Enemy enemy;
-HXLINE( 204)		if ((this->deadEnemies->length > 0)) {
-HXLINE( 206)			enemy = this->deadEnemies->pop().StaticCast<  ::Enemy >();
+            	HX_GC_STACKFRAME(&_hx_pos_69efd8c9269cf369_272_generateEnemy)
+HXLINE( 273)		 ::Enemy enemy;
+HXLINE( 274)		if ((this->deadEnemies->length > 0)) {
+HXLINE( 276)			enemy = this->deadEnemies->pop().StaticCast<  ::Enemy >();
             		}
             		else {
-HXLINE( 210)			enemy =  ::Enemy_obj::__alloc( HX_CTX );
+HXLINE( 280)			enemy =  ::Enemy_obj::__alloc( HX_CTX );
             		}
-HXLINE( 212)		enemy->set_y(( (Float)(100) ));
-HXLINE( 213)		enemy->set_speedY(((Float)0.0));
-HXLINE( 214)		this->enemies->push(enemy);
-HXLINE( 215)		this->addChild(this->enemies->__get((this->enemies->length - 1)).StaticCast<  ::Enemy >());
-HXLINE( 216)		if ((::Math_obj::random() >= ((Float)0.5))) {
-HXLINE( 218)			enemy->set_x(( (Float)(800) ));
+HXLINE( 282)		enemy->set_y(( (Float)(100) ));
+HXLINE( 283)		enemy->set_speedY(((Float)0.0));
+HXLINE( 284)		this->enemies->push(enemy);
+HXLINE( 285)		this->addChild(this->enemies->__get((this->enemies->length - 1)).StaticCast<  ::Enemy >());
+HXLINE( 286)		if ((::Math_obj::random() >= ((Float)0.5))) {
+HXLINE( 288)			enemy->set_x(( (Float)(800) ));
             		}
             		else {
-HXLINE( 222)			enemy->set_x(( (Float)(0) ));
+HXLINE( 292)			enemy->set_x(( (Float)(0) ));
             		}
             	}
 
@@ -418,11 +467,11 @@ HXLINE( 222)			enemy->set_x(( (Float)(0) ));
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,generateEnemy,(void))
 
 void Game_obj::moveEnemies(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_228_moveEnemies)
-HXLINE( 229)		int i = 0;
-HXLINE( 230)		while((i < this->enemies->length)){
-HXLINE( 232)			this->enemies->__get(i).StaticCast<  ::Enemy >()->move(this->player);
-HXLINE( 233)			i = (i + 1);
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_298_moveEnemies)
+HXLINE( 299)		int i = 0;
+HXLINE( 300)		while((i < this->enemies->length)){
+HXLINE( 302)			this->enemies->__get(i).StaticCast<  ::Enemy >()->move(this->player);
+HXLINE( 303)			i = (i + 1);
             		}
             	}
 
@@ -430,22 +479,29 @@ HXLINE( 233)			i = (i + 1);
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,moveEnemies,(void))
 
 void Game_obj::doCollisionsWithBullet(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_238_doCollisionsWithBullet)
-HXLINE( 239)		int b = 0;
-HXLINE( 240)		while((b < this->bullets->length)){
-HXLINE( 242)			int e = 0;
-HXLINE( 243)			while((e < this->enemies->length)){
-HXLINE( 245)				if (this->bullets->__get(b).StaticCast<  ::Bullet >()->checkCollisionWithEnemy(this->enemies->__get(e).StaticCast<  ::Enemy >())) {
-HXLINE( 247)					this->removeChild(this->bullets->__get(b).StaticCast<  ::Bullet >());
-HXLINE( 248)					this->spentBullets->push(this->bullets->__get(b).StaticCast<  ::Bullet >());
-HXLINE( 249)					this->bullets->remove(this->bullets->__get(b).StaticCast<  ::Bullet >());
-HXLINE( 250)					this->removeChild(this->enemies->__get(e).StaticCast<  ::Enemy >());
-HXLINE( 251)					this->deadEnemies->push(this->enemies->__get(e).StaticCast<  ::Enemy >());
-HXLINE( 252)					this->enemies->remove(this->enemies->__get(e).StaticCast<  ::Enemy >());
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_308_doCollisionsWithBullet)
+HXLINE( 309)		int b = 0;
+HXLINE( 310)		while((b < this->bullets->length)){
+HXLINE( 312)			int e = 0;
+HXLINE( 313)			while((e < this->enemies->length)){
+HXLINE( 315)				if (this->bullets->__get(b).StaticCast<  ::Bullet >()->checkCollisionWithEnemy(this->enemies->__get(e).StaticCast<  ::Enemy >())) {
+HXLINE( 317)					this->removeChild(this->bullets->__get(b).StaticCast<  ::Bullet >());
+HXLINE( 318)					this->spentBullets->push(this->bullets->__get(b).StaticCast<  ::Bullet >());
+HXLINE( 319)					this->bullets->remove(this->bullets->__get(b).StaticCast<  ::Bullet >());
+HXLINE( 320)					this->removeChild(this->enemies->__get(e).StaticCast<  ::Enemy >());
+HXLINE( 321)					this->spawnBonus(this->enemies->__get(e).StaticCast<  ::Enemy >());
+HXLINE( 322)					++this->gamePoints;
+HXLINE( 323)					 ::openfl::text::TextField _hx_tmp = this->pointsField;
+HXDLIN( 323)					_hx_tmp->set_text(::Std_obj::string(this->gamePoints));
+HXLINE( 324)					this->deadEnemies->push(this->enemies->__get(e).StaticCast<  ::Enemy >());
+HXLINE( 325)					this->enemies->remove(this->enemies->__get(e).StaticCast<  ::Enemy >());
+HXLINE( 326)					b = (b - 1);
+HXLINE( 327)					goto _hx_goto_18;
             				}
-HXLINE( 254)				e = (e + 1);
+HXLINE( 329)				e = (e + 1);
             			}
-HXLINE( 256)			b = (b + 1);
+            			_hx_goto_18:;
+HXLINE( 331)			b = (b + 1);
             		}
             	}
 
@@ -453,26 +509,103 @@ HXLINE( 256)			b = (b + 1);
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,doCollisionsWithBullet,(void))
 
 bool Game_obj::get_gameIsOver(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_262_get_gameIsOver)
-HXDLIN( 262)		return this->gameIsOver;
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_337_get_gameIsOver)
+HXDLIN( 337)		return this->gameIsOver;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,get_gameIsOver,return )
 
+int Game_obj::get_gamePoints(){
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_341_get_gamePoints)
+HXDLIN( 341)		return this->gamePoints;
+            	}
+
+
+HX_DEFINE_DYNAMIC_FUNC0(Game_obj,get_gamePoints,return )
+
 void Game_obj::doCollidionWithEnemies(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_266_doCollidionWithEnemies)
-HXLINE( 267)		int e = 0;
-HXLINE( 268)		while((e < this->enemies->length)){
-HXLINE( 270)			if (this->player->checkCollisionWithEnemy(this->enemies->__get(e).StaticCast<  ::Enemy >())) {
-HXLINE( 272)				this->gameIsOver = true;
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_345_doCollidionWithEnemies)
+HXLINE( 346)		int e = 0;
+HXLINE( 347)		while((e < this->enemies->length)){
+HXLINE( 349)			if (this->player->checkCollisionWithEnemy(this->enemies->__get(e).StaticCast<  ::Enemy >())) {
+HXLINE( 351)				this->gameIsOver = true;
             			}
-HXLINE( 274)			e = (e + 1);
+HXLINE( 353)			e = (e + 1);
             		}
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,doCollidionWithEnemies,(void))
+
+void Game_obj::bonusBuf(){
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_359_bonusBuf)
+HXDLIN( 359)		if (::Bonus_obj::bonusIsUsed) {
+HXLINE( 361)			if (hx::IsEq( ::Bonus_obj::get_bonusType(),::BonusType_obj::slow_dyn() )) {
+HXLINE( 362)				::Bonus_obj::doBonusSlow(this->player,this->enemies,this->deadEnemies,this->bullets);
+            			}
+            			else {
+HXLINE( 363)				if (hx::IsEq( ::Bonus_obj::get_bonusType(),::BonusType_obj::destroy_dyn() )) {
+HXLINE( 364)					this->doBonusDestroy();
+            				}
+            			}
+            		}
+            	}
+
+
+HX_DEFINE_DYNAMIC_FUNC0(Game_obj,bonusBuf,(void))
+
+void Game_obj::spawnBonus( ::Enemy enemy){
+            	HX_GC_STACKFRAME(&_hx_pos_69efd8c9269cf369_377_spawnBonus)
+HXDLIN( 377)		bool _hx_tmp;
+HXDLIN( 377)		bool _hx_tmp1;
+HXDLIN( 377)		if (!(::Bonus_obj::bonusIsUsed)) {
+HXDLIN( 377)			_hx_tmp1 = !(::Bonus_obj::haveBonus);
+            		}
+            		else {
+HXDLIN( 377)			_hx_tmp1 = false;
+            		}
+HXDLIN( 377)		if (_hx_tmp1) {
+HXDLIN( 377)			_hx_tmp = (::Math_obj::random() < ((Float)0.05));
+            		}
+            		else {
+HXDLIN( 377)			_hx_tmp = false;
+            		}
+HXDLIN( 377)		if (_hx_tmp) {
+HXLINE( 379)			::Bonus_obj::bonusIsUsed = false;
+HXLINE( 380)			::Bonus_obj::haveBonus = true;
+HXLINE( 381)			this->bonus =  ::Bonus_obj::__alloc( HX_CTX );
+HXLINE( 382)			this->bonus->set_speedY(((Float)-10.0));
+HXLINE( 383)			 ::Bonus _hx_tmp2 = this->bonus;
+HXDLIN( 383)			_hx_tmp2->set_x(enemy->get_x());
+HXLINE( 384)			 ::Bonus _hx_tmp3 = this->bonus;
+HXDLIN( 384)			_hx_tmp3->set_y(enemy->get_y());
+HXLINE( 385)			this->addChild(this->bonus);
+            		}
+            	}
+
+
+HX_DEFINE_DYNAMIC_FUNC1(Game_obj,spawnBonus,(void))
+
+void Game_obj::doBonusDestroy(){
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_389_doBonusDestroy)
+HXLINE( 390)		int e = 0;
+HXLINE( 391)		while((e < this->enemies->length)){
+HXLINE( 394)			this->removeChild(this->enemies->__get(e).StaticCast<  ::Enemy >());
+HXLINE( 395)			++this->gamePoints;
+HXLINE( 396)			 ::openfl::text::TextField _hx_tmp = this->pointsField;
+HXDLIN( 396)			_hx_tmp->set_text(::Std_obj::string(this->gamePoints));
+HXLINE( 397)			this->deadEnemies->push(this->enemies->__get(e).StaticCast<  ::Enemy >());
+HXLINE( 398)			this->enemies->remove(this->enemies->__get(e).StaticCast<  ::Enemy >());
+            		}
+HXLINE( 402)		::Bonus_obj::haveBonus = false;
+HXLINE( 403)		::Bonus_obj::bonusIsUsed = false;
+            	}
+
+
+HX_DEFINE_DYNAMIC_FUNC0(Game_obj,doBonusDestroy,(void))
+
+Float Game_obj::jumpPower;
 
 
 hx::ObjectPtr< Game_obj > Game_obj::__new(int width,int height) {
@@ -500,17 +633,21 @@ void Game_obj::__Mark(HX_MARK_PARAMS)
 	HX_MARK_MEMBER_NAME(backGround,"backGround");
 	HX_MARK_MEMBER_NAME(quitButton,"quitButton");
 	HX_MARK_MEMBER_NAME(quitButtonIsPressed,"quitButtonIsPressed");
+	HX_MARK_MEMBER_NAME(pauseIsPressed,"pauseIsPressed");
 	HX_MARK_MEMBER_NAME(gameLevel,"gameLevel");
 	HX_MARK_MEMBER_NAME(player,"player");
 	HX_MARK_MEMBER_NAME(haveCollision,"haveCollision");
 	HX_MARK_MEMBER_NAME(gameIsOver,"gameIsOver");
+	HX_MARK_MEMBER_NAME(bonus,"bonus");
+	HX_MARK_MEMBER_NAME(gamePoints,"gamePoints");
+	HX_MARK_MEMBER_NAME(pointsField,"pointsField");
 	HX_MARK_MEMBER_NAME(bullets,"bullets");
 	HX_MARK_MEMBER_NAME(spentBullets,"spentBullets");
 	HX_MARK_MEMBER_NAME(enemies,"enemies");
 	HX_MARK_MEMBER_NAME(deadEnemies,"deadEnemies");
 	HX_MARK_MEMBER_NAME(maxEnemies,"maxEnemies");
 	HX_MARK_MEMBER_NAME(spawnDelay,"spawnDelay");
-	HX_MARK_MEMBER_NAME(enemiesTimeFlag,"enemiesTimeFlag");
+	HX_MARK_MEMBER_NAME(counter,"counter");
 	 ::openfl::display::Sprite_obj::__Mark(HX_MARK_ARG);
 	HX_MARK_END_CLASS();
 }
@@ -522,23 +659,31 @@ void Game_obj::__Visit(HX_VISIT_PARAMS)
 	HX_VISIT_MEMBER_NAME(backGround,"backGround");
 	HX_VISIT_MEMBER_NAME(quitButton,"quitButton");
 	HX_VISIT_MEMBER_NAME(quitButtonIsPressed,"quitButtonIsPressed");
+	HX_VISIT_MEMBER_NAME(pauseIsPressed,"pauseIsPressed");
 	HX_VISIT_MEMBER_NAME(gameLevel,"gameLevel");
 	HX_VISIT_MEMBER_NAME(player,"player");
 	HX_VISIT_MEMBER_NAME(haveCollision,"haveCollision");
 	HX_VISIT_MEMBER_NAME(gameIsOver,"gameIsOver");
+	HX_VISIT_MEMBER_NAME(bonus,"bonus");
+	HX_VISIT_MEMBER_NAME(gamePoints,"gamePoints");
+	HX_VISIT_MEMBER_NAME(pointsField,"pointsField");
 	HX_VISIT_MEMBER_NAME(bullets,"bullets");
 	HX_VISIT_MEMBER_NAME(spentBullets,"spentBullets");
 	HX_VISIT_MEMBER_NAME(enemies,"enemies");
 	HX_VISIT_MEMBER_NAME(deadEnemies,"deadEnemies");
 	HX_VISIT_MEMBER_NAME(maxEnemies,"maxEnemies");
 	HX_VISIT_MEMBER_NAME(spawnDelay,"spawnDelay");
-	HX_VISIT_MEMBER_NAME(enemiesTimeFlag,"enemiesTimeFlag");
+	HX_VISIT_MEMBER_NAME(counter,"counter");
 	 ::openfl::display::Sprite_obj::__Visit(HX_VISIT_ARG);
 }
 
 hx::Val Game_obj::__Field(const ::String &inName,hx::PropertyAccess inCallProp)
 {
 	switch(inName.length) {
+	case 5:
+		if (HX_FIELD_EQ(inName,"bonus") ) { return hx::Val( bonus ); }
+		if (HX_FIELD_EQ(inName,"pause") ) { return hx::Val( pause_dyn() ); }
+		break;
 	case 6:
 		if (HX_FIELD_EQ(inName,"player") ) { return hx::Val( player ); }
 		if (HX_FIELD_EQ(inName,"update") ) { return hx::Val( update_dyn() ); }
@@ -546,6 +691,10 @@ hx::Val Game_obj::__Field(const ::String &inName,hx::PropertyAccess inCallProp)
 	case 7:
 		if (HX_FIELD_EQ(inName,"bullets") ) { return hx::Val( bullets ); }
 		if (HX_FIELD_EQ(inName,"enemies") ) { return hx::Val( enemies ); }
+		if (HX_FIELD_EQ(inName,"counter") ) { return hx::Val( counter ); }
+		break;
+	case 8:
+		if (HX_FIELD_EQ(inName,"bonusBuf") ) { return hx::Val( bonusBuf_dyn() ); }
 		break;
 	case 9:
 		if (HX_FIELD_EQ(inName,"sizeWidth") ) { return hx::Val( sizeWidth ); }
@@ -556,11 +705,14 @@ hx::Val Game_obj::__Field(const ::String &inName,hx::PropertyAccess inCallProp)
 		if (HX_FIELD_EQ(inName,"backGround") ) { return hx::Val( backGround ); }
 		if (HX_FIELD_EQ(inName,"quitButton") ) { return hx::Val( quitButton ); }
 		if (HX_FIELD_EQ(inName,"gameIsOver") ) { return hx::Val( inCallProp == hx::paccAlways ? get_gameIsOver() : gameIsOver ); }
+		if (HX_FIELD_EQ(inName,"gamePoints") ) { return hx::Val( gamePoints ); }
 		if (HX_FIELD_EQ(inName,"maxEnemies") ) { return hx::Val( maxEnemies ); }
 		if (HX_FIELD_EQ(inName,"spawnDelay") ) { return hx::Val( spawnDelay ); }
 		if (HX_FIELD_EQ(inName,"playerJump") ) { return hx::Val( playerJump_dyn() ); }
+		if (HX_FIELD_EQ(inName,"spawnBonus") ) { return hx::Val( spawnBonus_dyn() ); }
 		break;
 	case 11:
+		if (HX_FIELD_EQ(inName,"pointsField") ) { return hx::Val( pointsField ); }
 		if (HX_FIELD_EQ(inName,"deadEnemies") ) { return hx::Val( deadEnemies ); }
 		if (HX_FIELD_EQ(inName,"bulletsMove") ) { return hx::Val( bulletsMove_dyn() ); }
 		if (HX_FIELD_EQ(inName,"moveEnemies") ) { return hx::Val( moveEnemies_dyn() ); }
@@ -574,11 +726,13 @@ hx::Val Game_obj::__Field(const ::String &inName,hx::PropertyAccess inCallProp)
 		if (HX_FIELD_EQ(inName,"generateEnemy") ) { return hx::Val( generateEnemy_dyn() ); }
 		break;
 	case 14:
+		if (HX_FIELD_EQ(inName,"pauseIsPressed") ) { return hx::Val( pauseIsPressed ); }
 		if (HX_FIELD_EQ(inName,"quitButtonOver") ) { return hx::Val( quitButtonOver_dyn() ); }
 		if (HX_FIELD_EQ(inName,"get_gameIsOver") ) { return hx::Val( get_gameIsOver_dyn() ); }
+		if (HX_FIELD_EQ(inName,"get_gamePoints") ) { return hx::Val( get_gamePoints_dyn() ); }
+		if (HX_FIELD_EQ(inName,"doBonusDestroy") ) { return hx::Val( doBonusDestroy_dyn() ); }
 		break;
 	case 15:
-		if (HX_FIELD_EQ(inName,"enemiesTimeFlag") ) { return hx::Val( enemiesTimeFlag ); }
 		if (HX_FIELD_EQ(inName,"quitButtonClick") ) { return hx::Val( quitButtonClick_dyn() ); }
 		if (HX_FIELD_EQ(inName,"generateEnemies") ) { return hx::Val( generateEnemies_dyn() ); }
 		break;
@@ -599,15 +753,28 @@ hx::Val Game_obj::__Field(const ::String &inName,hx::PropertyAccess inCallProp)
 	return super::__Field(inName,inCallProp);
 }
 
+bool Game_obj::__GetStatic(const ::String &inName, Dynamic &outValue, hx::PropertyAccess inCallProp)
+{
+	switch(inName.length) {
+	case 9:
+		if (HX_FIELD_EQ(inName,"jumpPower") ) { outValue = ( jumpPower ); return true; }
+	}
+	return false;
+}
+
 hx::Val Game_obj::__SetField(const ::String &inName,const hx::Val &inValue,hx::PropertyAccess inCallProp)
 {
 	switch(inName.length) {
+	case 5:
+		if (HX_FIELD_EQ(inName,"bonus") ) { bonus=inValue.Cast<  ::Bonus >(); return inValue; }
+		break;
 	case 6:
 		if (HX_FIELD_EQ(inName,"player") ) { player=inValue.Cast<  ::Player >(); return inValue; }
 		break;
 	case 7:
 		if (HX_FIELD_EQ(inName,"bullets") ) { bullets=inValue.Cast< ::Array< ::Dynamic> >(); return inValue; }
 		if (HX_FIELD_EQ(inName,"enemies") ) { enemies=inValue.Cast< ::Array< ::Dynamic> >(); return inValue; }
+		if (HX_FIELD_EQ(inName,"counter") ) { counter=inValue.Cast< int >(); return inValue; }
 		break;
 	case 9:
 		if (HX_FIELD_EQ(inName,"sizeWidth") ) { sizeWidth=inValue.Cast< int >(); return inValue; }
@@ -618,10 +785,12 @@ hx::Val Game_obj::__SetField(const ::String &inName,const hx::Val &inValue,hx::P
 		if (HX_FIELD_EQ(inName,"backGround") ) { backGround=inValue.Cast<  ::BackGround >(); return inValue; }
 		if (HX_FIELD_EQ(inName,"quitButton") ) { quitButton=inValue.Cast<  ::Button >(); return inValue; }
 		if (HX_FIELD_EQ(inName,"gameIsOver") ) { gameIsOver=inValue.Cast< bool >(); return inValue; }
+		if (HX_FIELD_EQ(inName,"gamePoints") ) { gamePoints=inValue.Cast< int >(); return inValue; }
 		if (HX_FIELD_EQ(inName,"maxEnemies") ) { maxEnemies=inValue.Cast< int >(); return inValue; }
 		if (HX_FIELD_EQ(inName,"spawnDelay") ) { spawnDelay=inValue.Cast< Float >(); return inValue; }
 		break;
 	case 11:
+		if (HX_FIELD_EQ(inName,"pointsField") ) { pointsField=inValue.Cast<  ::openfl::text::TextField >(); return inValue; }
 		if (HX_FIELD_EQ(inName,"deadEnemies") ) { deadEnemies=inValue.Cast< ::Array< ::Dynamic> >(); return inValue; }
 		break;
 	case 12:
@@ -630,13 +799,22 @@ hx::Val Game_obj::__SetField(const ::String &inName,const hx::Val &inValue,hx::P
 	case 13:
 		if (HX_FIELD_EQ(inName,"haveCollision") ) { haveCollision=inValue.Cast< bool >(); return inValue; }
 		break;
-	case 15:
-		if (HX_FIELD_EQ(inName,"enemiesTimeFlag") ) { enemiesTimeFlag=inValue.Cast< Float >(); return inValue; }
+	case 14:
+		if (HX_FIELD_EQ(inName,"pauseIsPressed") ) { pauseIsPressed=inValue.Cast< bool >(); return inValue; }
 		break;
 	case 19:
 		if (HX_FIELD_EQ(inName,"quitButtonIsPressed") ) { quitButtonIsPressed=inValue.Cast< bool >(); return inValue; }
 	}
 	return super::__SetField(inName,inValue,inCallProp);
+}
+
+bool Game_obj::__SetStatic(const ::String &inName,Dynamic &ioValue,hx::PropertyAccess inCallProp)
+{
+	switch(inName.length) {
+	case 9:
+		if (HX_FIELD_EQ(inName,"jumpPower") ) { jumpPower=ioValue.Cast< Float >(); return true; }
+	}
+	return false;
 }
 
 void Game_obj::__GetFields(Array< ::String> &outFields)
@@ -646,17 +824,21 @@ void Game_obj::__GetFields(Array< ::String> &outFields)
 	outFields->push(HX_("backGround",0e,08,b2,5a));
 	outFields->push(HX_("quitButton",21,5b,13,a5));
 	outFields->push(HX_("quitButtonIsPressed",77,e8,7a,c2));
+	outFields->push(HX_("pauseIsPressed",02,ca,44,47));
 	outFields->push(HX_("gameLevel",32,04,7e,a7));
 	outFields->push(HX_("player",61,eb,b8,37));
 	outFields->push(HX_("haveCollision",ea,c8,af,00));
 	outFields->push(HX_("gameIsOver",f0,3f,95,a9));
+	outFields->push(HX_("bonus",9f,66,f7,b6));
+	outFields->push(HX_("gamePoints",b5,fb,a3,39));
+	outFields->push(HX_("pointsField",97,53,cf,40));
 	outFields->push(HX_("bullets",f1,67,ef,29));
 	outFields->push(HX_("spentBullets",23,da,85,4d));
 	outFields->push(HX_("enemies",a6,68,0e,d3));
 	outFields->push(HX_("deadEnemies",62,1e,d0,19));
 	outFields->push(HX_("maxEnemies",62,e2,32,3d));
 	outFields->push(HX_("spawnDelay",48,33,3f,11));
-	outFields->push(HX_("enemiesTimeFlag",1f,c9,11,2a));
+	outFields->push(HX_("counter",fc,ae,59,1d));
 	super::__GetFields(outFields);
 };
 
@@ -667,20 +849,27 @@ static hx::StorageInfo Game_obj_sMemberStorageInfo[] = {
 	{hx::fsObject /*  ::BackGround */ ,(int)offsetof(Game_obj,backGround),HX_("backGround",0e,08,b2,5a)},
 	{hx::fsObject /*  ::Button */ ,(int)offsetof(Game_obj,quitButton),HX_("quitButton",21,5b,13,a5)},
 	{hx::fsBool,(int)offsetof(Game_obj,quitButtonIsPressed),HX_("quitButtonIsPressed",77,e8,7a,c2)},
+	{hx::fsBool,(int)offsetof(Game_obj,pauseIsPressed),HX_("pauseIsPressed",02,ca,44,47)},
 	{hx::fsObject /*  ::GameLevel */ ,(int)offsetof(Game_obj,gameLevel),HX_("gameLevel",32,04,7e,a7)},
 	{hx::fsObject /*  ::Player */ ,(int)offsetof(Game_obj,player),HX_("player",61,eb,b8,37)},
 	{hx::fsBool,(int)offsetof(Game_obj,haveCollision),HX_("haveCollision",ea,c8,af,00)},
 	{hx::fsBool,(int)offsetof(Game_obj,gameIsOver),HX_("gameIsOver",f0,3f,95,a9)},
+	{hx::fsObject /*  ::Bonus */ ,(int)offsetof(Game_obj,bonus),HX_("bonus",9f,66,f7,b6)},
+	{hx::fsInt,(int)offsetof(Game_obj,gamePoints),HX_("gamePoints",b5,fb,a3,39)},
+	{hx::fsObject /*  ::openfl::text::TextField */ ,(int)offsetof(Game_obj,pointsField),HX_("pointsField",97,53,cf,40)},
 	{hx::fsObject /* ::Array< ::Dynamic> */ ,(int)offsetof(Game_obj,bullets),HX_("bullets",f1,67,ef,29)},
 	{hx::fsObject /* ::Array< ::Dynamic> */ ,(int)offsetof(Game_obj,spentBullets),HX_("spentBullets",23,da,85,4d)},
 	{hx::fsObject /* ::Array< ::Dynamic> */ ,(int)offsetof(Game_obj,enemies),HX_("enemies",a6,68,0e,d3)},
 	{hx::fsObject /* ::Array< ::Dynamic> */ ,(int)offsetof(Game_obj,deadEnemies),HX_("deadEnemies",62,1e,d0,19)},
 	{hx::fsInt,(int)offsetof(Game_obj,maxEnemies),HX_("maxEnemies",62,e2,32,3d)},
 	{hx::fsFloat,(int)offsetof(Game_obj,spawnDelay),HX_("spawnDelay",48,33,3f,11)},
-	{hx::fsFloat,(int)offsetof(Game_obj,enemiesTimeFlag),HX_("enemiesTimeFlag",1f,c9,11,2a)},
+	{hx::fsInt,(int)offsetof(Game_obj,counter),HX_("counter",fc,ae,59,1d)},
 	{ hx::fsUnknown, 0, null()}
 };
-static hx::StaticInfo *Game_obj_sStaticStorageInfo = 0;
+static hx::StaticInfo Game_obj_sStaticStorageInfo[] = {
+	{hx::fsFloat,(void *) &Game_obj::jumpPower,HX_("jumpPower",37,58,67,52)},
+	{ hx::fsUnknown, 0, null()}
+};
 #endif
 
 static ::String Game_obj_sMemberFields[] = {
@@ -689,17 +878,22 @@ static ::String Game_obj_sMemberFields[] = {
 	HX_("backGround",0e,08,b2,5a),
 	HX_("quitButton",21,5b,13,a5),
 	HX_("quitButtonIsPressed",77,e8,7a,c2),
+	HX_("pauseIsPressed",02,ca,44,47),
 	HX_("gameLevel",32,04,7e,a7),
 	HX_("player",61,eb,b8,37),
 	HX_("haveCollision",ea,c8,af,00),
 	HX_("gameIsOver",f0,3f,95,a9),
+	HX_("bonus",9f,66,f7,b6),
+	HX_("gamePoints",b5,fb,a3,39),
+	HX_("pointsField",97,53,cf,40),
 	HX_("bullets",f1,67,ef,29),
 	HX_("spentBullets",23,da,85,4d),
 	HX_("enemies",a6,68,0e,d3),
 	HX_("deadEnemies",62,1e,d0,19),
 	HX_("maxEnemies",62,e2,32,3d),
 	HX_("spawnDelay",48,33,3f,11),
-	HX_("enemiesTimeFlag",1f,c9,11,2a),
+	HX_("counter",fc,ae,59,1d),
+	HX_("pause",f6,d6,57,bd),
 	HX_("quitButtonClick",67,99,35,9d),
 	HX_("quitButtonOver",15,bd,27,d6),
 	HX_("quitButtonOut",ed,e7,43,c5),
@@ -714,10 +908,30 @@ static ::String Game_obj_sMemberFields[] = {
 	HX_("moveEnemies",95,a1,8a,ab),
 	HX_("doCollisionsWithBullet",34,0b,7d,c8),
 	HX_("get_gameIsOver",39,c8,8a,1f),
+	HX_("get_gamePoints",fe,83,99,af),
 	HX_("doCollidionWithEnemies",ca,d6,2b,8f),
+	HX_("bonusBuf",d4,c1,77,92),
+	HX_("spawnBonus",64,c2,0f,f1),
+	HX_("doBonusDestroy",46,d8,ca,c9),
 	::String(null()) };
 
+static void Game_obj_sMarkStatics(HX_MARK_PARAMS) {
+	HX_MARK_MEMBER_NAME(Game_obj::jumpPower,"jumpPower");
+};
+
+#ifdef HXCPP_VISIT_ALLOCS
+static void Game_obj_sVisitStatics(HX_VISIT_PARAMS) {
+	HX_VISIT_MEMBER_NAME(Game_obj::jumpPower,"jumpPower");
+};
+
+#endif
+
 hx::Class Game_obj::__mClass;
+
+static ::String Game_obj_sStaticFields[] = {
+	HX_("jumpPower",37,58,67,52),
+	::String(null())
+};
 
 void Game_obj::__register()
 {
@@ -728,11 +942,15 @@ void Game_obj::__register()
 	__mClass->mSuper = &super::__SGetClass();
 	__mClass->mConstructEmpty = &__CreateEmpty;
 	__mClass->mConstructArgs = &__Create;
-	__mClass->mGetStaticField = &hx::Class_obj::GetNoStaticField;
-	__mClass->mSetStaticField = &hx::Class_obj::SetNoStaticField;
-	__mClass->mStatics = hx::Class_obj::dupFunctions(0 /* sStaticFields */);
+	__mClass->mGetStaticField = &Game_obj::__GetStatic;
+	__mClass->mSetStaticField = &Game_obj::__SetStatic;
+	__mClass->mMarkFunc = Game_obj_sMarkStatics;
+	__mClass->mStatics = hx::Class_obj::dupFunctions(Game_obj_sStaticFields);
 	__mClass->mMembers = hx::Class_obj::dupFunctions(Game_obj_sMemberFields);
 	__mClass->mCanCast = hx::TCanCast< Game_obj >;
+#ifdef HXCPP_VISIT_ALLOCS
+	__mClass->mVisitFunc = Game_obj_sVisitStatics;
+#endif
 #ifdef HXCPP_SCRIPTABLE
 	__mClass->mMemberStorageInfo = Game_obj_sMemberStorageInfo;
 #endif

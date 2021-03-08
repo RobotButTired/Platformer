@@ -16,6 +16,9 @@
 #ifndef INCLUDED_StartScreen
 #include <StartScreen.h>
 #endif
+#ifndef INCLUDED_Std
+#include <Std.h>
+#endif
 #ifndef INCLUDED_haxe_Log
 #include <haxe/Log.h>
 #endif
@@ -46,15 +49,19 @@
 #ifndef INCLUDED_openfl_events_IEventDispatcher
 #include <openfl/events/IEventDispatcher.h>
 #endif
+#ifndef INCLUDED_openfl_text_TextField
+#include <openfl/text/TextField.h>
+#endif
 
-HX_DEFINE_STACK_FRAME(_hx_pos_e47a9afac0942eb9_9_new,"Main","new",0x6616a5cb,"Main.new","Main.hx",9,0x087e5c05)
+HX_DEFINE_STACK_FRAME(_hx_pos_e47a9afac0942eb9_21_new,"Main","new",0x6616a5cb,"Main.new","Main.hx",21,0x087e5c05)
 HX_LOCAL_STACK_FRAME(_hx_pos_e47a9afac0942eb9_39_update,"Main","update",0xb7afa57e,"Main.update","Main.hx",39,0x087e5c05)
+HX_LOCAL_STACK_FRAME(_hx_pos_e47a9afac0942eb9_100_get_FPS,"Main","get_FPS",0x8adb934b,"Main.get_FPS","Main.hx",100,0x087e5c05)
 HX_LOCAL_STACK_FRAME(_hx_pos_e47a9afac0942eb9_11_boot,"Main","boot",0xe5d36c67,"Main.boot","Main.hx",11,0x087e5c05)
 HX_LOCAL_STACK_FRAME(_hx_pos_e47a9afac0942eb9_12_boot,"Main","boot",0xe5d36c67,"Main.boot","Main.hx",12,0x087e5c05)
+HX_LOCAL_STACK_FRAME(_hx_pos_e47a9afac0942eb9_18_boot,"Main","boot",0xe5d36c67,"Main.boot","Main.hx",18,0x087e5c05)
 
 void Main_obj::__construct(){
-            	HX_GC_STACKFRAME(&_hx_pos_e47a9afac0942eb9_9_new)
-HXLINE(  18)		this->FPS = 60;
+            	HX_GC_STACKFRAME(&_hx_pos_e47a9afac0942eb9_21_new)
 HXLINE(  22)		super::__construct();
 HXLINE(  23)		this->startScreen =  ::StartScreen_obj::__alloc( HX_CTX ,::Main_obj::sizeWidth,::Main_obj::sizeHeight,hx::ObjectPtr<OBJ_>(this));
 HXLINE(  24)		this->rulesScreen =  ::RulesScreen_obj::__alloc( HX_CTX ,::Main_obj::sizeWidth,::Main_obj::sizeHeight);
@@ -117,7 +124,8 @@ HXDLIN(  39)			_hx_tmp = (( (Float)(timer) ) / ( (Float)(1000) ));
             		else {
 HXDLIN(  39)			_hx_tmp = ( (Float)(0) );
             		}
-HXDLIN(  39)		if (((_hx_tmp - this->timeFlag) >= (( (Float)(1) ) / ( (Float)(this->FPS) )))) {
+HXDLIN(  39)		Float _hx_tmp1 = (_hx_tmp - this->timeFlag);
+HXDLIN(  39)		if ((_hx_tmp1 >= (( (Float)(1) ) / ( (Float)(::Main_obj::get_FPS()) )))) {
 HXLINE(  41)			if (this->startScreen->get_rulesButtonIsPressed()) {
 HXLINE(  43)				this->removeChild(this->startScreen);
 HXLINE(  44)				this->startScreen->reset();
@@ -154,23 +162,25 @@ HXLINE(  79)					this->game = null();
             				else {
 HXLINE(  81)					if (this->game->get_gameIsOver()) {
 HXLINE(  83)						this->removeChild(this->game);
-HXLINE(  84)						this->addChild(this->gameOverScreen);
-HXLINE(  85)						this->game = null();
+HXLINE(  84)						 ::openfl::text::TextField _hx_tmp2 = this->gameOverScreen->pointsField;
+HXDLIN(  84)						_hx_tmp2->set_text(::Std_obj::string(this->game->get_gamePoints()));
+HXLINE(  85)						this->addChild(this->gameOverScreen);
+HXLINE(  86)						this->game = null();
             					}
             				}
-HXLINE(  87)				if (hx::IsNotNull( this->game )) {
-HXLINE(  89)					this->game->update();
+HXLINE(  88)				if (hx::IsNotNull( this->game )) {
+HXLINE(  90)					this->game->update();
             				}
             			}
-HXLINE(  92)			int timer1 = ::lime::_hx_system::System_obj::getTimer();
-HXDLIN(  92)			Float _hx_tmp1;
-HXDLIN(  92)			if ((timer1 > 0)) {
-HXLINE(  92)				_hx_tmp1 = (( (Float)(timer1) ) / ( (Float)(1000) ));
+HXLINE(  93)			int timer1 = ::lime::_hx_system::System_obj::getTimer();
+HXDLIN(  93)			Float _hx_tmp3;
+HXDLIN(  93)			if ((timer1 > 0)) {
+HXLINE(  93)				_hx_tmp3 = (( (Float)(timer1) ) / ( (Float)(1000) ));
             			}
             			else {
-HXLINE(  92)				_hx_tmp1 = ( (Float)(0) );
+HXLINE(  93)				_hx_tmp3 = ( (Float)(0) );
             			}
-HXDLIN(  92)			this->timeFlag = _hx_tmp1;
+HXDLIN(  93)			this->timeFlag = _hx_tmp3;
             		}
             	}
 
@@ -180,6 +190,16 @@ HX_DEFINE_DYNAMIC_FUNC1(Main_obj,update,(void))
 int Main_obj::sizeWidth;
 
 int Main_obj::sizeHeight;
+
+int Main_obj::FPS;
+
+int Main_obj::get_FPS(){
+            	HX_STACKFRAME(&_hx_pos_e47a9afac0942eb9_100_get_FPS)
+HXDLIN( 100)		return ::Main_obj::FPS;
+            	}
+
+
+STATIC_HX_DEFINE_DYNAMIC_FUNC0(Main_obj,get_FPS,return )
 
 
 hx::ObjectPtr< Main_obj > Main_obj::__new() {
@@ -206,7 +226,6 @@ void Main_obj::__Mark(HX_MARK_PARAMS)
 	HX_MARK_MEMBER_NAME(rulesScreen,"rulesScreen");
 	HX_MARK_MEMBER_NAME(gameOverScreen,"gameOverScreen");
 	HX_MARK_MEMBER_NAME(game,"game");
-	HX_MARK_MEMBER_NAME(FPS,"FPS");
 	HX_MARK_MEMBER_NAME(timeFlag,"timeFlag");
 	 ::openfl::display::Sprite_obj::__Mark(HX_MARK_ARG);
 	HX_MARK_END_CLASS();
@@ -218,7 +237,6 @@ void Main_obj::__Visit(HX_VISIT_PARAMS)
 	HX_VISIT_MEMBER_NAME(rulesScreen,"rulesScreen");
 	HX_VISIT_MEMBER_NAME(gameOverScreen,"gameOverScreen");
 	HX_VISIT_MEMBER_NAME(game,"game");
-	HX_VISIT_MEMBER_NAME(FPS,"FPS");
 	HX_VISIT_MEMBER_NAME(timeFlag,"timeFlag");
 	 ::openfl::display::Sprite_obj::__Visit(HX_VISIT_ARG);
 }
@@ -226,9 +244,6 @@ void Main_obj::__Visit(HX_VISIT_PARAMS)
 hx::Val Main_obj::__Field(const ::String &inName,hx::PropertyAccess inCallProp)
 {
 	switch(inName.length) {
-	case 3:
-		if (HX_FIELD_EQ(inName,"FPS") ) { return hx::Val( FPS ); }
-		break;
 	case 4:
 		if (HX_FIELD_EQ(inName,"game") ) { return hx::Val( game ); }
 		break;
@@ -251,6 +266,12 @@ hx::Val Main_obj::__Field(const ::String &inName,hx::PropertyAccess inCallProp)
 bool Main_obj::__GetStatic(const ::String &inName, Dynamic &outValue, hx::PropertyAccess inCallProp)
 {
 	switch(inName.length) {
+	case 3:
+		if (HX_FIELD_EQ(inName,"FPS") ) { outValue = ( inCallProp == hx::paccAlways ? get_FPS() : FPS ); return true; }
+		break;
+	case 7:
+		if (HX_FIELD_EQ(inName,"get_FPS") ) { outValue = get_FPS_dyn(); return true; }
+		break;
 	case 9:
 		if (HX_FIELD_EQ(inName,"sizeWidth") ) { outValue = ( sizeWidth ); return true; }
 		break;
@@ -263,9 +284,6 @@ bool Main_obj::__GetStatic(const ::String &inName, Dynamic &outValue, hx::Proper
 hx::Val Main_obj::__SetField(const ::String &inName,const hx::Val &inValue,hx::PropertyAccess inCallProp)
 {
 	switch(inName.length) {
-	case 3:
-		if (HX_FIELD_EQ(inName,"FPS") ) { FPS=inValue.Cast< int >(); return inValue; }
-		break;
 	case 4:
 		if (HX_FIELD_EQ(inName,"game") ) { game=inValue.Cast<  ::Game >(); return inValue; }
 		break;
@@ -285,6 +303,9 @@ hx::Val Main_obj::__SetField(const ::String &inName,const hx::Val &inValue,hx::P
 bool Main_obj::__SetStatic(const ::String &inName,Dynamic &ioValue,hx::PropertyAccess inCallProp)
 {
 	switch(inName.length) {
+	case 3:
+		if (HX_FIELD_EQ(inName,"FPS") ) { FPS=ioValue.Cast< int >(); return true; }
+		break;
 	case 9:
 		if (HX_FIELD_EQ(inName,"sizeWidth") ) { sizeWidth=ioValue.Cast< int >(); return true; }
 		break;
@@ -300,7 +321,6 @@ void Main_obj::__GetFields(Array< ::String> &outFields)
 	outFields->push(HX_("rulesScreen",c3,e6,e9,fd));
 	outFields->push(HX_("gameOverScreen",72,12,97,bb));
 	outFields->push(HX_("game",f2,f3,5e,44));
-	outFields->push(HX_("FPS",c9,63,35,00));
 	outFields->push(HX_("timeFlag",59,8e,1f,e4));
 	super::__GetFields(outFields);
 };
@@ -311,13 +331,13 @@ static hx::StorageInfo Main_obj_sMemberStorageInfo[] = {
 	{hx::fsObject /*  ::RulesScreen */ ,(int)offsetof(Main_obj,rulesScreen),HX_("rulesScreen",c3,e6,e9,fd)},
 	{hx::fsObject /*  ::GameOverScreen */ ,(int)offsetof(Main_obj,gameOverScreen),HX_("gameOverScreen",72,12,97,bb)},
 	{hx::fsObject /*  ::Game */ ,(int)offsetof(Main_obj,game),HX_("game",f2,f3,5e,44)},
-	{hx::fsInt,(int)offsetof(Main_obj,FPS),HX_("FPS",c9,63,35,00)},
 	{hx::fsFloat,(int)offsetof(Main_obj,timeFlag),HX_("timeFlag",59,8e,1f,e4)},
 	{ hx::fsUnknown, 0, null()}
 };
 static hx::StaticInfo Main_obj_sStaticStorageInfo[] = {
 	{hx::fsInt,(void *) &Main_obj::sizeWidth,HX_("sizeWidth",85,29,f9,c8)},
 	{hx::fsInt,(void *) &Main_obj::sizeHeight,HX_("sizeHeight",88,a3,5a,c7)},
+	{hx::fsInt,(void *) &Main_obj::FPS,HX_("FPS",c9,63,35,00)},
 	{ hx::fsUnknown, 0, null()}
 };
 #endif
@@ -327,7 +347,6 @@ static ::String Main_obj_sMemberFields[] = {
 	HX_("rulesScreen",c3,e6,e9,fd),
 	HX_("gameOverScreen",72,12,97,bb),
 	HX_("game",f2,f3,5e,44),
-	HX_("FPS",c9,63,35,00),
 	HX_("timeFlag",59,8e,1f,e4),
 	HX_("update",09,86,05,87),
 	::String(null()) };
@@ -335,12 +354,14 @@ static ::String Main_obj_sMemberFields[] = {
 static void Main_obj_sMarkStatics(HX_MARK_PARAMS) {
 	HX_MARK_MEMBER_NAME(Main_obj::sizeWidth,"sizeWidth");
 	HX_MARK_MEMBER_NAME(Main_obj::sizeHeight,"sizeHeight");
+	HX_MARK_MEMBER_NAME(Main_obj::FPS,"FPS");
 };
 
 #ifdef HXCPP_VISIT_ALLOCS
 static void Main_obj_sVisitStatics(HX_VISIT_PARAMS) {
 	HX_VISIT_MEMBER_NAME(Main_obj::sizeWidth,"sizeWidth");
 	HX_VISIT_MEMBER_NAME(Main_obj::sizeHeight,"sizeHeight");
+	HX_VISIT_MEMBER_NAME(Main_obj::FPS,"FPS");
 };
 
 #endif
@@ -350,6 +371,8 @@ hx::Class Main_obj::__mClass;
 static ::String Main_obj_sStaticFields[] = {
 	HX_("sizeWidth",85,29,f9,c8),
 	HX_("sizeHeight",88,a3,5a,c7),
+	HX_("FPS",c9,63,35,00),
+	HX_("get_FPS",60,2c,aa,26),
 	::String(null())
 };
 
@@ -389,6 +412,10 @@ HXDLIN(  11)		sizeWidth = 800;
 {
             	HX_STACKFRAME(&_hx_pos_e47a9afac0942eb9_12_boot)
 HXDLIN(  12)		sizeHeight = 600;
+            	}
+{
+            	HX_STACKFRAME(&_hx_pos_e47a9afac0942eb9_18_boot)
+HXDLIN(  18)		FPS = 60;
             	}
 }
 

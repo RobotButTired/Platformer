@@ -21,6 +21,7 @@ HX_DECLARE_CLASS2(openfl,events,Event)
 HX_DECLARE_CLASS2(openfl,events,EventDispatcher)
 HX_DECLARE_CLASS2(openfl,events,IEventDispatcher)
 HX_DECLARE_CLASS2(openfl,events,MouseEvent)
+HX_DECLARE_CLASS2(openfl,text,TextField)
 
 
 
@@ -60,6 +61,7 @@ class HXCPP_CLASS_ATTRIBUTES GameOverScreen_obj : public  ::openfl::display::Spr
 		bool quitButtonIsPressed;
 		 ::Button tryAgainButton;
 		bool tryAgainButtonIsPressed;
+		 ::openfl::text::TextField pointsField;
 		 ::BackGround backGround;
 		void quitButtonOver( ::openfl::events::MouseEvent e);
 		::Dynamic quitButtonOver_dyn();

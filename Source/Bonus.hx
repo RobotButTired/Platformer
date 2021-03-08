@@ -94,7 +94,7 @@ class Bonus extends Unit
         }
         else 
         {
-             if(counter >= Main.get_FPS()* 3.0)
+             if(counter >= Main.get_FPS()* 10.0)
             {
                 player.speedX *=2.0;
                 player.speedY *=2.0;

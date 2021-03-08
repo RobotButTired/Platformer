@@ -73,6 +73,9 @@
 #ifndef INCLUDED_State
 #include <State.h>
 #endif
+#ifndef INCLUDED_BonusType
+#include <BonusType.h>
+#endif
 #ifndef INCLUDED_haxe_lang_Iterable
 #include <haxe/lang/Iterable.h>
 #endif
@@ -682,6 +685,9 @@
 #ifndef INCLUDED_lime_system_CFFI
 #include <lime/system/CFFI.h>
 #endif
+#ifndef INCLUDED_lime_system_BackgroundWorker
+#include <lime/system/BackgroundWorker.h>
+#endif
 #ifndef INCLUDED_lime_net_curl_CURL
 #include <lime/net/curl/CURL.h>
 #endif
@@ -744,6 +750,9 @@
 #endif
 #ifndef INCLUDED_haxe_SysTools
 #include <haxe/SysTools.h>
+#endif
+#ifndef INCLUDED_Bonus
+#include <Bonus.h>
 #endif
 #ifndef INCLUDED_Main
 #include <Main.h>
@@ -1987,9 +1996,6 @@
 #ifndef INCLUDED_Enemy
 #include <Enemy.h>
 #endif
-#ifndef INCLUDED_Unit
-#include <Unit.h>
-#endif
 #ifndef INCLUDED_EReg
 #include <EReg.h>
 #endif
@@ -2001,6 +2007,9 @@
 #endif
 #ifndef INCLUDED_Bullet
 #include <Bullet.h>
+#endif
+#ifndef INCLUDED_Unit
+#include <Unit.h>
 #endif
 #ifndef INCLUDED_BackGround
 #include <BackGround.h>
@@ -2078,6 +2087,7 @@ hx::RegisterResources( hx::GetResources() );
 ::Direction_obj::__register();
 ::ValueType_obj::__register();
 ::State_obj::__register();
+::BonusType_obj::__register();
 ::haxe::lang::Iterable_obj::__register();
 ::haxe::lang::Iterator_obj::__register();
 ::openfl::utils::_Object::Object_Impl__obj::__register();
@@ -2281,6 +2291,7 @@ hx::RegisterResources( hx::GetResources() );
 ::lime::_hx_system::JNI_obj::__register();
 ::lime::_hx_system::Clipboard_obj::__register();
 ::lime::_hx_system::CFFI_obj::__register();
+::lime::_hx_system::BackgroundWorker_obj::__register();
 ::lime::net::curl::CURL_obj::__register();
 ::lime::media::openal::ALC_obj::__register();
 ::lime::media::openal::AL_obj::__register();
@@ -2302,6 +2313,7 @@ hx::RegisterResources( hx::GetResources() );
 ::haxe::Serializer_obj::__register();
 ::haxe::Log_obj::__register();
 ::haxe::SysTools_obj::__register();
+::Bonus_obj::__register();
 ::Main_obj::__register();
 ::openfl::display::DisplayObject_obj::__register();
 ::openfl::_Vector::Vector_Impl__obj::__register();
@@ -2716,11 +2728,11 @@ hx::RegisterResources( hx::GetResources() );
 ::GameLevel_obj::__register();
 ::Game_obj::__register();
 ::Enemy_obj::__register();
-::Unit_obj::__register();
 ::EReg_obj::__register();
 ::Date_obj::__register();
 ::Button_obj::__register();
 ::Bullet_obj::__register();
+::Unit_obj::__register();
 ::BackGround_obj::__register();
 ::DocumentClass_obj::__register();
 ::openfl::display::Sprite_obj::__register();
@@ -2760,6 +2772,7 @@ hx::RegisterResources( hx::GetResources() );
 ::Direction_obj::__boot();
 ::ValueType_obj::__boot();
 ::State_obj::__boot();
+::BonusType_obj::__boot();
 ::lime::_internal::backend::native::NativeApplication_obj::__init__();
 ::lime::app::Application_obj::__init__();
 ::ApplicationMain_obj::__init__();
@@ -2774,6 +2787,7 @@ hx::RegisterResources( hx::GetResources() );
 ::openfl::_Vector::Vector_Impl__obj::__boot();
 ::openfl::display::DisplayObject_obj::__boot();
 ::Main_obj::__boot();
+::Bonus_obj::__boot();
 ::haxe::SysTools_obj::__boot();
 ::haxe::Serializer_obj::__boot();
 ::haxe::Timer_obj::__boot();
@@ -2794,6 +2808,7 @@ hx::RegisterResources( hx::GetResources() );
 ::lime::media::openal::AL_obj::__boot();
 ::lime::media::openal::ALC_obj::__boot();
 ::lime::net::curl::CURL_obj::__boot();
+::lime::_hx_system::BackgroundWorker_obj::__boot();
 ::lime::_hx_system::CFFI_obj::__boot();
 ::lime::_hx_system::Clipboard_obj::__boot();
 ::lime::_hx_system::JNI_obj::__boot();

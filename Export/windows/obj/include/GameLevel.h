@@ -64,6 +64,7 @@ class HXCPP_CLASS_ATTRIBUTES GameLevel_obj : public  ::openfl::display::Sprite_o
 		 ::openfl::display::Tileset tileset;
 		::Array< int > IDs;
 		 ::openfl::display::Tile tile;
+		::Array< ::Dynamic> level;
 		void addTiles();
 		::Dynamic addTiles_dyn();
 

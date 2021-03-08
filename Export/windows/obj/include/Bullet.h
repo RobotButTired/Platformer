@@ -63,6 +63,12 @@ class HXCPP_CLASS_ATTRIBUTES Bullet_obj : public  ::openfl::display::Sprite_obj
 		bool checkCollisionWithEnemy( ::Enemy enemy);
 		::Dynamic checkCollisionWithEnemy_dyn();
 
+		Float get_speed();
+		::Dynamic get_speed_dyn();
+
+		void set_speed(Float value);
+		::Dynamic set_speed_dyn();
+
 };
 
 

@@ -71,7 +71,7 @@ class HXCPP_CLASS_ATTRIBUTES Player_obj : public  ::Unit_obj
 		int ind;
 		Float frameOfFire;
 		bool shooting;
-		Float shootingTime;
+		int counter;
 		void spriteAnimated( ::State state);
 		::Dynamic spriteAnimated_dyn();
 

@@ -44,6 +44,7 @@ HXLINE(  15)		this->movingLeft = false;
 HXLINE(  13)		this->direction = ::Direction_obj::right_dyn();
 HXLINE(  12)		this->gravity = ((Float)0.8);
 HXLINE(  11)		this->speedY = ((Float)0.0);
+HXLINE(  10)		this->speedX = ((Float)0.0);
 HXLINE(  21)		super::__construct();
             	}
 

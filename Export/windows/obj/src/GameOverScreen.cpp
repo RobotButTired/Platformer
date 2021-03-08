@@ -40,39 +40,50 @@
 #ifndef INCLUDED_openfl_events_MouseEvent
 #include <openfl/events/MouseEvent.h>
 #endif
+#ifndef INCLUDED_openfl_text_TextField
+#include <openfl/text/TextField.h>
+#endif
 
-HX_DEFINE_STACK_FRAME(_hx_pos_8a6ee0e24ab90c83_6_new,"GameOverScreen","new",0x7f73f884,"GameOverScreen.new","GameOverScreen.hx",6,0x2fa3836c)
-HX_LOCAL_STACK_FRAME(_hx_pos_8a6ee0e24ab90c83_39_quitButtonOver,"GameOverScreen","quitButtonOver",0x9313ff71,"GameOverScreen.quitButtonOver","GameOverScreen.hx",39,0x2fa3836c)
-HX_LOCAL_STACK_FRAME(_hx_pos_8a6ee0e24ab90c83_44_quitButtonOut,"GameOverScreen","quitButtonOut",0x4c6d2511,"GameOverScreen.quitButtonOut","GameOverScreen.hx",44,0x2fa3836c)
-HX_LOCAL_STACK_FRAME(_hx_pos_8a6ee0e24ab90c83_50_quitButtonClick,"GameOverScreen","quitButtonClick",0x2f03678b,"GameOverScreen.quitButtonClick","GameOverScreen.hx",50,0x2fa3836c)
-HX_LOCAL_STACK_FRAME(_hx_pos_8a6ee0e24ab90c83_54_get_quitButtonIsPressed,"GameOverScreen","get_quitButtonIsPressed",0x5e0f2132,"GameOverScreen.get_quitButtonIsPressed","GameOverScreen.hx",54,0x2fa3836c)
-HX_LOCAL_STACK_FRAME(_hx_pos_8a6ee0e24ab90c83_57_reset,"GameOverScreen","reset",0x8c5dc2f3,"GameOverScreen.reset","GameOverScreen.hx",57,0x2fa3836c)
-HX_LOCAL_STACK_FRAME(_hx_pos_8a6ee0e24ab90c83_63_tryAgainButtononOver,"GameOverScreen","tryAgainButtononOver",0xd7d5c2a6,"GameOverScreen.tryAgainButtononOver","GameOverScreen.hx",63,0x2fa3836c)
-HX_LOCAL_STACK_FRAME(_hx_pos_8a6ee0e24ab90c83_68_tryAgainButtonOut,"GameOverScreen","tryAgainButtonOut",0x456265fb,"GameOverScreen.tryAgainButtonOut","GameOverScreen.hx",68,0x2fa3836c)
-HX_LOCAL_STACK_FRAME(_hx_pos_8a6ee0e24ab90c83_74_tryAgainButtonClick,"GameOverScreen","tryAgainButtonClick",0x407a36f5,"GameOverScreen.tryAgainButtonClick","GameOverScreen.hx",74,0x2fa3836c)
-HX_LOCAL_STACK_FRAME(_hx_pos_8a6ee0e24ab90c83_78_get_tryAgainButtonIsPressed,"GameOverScreen","get_tryAgainButtonIsPressed",0x8278851c,"GameOverScreen.get_tryAgainButtonIsPressed","GameOverScreen.hx",78,0x2fa3836c)
+HX_DEFINE_STACK_FRAME(_hx_pos_8a6ee0e24ab90c83_7_new,"GameOverScreen","new",0x7f73f884,"GameOverScreen.new","GameOverScreen.hx",7,0x2fa3836c)
+HX_LOCAL_STACK_FRAME(_hx_pos_8a6ee0e24ab90c83_51_quitButtonOver,"GameOverScreen","quitButtonOver",0x9313ff71,"GameOverScreen.quitButtonOver","GameOverScreen.hx",51,0x2fa3836c)
+HX_LOCAL_STACK_FRAME(_hx_pos_8a6ee0e24ab90c83_56_quitButtonOut,"GameOverScreen","quitButtonOut",0x4c6d2511,"GameOverScreen.quitButtonOut","GameOverScreen.hx",56,0x2fa3836c)
+HX_LOCAL_STACK_FRAME(_hx_pos_8a6ee0e24ab90c83_62_quitButtonClick,"GameOverScreen","quitButtonClick",0x2f03678b,"GameOverScreen.quitButtonClick","GameOverScreen.hx",62,0x2fa3836c)
+HX_LOCAL_STACK_FRAME(_hx_pos_8a6ee0e24ab90c83_66_get_quitButtonIsPressed,"GameOverScreen","get_quitButtonIsPressed",0x5e0f2132,"GameOverScreen.get_quitButtonIsPressed","GameOverScreen.hx",66,0x2fa3836c)
+HX_LOCAL_STACK_FRAME(_hx_pos_8a6ee0e24ab90c83_69_reset,"GameOverScreen","reset",0x8c5dc2f3,"GameOverScreen.reset","GameOverScreen.hx",69,0x2fa3836c)
+HX_LOCAL_STACK_FRAME(_hx_pos_8a6ee0e24ab90c83_75_tryAgainButtononOver,"GameOverScreen","tryAgainButtononOver",0xd7d5c2a6,"GameOverScreen.tryAgainButtononOver","GameOverScreen.hx",75,0x2fa3836c)
+HX_LOCAL_STACK_FRAME(_hx_pos_8a6ee0e24ab90c83_80_tryAgainButtonOut,"GameOverScreen","tryAgainButtonOut",0x456265fb,"GameOverScreen.tryAgainButtonOut","GameOverScreen.hx",80,0x2fa3836c)
+HX_LOCAL_STACK_FRAME(_hx_pos_8a6ee0e24ab90c83_86_tryAgainButtonClick,"GameOverScreen","tryAgainButtonClick",0x407a36f5,"GameOverScreen.tryAgainButtonClick","GameOverScreen.hx",86,0x2fa3836c)
+HX_LOCAL_STACK_FRAME(_hx_pos_8a6ee0e24ab90c83_90_get_tryAgainButtonIsPressed,"GameOverScreen","get_tryAgainButtonIsPressed",0x8278851c,"GameOverScreen.get_tryAgainButtonIsPressed","GameOverScreen.hx",90,0x2fa3836c)
 
 void GameOverScreen_obj::__construct(){
-            	HX_GC_STACKFRAME(&_hx_pos_8a6ee0e24ab90c83_6_new)
-HXLINE(  11)		this->tryAgainButtonIsPressed = false;
-HXLINE(   9)		this->quitButtonIsPressed = false;
-HXLINE(  16)		super::__construct();
-HXLINE(  17)		this->backGround =  ::BackGround_obj::__alloc( HX_CTX ,HX_("gameOverScreen",72,12,97,bb));
-HXLINE(  18)		this->addChild(this->backGround);
-HXLINE(  20)		this->quitButton =  ::Button_obj::__alloc( HX_CTX ,( (Float)(::Main_obj::sizeWidth) ),( (Float)(::Main_obj::sizeHeight) ),HX_("QUIT",cf,07,cb,35));
-HXLINE(  21)		this->quitButton->set_x((( (Float)(::Main_obj::sizeWidth) ) / ( (Float)(4) )));
-HXLINE(  22)		this->quitButton->set_y((( (Float)((::Main_obj::sizeHeight * 5)) ) / ( (Float)(6) )));
-HXLINE(  23)		this->addChild(this->quitButton);
-HXLINE(  24)		this->quitButton->addEventListener(HX_("mouseOver",19,4a,0d,f6),this->quitButtonOver_dyn(),null(),null(),null());
-HXLINE(  25)		this->quitButton->addEventListener(HX_("mouseOut",69,e7,1d,a4),this->quitButtonOut_dyn(),null(),null(),null());
-HXLINE(  26)		this->quitButton->addEventListener(HX_("mouseDown",27,b1,c2,ee),this->quitButtonClick_dyn(),null(),null(),null());
-HXLINE(  28)		this->tryAgainButton =  ::Button_obj::__alloc( HX_CTX ,( (Float)(::Main_obj::sizeWidth) ),( (Float)(::Main_obj::sizeHeight) ),HX_("TRY AGAIN",7b,44,ec,65));
-HXLINE(  29)		this->tryAgainButton->set_x((( (Float)((::Main_obj::sizeWidth * 3)) ) / ( (Float)(4) )));
-HXLINE(  30)		this->tryAgainButton->set_y((( (Float)((::Main_obj::sizeHeight * 5)) ) / ( (Float)(6) )));
-HXLINE(  31)		this->addChild(this->tryAgainButton);
-HXLINE(  32)		this->tryAgainButton->addEventListener(HX_("mouseOver",19,4a,0d,f6),this->tryAgainButtononOver_dyn(),null(),null(),null());
-HXLINE(  33)		this->tryAgainButton->addEventListener(HX_("mouseOut",69,e7,1d,a4),this->tryAgainButtonOut_dyn(),null(),null(),null());
-HXLINE(  34)		this->tryAgainButton->addEventListener(HX_("mouseDown",27,b1,c2,ee),this->tryAgainButtonClick_dyn(),null(),null(),null());
+            	HX_GC_STACKFRAME(&_hx_pos_8a6ee0e24ab90c83_7_new)
+HXLINE(  12)		this->tryAgainButtonIsPressed = false;
+HXLINE(  10)		this->quitButtonIsPressed = false;
+HXLINE(  19)		super::__construct();
+HXLINE(  20)		this->backGround =  ::BackGround_obj::__alloc( HX_CTX ,HX_("gameOverScreen",72,12,97,bb));
+HXLINE(  21)		this->addChild(this->backGround);
+HXLINE(  23)		this->quitButton =  ::Button_obj::__alloc( HX_CTX ,( (Float)(::Main_obj::sizeWidth) ),( (Float)(::Main_obj::sizeHeight) ),HX_("QUIT",cf,07,cb,35));
+HXLINE(  24)		this->quitButton->set_x((( (Float)(::Main_obj::sizeWidth) ) / ( (Float)(4) )));
+HXLINE(  25)		this->quitButton->set_y((( (Float)((::Main_obj::sizeHeight * 5)) ) / ( (Float)(6) )));
+HXLINE(  26)		this->addChild(this->quitButton);
+HXLINE(  27)		this->quitButton->addEventListener(HX_("mouseOver",19,4a,0d,f6),this->quitButtonOver_dyn(),null(),null(),null());
+HXLINE(  28)		this->quitButton->addEventListener(HX_("mouseOut",69,e7,1d,a4),this->quitButtonOut_dyn(),null(),null(),null());
+HXLINE(  29)		this->quitButton->addEventListener(HX_("mouseDown",27,b1,c2,ee),this->quitButtonClick_dyn(),null(),null(),null());
+HXLINE(  31)		this->tryAgainButton =  ::Button_obj::__alloc( HX_CTX ,( (Float)(::Main_obj::sizeWidth) ),( (Float)(::Main_obj::sizeHeight) ),HX_("TRY AGAIN",7b,44,ec,65));
+HXLINE(  32)		this->tryAgainButton->set_x((( (Float)((::Main_obj::sizeWidth * 3)) ) / ( (Float)(4) )));
+HXLINE(  33)		this->tryAgainButton->set_y((( (Float)((::Main_obj::sizeHeight * 5)) ) / ( (Float)(6) )));
+HXLINE(  34)		this->addChild(this->tryAgainButton);
+HXLINE(  35)		this->tryAgainButton->addEventListener(HX_("mouseOver",19,4a,0d,f6),this->tryAgainButtononOver_dyn(),null(),null(),null());
+HXLINE(  36)		this->tryAgainButton->addEventListener(HX_("mouseOut",69,e7,1d,a4),this->tryAgainButtonOut_dyn(),null(),null(),null());
+HXLINE(  37)		this->tryAgainButton->addEventListener(HX_("mouseDown",27,b1,c2,ee),this->tryAgainButtonClick_dyn(),null(),null(),null());
+HXLINE(  39)		this->pointsField =  ::openfl::text::TextField_obj::__alloc( HX_CTX );
+HXLINE(  40)		this->pointsField->set_text(HX_("0",30,00,00,00));
+HXLINE(  41)		this->pointsField->set_x((( (Float)(::Main_obj::sizeWidth) ) / ( (Float)(2) )));
+HXLINE(  42)		this->pointsField->set_y((( (Float)(::Main_obj::sizeHeight) ) / ( (Float)(2) )));
+HXLINE(  43)		this->pointsField->set_scaleX(((Float)4.0));
+HXLINE(  44)		this->pointsField->set_scaleY(((Float)4.0));
+HXLINE(  45)		this->pointsField->mouseEnabled = false;
+HXLINE(  46)		this->addChild(this->pointsField);
             	}
 
 Dynamic GameOverScreen_obj::__CreateEmpty() { return new GameOverScreen_obj; }
@@ -107,77 +118,77 @@ bool GameOverScreen_obj::_hx_isInstanceOf(int inClassId) {
 }
 
 void GameOverScreen_obj::quitButtonOver( ::openfl::events::MouseEvent e){
-            	HX_STACKFRAME(&_hx_pos_8a6ee0e24ab90c83_39_quitButtonOver)
-HXLINE(  40)		this->quitButton->set_scaleX(((Float)1.25));
-HXLINE(  41)		this->quitButton->set_scaleY(((Float)1.25));
+            	HX_STACKFRAME(&_hx_pos_8a6ee0e24ab90c83_51_quitButtonOver)
+HXLINE(  52)		this->quitButton->set_scaleX(((Float)1.25));
+HXLINE(  53)		this->quitButton->set_scaleY(((Float)1.25));
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC1(GameOverScreen_obj,quitButtonOver,(void))
 
 void GameOverScreen_obj::quitButtonOut( ::openfl::events::MouseEvent e){
-            	HX_STACKFRAME(&_hx_pos_8a6ee0e24ab90c83_44_quitButtonOut)
-HXLINE(  45)		this->quitButton->set_scaleX(((Float)1.0));
-HXLINE(  46)		this->quitButton->set_scaleY(((Float)1.0));
+            	HX_STACKFRAME(&_hx_pos_8a6ee0e24ab90c83_56_quitButtonOut)
+HXLINE(  57)		this->quitButton->set_scaleX(((Float)1.0));
+HXLINE(  58)		this->quitButton->set_scaleY(((Float)1.0));
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC1(GameOverScreen_obj,quitButtonOut,(void))
 
 void GameOverScreen_obj::quitButtonClick( ::openfl::events::MouseEvent e){
-            	HX_STACKFRAME(&_hx_pos_8a6ee0e24ab90c83_50_quitButtonClick)
-HXDLIN(  50)		this->quitButtonIsPressed = true;
+            	HX_STACKFRAME(&_hx_pos_8a6ee0e24ab90c83_62_quitButtonClick)
+HXDLIN(  62)		this->quitButtonIsPressed = true;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC1(GameOverScreen_obj,quitButtonClick,(void))
 
 bool GameOverScreen_obj::get_quitButtonIsPressed(){
-            	HX_STACKFRAME(&_hx_pos_8a6ee0e24ab90c83_54_get_quitButtonIsPressed)
-HXDLIN(  54)		return this->quitButtonIsPressed;
+            	HX_STACKFRAME(&_hx_pos_8a6ee0e24ab90c83_66_get_quitButtonIsPressed)
+HXDLIN(  66)		return this->quitButtonIsPressed;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(GameOverScreen_obj,get_quitButtonIsPressed,return )
 
 void GameOverScreen_obj::reset(){
-            	HX_STACKFRAME(&_hx_pos_8a6ee0e24ab90c83_57_reset)
-HXLINE(  58)		this->quitButtonIsPressed = false;
-HXLINE(  59)		this->tryAgainButtonIsPressed = false;
+            	HX_STACKFRAME(&_hx_pos_8a6ee0e24ab90c83_69_reset)
+HXLINE(  70)		this->quitButtonIsPressed = false;
+HXLINE(  71)		this->tryAgainButtonIsPressed = false;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(GameOverScreen_obj,reset,(void))
 
 void GameOverScreen_obj::tryAgainButtononOver( ::openfl::events::MouseEvent e){
-            	HX_STACKFRAME(&_hx_pos_8a6ee0e24ab90c83_63_tryAgainButtononOver)
-HXLINE(  64)		this->tryAgainButton->set_scaleX(((Float)1.25));
-HXLINE(  65)		this->tryAgainButton->set_scaleY(((Float)1.25));
+            	HX_STACKFRAME(&_hx_pos_8a6ee0e24ab90c83_75_tryAgainButtononOver)
+HXLINE(  76)		this->tryAgainButton->set_scaleX(((Float)1.25));
+HXLINE(  77)		this->tryAgainButton->set_scaleY(((Float)1.25));
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC1(GameOverScreen_obj,tryAgainButtononOver,(void))
 
 void GameOverScreen_obj::tryAgainButtonOut( ::openfl::events::MouseEvent e){
-            	HX_STACKFRAME(&_hx_pos_8a6ee0e24ab90c83_68_tryAgainButtonOut)
-HXLINE(  69)		this->tryAgainButton->set_scaleX(((Float)1.0));
-HXLINE(  70)		this->tryAgainButton->set_scaleY(((Float)1.0));
+            	HX_STACKFRAME(&_hx_pos_8a6ee0e24ab90c83_80_tryAgainButtonOut)
+HXLINE(  81)		this->tryAgainButton->set_scaleX(((Float)1.0));
+HXLINE(  82)		this->tryAgainButton->set_scaleY(((Float)1.0));
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC1(GameOverScreen_obj,tryAgainButtonOut,(void))
 
 void GameOverScreen_obj::tryAgainButtonClick( ::openfl::events::MouseEvent e){
-            	HX_STACKFRAME(&_hx_pos_8a6ee0e24ab90c83_74_tryAgainButtonClick)
-HXDLIN(  74)		this->tryAgainButtonIsPressed = true;
+            	HX_STACKFRAME(&_hx_pos_8a6ee0e24ab90c83_86_tryAgainButtonClick)
+HXDLIN(  86)		this->tryAgainButtonIsPressed = true;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC1(GameOverScreen_obj,tryAgainButtonClick,(void))
 
 bool GameOverScreen_obj::get_tryAgainButtonIsPressed(){
-            	HX_STACKFRAME(&_hx_pos_8a6ee0e24ab90c83_78_get_tryAgainButtonIsPressed)
-HXDLIN(  78)		return this->tryAgainButtonIsPressed;
+            	HX_STACKFRAME(&_hx_pos_8a6ee0e24ab90c83_90_get_tryAgainButtonIsPressed)
+HXDLIN(  90)		return this->tryAgainButtonIsPressed;
             	}
 
 
@@ -208,6 +219,7 @@ void GameOverScreen_obj::__Mark(HX_MARK_PARAMS)
 	HX_MARK_MEMBER_NAME(quitButtonIsPressed,"quitButtonIsPressed");
 	HX_MARK_MEMBER_NAME(tryAgainButton,"tryAgainButton");
 	HX_MARK_MEMBER_NAME(tryAgainButtonIsPressed,"tryAgainButtonIsPressed");
+	HX_MARK_MEMBER_NAME(pointsField,"pointsField");
 	HX_MARK_MEMBER_NAME(backGround,"backGround");
 	 ::openfl::display::Sprite_obj::__Mark(HX_MARK_ARG);
 	HX_MARK_END_CLASS();
@@ -219,6 +231,7 @@ void GameOverScreen_obj::__Visit(HX_VISIT_PARAMS)
 	HX_VISIT_MEMBER_NAME(quitButtonIsPressed,"quitButtonIsPressed");
 	HX_VISIT_MEMBER_NAME(tryAgainButton,"tryAgainButton");
 	HX_VISIT_MEMBER_NAME(tryAgainButtonIsPressed,"tryAgainButtonIsPressed");
+	HX_VISIT_MEMBER_NAME(pointsField,"pointsField");
 	HX_VISIT_MEMBER_NAME(backGround,"backGround");
 	 ::openfl::display::Sprite_obj::__Visit(HX_VISIT_ARG);
 }
@@ -232,6 +245,9 @@ hx::Val GameOverScreen_obj::__Field(const ::String &inName,hx::PropertyAccess in
 	case 10:
 		if (HX_FIELD_EQ(inName,"quitButton") ) { return hx::Val( quitButton ); }
 		if (HX_FIELD_EQ(inName,"backGround") ) { return hx::Val( backGround ); }
+		break;
+	case 11:
+		if (HX_FIELD_EQ(inName,"pointsField") ) { return hx::Val( pointsField ); }
 		break;
 	case 13:
 		if (HX_FIELD_EQ(inName,"quitButtonOut") ) { return hx::Val( quitButtonOut_dyn() ); }
@@ -270,6 +286,9 @@ hx::Val GameOverScreen_obj::__SetField(const ::String &inName,const hx::Val &inV
 		if (HX_FIELD_EQ(inName,"quitButton") ) { quitButton=inValue.Cast<  ::Button >(); return inValue; }
 		if (HX_FIELD_EQ(inName,"backGround") ) { backGround=inValue.Cast<  ::BackGround >(); return inValue; }
 		break;
+	case 11:
+		if (HX_FIELD_EQ(inName,"pointsField") ) { pointsField=inValue.Cast<  ::openfl::text::TextField >(); return inValue; }
+		break;
 	case 14:
 		if (HX_FIELD_EQ(inName,"tryAgainButton") ) { tryAgainButton=inValue.Cast<  ::Button >(); return inValue; }
 		break;
@@ -288,6 +307,7 @@ void GameOverScreen_obj::__GetFields(Array< ::String> &outFields)
 	outFields->push(HX_("quitButtonIsPressed",77,e8,7a,c2));
 	outFields->push(HX_("tryAgainButton",f7,65,03,c0));
 	outFields->push(HX_("tryAgainButtonIsPressed",e1,d2,79,70));
+	outFields->push(HX_("pointsField",97,53,cf,40));
 	outFields->push(HX_("backGround",0e,08,b2,5a));
 	super::__GetFields(outFields);
 };
@@ -298,6 +318,7 @@ static hx::StorageInfo GameOverScreen_obj_sMemberStorageInfo[] = {
 	{hx::fsBool,(int)offsetof(GameOverScreen_obj,quitButtonIsPressed),HX_("quitButtonIsPressed",77,e8,7a,c2)},
 	{hx::fsObject /*  ::Button */ ,(int)offsetof(GameOverScreen_obj,tryAgainButton),HX_("tryAgainButton",f7,65,03,c0)},
 	{hx::fsBool,(int)offsetof(GameOverScreen_obj,tryAgainButtonIsPressed),HX_("tryAgainButtonIsPressed",e1,d2,79,70)},
+	{hx::fsObject /*  ::openfl::text::TextField */ ,(int)offsetof(GameOverScreen_obj,pointsField),HX_("pointsField",97,53,cf,40)},
 	{hx::fsObject /*  ::BackGround */ ,(int)offsetof(GameOverScreen_obj,backGround),HX_("backGround",0e,08,b2,5a)},
 	{ hx::fsUnknown, 0, null()}
 };
@@ -309,6 +330,7 @@ static ::String GameOverScreen_obj_sMemberFields[] = {
 	HX_("quitButtonIsPressed",77,e8,7a,c2),
 	HX_("tryAgainButton",f7,65,03,c0),
 	HX_("tryAgainButtonIsPressed",e1,d2,79,70),
+	HX_("pointsField",97,53,cf,40),
 	HX_("backGround",0e,08,b2,5a),
 	HX_("quitButtonOver",15,bd,27,d6),
 	HX_("quitButtonOut",ed,e7,43,c5),

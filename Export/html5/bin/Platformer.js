@@ -870,9 +870,9 @@ ApplicationMain.create = function(config) {
 	ManifestResources.init(config);
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-		_this.setReserved("build","8");
+		_this.setReserved("build","10");
 	} else {
-		_this.h["build"] = "8";
+		_this.h["build"] = "10";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -4189,6 +4189,10 @@ BackGround.__super__ = openfl_display_Sprite;
 BackGround.prototype = $extend(openfl_display_Sprite.prototype,{
 	__class__: BackGround
 });
+var BonusType = $hxEnums["BonusType"] = { __ename__ : "BonusType", __constructs__ : ["slow","destroy"]
+	,slow: {_hx_index:0,__enum__:"BonusType",toString:$estr}
+	,destroy: {_hx_index:1,__enum__:"BonusType",toString:$estr}
+};
 var Unit = function() {
 	this.movingRight = false;
 	this.movingLeft = false;
@@ -4215,32 +4219,85 @@ Unit.prototype = $extend(openfl_display_Sprite.prototype,{
 });
 var Bonus = function() {
 	Unit.call(this);
+	if(Math.random() < 0.5) {
+		Bonus.bonusType = BonusType.destroy;
+	} else {
+		Bonus.bonusType = BonusType.slow;
+	}
+	Bonus.counter = 0;
 	this.hitBox = new openfl_geom_Rectangle(-12.5,-12.5,25,25);
 	this.drawHitBox();
 };
 $hxClasses["Bonus"] = Bonus;
 Bonus.__name__ = "Bonus";
-Bonus.doBonus = function(player,enemies,bullets) {
+Bonus.doBonusSlow = function(player,enemies,deadEnemies,bullets) {
 	if(Bonus.counter == 0) {
 		player.speedX *= 0.5;
 		player.speedY *= 0.5;
 		player.gravity *= 0.25;
 		Game.jumpPower *= 0.50;
-	} else if(Bonus.counter >= Main.get_FPS() * 3.0) {
+		var b = 0;
+		while(b < bullets.length) {
+			var tmp = bullets[b].get_speed() * 0.25;
+			bullets[b].set_speed(tmp);
+			++b;
+		}
+		var e = 0;
+		while(e < enemies.length) {
+			enemies[e].speedX *= 0.25;
+			enemies[e].speedY *= 0.25;
+			enemies[e].gravity *= 0.25;
+			++e;
+		}
+		e = 0;
+		while(e < deadEnemies.length) {
+			deadEnemies[e].speedX *= 0.25;
+			deadEnemies[e].speedY *= 0.25;
+			deadEnemies[e].gravity *= 0.25;
+			++e;
+		}
+	} else if(Bonus.counter >= Main.get_FPS() * 10.0) {
 		player.speedX *= 2.0;
 		player.speedY *= 2.0;
 		player.gravity /= 0.25;
 		Game.jumpPower /= 0.50;
+		var b1 = 0;
+		while(b1 < bullets.length) {
+			var tmp1 = bullets[b1].get_speed() / 0.25;
+			bullets[b1].set_speed(tmp1);
+			++b1;
+		}
+		var e1 = 0;
+		while(e1 < enemies.length) {
+			enemies[e1].speedX /= 0.25;
+			enemies[e1].speedY /= 0.25;
+			enemies[e1].gravity /= 0.25;
+			++e1;
+		}
+		e1 = 0;
+		while(e1 < deadEnemies.length) {
+			deadEnemies[e1].speedX /= 0.25;
+			deadEnemies[e1].speedY /= 0.25;
+			deadEnemies[e1].gravity /= 0.25;
+			++e1;
+		}
 		Bonus.bonusIsUsed = false;
+		Bonus.haveBonus = false;
 		Bonus.counter = -1;
 	}
-	++Bonus.counter;
-	haxe_Log.trace(Bonus.counter,{ fileName : "Source/Bonus.hx", lineNumber : 75, className : "Bonus", methodName : "doBonus"});
+	Bonus.counter++;
+};
+Bonus.get_bonusType = function() {
+	return Bonus.bonusType;
 };
 Bonus.__super__ = Unit;
 Bonus.prototype = $extend(Unit.prototype,{
 	drawHitBox: function() {
-		this.get_graphics().lineStyle(3,65535);
+		if(Bonus.get_bonusType() == BonusType.slow) {
+			this.get_graphics().lineStyle(3,65535);
+		} else {
+			this.get_graphics().lineStyle(3,0);
+		}
 		this.get_graphics().drawRect(-this.get_hitBox().width / 2,-this.get_hitBox().height / 2,this.get_hitBox().width,this.get_hitBox().height);
 		this.get_graphics().endFill();
 	}
@@ -4287,10 +4344,16 @@ Bullet.prototype = $extend(openfl_display_Sprite.prototype,{
 			this.set_x(player.get_x() + 10.0);
 			this.set_y(player.get_y());
 			this.speed = 20.0;
+			if(Bonus.bonusIsUsed) {
+				this.speed = 5.0;
+			}
 		} else {
 			this.set_x(player.get_x() - 10.0);
 			this.set_y(player.get_y());
 			this.speed = -20.0;
+			if(Bonus.bonusIsUsed) {
+				this.speed = -5.0;
+			}
 		}
 	}
 	,checkCollisionWithEnemy: function(enemy) {
@@ -4304,7 +4367,7 @@ Bullet.prototype = $extend(openfl_display_Sprite.prototype,{
 		return this.speed;
 	}
 	,set_speed: function(value) {
-		return this.speed = value;
+		this.speed = value;
 	}
 	,__class__: Bullet
 });
@@ -4430,6 +4493,11 @@ var Enemy = function() {
 	this.hitBox = new openfl_geom_Rectangle(-15.,-20.,30,40);
 	this.drawHitBox();
 	this.speedX = 1.5;
+	if(Bonus.bonusIsUsed) {
+		this.speedY *= 0.25;
+		this.speedX = 0.375;
+		this.gravity *= 0.25;
+	}
 };
 $hxClasses["Enemy"] = Enemy;
 Enemy.__name__ = "Enemy";
@@ -4461,7 +4529,7 @@ Enemy.prototype = $extend(Unit.prototype,{
 var Game = function(width,height) {
 	this.counter = 0;
 	this.spawnDelay = 1.0;
-	this.maxEnemies = 2;
+	this.maxEnemies = 4;
 	this.gamePoints = 0;
 	this.gameIsOver = false;
 	this.haveCollision = false;
@@ -4476,16 +4544,15 @@ var Game = function(width,height) {
 	this.addChild(this.gameLevel);
 	this.bullets = [];
 	this.spentBullets = [];
+	Game.jumpPower = 15.0;
 	this.player = new Player();
 	this.player.set_x(100);
 	this.player.set_y(100);
 	this.addChild(this.player);
 	this.enemies = [];
 	this.deadEnemies = [];
-	this.bonus = new Bonus();
-	this.bonus.set_x(Main.sizeWidth / 2);
-	this.bonus.set_y(Main.sizeHeight / 4);
-	this.addChild(this.bonus);
+	Bonus.bonusIsUsed = false;
+	Bonus.haveBonus = false;
 	this.pointsField = new openfl_text_TextField();
 	this.pointsField.set_text(Std.string(this.gamePoints));
 	this.pointsField.set_x(Main.sizeWidth / 2);
@@ -4532,6 +4599,7 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 	}
 	,update: function() {
 		if(!this.pauseIsPressed) {
+			this.bonusBuf();
 			this.player.move();
 			this.doCollisionsWithTiles();
 			this.doCollidionWithEnemies();
@@ -4549,7 +4617,6 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 					this.bonus = null;
 				}
 			}
-			this.bonusBuf();
 		}
 	}
 	,checkCollisionWithTile: function(playerHitBox,tile) {
@@ -4583,7 +4650,7 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 	}
 	,playerJump: function(jumpPower) {
 		if(this.player.get_jump() && this.haveCollision) {
-			haxe_Log.trace("jump",{ fileName : "Source/Game.hx", lineNumber : 227, className : "Game", methodName : "playerJump"});
+			haxe_Log.trace("jump",{ fileName : "Source/Game.hx", lineNumber : 233, className : "Game", methodName : "playerJump"});
 			this.player.set_speedY(this.player.get_speedY() - jumpPower);
 		}
 		if(!this.haveCollision) {
@@ -4646,10 +4713,13 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 					this.spentBullets.push(this.bullets[b]);
 					HxOverrides.remove(this.bullets,this.bullets[b]);
 					this.removeChild(this.enemies[e]);
+					this.spawnBonus(this.enemies[e]);
 					++this.gamePoints;
 					this.pointsField.set_text(Std.string(this.gamePoints));
 					this.deadEnemies.push(this.enemies[e]);
 					HxOverrides.remove(this.enemies,this.enemies[e]);
+					--b;
+					break;
 				}
 				++e;
 			}
@@ -4673,8 +4743,35 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 	}
 	,bonusBuf: function() {
 		if(Bonus.bonusIsUsed) {
-			Bonus.doBonus(this.player,this.enemies,this.bullets);
+			if(Bonus.get_bonusType() == BonusType.slow) {
+				Bonus.doBonusSlow(this.player,this.enemies,this.deadEnemies,this.bullets);
+			} else if(Bonus.get_bonusType() == BonusType.destroy) {
+				this.doBonusDestroy();
+			}
 		}
+	}
+	,spawnBonus: function(enemy) {
+		if(!Bonus.bonusIsUsed && !Bonus.haveBonus && Math.random() < 0.05) {
+			Bonus.bonusIsUsed = false;
+			Bonus.haveBonus = true;
+			this.bonus = new Bonus();
+			this.bonus.set_speedY(-10.0);
+			this.bonus.set_x(enemy.get_x());
+			this.bonus.set_y(enemy.get_y());
+			this.addChild(this.bonus);
+		}
+	}
+	,doBonusDestroy: function() {
+		var e = 0;
+		while(e < this.enemies.length) {
+			this.removeChild(this.enemies[e]);
+			++this.gamePoints;
+			this.pointsField.set_text(Std.string(this.gamePoints));
+			this.deadEnemies.push(this.enemies[e]);
+			HxOverrides.remove(this.enemies,this.enemies[e]);
+		}
+		Bonus.haveBonus = false;
+		Bonus.bonusIsUsed = false;
 	}
 	,__class__: Game
 });
@@ -4686,19 +4783,28 @@ var GameLevel = function(width,height) {
 	this.tileset = new openfl_display_Tileset(this.bmpData);
 	this.tilemap = new openfl_display_Tilemap(this.sizeWidth,this.sizeHeight,this.tileset);
 	this.addChild(this.tilemap);
+	this.level = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,9,9,5,6,9,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,2,2,2,2,1,1,1,1,1,1,1,1],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]];
 	var ind1 = this.tileset.addRect(new openfl_geom_Rectangle(0,0,32,32));
 	var ind2 = this.tileset.addRect(new openfl_geom_Rectangle(32,0,32,32));
 	var ind3 = this.tileset.addRect(new openfl_geom_Rectangle(64,0,32,32));
 	var ind4 = this.tileset.addRect(new openfl_geom_Rectangle(96,0,32,32));
+	var ind5 = this.tileset.addRect(new openfl_geom_Rectangle(96,96,32,32));
+	var ind6 = this.tileset.addRect(new openfl_geom_Rectangle(0,128,32,32));
+	var ind7 = this.tileset.addRect(new openfl_geom_Rectangle(32,128,32,32));
+	var ind8 = this.tileset.addRect(new openfl_geom_Rectangle(64,128,32,32));
+	var ind9 = this.tileset.addRect(new openfl_geom_Rectangle(96,128,32,32));
 	this.IDs = [];
 	this.IDs.push(ind1);
 	this.IDs.push(ind2);
 	this.IDs.push(ind3);
 	this.IDs.push(ind4);
+	this.IDs.push(ind5);
+	this.IDs.push(ind6);
+	this.IDs.push(ind7);
+	this.IDs.push(ind8);
+	this.IDs.push(ind9);
 	this.addTiles();
-	haxe_Log.trace(this.tilemap.get_numTiles(),{ fileName : "Source/GameLevel.hx", lineNumber : 48, className : "GameLevel", methodName : "new"});
-	haxe_Log.trace(this.tilemap.getTileAt(0).get_x() + " " + this.tilemap.getTileAt(0).get_y(),{ fileName : "Source/GameLevel.hx", lineNumber : 49, className : "GameLevel", methodName : "new"});
-	haxe_Log.trace(this.tilemap.getTileAt(0).get_width(),{ fileName : "Source/GameLevel.hx", lineNumber : 50, className : "GameLevel", methodName : "new"});
+	haxe_Log.trace(this.tilemap.get_numTiles(),{ fileName : "Source/GameLevel.hx", lineNumber : 76, className : "GameLevel", methodName : "new"});
 };
 $hxClasses["GameLevel"] = GameLevel;
 GameLevel.__name__ = "GameLevel";
@@ -4706,24 +4812,15 @@ GameLevel.__super__ = openfl_display_Sprite;
 GameLevel.prototype = $extend(openfl_display_Sprite.prototype,{
 	addTiles: function() {
 		var _g = 0;
-		while(_g < 15) {
+		var _g1 = this.level.length;
+		while(_g < _g1) {
 			var i = _g++;
-			var _g1 = 0;
-			while(_g1 < 20) {
-				var j = _g1++;
-				if(i == 11) {
-					this.tile = new openfl_display_Tile(this.IDs[0],j * this.sizeWidth / 20,i * this.sizeHeight / 15);
-				}
-				if(i == 12) {
-					this.tile = new openfl_display_Tile(this.IDs[1],j * this.sizeWidth / 20,i * this.sizeHeight / 15);
-				}
-				if(i == 13) {
-					this.tile = new openfl_display_Tile(this.IDs[2],j * this.sizeWidth / 20,i * this.sizeHeight / 15);
-				}
-				if(i == 14) {
-					this.tile = new openfl_display_Tile(this.IDs[3],j * this.sizeWidth / 20,i * this.sizeHeight / 15);
-				}
-				if(i >= 11) {
+			var _g2 = 0;
+			var _g11 = this.level[i].length;
+			while(_g2 < _g11) {
+				var j = _g2++;
+				if(this.level[i][j] != 0) {
+					this.tile = new openfl_display_Tile(this.IDs[this.level[i][j] - 1],j * Main.sizeWidth / 20,i * Main.sizeHeight / 15);
 					this.tile.set_scaleX(1.25);
 					this.tile.set_scaleY(1.25);
 					this.tilemap.addTile(this.tile);
@@ -4905,7 +5002,7 @@ var State = $hxEnums["State"] = { __ename__ : "State", __constructs__ : ["idle",
 var Player = function() {
 	this.counter = 0;
 	this.shooting = false;
-	this.frameOfFire = 0.5;
+	this.frameOfFire = 0.75;
 	this.frameTime = 0.15;
 	this.state = State.idle;
 	this.jump = false;
@@ -24128,7 +24225,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 244087;
+	this.version = 12518;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
@@ -72451,7 +72548,7 @@ Main.sizeHeight = 600;
 Main.FPS = 60;
 Bonus.counter = 0;
 Bonus.bonusIsUsed = false;
-Game.jumpPower = 15.0;
+Bonus.haveBonus = false;
 haxe_Serializer.USE_CACHE = false;
 haxe_Serializer.USE_ENUM_INDEX = false;
 haxe_Serializer.BASE64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%:";

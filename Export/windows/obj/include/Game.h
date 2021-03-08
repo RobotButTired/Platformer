@@ -10,6 +10,7 @@
 #include <openfl/display/Sprite.h>
 #endif
 HX_DECLARE_CLASS0(BackGround)
+HX_DECLARE_CLASS0(Bonus)
 HX_DECLARE_CLASS0(Bullet)
 HX_DECLARE_CLASS0(Button)
 HX_DECLARE_CLASS0(Enemy)
@@ -26,8 +27,10 @@ HX_DECLARE_CLASS2(openfl,display,Tile)
 HX_DECLARE_CLASS2(openfl,events,Event)
 HX_DECLARE_CLASS2(openfl,events,EventDispatcher)
 HX_DECLARE_CLASS2(openfl,events,IEventDispatcher)
+HX_DECLARE_CLASS2(openfl,events,KeyboardEvent)
 HX_DECLARE_CLASS2(openfl,events,MouseEvent)
 HX_DECLARE_CLASS2(openfl,geom,Rectangle)
+HX_DECLARE_CLASS2(openfl,text,TextField)
 
 
 
@@ -55,7 +58,9 @@ class HXCPP_CLASS_ATTRIBUTES Game_obj : public  ::openfl::display::Sprite_obj
 
 		HX_DO_RTTI_ALL;
 		hx::Val __Field(const ::String &inString, hx::PropertyAccess inCallProp);
+		static bool __GetStatic(const ::String &inString, Dynamic &outValue, hx::PropertyAccess inCallProp);
 		hx::Val __SetField(const ::String &inString,const hx::Val &inValue, hx::PropertyAccess inCallProp);
+		static bool __SetStatic(const ::String &inString, Dynamic &ioValue, hx::PropertyAccess inCallProp);
 		void __GetFields(Array< ::String> &outFields);
 		static void __register();
 		void __Mark(HX_MARK_PARAMS);
@@ -63,22 +68,30 @@ class HXCPP_CLASS_ATTRIBUTES Game_obj : public  ::openfl::display::Sprite_obj
 		bool _hx_isInstanceOf(int inClassId);
 		::String __ToString() const { return HX_("Game",12,20,38,2f); }
 
+		static Float jumpPower;
 		int sizeWidth;
 		int sizeHeight;
 		 ::BackGround backGround;
 		 ::Button quitButton;
 		bool quitButtonIsPressed;
+		bool pauseIsPressed;
 		 ::GameLevel gameLevel;
 		 ::Player player;
 		bool haveCollision;
 		bool gameIsOver;
+		 ::Bonus bonus;
+		int gamePoints;
+		 ::openfl::text::TextField pointsField;
 		::Array< ::Dynamic> bullets;
 		::Array< ::Dynamic> spentBullets;
 		::Array< ::Dynamic> enemies;
 		::Array< ::Dynamic> deadEnemies;
 		int maxEnemies;
 		Float spawnDelay;
-		Float enemiesTimeFlag;
+		int counter;
+		void pause( ::openfl::events::KeyboardEvent e);
+		::Dynamic pause_dyn();
+
 		void quitButtonClick( ::openfl::events::MouseEvent e);
 		::Dynamic quitButtonClick_dyn();
 
@@ -100,7 +113,7 @@ class HXCPP_CLASS_ATTRIBUTES Game_obj : public  ::openfl::display::Sprite_obj
 		void doCollisionsWithTiles();
 		::Dynamic doCollisionsWithTiles_dyn();
 
-		void playerJump();
+		void playerJump(Float jumpPower);
 		::Dynamic playerJump_dyn();
 
 		void bulletsMove();
@@ -121,8 +134,20 @@ class HXCPP_CLASS_ATTRIBUTES Game_obj : public  ::openfl::display::Sprite_obj
 		bool get_gameIsOver();
 		::Dynamic get_gameIsOver_dyn();
 
+		int get_gamePoints();
+		::Dynamic get_gamePoints_dyn();
+
 		void doCollidionWithEnemies();
 		::Dynamic doCollidionWithEnemies_dyn();
+
+		void bonusBuf();
+		::Dynamic bonusBuf_dyn();
+
+		void spawnBonus( ::Enemy enemy);
+		::Dynamic spawnBonus_dyn();
+
+		void doBonusDestroy();
+		::Dynamic doBonusDestroy_dyn();
 
 };
 
