@@ -5,6 +5,7 @@ import openfl.geom.Rectangle;
 
 class Enemy extends Unit
 {
+    public var color = 0x00FF00;
     public function new() 
     {
         super();
@@ -23,18 +24,13 @@ class Enemy extends Unit
 
     public function drawHitBox() 
     {
-        graphics.lineStyle(3,0x00FF00); 
+        graphics.lineStyle(3,color); 
         graphics.drawRect(-hitBox.width/2,-hitBox.height/2,hitBox.width,hitBox.height);   
         graphics.endFill();
     }
 
     public function move (player:Player, level:Array<Array<Int>>) 
     {
-       /* if(y + hitBox.height >= 440)
-            {
-                y = 440-hitBox.height/2;
-                speedY = 0.0;
-            }*/
         if(player.x < x)
             x -= speedX;
         else if(player.x > x)
@@ -42,6 +38,10 @@ class Enemy extends Unit
         speedY += gravity;
         y += speedY;
         doCollisionsWithTiles(level);
+    }
+    public function doShot(game:Game)
+    {
+        
     }
 
 }

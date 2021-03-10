@@ -28,6 +28,8 @@ class Grenade extends Sprite
     {
         if(state == active)
         {
+            if(x - width/2 >= Main.sizeWidth || x + width/2 <= 0)
+                state = inactive;
             x += speedX;
             y += speedY;
             speedY += gravity;

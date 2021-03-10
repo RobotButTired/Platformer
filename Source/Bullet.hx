@@ -5,50 +5,63 @@ import openfl.display.Sprite;
 class Bullet extends Sprite
 {
     public  var speed:Float;
-    public function new(player:Player)
+    public function new(unit:Unit, ?color:Int)
     {
         super();
 
-        graphics.beginFill(0x0000FF);
+        if(color != null)
+            graphics.beginFill(0xFF00FF);
+        else
+            graphics.beginFill(0x0000FF);
         graphics.drawRect(-7/2,-2/4,7,4);
         graphics.endFill();
-        setBullet(player);
+        setBullet(unit);
        
     }
     public function move() 
     {
         x += speed;   
     }
-    public function setBullet(player:Player) 
+    public function setBullet(unit:Unit) 
     {
-        if(player.get_direction() == right)
+        if(unit.get_direction() == right)
             {
-                x= player.x + 10.0;
-                y = player.y;
+                x= unit.x + 10.0;
+                y = unit.y;
                 speed = 20.0;
                 if(Bonus.bonusIsUsed)
                     speed = 5.0;
             } 
         else
             {
-                x = player.x - 10.0;
-                y = player.y;
+                x = unit.x - 10.0;
+                y = unit.y;
                 speed = -20.0;
                 if(Bonus.bonusIsUsed)
                     speed = -5.0;
             }
     }
 
-    public function checkCollisionWithEnemy(enemy:Enemy):Bool
+    public function checkCollisionWithUnit(unit:Unit):Bool
     {
-        if(x + width/2 > enemy.x-enemy.width/2 && x - width/2 < enemy.x + enemy.width/2 &&
-            y + height/2 > enemy.y - enemy.height/2 && y - height/2 < enemy.y + enemy.height/2)
+        if(x + width/2 > unit.x-unit.get_hitBox().width/2 && x - width/2 < unit.x + unit.get_hitBox().width/2 &&
+            y + height/2 > unit.y - unit.get_hitBox().height/2 && y - height/2 < unit.y + unit.get_hitBox().height/2)
             {
                 return true;
             }
             else 
                 return false;
     }
+    /*public function checkCollisionWithPlayer(player:Player):Bool
+    {
+    if(x + width/2 > player.x-player.width/2 && x - width/2 < player.x + player.width/2 &&
+        y + height/2 > player.y - player.height/2 && y - height/2 < player.y + player.height/2)
+        {
+            return true;
+        }
+        else 
+            return false;
+     }*/
     public function get_speed() 
     {
         return speed;    

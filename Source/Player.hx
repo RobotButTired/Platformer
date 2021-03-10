@@ -207,7 +207,7 @@ class Player extends Unit
         var bullet:Bullet;
         if(game.spentBullets.length > 0)
             {
-                trace(999999);
+                //trace(999999);
                 game.bullets.push(game.spentBullets.pop());
                 game.bullets[game.bullets.length-1].setBullet(this);
                // game.bullets.push(bullet);
@@ -220,7 +220,7 @@ class Player extends Unit
                 bullet = new Bullet(this);
                 game.bullets.push(bullet);
                 game.addChild(bullet);
-                trace("Shot");          
+                //trace("Shot");          
                 gunCounter = Math.floor(Main.get_FPS() / rateOfFire);
             }
     }
@@ -258,11 +258,7 @@ class Player extends Unit
     {
         return state;    
     }
-    public function get_direction() 
-    {
-        return direction;    
-    }
-
+  
 
     public function drawHitBox() 
     {

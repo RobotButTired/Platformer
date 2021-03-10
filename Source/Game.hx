@@ -36,10 +36,14 @@ class Game extends Sprite
     public var bullets:Array<Bullet>;          //массив пуль
     public var spentBullets:Array<Bullet>;     //массив отработавших пуль
 
+    public var enemyBullets:Array<Bullet>;      //массив вражеских пуль
+    public var spentEnemyBullets:Array<Bullet>; //массив отработавших вражеских пуль
+
     public var grenade:Grenade;                    //граната
 
     var enemies:Array<Enemy>;                   //массив врагов
     var deadEnemies:Array<Enemy>;               //массив убитых врагов
+    var deadEnemiesWithGun:Array<Enemy>; // массив убитых стреляющих врегов 
     var maxEnemies:Int = 4;                         //максимальное число врагов на поле
     var spawnDelay:Float = 1.0;                       //промежуток времени, через который появляются враги
   //  var enemiesTimeFlag:Float;                  //временной флаг для генерации врагов
@@ -62,6 +66,8 @@ class Game extends Sprite
           //Bullets
           bullets = [];
           spentBullets = [];
+          enemyBullets = [];
+          spentEnemyBullets = [];
 
 
           //PLayer
@@ -78,6 +84,7 @@ class Game extends Sprite
         //Enemies
         enemies = [];
         deadEnemies = [];
+        deadEnemiesWithGun = [];
        // enemiesTimeFlag = Timer.stamp();
 
        //Bonus
@@ -168,10 +175,12 @@ class Game extends Sprite
 
             bulletsMove();
             grenadeMove();
-            if(contains(grenade))
+            //if(contains(grenade))
             generateEnemies();
             moveEnemies();
+            trace(enemyBullets.length+" "+spentEnemyBullets.length);
             doCollisionsWithBullet();
+            doCollisionWithEnemyBullet();
             
             //bonusDebuf();
 
@@ -265,7 +274,19 @@ class Game extends Sprite
                     bullets.remove(bullets[i]);
                 }
                 i++;
-            }    
+            } 
+        i =0;
+        while(i < enemyBullets.length)
+            {
+                enemyBullets[i].move();
+                if(enemyBullets[i].x-enemyBullets[i].width/2 >= Main.sizeWidth || enemyBullets[i].x+enemyBullets[i].width/2 <= 0)
+                {
+                    removeChild(enemyBullets[i]);
+                    spentEnemyBullets.push(enemyBullets[i]);
+                    enemyBullets.remove(enemyBullets[i]);
+                }
+                i++;
+            } 
     }
     public function grenadeMove() 
     {
@@ -279,6 +300,7 @@ class Game extends Sprite
 
     public function generateEnemies() 
     {
+       // trace(enemies.length+" "+deadEnemies.length+" "+deadEnemiesWithGun.length);
        // if(Timer.stamp()- enemiesTimeFlag >= spawnDelay)
         if(counter >= Main.get_FPS()* spawnDelay)
         {
@@ -296,13 +318,27 @@ class Game extends Sprite
     public function generateEnemy() 
     {
         var enemy:Enemy;
-        if(deadEnemies.length > 0)
+        if(Math.random() > 0.2)
         {
-            enemy = deadEnemies.pop();
+            if(deadEnemies.length > 0)
+                {
+                    enemy = deadEnemies.pop();
+                }
+                else
+                {
+                    enemy = new Enemy();
+                }
         }
         else
         {
-            enemy = new Enemy();
+            if(deadEnemiesWithGun.length > 0)
+                {
+                    enemy = deadEnemiesWithGun.pop();
+                }
+                else
+                {
+                    enemy = new EnemyWithGun();
+                }   
         }
         enemy.y = 100;
         enemy.set_speedY(0.0);
@@ -317,6 +353,7 @@ class Game extends Sprite
                 enemy.x = 0;
             } 
         
+        
     }
 
     public function moveEnemies() 
@@ -325,6 +362,7 @@ class Game extends Sprite
         while(i < enemies.length)
         {
             enemies[i].move(player, gameLevel.level);
+            enemies[i].doShot(this);
             i++;
         }    
     }
@@ -337,17 +375,12 @@ class Game extends Sprite
             var e =0;
             while(e < enemies.length)
             {
-                if(bullets[b].checkCollisionWithEnemy(enemies[e]))
+                if(bullets[b].checkCollisionWithUnit(enemies[e]))
                 {
                     removeChild(bullets[b]);
                     spentBullets.push(bullets[b]);
                     bullets.remove(bullets[b]);
-                    removeChild(enemies[e]);
-                    spawnBonus(enemies[e]);
-                    ++gamePoints;
-                    pointsField.text = Std.string(gamePoints);
-                    deadEnemies.push(enemies[e]);
-                    enemies.remove(enemies[e]);
+                    killEnemy(enemies[e]);
                     b--;
                     break;
                 }
@@ -356,6 +389,19 @@ class Game extends Sprite
             b++;
         } 
     }
+    public function doCollisionWithEnemyBullet() 
+    {
+        var b =0;
+        while(b < enemyBullets.length)
+        {
+                if(enemyBullets[b].checkCollisionWithUnit(player))
+                {
+                    gameIsOver = true;
+                    break;
+                }
+                b++;
+        }     
+    }
     public function doCollisionWithGrenade() 
     {
         var e =0;
@@ -363,17 +409,24 @@ class Game extends Sprite
         {
             if(grenade.checkCollisionWithEnemy(enemies[e]))
             {
-                removeChild(enemies[e]);
-                spawnBonus(enemies[e]);
-                ++gamePoints;
-                pointsField.text = Std.string(gamePoints);
-                deadEnemies.push(enemies[e]);
-                enemies.remove(enemies[e]);
+                killEnemy(enemies[e]);
                 grenade.set_state(explosion);
                 break;
             }
             e++;
         }
+    }
+    public function killEnemy(enemy:Enemy) 
+    {
+        removeChild(enemy);
+        spawnBonus(enemy);
+        ++gamePoints;
+        pointsField.text = Std.string(gamePoints);
+        if(enemy.color == 0xFF00FF)
+            deadEnemiesWithGun.push(enemy);
+        else
+            deadEnemies.push(enemy);
+        enemies.remove(enemy);    
     }
     
     public function get_gameIsOver() 
@@ -404,7 +457,7 @@ class Game extends Sprite
         {
             if(Bonus.get_bonusType() == slow)
             {
-                Bonus.doBonusSlow(player,enemies,deadEnemies, bullets, grenade);
+                Bonus.doBonusSlow(player,enemies,deadEnemies,deadEnemiesWithGun,bullets,enemyBullets ,grenade);
                 bonusIndicator.graphics.clear();
                 bonusIndicator.graphics.beginGradientFill(RADIAL,[0xFF0000, 0xFFFFFF],[1.0,1.0], [0,95]);
                 bonusIndicator.graphics.drawRect(0,0,(Main.sizeWidth/3.5/(600)*(600-Bonus.get_counter())),20);

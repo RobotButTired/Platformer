@@ -80,7 +80,7 @@ class Bonus extends Unit
             return false;
     }
 
-    public static function doBonusSlow(player:Player, enemies:Array<Enemy>,deadEnemies:Array<Enemy>, bullets:Array<Bullet>, grenade:Grenade) 
+    public static function doBonusSlow(player:Player, enemies:Array<Enemy>,deadEnemies:Array<Enemy>,deadEnemiesWithGun:Array<Enemy> ,bullets:Array<Bullet>,enemyBullets:Array<Bullet>, grenade:Grenade) 
     {
         if(counter == 0)
         {
@@ -95,6 +95,13 @@ class Bonus extends Unit
                 ++b;   
                // trace(bullets[b].speed);
             }
+            b=0;
+            while(b < enemyBullets.length)
+                {
+                    enemyBullets[b].set_speed(enemyBullets[b].get_speed()*0.25);
+                    ++b;   
+                   // trace(bullets[b].speed);
+                }
             var e =0;
             while(e < enemies.length)
             {
@@ -109,6 +116,14 @@ class Bonus extends Unit
                 deadEnemies[e].speedX *= 0.25;
                 deadEnemies[e].speedY *= 0.25;
                 deadEnemies[e].gravity*=0.25;
+                ++e;
+            }
+            e =0;
+            while(e < deadEnemiesWithGun.length)
+            {
+                deadEnemiesWithGun[e].speedX *= 0.25;
+                deadEnemiesWithGun[e].speedY *= 0.25;
+                deadEnemiesWithGun[e].gravity*=0.25;
                 ++e;
             }
             if(grenade != null)
@@ -132,6 +147,12 @@ class Bonus extends Unit
                     bullets[b].set_speed(bullets[b].get_speed()/0.25);
                     ++b;
                 }
+                b=0;
+                while(b < enemyBullets.length)
+                {
+                    enemyBullets[b].set_speed(enemyBullets[b].get_speed()/0.25);
+                    ++b;
+                }
                 var e =0;
                 while(e < enemies.length)
                 {
@@ -148,6 +169,14 @@ class Bonus extends Unit
                     deadEnemies[e].gravity/=0.5;
                     ++e;
                 }
+                e=0;
+                while(e < deadEnemiesWithGun.length)
+                    {
+                        deadEnemiesWithGun[e].speedX /= 0.25;
+                        deadEnemiesWithGun[e].speedY /= 0.25;
+                        deadEnemiesWithGun[e].gravity/=0.25;
+                        ++e;
+                    }
                 if(grenade != null)
                 {
                     grenade.set_speedX(grenade.get_speedX()/0.25);

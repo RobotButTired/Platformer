@@ -128,4 +128,8 @@ class Unit extends Sprite
     {
         return collisionDirection;    
     }
+    public function get_direction() 
+        {
+            return direction;    
+        }
 }
