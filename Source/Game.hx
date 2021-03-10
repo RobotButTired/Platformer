@@ -1,6 +1,5 @@
 package;
 
-import lime.system.BackgroundWorker;
 import openfl.text.TextField;
 import openfl.events.KeyboardEvent;
 import openfl.Lib;
@@ -27,12 +26,17 @@ class Game extends Sprite
     var gameIsOver(get,null):Bool = false;
 
     var bonus:Bonus;
+    var bonusIndicator:Sprite;
+
+    
 
     var gamePoints:Int = 0;
     var pointsField:TextField;
 
     public var bullets:Array<Bullet>;          //массив пуль
     public var spentBullets:Array<Bullet>;     //массив отработавших пуль
+
+    public var grenade:Grenade;                    //граната
 
     var enemies:Array<Enemy>;                   //массив врагов
     var deadEnemies:Array<Enemy>;               //массив убитых врагов
@@ -67,6 +71,10 @@ class Game extends Sprite
         player.y = Main.sizeHeight/2;
         addChild(player);
 
+        //Inventory
+       
+        addChild(player.inventory.panel);
+
         //Enemies
         enemies = [];
         deadEnemies = [];
@@ -75,6 +83,9 @@ class Game extends Sprite
        //Bonus
        Bonus.bonusIsUsed = false;
        Bonus.haveBonus = false;
+       bonusIndicator = new Sprite();
+       bonusIndicator.x = 10;
+       bonusIndicator.y = 50;
        /* bonus = new Bonus();
        bonus.x = Main.sizeWidth/2;
        bonus.y = Main.sizeHeight/4;
@@ -153,11 +164,15 @@ class Game extends Sprite
             playerJump(jumpPower);
             player.spriteAnimated(player.get_state());  
             player.doShot(this);
+           // player.inventory.update(player);
 
             bulletsMove();
+            grenadeMove();
+            if(contains(grenade))
             generateEnemies();
             moveEnemies();
             doCollisionsWithBullet();
+            
             //bonusDebuf();
 
             if(this.contains(bonus))
@@ -179,7 +194,7 @@ class Game extends Sprite
        // trace(pauseIsPressed);
     }
 
-    public function checkCollisionWithTile(playerHitBox: Rectangle, tile:Tile):Bool
+   /* public function checkCollisionWithTile(playerHitBox: Rectangle, tile:Tile):Bool
     {
         var hitBox = new Point();
         hitBox = player.localToGlobal(new Point(playerHitBox.x,playerHitBox.y));  // координаты хитбокса игрока в глобальной системе координат
@@ -225,7 +240,7 @@ class Game extends Sprite
             }
             //trace(i);
         }
-    }
+    }*/
     public function playerJump(jumpPower:Float)
     {
        // trace(player.get_jump()+" "+haveCollision);
@@ -251,6 +266,15 @@ class Game extends Sprite
                 }
                 i++;
             }    
+    }
+    public function grenadeMove() 
+    {
+        if(this.contains(grenade))
+        {
+            grenade.move();
+            grenade.doCollisionWithTiles(gameLevel.level);
+            doCollisionWithGrenade();
+        }    
     }
 
     public function generateEnemies() 
@@ -332,6 +356,25 @@ class Game extends Sprite
             b++;
         } 
     }
+    public function doCollisionWithGrenade() 
+    {
+        var e =0;
+        while(e < enemies.length)
+        {
+            if(grenade.checkCollisionWithEnemy(enemies[e]))
+            {
+                removeChild(enemies[e]);
+                spawnBonus(enemies[e]);
+                ++gamePoints;
+                pointsField.text = Std.string(gamePoints);
+                deadEnemies.push(enemies[e]);
+                enemies.remove(enemies[e]);
+                grenade.set_state(explosion);
+                break;
+            }
+            e++;
+        }
+    }
     
     public function get_gameIsOver() 
     {
@@ -360,7 +403,16 @@ class Game extends Sprite
         if(Bonus.bonusIsUsed)
         {
             if(Bonus.get_bonusType() == slow)
-                Bonus.doBonusSlow(player,enemies,deadEnemies, bullets);
+            {
+                Bonus.doBonusSlow(player,enemies,deadEnemies, bullets, grenade);
+                bonusIndicator.graphics.clear();
+                bonusIndicator.graphics.beginGradientFill(RADIAL,[0xFF0000, 0xFFFFFF],[1.0,1.0], [0,95]);
+                bonusIndicator.graphics.drawRect(0,0,(Main.sizeWidth/3.5/(600)*(600-Bonus.get_counter())),20);
+                addChild(bonusIndicator);
+                if(Bonus.get_counter() < 1)
+                    removeChild(bonusIndicator);
+            }
+                
             else if(Bonus.get_bonusType()== destroy)
                 doBonusDestroy();
         }    
@@ -375,7 +427,7 @@ class Game extends Sprite
 
     public function spawnBonus(enemy:Enemy) 
     {
-        if(!Bonus.bonusIsUsed && !Bonus.haveBonus && Math.random() < 0.08)
+        if(!Bonus.bonusIsUsed && !Bonus.haveBonus && Math.random() < 0.15)
         {
             Bonus.bonusIsUsed = false;
             Bonus.haveBonus = true;

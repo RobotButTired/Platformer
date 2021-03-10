@@ -22,6 +22,9 @@
 #ifndef INCLUDED_haxe_Log
 #include <haxe/Log.h>
 #endif
+#ifndef INCLUDED_lime_app_IModule
+#include <lime/app/IModule.h>
+#endif
 #ifndef INCLUDED_lime_system_System
 #include <lime/system/System.h>
 #endif
@@ -40,6 +43,9 @@
 #ifndef INCLUDED_openfl_display_Sprite
 #include <openfl/display/Sprite.h>
 #endif
+#ifndef INCLUDED_openfl_display_Stage
+#include <openfl/display/Stage.h>
+#endif
 #ifndef INCLUDED_openfl_events_Event
 #include <openfl/events/Event.h>
 #endif
@@ -54,8 +60,8 @@
 #endif
 
 HX_DEFINE_STACK_FRAME(_hx_pos_e47a9afac0942eb9_21_new,"Main","new",0x6616a5cb,"Main.new","Main.hx",21,0x087e5c05)
-HX_LOCAL_STACK_FRAME(_hx_pos_e47a9afac0942eb9_39_update,"Main","update",0xb7afa57e,"Main.update","Main.hx",39,0x087e5c05)
-HX_LOCAL_STACK_FRAME(_hx_pos_e47a9afac0942eb9_100_get_FPS,"Main","get_FPS",0x8adb934b,"Main.get_FPS","Main.hx",100,0x087e5c05)
+HX_LOCAL_STACK_FRAME(_hx_pos_e47a9afac0942eb9_40_update,"Main","update",0xb7afa57e,"Main.update","Main.hx",40,0x087e5c05)
+HX_LOCAL_STACK_FRAME(_hx_pos_e47a9afac0942eb9_101_get_FPS,"Main","get_FPS",0x8adb934b,"Main.get_FPS","Main.hx",101,0x087e5c05)
 HX_LOCAL_STACK_FRAME(_hx_pos_e47a9afac0942eb9_11_boot,"Main","boot",0xe5d36c67,"Main.boot","Main.hx",11,0x087e5c05)
 HX_LOCAL_STACK_FRAME(_hx_pos_e47a9afac0942eb9_12_boot,"Main","boot",0xe5d36c67,"Main.boot","Main.hx",12,0x087e5c05)
 HX_LOCAL_STACK_FRAME(_hx_pos_e47a9afac0942eb9_18_boot,"Main","boot",0xe5d36c67,"Main.boot","Main.hx",18,0x087e5c05)
@@ -63,24 +69,25 @@ HX_LOCAL_STACK_FRAME(_hx_pos_e47a9afac0942eb9_18_boot,"Main","boot",0xe5d36c67,"
 void Main_obj::__construct(){
             	HX_GC_STACKFRAME(&_hx_pos_e47a9afac0942eb9_21_new)
 HXLINE(  22)		super::__construct();
-HXLINE(  23)		this->startScreen =  ::StartScreen_obj::__alloc( HX_CTX ,::Main_obj::sizeWidth,::Main_obj::sizeHeight,hx::ObjectPtr<OBJ_>(this));
-HXLINE(  24)		this->rulesScreen =  ::RulesScreen_obj::__alloc( HX_CTX ,::Main_obj::sizeWidth,::Main_obj::sizeHeight);
-HXLINE(  25)		this->gameOverScreen =  ::GameOverScreen_obj::__alloc( HX_CTX );
-HXLINE(  28)		this->addChild(this->startScreen);
-HXLINE(  30)		 ::Dynamic _hx_tmp = ::haxe::Log_obj::trace;
-HXDLIN(  30)		::String _hx_tmp1 = (this->get_width() + HX_(" ",20,00,00,00));
-HXDLIN(  30)		::String _hx_tmp2 = (_hx_tmp1 + this->get_height());
-HXDLIN(  30)		_hx_tmp(_hx_tmp2,hx::SourceInfo(HX_("Source/Main.hx",b1,67,fd,ea),30,HX_("Main",59,64,2f,33),HX_("new",60,d0,53,00)));
-HXLINE(  32)		this->addEventListener(HX_("enterFrame",f5,03,50,02),this->update_dyn(),null(),null(),null());
-HXLINE(  34)		int timer = ::lime::_hx_system::System_obj::getTimer();
-HXDLIN(  34)		Float _hx_tmp3;
-HXDLIN(  34)		if ((timer > 0)) {
-HXLINE(  34)			_hx_tmp3 = (( (Float)(timer) ) / ( (Float)(1000) ));
+HXLINE(  23)		this->stage->set_frameRate(( (Float)(120) ));
+HXLINE(  24)		this->startScreen =  ::StartScreen_obj::__alloc( HX_CTX ,::Main_obj::sizeWidth,::Main_obj::sizeHeight,hx::ObjectPtr<OBJ_>(this));
+HXLINE(  25)		this->rulesScreen =  ::RulesScreen_obj::__alloc( HX_CTX ,::Main_obj::sizeWidth,::Main_obj::sizeHeight);
+HXLINE(  26)		this->gameOverScreen =  ::GameOverScreen_obj::__alloc( HX_CTX );
+HXLINE(  29)		this->addChild(this->startScreen);
+HXLINE(  31)		 ::Dynamic _hx_tmp = ::haxe::Log_obj::trace;
+HXDLIN(  31)		::String _hx_tmp1 = (this->get_width() + HX_(" ",20,00,00,00));
+HXDLIN(  31)		::String _hx_tmp2 = (_hx_tmp1 + this->get_height());
+HXDLIN(  31)		_hx_tmp(_hx_tmp2,hx::SourceInfo(HX_("Source/Main.hx",b1,67,fd,ea),31,HX_("Main",59,64,2f,33),HX_("new",60,d0,53,00)));
+HXLINE(  33)		this->addEventListener(HX_("enterFrame",f5,03,50,02),this->update_dyn(),null(),null(),null());
+HXLINE(  35)		int timer = ::lime::_hx_system::System_obj::getTimer();
+HXDLIN(  35)		Float _hx_tmp3;
+HXDLIN(  35)		if ((timer > 0)) {
+HXLINE(  35)			_hx_tmp3 = (( (Float)(timer) ) / ( (Float)(1000) ));
             		}
             		else {
-HXLINE(  34)			_hx_tmp3 = ( (Float)(0) );
+HXLINE(  35)			_hx_tmp3 = ( (Float)(0) );
             		}
-HXDLIN(  34)		this->timeFlag = _hx_tmp3;
+HXDLIN(  35)		this->timeFlag = _hx_tmp3;
             	}
 
 Dynamic Main_obj::__CreateEmpty() { return new Main_obj; }
@@ -115,72 +122,72 @@ bool Main_obj::_hx_isInstanceOf(int inClassId) {
 }
 
 void Main_obj::update( ::openfl::events::Event e){
-            	HX_GC_STACKFRAME(&_hx_pos_e47a9afac0942eb9_39_update)
-HXDLIN(  39)		int timer = ::lime::_hx_system::System_obj::getTimer();
-HXDLIN(  39)		Float _hx_tmp;
-HXDLIN(  39)		if ((timer > 0)) {
-HXDLIN(  39)			_hx_tmp = (( (Float)(timer) ) / ( (Float)(1000) ));
+            	HX_GC_STACKFRAME(&_hx_pos_e47a9afac0942eb9_40_update)
+HXDLIN(  40)		int timer = ::lime::_hx_system::System_obj::getTimer();
+HXDLIN(  40)		Float _hx_tmp;
+HXDLIN(  40)		if ((timer > 0)) {
+HXDLIN(  40)			_hx_tmp = (( (Float)(timer) ) / ( (Float)(1000) ));
             		}
             		else {
-HXDLIN(  39)			_hx_tmp = ( (Float)(0) );
+HXDLIN(  40)			_hx_tmp = ( (Float)(0) );
             		}
-HXDLIN(  39)		Float _hx_tmp1 = (_hx_tmp - this->timeFlag);
-HXDLIN(  39)		if ((_hx_tmp1 >= (( (Float)(1) ) / ( (Float)(::Main_obj::get_FPS()) )))) {
-HXLINE(  41)			if (this->startScreen->get_rulesButtonIsPressed()) {
-HXLINE(  43)				this->removeChild(this->startScreen);
-HXLINE(  44)				this->startScreen->reset();
-HXLINE(  45)				this->addChild(this->rulesScreen);
+HXDLIN(  40)		Float _hx_tmp1 = (_hx_tmp - this->timeFlag);
+HXDLIN(  40)		if ((_hx_tmp1 >= (( (Float)(1) ) / ( (Float)(::Main_obj::get_FPS()) )))) {
+HXLINE(  42)			if (this->startScreen->get_rulesButtonIsPressed()) {
+HXLINE(  44)				this->removeChild(this->startScreen);
+HXLINE(  45)				this->startScreen->reset();
+HXLINE(  46)				this->addChild(this->rulesScreen);
             			}
-HXLINE(  47)			if (this->rulesScreen->get_backButtonIsPressed()) {
-HXLINE(  49)				this->removeChild(this->rulesScreen);
-HXLINE(  50)				this->rulesScreen->reset();
-HXLINE(  51)				this->addChild(this->startScreen);
+HXLINE(  48)			if (this->rulesScreen->get_backButtonIsPressed()) {
+HXLINE(  50)				this->removeChild(this->rulesScreen);
+HXLINE(  51)				this->rulesScreen->reset();
+HXLINE(  52)				this->addChild(this->startScreen);
             			}
-HXLINE(  53)			if (this->startScreen->get_startButtonIsPressed()) {
-HXLINE(  55)				this->removeChild(this->startScreen);
-HXLINE(  56)				this->startScreen->reset();
-HXLINE(  57)				this->game =  ::Game_obj::__alloc( HX_CTX ,::Main_obj::sizeWidth,::Main_obj::sizeHeight);
-HXLINE(  58)				this->addChild(this->game);
+HXLINE(  54)			if (this->startScreen->get_startButtonIsPressed()) {
+HXLINE(  56)				this->removeChild(this->startScreen);
+HXLINE(  57)				this->startScreen->reset();
+HXLINE(  58)				this->game =  ::Game_obj::__alloc( HX_CTX ,::Main_obj::sizeWidth,::Main_obj::sizeHeight);
+HXLINE(  59)				this->addChild(this->game);
             			}
-HXLINE(  60)			if (this->gameOverScreen->get_quitButtonIsPressed()) {
-HXLINE(  62)				this->removeChild(this->gameOverScreen);
-HXLINE(  63)				this->gameOverScreen->reset();
-HXLINE(  64)				this->addChild(this->startScreen);
+HXLINE(  61)			if (this->gameOverScreen->get_quitButtonIsPressed()) {
+HXLINE(  63)				this->removeChild(this->gameOverScreen);
+HXLINE(  64)				this->gameOverScreen->reset();
+HXLINE(  65)				this->addChild(this->startScreen);
             			}
-HXLINE(  66)			if (this->gameOverScreen->get_tryAgainButtonIsPressed()) {
-HXLINE(  68)				this->removeChild(this->gameOverScreen);
-HXLINE(  69)				this->gameOverScreen->reset();
-HXLINE(  70)				this->game =  ::Game_obj::__alloc( HX_CTX ,::Main_obj::sizeWidth,::Main_obj::sizeHeight);
-HXLINE(  71)				this->addChild(this->game);
+HXLINE(  67)			if (this->gameOverScreen->get_tryAgainButtonIsPressed()) {
+HXLINE(  69)				this->removeChild(this->gameOverScreen);
+HXLINE(  70)				this->gameOverScreen->reset();
+HXLINE(  71)				this->game =  ::Game_obj::__alloc( HX_CTX ,::Main_obj::sizeWidth,::Main_obj::sizeHeight);
+HXLINE(  72)				this->addChild(this->game);
             			}
-HXLINE(  73)			if (this->contains(this->game)) {
-HXLINE(  75)				if (this->game->get_quitButtonIsPressed()) {
-HXLINE(  77)					this->removeChild(this->game);
-HXLINE(  78)					this->addChild(this->startScreen);
-HXLINE(  79)					this->game = null();
+HXLINE(  74)			if (this->contains(this->game)) {
+HXLINE(  76)				if (this->game->get_quitButtonIsPressed()) {
+HXLINE(  78)					this->removeChild(this->game);
+HXLINE(  79)					this->addChild(this->startScreen);
+HXLINE(  80)					this->game = null();
             				}
             				else {
-HXLINE(  81)					if (this->game->get_gameIsOver()) {
-HXLINE(  83)						this->removeChild(this->game);
-HXLINE(  84)						 ::openfl::text::TextField _hx_tmp2 = this->gameOverScreen->pointsField;
-HXDLIN(  84)						_hx_tmp2->set_text(::Std_obj::string(this->game->get_gamePoints()));
-HXLINE(  85)						this->addChild(this->gameOverScreen);
-HXLINE(  86)						this->game = null();
+HXLINE(  82)					if (this->game->get_gameIsOver()) {
+HXLINE(  84)						this->removeChild(this->game);
+HXLINE(  85)						 ::openfl::text::TextField _hx_tmp2 = this->gameOverScreen->pointsField;
+HXDLIN(  85)						_hx_tmp2->set_text(::Std_obj::string(this->game->get_gamePoints()));
+HXLINE(  86)						this->addChild(this->gameOverScreen);
+HXLINE(  87)						this->game = null();
             					}
             				}
-HXLINE(  88)				if (hx::IsNotNull( this->game )) {
-HXLINE(  90)					this->game->update();
+HXLINE(  89)				if (hx::IsNotNull( this->game )) {
+HXLINE(  91)					this->game->update();
             				}
             			}
-HXLINE(  93)			int timer1 = ::lime::_hx_system::System_obj::getTimer();
-HXDLIN(  93)			Float _hx_tmp3;
-HXDLIN(  93)			if ((timer1 > 0)) {
-HXLINE(  93)				_hx_tmp3 = (( (Float)(timer1) ) / ( (Float)(1000) ));
+HXLINE(  94)			int timer1 = ::lime::_hx_system::System_obj::getTimer();
+HXDLIN(  94)			Float _hx_tmp3;
+HXDLIN(  94)			if ((timer1 > 0)) {
+HXLINE(  94)				_hx_tmp3 = (( (Float)(timer1) ) / ( (Float)(1000) ));
             			}
             			else {
-HXLINE(  93)				_hx_tmp3 = ( (Float)(0) );
+HXLINE(  94)				_hx_tmp3 = ( (Float)(0) );
             			}
-HXDLIN(  93)			this->timeFlag = _hx_tmp3;
+HXDLIN(  94)			this->timeFlag = _hx_tmp3;
             		}
             	}
 
@@ -194,8 +201,8 @@ int Main_obj::sizeHeight;
 int Main_obj::FPS;
 
 int Main_obj::get_FPS(){
-            	HX_STACKFRAME(&_hx_pos_e47a9afac0942eb9_100_get_FPS)
-HXDLIN( 100)		return ::Main_obj::FPS;
+            	HX_STACKFRAME(&_hx_pos_e47a9afac0942eb9_101_get_FPS)
+HXDLIN( 101)		return ::Main_obj::FPS;
             	}
 
 

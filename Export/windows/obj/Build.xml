@@ -5337,12 +5337,14 @@
    <depend name="include/StartScreen.h"/>
    <depend name="include/Std.h"/>
    <depend name="include/haxe/Log.h"/>
+   <depend name="include/lime/app/IModule.h"/>
    <depend name="include/lime/system/System.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
    <depend name="include/openfl/display/DisplayObjectContainer.h"/>
    <depend name="include/openfl/display/IBitmapDrawable.h"/>
    <depend name="include/openfl/display/InteractiveObject.h"/>
    <depend name="include/openfl/display/Sprite.h"/>
+   <depend name="include/openfl/display/Stage.h"/>
    <depend name="include/openfl/events/Event.h"/>
    <depend name="include/openfl/events/EventDispatcher.h"/>
    <depend name="include/openfl/events/IEventDispatcher.h"/>

@@ -1,5 +1,6 @@
 package;
 
+import openfl.display.GraphicsEndFill;
 import openfl.events.MouseEvent;
 import openfl.display.Sprite;
 import openfl.geom.Rectangle;
@@ -26,10 +27,14 @@ class Player extends Unit
     var frameTime:Float = 0.15;
     var ind:Int;
 
-    var frameOfFire:Float = 0.75;        //скорострельность
+    var rateOfFire:Float = 0.75;        //скорострельность в секунду
+    var rateOfThrow:Float = 0.25;       //бросков гранаты в секунду
     var shooting:Bool = false;          //тригер для стрельбы
    // var shootingTime:Float;             //временной флаг для стрельбы
-   var counter:Int = 0;
+   var gunCounter:Int = 0;
+   var grenadeCounter:Int = 0;            //счетчик для гранаты
+
+    public var inventory:Inventory;
 
 
     public function new() 
@@ -69,6 +74,10 @@ class Player extends Unit
         timeFlag = Timer.stamp();
 
         //shootingTime = Timer.stamp();
+
+        inventory = new Inventory();
+        inventory.panel.x =200;
+        inventory.panel.y =5;
 
         Lib.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownHandler);
         Lib.current.stage.addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
@@ -174,33 +183,64 @@ class Player extends Unit
 
     public function doShot(game:Game) 
     {
-        //if(Timer.stamp()- shootingTime >= 1/frameOfFire && shooting)
-        if(counter >= Main.get_FPS() / frameOfFire && shooting)
+        inventory.update(this);
+        if(gunCounter == 0 && shooting && inventory.get_weapon() == gun)
             {
-                var bullet:Bullet;
-                if(game.spentBullets.length > 0)
-                    {
-                        trace(999999);
-                        game.bullets.push(game.spentBullets.pop());
-                        game.bullets[game.bullets.length-1].setBullet(this);
-                       // game.bullets.push(bullet);
-                        game.addChild(game.bullets[game.bullets.length-1]);
-                       // shootingTime = Timer.stamp();
-                       counter = 0;
-                    }
-                    else
-                    {
-                        bullet = new Bullet(this);
-                        game.bullets.push(bullet);
-                        game.addChild(bullet);
-                        trace("Shot");
-                        //shootingTime = Timer.stamp();
-                        counter = 0;
-                    }
-              
+                doShotGun(game);
             }
+        else if(gunCounter != 0)
+        {
+            --gunCounter;
+        }
+        if(grenadeCounter ==0 && shooting && inventory.get_weapon() == grenade)
+        {
+            doShotGrenade(game);
+        }
+        else if(grenadeCounter != 0)
+        {
+            --grenadeCounter;
+        }
+           //trace(gunCounter);
+    }
+    public function doShotGun(game:Game) 
+    {
+        var bullet:Bullet;
+        if(game.spentBullets.length > 0)
+            {
+                trace(999999);
+                game.bullets.push(game.spentBullets.pop());
+                game.bullets[game.bullets.length-1].setBullet(this);
+               // game.bullets.push(bullet);
+                game.addChild(game.bullets[game.bullets.length-1]);
+               // shootingTime = Timer.stamp();
+               gunCounter = Math.floor(Main.get_FPS() / rateOfFire);
+            }
+            else
+            {
+                bullet = new Bullet(this);
+                game.bullets.push(bullet);
+                game.addChild(bullet);
+                trace("Shot");          
+                gunCounter = Math.floor(Main.get_FPS() / rateOfFire);
+            }
+    }
+    public function doShotGrenade(game:Game) 
+    {
+        if(game.grenade != null) //  && game.grenade.get_state() == inactive)
+        {
+            game.grenade.setGrenade(this);
+            game.addChild(game.grenade);
+            game.grenade.set_state(active);
+            grenadeCounter = Math.floor(Main.get_FPS() / rateOfThrow);
+            trace("SETTING GRENADE");
+        }
         else
-            ++counter;
+        {
+            var grenade = new Grenade(this);
+            game.grenade = grenade;
+            game.addChild(grenade);
+            grenadeCounter = Math.floor(Main.get_FPS() / rateOfThrow);
+        }
     }
 
     public function checkCollisionWithEnemy(enemy:Enemy):Bool
@@ -280,6 +320,22 @@ class Player extends Unit
     public function set_state(value:State) 
     {
         state = value;    
+    }
+    public function get_gunCounter()
+    {
+        return gunCounter;    
+    }
+    public function get_rateOfFire() 
+    {
+        return rateOfFire;    
+    }
+    public function get_grenadeCounter() 
+    {
+        return grenadeCounter;    
+    }
+    public function get_rateOfThrow() 
+    {
+        return rateOfThrow;    
     }
 
    /* public function set_shootingTime(value:Float):Float

@@ -1,5 +1,6 @@
 package;
 
+import openfl.display.Sprite;
 import openfl.geom.Rectangle;
 
 enum BonusType{slow;destroy;}
@@ -10,6 +11,8 @@ class Bonus extends Unit
     public static var bonusIsUsed:Bool = false;
     public static var haveBonus:Bool = false;
     static var bonusType(get, null):BonusType;
+
+    
     public function new() 
     {
         super();
@@ -77,7 +80,7 @@ class Bonus extends Unit
             return false;
     }
 
-    public static function doBonusSlow(player:Player, enemies:Array<Enemy>,deadEnemies:Array<Enemy>, bullets:Array<Bullet>) 
+    public static function doBonusSlow(player:Player, enemies:Array<Enemy>,deadEnemies:Array<Enemy>, bullets:Array<Bullet>, grenade:Grenade) 
     {
         if(counter == 0)
         {
@@ -108,7 +111,12 @@ class Bonus extends Unit
                 deadEnemies[e].gravity*=0.25;
                 ++e;
             }
-           // bullet.set_speed(bullet.get_speed()*0.25);
+            if(grenade != null)
+            {
+                grenade.set_speedX(grenade.get_speedX()*0.25);
+                grenade.set_speedY(grenade.get_speedY()*0.25);
+                grenade.set_gravity(grenade.get_gravity()/16.0);
+            }
         }
         else 
         {
@@ -137,10 +145,15 @@ class Bonus extends Unit
                 {
                     deadEnemies[e].speedX /= 0.25;
                     deadEnemies[e].speedY /= 0.25;
-                    deadEnemies[e].gravity/=0.25;
+                    deadEnemies[e].gravity/=0.5;
                     ++e;
                 }
-               // bullet.set_speed(bullet.get_speed()*4.0);
+                if(grenade != null)
+                {
+                    grenade.set_speedX(grenade.get_speedX()/0.25);
+                    grenade.set_speedY(grenade.get_speedY()/0.25);
+                    grenade.set_gravity(grenade.get_gravity()*16.0);
+                }
                bonusIsUsed = false;
                haveBonus = false;
                counter =-1;
@@ -153,6 +166,10 @@ class Bonus extends Unit
     public static function get_bonusType() 
     {
         return bonusType;    
+    }
+    public static function get_counter() 
+    {
+        return counter;    
     }
 
 
