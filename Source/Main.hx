@@ -20,7 +20,7 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
-		stage.frameRate = 100;
+		stage.frameRate = 120;
 		startScreen = new StartScreen(sizeWidth, sizeHeight, this);
 		rulesScreen = new RulesScreen(sizeWidth, sizeHeight);
 		gameOverScreen = new GameOverScreen();

@@ -10,12 +10,6 @@
 #ifndef INCLUDED_Direction
 #include <Direction.h>
 #endif
-#ifndef INCLUDED_Enemy
-#include <Enemy.h>
-#endif
-#ifndef INCLUDED_Player
-#include <Player.h>
-#endif
 #ifndef INCLUDED_Unit
 #include <Unit.h>
 #endif
@@ -43,21 +37,29 @@
 #ifndef INCLUDED_openfl_events_IEventDispatcher
 #include <openfl/events/IEventDispatcher.h>
 #endif
+#ifndef INCLUDED_openfl_geom_Rectangle
+#include <openfl/geom/Rectangle.h>
+#endif
 
 HX_DEFINE_STACK_FRAME(_hx_pos_916b41f5f19492cb_9_new,"Bullet","new",0xf3208054,"Bullet.new","Bullet.hx",9,0xb42ce59c)
-HX_LOCAL_STACK_FRAME(_hx_pos_916b41f5f19492cb_20_move,"Bullet","move",0xc8ae289d,"Bullet.move","Bullet.hx",20,0xb42ce59c)
-HX_LOCAL_STACK_FRAME(_hx_pos_916b41f5f19492cb_24_setBullet,"Bullet","setBullet",0x16a72678,"Bullet.setBullet","Bullet.hx",24,0xb42ce59c)
-HX_LOCAL_STACK_FRAME(_hx_pos_916b41f5f19492cb_44_checkCollisionWithEnemy,"Bullet","checkCollisionWithEnemy",0x7bc7806c,"Bullet.checkCollisionWithEnemy","Bullet.hx",44,0xb42ce59c)
-HX_LOCAL_STACK_FRAME(_hx_pos_916b41f5f19492cb_54_get_speed,"Bullet","get_speed",0xa78212d2,"Bullet.get_speed","Bullet.hx",54,0xb42ce59c)
-HX_LOCAL_STACK_FRAME(_hx_pos_916b41f5f19492cb_58_set_speed,"Bullet","set_speed",0x8ad2fede,"Bullet.set_speed","Bullet.hx",58,0xb42ce59c)
+HX_LOCAL_STACK_FRAME(_hx_pos_916b41f5f19492cb_23_move,"Bullet","move",0xc8ae289d,"Bullet.move","Bullet.hx",23,0xb42ce59c)
+HX_LOCAL_STACK_FRAME(_hx_pos_916b41f5f19492cb_27_setBullet,"Bullet","setBullet",0x16a72678,"Bullet.setBullet","Bullet.hx",27,0xb42ce59c)
+HX_LOCAL_STACK_FRAME(_hx_pos_916b41f5f19492cb_47_checkCollisionWithUnit,"Bullet","checkCollisionWithUnit",0x1fcb6ce0,"Bullet.checkCollisionWithUnit","Bullet.hx",47,0xb42ce59c)
+HX_LOCAL_STACK_FRAME(_hx_pos_916b41f5f19492cb_67_get_speed,"Bullet","get_speed",0xa78212d2,"Bullet.get_speed","Bullet.hx",67,0xb42ce59c)
+HX_LOCAL_STACK_FRAME(_hx_pos_916b41f5f19492cb_71_set_speed,"Bullet","set_speed",0x8ad2fede,"Bullet.set_speed","Bullet.hx",71,0xb42ce59c)
 
-void Bullet_obj::__construct( ::Player player){
+void Bullet_obj::__construct( ::Unit unit, ::Dynamic color){
             	HX_STACKFRAME(&_hx_pos_916b41f5f19492cb_9_new)
 HXLINE(  10)		super::__construct();
-HXLINE(  12)		this->get_graphics()->beginFill(255,null());
-HXLINE(  13)		this->get_graphics()->drawRect(((Float)-3.5),((Float)-0.5),( (Float)(7) ),( (Float)(4) ));
-HXLINE(  14)		this->get_graphics()->endFill();
-HXLINE(  15)		this->setBullet(player);
+HXLINE(  12)		if (hx::IsNotNull( color )) {
+HXLINE(  13)			this->get_graphics()->beginFill(0,null());
+            		}
+            		else {
+HXLINE(  15)			this->get_graphics()->beginFill(255,null());
+            		}
+HXLINE(  16)		this->get_graphics()->drawRect(((Float)-3.5),((Float)-0.5),( (Float)(7) ),( (Float)(4) ));
+HXLINE(  17)		this->get_graphics()->endFill();
+HXLINE(  18)		this->setBullet(unit);
             	}
 
 Dynamic Bullet_obj::__CreateEmpty() { return new Bullet_obj; }
@@ -67,7 +69,7 @@ void *Bullet_obj::_hx_vtable = 0;
 Dynamic Bullet_obj::__Create(hx::DynamicArray inArgs)
 {
 	hx::ObjectPtr< Bullet_obj > _hx_result = new Bullet_obj();
-	_hx_result->__construct(inArgs[0]);
+	_hx_result->__construct(inArgs[0],inArgs[1]);
 	return _hx_result;
 }
 
@@ -92,31 +94,31 @@ bool Bullet_obj::_hx_isInstanceOf(int inClassId) {
 }
 
 void Bullet_obj::move(){
-            	HX_STACKFRAME(&_hx_pos_916b41f5f19492cb_20_move)
-HXDLIN(  20)		 ::Bullet _g = hx::ObjectPtr<OBJ_>(this);
-HXDLIN(  20)		Float _hx_tmp = _g->get_x();
-HXDLIN(  20)		_g->set_x((_hx_tmp + this->speed));
+            	HX_STACKFRAME(&_hx_pos_916b41f5f19492cb_23_move)
+HXDLIN(  23)		 ::Bullet _g = hx::ObjectPtr<OBJ_>(this);
+HXDLIN(  23)		Float _hx_tmp = _g->get_x();
+HXDLIN(  23)		_g->set_x((_hx_tmp + this->speed));
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(Bullet_obj,move,(void))
 
-void Bullet_obj::setBullet( ::Player player){
-            	HX_STACKFRAME(&_hx_pos_916b41f5f19492cb_24_setBullet)
-HXDLIN(  24)		if (hx::IsEq( player->get_direction(),::Direction_obj::right_dyn() )) {
-HXLINE(  26)			this->set_x((player->get_x() + ((Float)10.0)));
-HXLINE(  27)			this->set_y(player->get_y());
-HXLINE(  28)			this->speed = ((Float)20.0);
-HXLINE(  29)			if (::Bonus_obj::bonusIsUsed) {
-HXLINE(  30)				this->speed = ((Float)5.0);
+void Bullet_obj::setBullet( ::Unit unit){
+            	HX_STACKFRAME(&_hx_pos_916b41f5f19492cb_27_setBullet)
+HXDLIN(  27)		if (hx::IsEq( unit->get_direction(),::Direction_obj::right_dyn() )) {
+HXLINE(  29)			this->set_x((unit->get_x() + ((Float)10.0)));
+HXLINE(  30)			this->set_y(unit->get_y());
+HXLINE(  31)			this->speed = ((Float)20.0);
+HXLINE(  32)			if (::Bonus_obj::bonusIsUsed) {
+HXLINE(  33)				this->speed = ((Float)5.0);
             			}
             		}
             		else {
-HXLINE(  34)			this->set_x((player->get_x() - ((Float)10.0)));
-HXLINE(  35)			this->set_y(player->get_y());
-HXLINE(  36)			this->speed = ((Float)-20.0);
-HXLINE(  37)			if (::Bonus_obj::bonusIsUsed) {
-HXLINE(  38)				this->speed = ((Float)-5.0);
+HXLINE(  37)			this->set_x((unit->get_x() - ((Float)10.0)));
+HXLINE(  38)			this->set_y(unit->get_y());
+HXLINE(  39)			this->speed = ((Float)-20.0);
+HXLINE(  40)			if (::Bonus_obj::bonusIsUsed) {
+HXLINE(  41)				this->speed = ((Float)-5.0);
             			}
             		}
             	}
@@ -124,80 +126,80 @@ HXLINE(  38)				this->speed = ((Float)-5.0);
 
 HX_DEFINE_DYNAMIC_FUNC1(Bullet_obj,setBullet,(void))
 
-bool Bullet_obj::checkCollisionWithEnemy( ::Enemy enemy){
-            	HX_STACKFRAME(&_hx_pos_916b41f5f19492cb_44_checkCollisionWithEnemy)
-HXDLIN(  44)		bool _hx_tmp;
-HXDLIN(  44)		bool _hx_tmp1;
-HXDLIN(  44)		bool _hx_tmp2;
-HXDLIN(  44)		Float _hx_tmp3 = this->get_x();
-HXDLIN(  44)		Float _hx_tmp4 = (_hx_tmp3 + (this->get_width() / ( (Float)(2) )));
-HXDLIN(  44)		Float _hx_tmp5 = enemy->get_x();
-HXDLIN(  44)		if ((_hx_tmp4 > (_hx_tmp5 - (enemy->get_width() / ( (Float)(2) ))))) {
-HXDLIN(  44)			Float _hx_tmp6 = this->get_x();
-HXDLIN(  44)			Float _hx_tmp7 = (_hx_tmp6 - (this->get_width() / ( (Float)(2) )));
-HXDLIN(  44)			Float _hx_tmp8 = enemy->get_x();
-HXDLIN(  44)			_hx_tmp2 = (_hx_tmp7 < (_hx_tmp8 + (enemy->get_width() / ( (Float)(2) ))));
+bool Bullet_obj::checkCollisionWithUnit( ::Unit unit){
+            	HX_STACKFRAME(&_hx_pos_916b41f5f19492cb_47_checkCollisionWithUnit)
+HXDLIN(  47)		bool _hx_tmp;
+HXDLIN(  47)		bool _hx_tmp1;
+HXDLIN(  47)		bool _hx_tmp2;
+HXDLIN(  47)		Float _hx_tmp3 = this->get_x();
+HXDLIN(  47)		Float _hx_tmp4 = (_hx_tmp3 + (this->get_width() / ( (Float)(2) )));
+HXDLIN(  47)		Float _hx_tmp5 = unit->get_x();
+HXDLIN(  47)		if ((_hx_tmp4 > (_hx_tmp5 - (unit->get_hitBox()->width / ( (Float)(2) ))))) {
+HXDLIN(  47)			Float _hx_tmp6 = this->get_x();
+HXDLIN(  47)			Float _hx_tmp7 = (_hx_tmp6 - (this->get_width() / ( (Float)(2) )));
+HXDLIN(  47)			Float _hx_tmp8 = unit->get_x();
+HXDLIN(  47)			_hx_tmp2 = (_hx_tmp7 < (_hx_tmp8 + (unit->get_hitBox()->width / ( (Float)(2) ))));
             		}
             		else {
-HXDLIN(  44)			_hx_tmp2 = false;
+HXDLIN(  47)			_hx_tmp2 = false;
             		}
-HXDLIN(  44)		if (_hx_tmp2) {
-HXLINE(  45)			Float _hx_tmp9 = this->get_y();
-HXDLIN(  45)			Float _hx_tmp10 = (_hx_tmp9 + (this->get_height() / ( (Float)(2) )));
-HXDLIN(  45)			Float _hx_tmp11 = enemy->get_y();
-HXLINE(  44)			_hx_tmp1 = (_hx_tmp10 > (_hx_tmp11 - (enemy->get_height() / ( (Float)(2) ))));
-            		}
-            		else {
-HXDLIN(  44)			_hx_tmp1 = false;
-            		}
-HXDLIN(  44)		if (_hx_tmp1) {
-HXLINE(  45)			Float _hx_tmp12 = this->get_y();
-HXDLIN(  45)			Float _hx_tmp13 = (_hx_tmp12 - (this->get_height() / ( (Float)(2) )));
-HXDLIN(  45)			Float _hx_tmp14 = enemy->get_y();
-HXLINE(  44)			_hx_tmp = (_hx_tmp13 < (_hx_tmp14 + (enemy->get_height() / ( (Float)(2) ))));
+HXDLIN(  47)		if (_hx_tmp2) {
+HXLINE(  48)			Float _hx_tmp9 = this->get_y();
+HXDLIN(  48)			Float _hx_tmp10 = (_hx_tmp9 + (this->get_height() / ( (Float)(2) )));
+HXDLIN(  48)			Float _hx_tmp11 = unit->get_y();
+HXLINE(  47)			_hx_tmp1 = (_hx_tmp10 > (_hx_tmp11 - (unit->get_hitBox()->height / ( (Float)(2) ))));
             		}
             		else {
-HXDLIN(  44)			_hx_tmp = false;
+HXDLIN(  47)			_hx_tmp1 = false;
             		}
-HXDLIN(  44)		if (_hx_tmp) {
-HXLINE(  47)			return true;
+HXDLIN(  47)		if (_hx_tmp1) {
+HXLINE(  48)			Float _hx_tmp12 = this->get_y();
+HXDLIN(  48)			Float _hx_tmp13 = (_hx_tmp12 - (this->get_height() / ( (Float)(2) )));
+HXDLIN(  48)			Float _hx_tmp14 = unit->get_y();
+HXLINE(  47)			_hx_tmp = (_hx_tmp13 < (_hx_tmp14 + (unit->get_hitBox()->height / ( (Float)(2) ))));
             		}
             		else {
-HXLINE(  50)			return false;
+HXDLIN(  47)			_hx_tmp = false;
             		}
-HXLINE(  44)		return false;
+HXDLIN(  47)		if (_hx_tmp) {
+HXLINE(  50)			return true;
+            		}
+            		else {
+HXLINE(  53)			return false;
+            		}
+HXLINE(  47)		return false;
             	}
 
 
-HX_DEFINE_DYNAMIC_FUNC1(Bullet_obj,checkCollisionWithEnemy,return )
+HX_DEFINE_DYNAMIC_FUNC1(Bullet_obj,checkCollisionWithUnit,return )
 
 Float Bullet_obj::get_speed(){
-            	HX_STACKFRAME(&_hx_pos_916b41f5f19492cb_54_get_speed)
-HXDLIN(  54)		return this->speed;
+            	HX_STACKFRAME(&_hx_pos_916b41f5f19492cb_67_get_speed)
+HXDLIN(  67)		return this->speed;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(Bullet_obj,get_speed,return )
 
 void Bullet_obj::set_speed(Float value){
-            	HX_STACKFRAME(&_hx_pos_916b41f5f19492cb_58_set_speed)
-HXDLIN(  58)		this->speed = value;
+            	HX_STACKFRAME(&_hx_pos_916b41f5f19492cb_71_set_speed)
+HXDLIN(  71)		this->speed = value;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC1(Bullet_obj,set_speed,(void))
 
 
-hx::ObjectPtr< Bullet_obj > Bullet_obj::__new( ::Player player) {
+hx::ObjectPtr< Bullet_obj > Bullet_obj::__new( ::Unit unit, ::Dynamic color) {
 	hx::ObjectPtr< Bullet_obj > __this = new Bullet_obj();
-	__this->__construct(player);
+	__this->__construct(unit,color);
 	return __this;
 }
 
-hx::ObjectPtr< Bullet_obj > Bullet_obj::__alloc(hx::Ctx *_hx_ctx, ::Player player) {
+hx::ObjectPtr< Bullet_obj > Bullet_obj::__alloc(hx::Ctx *_hx_ctx, ::Unit unit, ::Dynamic color) {
 	Bullet_obj *__this = (Bullet_obj*)(hx::Ctx::alloc(_hx_ctx, sizeof(Bullet_obj), true, "Bullet"));
 	*(void **)__this = Bullet_obj::_hx_vtable;
-	__this->__construct(player);
+	__this->__construct(unit,color);
 	return __this;
 }
 
@@ -219,8 +221,8 @@ hx::Val Bullet_obj::__Field(const ::String &inName,hx::PropertyAccess inCallProp
 		if (HX_FIELD_EQ(inName,"get_speed") ) { return hx::Val( get_speed_dyn() ); }
 		if (HX_FIELD_EQ(inName,"set_speed") ) { return hx::Val( set_speed_dyn() ); }
 		break;
-	case 23:
-		if (HX_FIELD_EQ(inName,"checkCollisionWithEnemy") ) { return hx::Val( checkCollisionWithEnemy_dyn() ); }
+	case 22:
+		if (HX_FIELD_EQ(inName,"checkCollisionWithUnit") ) { return hx::Val( checkCollisionWithUnit_dyn() ); }
 	}
 	return super::__Field(inName,inCallProp);
 }
@@ -252,7 +254,7 @@ static ::String Bullet_obj_sMemberFields[] = {
 	HX_("speed",87,97,69,81),
 	HX_("move",11,e3,60,48),
 	HX_("setBullet",84,07,38,34),
-	HX_("checkCollisionWithEnemy",78,9e,8b,58),
+	HX_("checkCollisionWithUnit",54,d4,a1,3e),
 	HX_("get_speed",de,f3,12,c5),
 	HX_("set_speed",ea,df,63,a8),
 	::String(null()) };

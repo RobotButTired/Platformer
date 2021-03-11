@@ -166,7 +166,7 @@ class Bonus extends Unit
                 {
                     deadEnemies[e].speedX /= 0.25;
                     deadEnemies[e].speedY /= 0.25;
-                    deadEnemies[e].gravity/=0.5;
+                    deadEnemies[e].gravity/=0.25;
                     ++e;
                 }
                 e=0;

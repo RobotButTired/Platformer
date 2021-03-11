@@ -1,5 +1,6 @@
 package;
 
+import openfl.text.TextField;
 import openfl.events.KeyboardEvent;
 import openfl.Lib;
 import openfl.display.Sprite;
@@ -32,6 +33,20 @@ class Inventory
         grenadeIndicator.x = 55;
         panel.addChild(grenadeIndicator);
         grenadeReload = new Sprite();
+
+        var textGun = new TextField();
+        textGun.text = "GUN";
+        textGun.width = 50;
+        textGun.height =50;
+        textGun.mouseEnabled = false;
+        panel.addChild(textGun);
+        var textGrenade = new TextField();
+        textGrenade.text = "GRE\nNA\nDE";
+        textGrenade.width = 50;
+        textGrenade.height =50;
+        textGrenade.x = 55;
+        textGrenade.mouseEnabled = false;
+        panel.addChild(textGrenade);
 
         Lib.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, onDown);
     }

@@ -87,6 +87,9 @@ class HXCPP_CLASS_ATTRIBUTES Unit_obj : public  ::openfl::display::Sprite_obj
 		 ::CollisionDirection get_collisionDirection();
 		::Dynamic get_collisionDirection_dyn();
 
+		 ::Direction get_direction();
+		::Dynamic get_direction_dyn();
+
 };
 
 

@@ -10,8 +10,6 @@
 #include <openfl/display/Sprite.h>
 #endif
 HX_DECLARE_CLASS0(Bullet)
-HX_DECLARE_CLASS0(Enemy)
-HX_DECLARE_CLASS0(Player)
 HX_DECLARE_CLASS0(Unit)
 HX_DECLARE_CLASS2(openfl,display,DisplayObject)
 HX_DECLARE_CLASS2(openfl,display,DisplayObjectContainer)
@@ -33,13 +31,13 @@ class HXCPP_CLASS_ATTRIBUTES Bullet_obj : public  ::openfl::display::Sprite_obj
 	public:
 		enum { _hx_ClassId = 0x09250662 };
 
-		void __construct( ::Player player);
+		void __construct( ::Unit unit, ::Dynamic color);
 		inline void *operator new(size_t inSize, bool inContainer=true,const char *inName="Bullet")
 			{ return hx::Object::operator new(inSize,inContainer,inName); }
 		inline void *operator new(size_t inSize, int extra)
 			{ return hx::Object::operator new(inSize+extra,true,"Bullet"); }
-		static hx::ObjectPtr< Bullet_obj > __new( ::Player player);
-		static hx::ObjectPtr< Bullet_obj > __alloc(hx::Ctx *_hx_ctx, ::Player player);
+		static hx::ObjectPtr< Bullet_obj > __new( ::Unit unit, ::Dynamic color);
+		static hx::ObjectPtr< Bullet_obj > __alloc(hx::Ctx *_hx_ctx, ::Unit unit, ::Dynamic color);
 		static void * _hx_vtable;
 		static Dynamic __CreateEmpty();
 		static Dynamic __Create(hx::DynamicArray inArgs);
@@ -57,11 +55,11 @@ class HXCPP_CLASS_ATTRIBUTES Bullet_obj : public  ::openfl::display::Sprite_obj
 		void move();
 		::Dynamic move_dyn();
 
-		void setBullet( ::Player player);
+		void setBullet( ::Unit unit);
 		::Dynamic setBullet_dyn();
 
-		bool checkCollisionWithEnemy( ::Enemy enemy);
-		::Dynamic checkCollisionWithEnemy_dyn();
+		bool checkCollisionWithUnit( ::Unit unit);
+		::Dynamic checkCollisionWithUnit_dyn();
 
 		Float get_speed();
 		::Dynamic get_speed_dyn();

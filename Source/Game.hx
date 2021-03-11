@@ -1,5 +1,6 @@
 package;
 
+import openfl.geom.ColorTransform;
 import openfl.text.TextField;
 import openfl.events.KeyboardEvent;
 import openfl.Lib;
@@ -49,6 +50,12 @@ class Game extends Sprite
   //  var enemiesTimeFlag:Float;                  //временной флаг для генерации врагов
     var counter:Int =0;
 
+    var healthIndicator:Sprite;         //индикатор здоровья
+    
+    /*var colorPause:ColorTransform;
+    var colorUnpause:ColorTransform;*/
+    var pauseScreen:Sprite;
+
     public function new(width:Int, height:Int)
     {
         super();
@@ -92,12 +99,12 @@ class Game extends Sprite
        Bonus.haveBonus = false;
        bonusIndicator = new Sprite();
        bonusIndicator.x = 10;
-       bonusIndicator.y = 50;
-       /* bonus = new Bonus();
-       bonus.x = Main.sizeWidth/2;
-       bonus.y = Main.sizeHeight/4;
-       addChild(bonus);*/
+       bonusIndicator.y = 55;
 
+       //Health
+        healthIndicator = new Sprite();
+        healthIndicator.x = 10;
+        healthIndicator.y = 10;
         // PointsField
         pointsField = new TextField();
         pointsField.text = Std.string(gamePoints);
@@ -107,6 +114,13 @@ class Game extends Sprite
         pointsField.scaleY = 2.0;
         pointsField.mouseEnabled = false;
         addChild(pointsField);
+
+        //PauseScreen
+        pauseScreen = new Sprite();
+        pauseScreen.graphics.beginFill(0x000000);
+        pauseScreen.graphics.drawRect(0,0,Main.sizeWidth, Main.sizeHeight);
+        pauseScreen.graphics.endFill();
+        pauseScreen.alpha = 0.35;
 
           
         //quitButton
@@ -122,6 +136,7 @@ class Game extends Sprite
         Lib.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, pause);
 
       
+      
 
             
     }
@@ -135,9 +150,15 @@ class Game extends Sprite
         if(e.keyCode == 120)
         {
             if(!pauseIsPressed)
+            {
                 pauseIsPressed = true;
+                set_Pause();
+            }
             else 
+            {
                 pauseIsPressed = false;
+                set_Unpause();
+            }
         }
     }
     public function quitButtonClick(e:MouseEvent) 
@@ -163,14 +184,27 @@ class Game extends Sprite
     {
         if(!pauseIsPressed)
         {
+            //set_Unpause();
             bonusBuf();
+            showHealthIndicator();
             player.move(); 
            // doCollisionsWithTiles(); 
             player.doCollisionsWithTilesForPLayer(gameLevel.level);
-            doCollidionWithEnemies();
+            doCollisionsWithPLatforms();
+            if(!player.get_invulnerability())
+            {
+                doCollidionWithEnemies();
+                doCollisionWithEnemyBullet();
+            }
+            
             playerJump(jumpPower);
             player.spriteAnimated(player.get_state());  
             player.doShot(this);
+            if(player.get_invulnerability())
+            {
+                player.doInvulnerability();
+            }
+           
            // player.inventory.update(player);
 
             bulletsMove();
@@ -178,9 +212,9 @@ class Game extends Sprite
             //if(contains(grenade))
             generateEnemies();
             moveEnemies();
-            trace(enemyBullets.length+" "+spentEnemyBullets.length);
+           // trace(enemyBullets.length+" "+spentEnemyBullets.length);
             doCollisionsWithBullet();
-            doCollisionWithEnemyBullet();
+           
             
             //bonusDebuf();
 
@@ -196,8 +230,7 @@ class Game extends Sprite
         }
         else 
         {
-            //enemiesTimeFlag += Timer.stamp() - enemiesTimeFlag;
-           // player.set_shootingTime(player.get_shootingTime() + (Timer.stamp() - player.get_shootingTime()));
+            //set_Pause();
         }
         //trace(enemies.length+" "+deadEnemies.length);
        // trace(pauseIsPressed);
@@ -396,7 +429,14 @@ class Game extends Sprite
         {
                 if(enemyBullets[b].checkCollisionWithUnit(player))
                 {
-                    gameIsOver = true;
+                    spentEnemyBullets.push(enemyBullets[b]);
+                    removeChild(enemyBullets[b]);
+                    enemyBullets.remove(enemyBullets[b]);
+
+                    player.set_healthPoints(player.get_healthPoints() - 1);
+                    player.set_invulnerability(true);
+                    if(player.get_healthPoints() == 0)
+                        gameIsOver = true;
                     break;
                 }
                 b++;
@@ -445,10 +485,21 @@ class Game extends Sprite
         {
             if(player.checkCollisionWithEnemy(enemies[e]))
             {
-                gameIsOver = true;
+                player.set_healthPoints(player.get_healthPoints() - 1);
+                player.set_invulnerability(true);
+                if(player.get_healthPoints() == 0)
+                    gameIsOver = true;
             }
             e++;
         }    
+    }
+
+    public function showHealthIndicator() 
+    {
+        healthIndicator.graphics.clear();
+        healthIndicator.graphics.beginGradientFill(RADIAL, [0x00FF00, 0xFFFFFF], [1.0,1.0], [0,85]);
+        healthIndicator.graphics.drawRect(0,0,(Main.sizeWidth/4/player.get_maxHealthPoints()*player.get_healthPoints()),20);
+        addChild(healthIndicator);
     }
 
     public function bonusBuf()
@@ -508,4 +559,22 @@ class Game extends Sprite
                 Bonus.haveBonus = false;
                 Bonus.bonusIsUsed = false;
         }
+    public function doCollisionsWithPLatforms() 
+    {
+        for(i in 0...gameLevel.platforms.length)
+        {
+            player.doCollisionWithPlatform(gameLevel.platforms[i]);
+        }    
+    }
+    public function set_Pause() 
+    {
+        addChild(pauseScreen);
+    }
+    public function set_Unpause() 
+    {
+       //if(pauseIsPressed)
+        {
+            removeChild(pauseScreen);
+        }   
+    }
 }

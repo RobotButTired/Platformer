@@ -9,9 +9,9 @@
 #ifndef INCLUDED_Unit
 #include <Unit.h>
 #endif
-HX_DECLARE_CLASS0(Direction)
 HX_DECLARE_CLASS0(Enemy)
 HX_DECLARE_CLASS0(Game)
+HX_DECLARE_CLASS0(Inventory)
 HX_DECLARE_CLASS0(Player)
 HX_DECLARE_CLASS0(State)
 HX_DECLARE_CLASS0(Unit)
@@ -69,9 +69,17 @@ class HXCPP_CLASS_ATTRIBUTES Player_obj : public  ::Unit_obj
 		Float timeFlag;
 		Float frameTime;
 		int ind;
-		Float frameOfFire;
+		Float rateOfFire;
+		Float rateOfThrow;
 		bool shooting;
-		int counter;
+		int gunCounter;
+		int grenadeCounter;
+		 ::Inventory inventory;
+		int healthPoints;
+		int maxHealthPoints;
+		bool invulnerability;
+		Float invulnerabilityTime;
+		int invulnerabilityCounter;
 		void spriteAnimated( ::State state);
 		::Dynamic spriteAnimated_dyn();
 
@@ -96,14 +104,17 @@ class HXCPP_CLASS_ATTRIBUTES Player_obj : public  ::Unit_obj
 		void doShot( ::Game game);
 		::Dynamic doShot_dyn();
 
+		void doShotGun( ::Game game);
+		::Dynamic doShotGun_dyn();
+
+		void doShotGrenade( ::Game game);
+		::Dynamic doShotGrenade_dyn();
+
 		bool checkCollisionWithEnemy( ::Enemy enemy);
 		::Dynamic checkCollisionWithEnemy_dyn();
 
 		 ::State get_state();
 		::Dynamic get_state_dyn();
-
-		 ::Direction get_direction();
-		::Dynamic get_direction_dyn();
 
 		void drawHitBox();
 		::Dynamic drawHitBox_dyn();
@@ -112,6 +123,12 @@ class HXCPP_CLASS_ATTRIBUTES Player_obj : public  ::Unit_obj
 		::Dynamic doCollisionsWithTilesForPLayer_dyn();
 
 		void doCollisionsWithTiles(::Array< ::Dynamic> level);
+
+		void doInvulnerability();
+		::Dynamic doInvulnerability_dyn();
+
+		void doCollisionWithPlatform( ::openfl::display::Sprite platform);
+		::Dynamic doCollisionWithPlatform_dyn();
 
 		bool get_directionLeft();
 		::Dynamic get_directionLeft_dyn();
@@ -124,6 +141,33 @@ class HXCPP_CLASS_ATTRIBUTES Player_obj : public  ::Unit_obj
 
 		void set_state( ::State value);
 		::Dynamic set_state_dyn();
+
+		int get_gunCounter();
+		::Dynamic get_gunCounter_dyn();
+
+		Float get_rateOfFire();
+		::Dynamic get_rateOfFire_dyn();
+
+		int get_grenadeCounter();
+		::Dynamic get_grenadeCounter_dyn();
+
+		Float get_rateOfThrow();
+		::Dynamic get_rateOfThrow_dyn();
+
+		int get_healthPoints();
+		::Dynamic get_healthPoints_dyn();
+
+		void set_healthPoints(int value);
+		::Dynamic set_healthPoints_dyn();
+
+		int get_maxHealthPoints();
+		::Dynamic get_maxHealthPoints_dyn();
+
+		bool get_invulnerability();
+		::Dynamic get_invulnerability_dyn();
+
+		void set_invulnerability(bool value);
+		::Dynamic set_invulnerability_dyn();
 
 };
 

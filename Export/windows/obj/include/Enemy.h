@@ -10,6 +10,7 @@
 #include <Unit.h>
 #endif
 HX_DECLARE_CLASS0(Enemy)
+HX_DECLARE_CLASS0(Game)
 HX_DECLARE_CLASS0(Player)
 HX_DECLARE_CLASS0(Unit)
 HX_DECLARE_CLASS2(openfl,display,DisplayObject)
@@ -46,15 +47,21 @@ class HXCPP_CLASS_ATTRIBUTES Enemy_obj : public  ::Unit_obj
 
 		HX_DO_RTTI_ALL;
 		hx::Val __Field(const ::String &inString, hx::PropertyAccess inCallProp);
+		hx::Val __SetField(const ::String &inString,const hx::Val &inValue, hx::PropertyAccess inCallProp);
+		void __GetFields(Array< ::String> &outFields);
 		static void __register();
 		bool _hx_isInstanceOf(int inClassId);
 		::String __ToString() const { return HX_("Enemy",28,82,a8,03); }
 
+		int color;
 		void drawHitBox();
 		::Dynamic drawHitBox_dyn();
 
-		void move( ::Player player,::Array< ::Dynamic> level);
+		virtual void move( ::Player player,::Array< ::Dynamic> level);
 		::Dynamic move_dyn();
+
+		virtual void doShot( ::Game game);
+		::Dynamic doShot_dyn();
 
 };
 

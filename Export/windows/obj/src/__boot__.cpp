@@ -76,6 +76,12 @@
 #ifndef INCLUDED_State
 #include <State.h>
 #endif
+#ifndef INCLUDED_Weapon
+#include <Weapon.h>
+#endif
+#ifndef INCLUDED_GrenadeState
+#include <GrenadeState.h>
+#endif
 #ifndef INCLUDED_BonusType
 #include <BonusType.h>
 #endif
@@ -687,9 +693,6 @@
 #endif
 #ifndef INCLUDED_lime_system_CFFI
 #include <lime/system/CFFI.h>
-#endif
-#ifndef INCLUDED_lime_system_BackgroundWorker
-#include <lime/system/BackgroundWorker.h>
 #endif
 #ifndef INCLUDED_lime_net_curl_CURL
 #include <lime/net/curl/CURL.h>
@@ -1990,11 +1993,20 @@
 #ifndef INCLUDED_Lambda
 #include <Lambda.h>
 #endif
+#ifndef INCLUDED_Inventory
+#include <Inventory.h>
+#endif
+#ifndef INCLUDED_Grenade
+#include <Grenade.h>
+#endif
 #ifndef INCLUDED_GameOverScreen
 #include <GameOverScreen.h>
 #endif
 #ifndef INCLUDED_GameLevel
 #include <GameLevel.h>
+#endif
+#ifndef INCLUDED_EnemyWithGun
+#include <EnemyWithGun.h>
 #endif
 #ifndef INCLUDED_Enemy
 #include <Enemy.h>
@@ -2091,6 +2103,8 @@ hx::RegisterResources( hx::GetResources() );
 ::Direction_obj::__register();
 ::ValueType_obj::__register();
 ::State_obj::__register();
+::Weapon_obj::__register();
+::GrenadeState_obj::__register();
 ::BonusType_obj::__register();
 ::haxe::lang::Iterable_obj::__register();
 ::haxe::lang::Iterator_obj::__register();
@@ -2295,7 +2309,6 @@ hx::RegisterResources( hx::GetResources() );
 ::lime::_hx_system::JNI_obj::__register();
 ::lime::_hx_system::Clipboard_obj::__register();
 ::lime::_hx_system::CFFI_obj::__register();
-::lime::_hx_system::BackgroundWorker_obj::__register();
 ::lime::net::curl::CURL_obj::__register();
 ::lime::media::openal::ALC_obj::__register();
 ::lime::media::openal::AL_obj::__register();
@@ -2729,8 +2742,11 @@ hx::RegisterResources( hx::GetResources() );
 ::Player_obj::__register();
 ::ManifestResources_obj::__register();
 ::Lambda_obj::__register();
+::Inventory_obj::__register();
+::Grenade_obj::__register();
 ::GameOverScreen_obj::__register();
 ::GameLevel_obj::__register();
+::EnemyWithGun_obj::__register();
 ::Enemy_obj::__register();
 ::EReg_obj::__register();
 ::Date_obj::__register();
@@ -2777,6 +2793,8 @@ hx::RegisterResources( hx::GetResources() );
 ::Direction_obj::__boot();
 ::ValueType_obj::__boot();
 ::State_obj::__boot();
+::Weapon_obj::__boot();
+::GrenadeState_obj::__boot();
 ::BonusType_obj::__boot();
 ::lime::_internal::backend::native::NativeApplication_obj::__init__();
 ::lime::app::Application_obj::__init__();
@@ -2814,7 +2832,6 @@ hx::RegisterResources( hx::GetResources() );
 ::lime::media::openal::AL_obj::__boot();
 ::lime::media::openal::ALC_obj::__boot();
 ::lime::net::curl::CURL_obj::__boot();
-::lime::_hx_system::BackgroundWorker_obj::__boot();
 ::lime::_hx_system::CFFI_obj::__boot();
 ::lime::_hx_system::Clipboard_obj::__boot();
 ::lime::_hx_system::JNI_obj::__boot();

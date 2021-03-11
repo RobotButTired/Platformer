@@ -35,7 +35,13 @@ class Player extends Unit
    var grenadeCounter:Int = 0;            //счетчик для гранаты
 
     public var inventory:Inventory;
-
+    var healthPoints:Int;            //очки здоровья
+    var maxHealthPoints:Int = 3;          //максимальное количество очков здоровья
+    var invulnerability:Bool =false;               //неуязвимость
+    var invulnerabilityTime:Float = 2.0;          //время неуязвимости
+    var invulnerabilityCounter:Int =0;
+    
+    
 
     public function new() 
     {
@@ -68,7 +74,7 @@ class Player extends Unit
         idleWidthGun[0].x = -15;
         idleWidthGun[0].y = -40;
         trace(width+" "+height);
-        drawHitBox();
+       // drawHitBox();
        //this.addChild(idleWidthGun[0]);  
         ind =0; 
         timeFlag = Timer.stamp();
@@ -76,8 +82,11 @@ class Player extends Unit
         //shootingTime = Timer.stamp();
 
         inventory = new Inventory();
-        inventory.panel.x =200;
+        inventory.panel.x =250;
         inventory.panel.y =5;
+
+        healthPoints = maxHealthPoints;
+    
 
         Lib.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownHandler);
         Lib.current.stage.addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
@@ -299,6 +308,35 @@ class Player extends Unit
             }
         }
 
+    public function doInvulnerability() 
+    {
+        if(invulnerabilityCounter % (Main.get_FPS()/6) == 0)
+        {
+            alpha = (alpha == 1.0)? 0.0 : 1.0;
+            /*if(alpha == 1.0)
+                alpha = 0.0;
+            else alpha =1.0;*/
+        }
+        ++invulnerabilityCounter;
+        if(invulnerabilityCounter >= Main.get_FPS()*invulnerabilityTime)
+        {
+            invulnerability = false;
+            invulnerabilityCounter =0;
+        }
+    }
+
+    public function doCollisionWithPlatform(platform:Sprite) 
+    {
+        if(speedY >= 0.0 && x + hitBox.width/2 > platform.x && x - hitBox.width/2 < platform.x + platform.width &&
+            y + hitBox.height/2 > platform.y && y - hitBox.height/2 < platform.y)
+        {
+            Game.haveCollision = true;
+            collisionDirection = up;
+            y = platform.y - hitBox.height/2;
+            speedY = 0.0;
+        }
+    }
+
   
 
     public function get_directionLeft() 
@@ -332,6 +370,26 @@ class Player extends Unit
     public function get_rateOfThrow() 
     {
         return rateOfThrow;    
+    }
+    public function get_healthPoints() 
+    {
+        return healthPoints;    
+    }
+    public function set_healthPoints(value:Int) 
+    {
+         healthPoints = value;    
+    }
+    public function get_maxHealthPoints() 
+    {
+        return maxHealthPoints;    
+    }
+    public function get_invulnerability()
+    {
+        return invulnerability;    
+    }
+    public function set_invulnerability(value:Bool)
+    {
+        invulnerability = value;    
     }
 
    /* public function set_shootingTime(value:Float):Float

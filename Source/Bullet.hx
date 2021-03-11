@@ -10,7 +10,7 @@ class Bullet extends Sprite
         super();
 
         if(color != null)
-            graphics.beginFill(0xFF00FF);
+            graphics.beginFill(0x000000);
         else
             graphics.beginFill(0x0000FF);
         graphics.drawRect(-7/2,-2/4,7,4);

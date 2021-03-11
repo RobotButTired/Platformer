@@ -47,6 +47,7 @@ HX_LOCAL_STACK_FRAME(_hx_pos_39a55bac71d71c88_59_directionDefinition,"Unit","dir
 HX_LOCAL_STACK_FRAME(_hx_pos_39a55bac71d71c88_84_doCollisionWithTile,"Unit","doCollisionWithTile",0xc0d98011,"Unit.doCollisionWithTile","Unit.hx",84,0x8bc50a9a)
 HX_LOCAL_STACK_FRAME(_hx_pos_39a55bac71d71c88_110_doCollisionsWithTiles,"Unit","doCollisionsWithTiles",0x610bd789,"Unit.doCollisionsWithTiles","Unit.hx",110,0x8bc50a9a)
 HX_LOCAL_STACK_FRAME(_hx_pos_39a55bac71d71c88_129_get_collisionDirection,"Unit","get_collisionDirection",0xf03ce540,"Unit.get_collisionDirection","Unit.hx",129,0x8bc50a9a)
+HX_LOCAL_STACK_FRAME(_hx_pos_39a55bac71d71c88_133_get_direction,"Unit","get_direction",0x6180fecc,"Unit.get_direction","Unit.hx",133,0x8bc50a9a)
 
 void Unit_obj::__construct(){
             	HX_STACKFRAME(&_hx_pos_39a55bac71d71c88_8_new)
@@ -332,6 +333,14 @@ HXDLIN( 129)		return this->collisionDirection;
 
 HX_DEFINE_DYNAMIC_FUNC0(Unit_obj,get_collisionDirection,return )
 
+ ::Direction Unit_obj::get_direction(){
+            	HX_STACKFRAME(&_hx_pos_39a55bac71d71c88_133_get_direction)
+HXDLIN( 133)		return this->direction;
+            	}
+
+
+HX_DEFINE_DYNAMIC_FUNC0(Unit_obj,get_direction,return )
+
 
 hx::ObjectPtr< Unit_obj > Unit_obj::__new() {
 	hx::ObjectPtr< Unit_obj > __this = new Unit_obj();
@@ -400,6 +409,9 @@ hx::Val Unit_obj::__Field(const ::String &inName,hx::PropertyAccess inCallProp)
 		break;
 	case 11:
 		if (HX_FIELD_EQ(inName,"movingRight") ) { return hx::Val( movingRight ); }
+		break;
+	case 13:
+		if (HX_FIELD_EQ(inName,"get_direction") ) { return hx::Val( get_direction_dyn() ); }
 		break;
 	case 18:
 		if (HX_FIELD_EQ(inName,"collisionDirection") ) { return hx::Val( inCallProp == hx::paccAlways ? get_collisionDirection() : collisionDirection ); }
@@ -489,6 +501,7 @@ static ::String Unit_obj_sMemberFields[] = {
 	HX_("doCollisionWithTile",db,4a,f4,8e),
 	HX_("doCollisionsWithTiles",d3,68,86,03),
 	HX_("get_collisionDirection",b6,74,01,79),
+	HX_("get_direction",16,36,a4,d1),
 	::String(null()) };
 
 hx::Class Unit_obj::__mClass;

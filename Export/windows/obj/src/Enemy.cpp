@@ -7,6 +7,9 @@
 #ifndef INCLUDED_Enemy
 #include <Enemy.h>
 #endif
+#ifndef INCLUDED_Game
+#include <Game.h>
+#endif
 #ifndef INCLUDED_Player
 #include <Player.h>
 #endif
@@ -41,22 +44,24 @@
 #include <openfl/geom/Rectangle.h>
 #endif
 
-HX_DEFINE_STACK_FRAME(_hx_pos_c595a05c1c7a687d_9_new,"Enemy","new",0x35d4571a,"Enemy.new","Enemy.hx",9,0xbda88996)
-HX_LOCAL_STACK_FRAME(_hx_pos_c595a05c1c7a687d_25_drawHitBox,"Enemy","drawHitBox",0x09b64522,"Enemy.drawHitBox","Enemy.hx",25,0xbda88996)
-HX_LOCAL_STACK_FRAME(_hx_pos_c595a05c1c7a687d_32_move,"Enemy","move",0xe3563f17,"Enemy.move","Enemy.hx",32,0xbda88996)
+HX_DEFINE_STACK_FRAME(_hx_pos_c595a05c1c7a687d_6_new,"Enemy","new",0x35d4571a,"Enemy.new","Enemy.hx",6,0xbda88996)
+HX_LOCAL_STACK_FRAME(_hx_pos_c595a05c1c7a687d_26_drawHitBox,"Enemy","drawHitBox",0x09b64522,"Enemy.drawHitBox","Enemy.hx",26,0xbda88996)
+HX_LOCAL_STACK_FRAME(_hx_pos_c595a05c1c7a687d_33_move,"Enemy","move",0xe3563f17,"Enemy.move","Enemy.hx",33,0xbda88996)
+HX_LOCAL_STACK_FRAME(_hx_pos_c595a05c1c7a687d_43_doShot,"Enemy","doShot",0x645f63ab,"Enemy.doShot","Enemy.hx",43,0xbda88996)
 
 void Enemy_obj::__construct(){
-            	HX_GC_STACKFRAME(&_hx_pos_c595a05c1c7a687d_9_new)
-HXLINE(  10)		super::__construct();
-HXLINE(  12)		this->hitBox =  ::openfl::geom::Rectangle_obj::__alloc( HX_CTX ,((Float)-15.),((Float)-20.),30,40);
-HXLINE(  13)		this->drawHitBox();
-HXLINE(  14)		this->speedX = ((Float)1.5);
-HXLINE(  15)		if (::Bonus_obj::bonusIsUsed) {
-HXLINE(  17)			 ::Enemy _hx_tmp = hx::ObjectPtr<OBJ_>(this);
-HXDLIN(  17)			_hx_tmp->speedY = (_hx_tmp->speedY * ((Float)0.25));
-HXLINE(  18)			this->speedX = ((Float)0.375);
-HXLINE(  19)			 ::Enemy _hx_tmp1 = hx::ObjectPtr<OBJ_>(this);
-HXDLIN(  19)			_hx_tmp1->gravity = (_hx_tmp1->gravity * ((Float)0.25));
+            	HX_GC_STACKFRAME(&_hx_pos_c595a05c1c7a687d_6_new)
+HXLINE(   8)		this->color = 65280;
+HXLINE(  11)		super::__construct();
+HXLINE(  13)		this->hitBox =  ::openfl::geom::Rectangle_obj::__alloc( HX_CTX ,((Float)-15.),((Float)-20.),30,40);
+HXLINE(  14)		this->drawHitBox();
+HXLINE(  15)		this->speedX = ((Float)1.5);
+HXLINE(  16)		if (::Bonus_obj::bonusIsUsed) {
+HXLINE(  18)			 ::Enemy _hx_tmp = hx::ObjectPtr<OBJ_>(this);
+HXDLIN(  18)			_hx_tmp->speedY = (_hx_tmp->speedY * ((Float)0.25));
+HXLINE(  19)			this->speedX = ((Float)0.375);
+HXLINE(  20)			 ::Enemy _hx_tmp1 = hx::ObjectPtr<OBJ_>(this);
+HXDLIN(  20)			_hx_tmp1->gravity = (_hx_tmp1->gravity * ((Float)0.25));
             		}
             	}
 
@@ -92,47 +97,54 @@ bool Enemy_obj::_hx_isInstanceOf(int inClassId) {
 }
 
 void Enemy_obj::drawHitBox(){
-            	HX_STACKFRAME(&_hx_pos_c595a05c1c7a687d_25_drawHitBox)
-HXLINE(  26)		this->get_graphics()->lineStyle(3,65280,null(),null(),null(),null(),null(),null());
-HXLINE(  27)		 ::openfl::display::Graphics _hx_tmp = this->get_graphics();
-HXDLIN(  27)		Float _hx_tmp1 = (-(this->get_hitBox()->width) / ( (Float)(2) ));
-HXDLIN(  27)		Float _hx_tmp2 = (-(this->get_hitBox()->height) / ( (Float)(2) ));
-HXDLIN(  27)		Float _hx_tmp3 = this->get_hitBox()->width;
-HXDLIN(  27)		_hx_tmp->drawRect(_hx_tmp1,_hx_tmp2,_hx_tmp3,this->get_hitBox()->height);
-HXLINE(  28)		this->get_graphics()->endFill();
+            	HX_STACKFRAME(&_hx_pos_c595a05c1c7a687d_26_drawHitBox)
+HXLINE(  27)		this->get_graphics()->lineStyle(3,this->color,null(),null(),null(),null(),null(),null());
+HXLINE(  28)		 ::openfl::display::Graphics _hx_tmp = this->get_graphics();
+HXDLIN(  28)		Float _hx_tmp1 = (-(this->get_hitBox()->width) / ( (Float)(2) ));
+HXDLIN(  28)		Float _hx_tmp2 = (-(this->get_hitBox()->height) / ( (Float)(2) ));
+HXDLIN(  28)		Float _hx_tmp3 = this->get_hitBox()->width;
+HXDLIN(  28)		_hx_tmp->drawRect(_hx_tmp1,_hx_tmp2,_hx_tmp3,this->get_hitBox()->height);
+HXLINE(  29)		this->get_graphics()->endFill();
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(Enemy_obj,drawHitBox,(void))
 
 void Enemy_obj::move( ::Player player,::Array< ::Dynamic> level){
-            	HX_STACKFRAME(&_hx_pos_c595a05c1c7a687d_32_move)
-HXLINE(  38)		Float _hx_tmp = player->get_x();
-HXDLIN(  38)		if ((_hx_tmp < this->get_x())) {
-HXLINE(  39)			 ::Enemy _g = hx::ObjectPtr<OBJ_>(this);
-HXDLIN(  39)			Float _hx_tmp1 = _g->get_x();
-HXDLIN(  39)			_g->set_x((_hx_tmp1 - this->speedX));
+            	HX_STACKFRAME(&_hx_pos_c595a05c1c7a687d_33_move)
+HXLINE(  34)		Float _hx_tmp = player->get_x();
+HXDLIN(  34)		if ((_hx_tmp < this->get_x())) {
+HXLINE(  35)			 ::Enemy _g = hx::ObjectPtr<OBJ_>(this);
+HXDLIN(  35)			Float _hx_tmp1 = _g->get_x();
+HXDLIN(  35)			_g->set_x((_hx_tmp1 - this->speedX));
             		}
             		else {
-HXLINE(  40)			Float _hx_tmp2 = player->get_x();
-HXDLIN(  40)			if ((_hx_tmp2 > this->get_x())) {
-HXLINE(  41)				 ::Enemy _g1 = hx::ObjectPtr<OBJ_>(this);
-HXDLIN(  41)				Float _hx_tmp3 = _g1->get_x();
-HXDLIN(  41)				_g1->set_x((_hx_tmp3 + this->speedX));
+HXLINE(  36)			Float _hx_tmp2 = player->get_x();
+HXDLIN(  36)			if ((_hx_tmp2 > this->get_x())) {
+HXLINE(  37)				 ::Enemy _g1 = hx::ObjectPtr<OBJ_>(this);
+HXDLIN(  37)				Float _hx_tmp3 = _g1->get_x();
+HXDLIN(  37)				_g1->set_x((_hx_tmp3 + this->speedX));
             			}
             		}
-HXLINE(  42)		 ::Enemy _hx_tmp4 = hx::ObjectPtr<OBJ_>(this);
-HXDLIN(  42)		_hx_tmp4->speedY = (_hx_tmp4->speedY + this->gravity);
-HXLINE(  43)		{
-HXLINE(  43)			 ::Enemy _g2 = hx::ObjectPtr<OBJ_>(this);
-HXDLIN(  43)			Float _hx_tmp5 = _g2->get_y();
-HXDLIN(  43)			_g2->set_y((_hx_tmp5 + this->speedY));
+HXLINE(  38)		 ::Enemy _hx_tmp4 = hx::ObjectPtr<OBJ_>(this);
+HXDLIN(  38)		_hx_tmp4->speedY = (_hx_tmp4->speedY + this->gravity);
+HXLINE(  39)		{
+HXLINE(  39)			 ::Enemy _g2 = hx::ObjectPtr<OBJ_>(this);
+HXDLIN(  39)			Float _hx_tmp5 = _g2->get_y();
+HXDLIN(  39)			_g2->set_y((_hx_tmp5 + this->speedY));
             		}
-HXLINE(  44)		this->doCollisionsWithTiles(level);
+HXLINE(  40)		this->doCollisionsWithTiles(level);
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC2(Enemy_obj,move,(void))
+
+void Enemy_obj::doShot( ::Game game){
+            	HX_STACKFRAME(&_hx_pos_c595a05c1c7a687d_43_doShot)
+            	}
+
+
+HX_DEFINE_DYNAMIC_FUNC1(Enemy_obj,doShot,(void))
 
 
 hx::ObjectPtr< Enemy_obj > Enemy_obj::__new() {
@@ -158,20 +170,46 @@ hx::Val Enemy_obj::__Field(const ::String &inName,hx::PropertyAccess inCallProp)
 	case 4:
 		if (HX_FIELD_EQ(inName,"move") ) { return hx::Val( move_dyn() ); }
 		break;
+	case 5:
+		if (HX_FIELD_EQ(inName,"color") ) { return hx::Val( color ); }
+		break;
+	case 6:
+		if (HX_FIELD_EQ(inName,"doShot") ) { return hx::Val( doShot_dyn() ); }
+		break;
 	case 10:
 		if (HX_FIELD_EQ(inName,"drawHitBox") ) { return hx::Val( drawHitBox_dyn() ); }
 	}
 	return super::__Field(inName,inCallProp);
 }
 
+hx::Val Enemy_obj::__SetField(const ::String &inName,const hx::Val &inValue,hx::PropertyAccess inCallProp)
+{
+	switch(inName.length) {
+	case 5:
+		if (HX_FIELD_EQ(inName,"color") ) { color=inValue.Cast< int >(); return inValue; }
+	}
+	return super::__SetField(inName,inValue,inCallProp);
+}
+
+void Enemy_obj::__GetFields(Array< ::String> &outFields)
+{
+	outFields->push(HX_("color",63,71,5c,4a));
+	super::__GetFields(outFields);
+};
+
 #ifdef HXCPP_SCRIPTABLE
-static hx::StorageInfo *Enemy_obj_sMemberStorageInfo = 0;
+static hx::StorageInfo Enemy_obj_sMemberStorageInfo[] = {
+	{hx::fsInt,(int)offsetof(Enemy_obj,color),HX_("color",63,71,5c,4a)},
+	{ hx::fsUnknown, 0, null()}
+};
 static hx::StaticInfo *Enemy_obj_sStaticStorageInfo = 0;
 #endif
 
 static ::String Enemy_obj_sMemberFields[] = {
+	HX_("color",63,71,5c,4a),
 	HX_("drawHitBox",9c,20,d3,98),
 	HX_("move",11,e3,60,48),
+	HX_("doShot",25,7a,56,1c),
 	::String(null()) };
 
 hx::Class Enemy_obj::__mClass;

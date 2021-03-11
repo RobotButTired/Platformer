@@ -16,6 +16,7 @@ HX_DECLARE_CLASS0(Button)
 HX_DECLARE_CLASS0(Enemy)
 HX_DECLARE_CLASS0(Game)
 HX_DECLARE_CLASS0(GameLevel)
+HX_DECLARE_CLASS0(Grenade)
 HX_DECLARE_CLASS0(Player)
 HX_DECLARE_CLASS0(Unit)
 HX_DECLARE_CLASS2(openfl,display,DisplayObject)
@@ -23,13 +24,11 @@ HX_DECLARE_CLASS2(openfl,display,DisplayObjectContainer)
 HX_DECLARE_CLASS2(openfl,display,IBitmapDrawable)
 HX_DECLARE_CLASS2(openfl,display,InteractiveObject)
 HX_DECLARE_CLASS2(openfl,display,Sprite)
-HX_DECLARE_CLASS2(openfl,display,Tile)
 HX_DECLARE_CLASS2(openfl,events,Event)
 HX_DECLARE_CLASS2(openfl,events,EventDispatcher)
 HX_DECLARE_CLASS2(openfl,events,IEventDispatcher)
 HX_DECLARE_CLASS2(openfl,events,KeyboardEvent)
 HX_DECLARE_CLASS2(openfl,events,MouseEvent)
-HX_DECLARE_CLASS2(openfl,geom,Rectangle)
 HX_DECLARE_CLASS2(openfl,text,TextField)
 
 
@@ -81,15 +80,22 @@ class HXCPP_CLASS_ATTRIBUTES Game_obj : public  ::openfl::display::Sprite_obj
 		 ::Player player;
 		bool gameIsOver;
 		 ::Bonus bonus;
+		 ::openfl::display::Sprite bonusIndicator;
 		int gamePoints;
 		 ::openfl::text::TextField pointsField;
 		::Array< ::Dynamic> bullets;
 		::Array< ::Dynamic> spentBullets;
+		::Array< ::Dynamic> enemyBullets;
+		::Array< ::Dynamic> spentEnemyBullets;
+		 ::Grenade grenade;
 		::Array< ::Dynamic> enemies;
 		::Array< ::Dynamic> deadEnemies;
+		::Array< ::Dynamic> deadEnemiesWithGun;
 		int maxEnemies;
 		Float spawnDelay;
 		int counter;
+		 ::openfl::display::Sprite healthIndicator;
+		 ::openfl::display::Sprite pauseScreen;
 		void pause( ::openfl::events::KeyboardEvent e);
 		::Dynamic pause_dyn();
 
@@ -108,17 +114,14 @@ class HXCPP_CLASS_ATTRIBUTES Game_obj : public  ::openfl::display::Sprite_obj
 		void update();
 		::Dynamic update_dyn();
 
-		bool checkCollisionWithTile( ::openfl::geom::Rectangle playerHitBox, ::openfl::display::Tile tile);
-		::Dynamic checkCollisionWithTile_dyn();
-
-		void doCollisionsWithTiles();
-		::Dynamic doCollisionsWithTiles_dyn();
-
 		void playerJump(Float jumpPower);
 		::Dynamic playerJump_dyn();
 
 		void bulletsMove();
 		::Dynamic bulletsMove_dyn();
+
+		void grenadeMove();
+		::Dynamic grenadeMove_dyn();
 
 		void generateEnemies();
 		::Dynamic generateEnemies_dyn();
@@ -132,6 +135,15 @@ class HXCPP_CLASS_ATTRIBUTES Game_obj : public  ::openfl::display::Sprite_obj
 		void doCollisionsWithBullet();
 		::Dynamic doCollisionsWithBullet_dyn();
 
+		void doCollisionWithEnemyBullet();
+		::Dynamic doCollisionWithEnemyBullet_dyn();
+
+		void doCollisionWithGrenade();
+		::Dynamic doCollisionWithGrenade_dyn();
+
+		void killEnemy( ::Enemy enemy);
+		::Dynamic killEnemy_dyn();
+
 		bool get_gameIsOver();
 		::Dynamic get_gameIsOver_dyn();
 
@@ -141,6 +153,9 @@ class HXCPP_CLASS_ATTRIBUTES Game_obj : public  ::openfl::display::Sprite_obj
 		void doCollidionWithEnemies();
 		::Dynamic doCollidionWithEnemies_dyn();
 
+		void showHealthIndicator();
+		::Dynamic showHealthIndicator_dyn();
+
 		void bonusBuf();
 		::Dynamic bonusBuf_dyn();
 
@@ -149,6 +164,15 @@ class HXCPP_CLASS_ATTRIBUTES Game_obj : public  ::openfl::display::Sprite_obj
 
 		void doBonusDestroy();
 		::Dynamic doBonusDestroy_dyn();
+
+		void doCollisionsWithPLatforms();
+		::Dynamic doCollisionsWithPLatforms_dyn();
+
+		void set_Pause();
+		::Dynamic set_Pause_dyn();
+
+		void set_Unpause();
+		::Dynamic set_Unpause_dyn();
 
 };
 

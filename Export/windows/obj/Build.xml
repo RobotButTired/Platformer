@@ -3431,15 +3431,6 @@
    <depend name="include/lime/system/CFFI.h"/>
    <depend name="include/sys/io/Process.h"/>
   </file>
-  <file name="src/lime/system/BackgroundWorker.cpp" tags="haxe,release">
-   <depend name="include/lime/app/Application.h"/>
-   <depend name="include/lime/app/IModule.h"/>
-   <depend name="include/lime/app/Module.h"/>
-   <depend name="include/lime/app/_Event_Dynamic_Void.h"/>
-   <depend name="include/lime/app/_Event_Int_Void.h"/>
-   <depend name="include/lime/system/BackgroundWorker.h"/>
-   <depend name="include/sys/thread/Deque.h"/>
-  </file>
   <file name="src/lime/net/curl/CURLMultiMessage.cpp" >
    <depend name="include/lime/net/curl/CURL.h"/>
    <depend name="include/lime/net/curl/CURLMultiMessage.h"/>
@@ -5103,10 +5094,14 @@
    <depend name="include/Direction.h"/>
    <depend name="include/Enemy.h"/>
    <depend name="include/Game.h"/>
+   <depend name="include/Grenade.h"/>
+   <depend name="include/GrenadeState.h"/>
+   <depend name="include/Inventory.h"/>
    <depend name="include/Main.h"/>
    <depend name="include/Player.h"/>
    <depend name="include/State.h"/>
    <depend name="include/Unit.h"/>
+   <depend name="include/Weapon.h"/>
    <depend name="include/haxe/Log.h"/>
    <depend name="include/lime/app/IModule.h"/>
    <depend name="include/lime/system/System.h"/>
@@ -5143,6 +5138,54 @@
   <file name="src/Lambda.cpp" >
    <depend name="include/Lambda.h"/>
   </file>
+  <file name="src/Inventory.cpp" >
+   <depend name="include/Inventory.h"/>
+   <depend name="include/Main.h"/>
+   <depend name="include/Player.h"/>
+   <depend name="include/Unit.h"/>
+   <depend name="include/Weapon.h"/>
+   <depend name="include/lime/app/IModule.h"/>
+   <depend name="include/openfl/Lib.h"/>
+   <depend name="include/openfl/display/DisplayObject.h"/>
+   <depend name="include/openfl/display/DisplayObjectContainer.h"/>
+   <depend name="include/openfl/display/Graphics.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
+   <depend name="include/openfl/display/InteractiveObject.h"/>
+   <depend name="include/openfl/display/MovieClip.h"/>
+   <depend name="include/openfl/display/Sprite.h"/>
+   <depend name="include/openfl/display/Stage.h"/>
+   <depend name="include/openfl/events/Event.h"/>
+   <depend name="include/openfl/events/EventDispatcher.h"/>
+   <depend name="include/openfl/events/IEventDispatcher.h"/>
+   <depend name="include/openfl/events/KeyboardEvent.h"/>
+   <depend name="include/openfl/text/TextField.h"/>
+  </file>
+  <file name="src/Weapon.cpp" >
+   <depend name="include/Weapon.h"/>
+  </file>
+  <file name="src/Grenade.cpp" >
+   <depend name="include/Bonus.h"/>
+   <depend name="include/Direction.h"/>
+   <depend name="include/Enemy.h"/>
+   <depend name="include/Grenade.h"/>
+   <depend name="include/GrenadeState.h"/>
+   <depend name="include/Main.h"/>
+   <depend name="include/Player.h"/>
+   <depend name="include/Unit.h"/>
+   <depend name="include/openfl/display/DisplayObject.h"/>
+   <depend name="include/openfl/display/DisplayObjectContainer.h"/>
+   <depend name="include/openfl/display/Graphics.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
+   <depend name="include/openfl/display/InteractiveObject.h"/>
+   <depend name="include/openfl/display/Sprite.h"/>
+   <depend name="include/openfl/events/EventDispatcher.h"/>
+   <depend name="include/openfl/events/IEventDispatcher.h"/>
+   <depend name="include/openfl/geom/Point.h"/>
+   <depend name="include/openfl/geom/Rectangle.h"/>
+  </file>
+  <file name="src/GrenadeState.cpp" >
+   <depend name="include/GrenadeState.h"/>
+  </file>
   <file name="src/GameOverScreen.cpp" >
    <depend name="include/BackGround.h"/>
    <depend name="include/Button.h"/>
@@ -5163,6 +5206,7 @@
    <depend name="include/GameLevel.h"/>
    <depend name="include/Main.h"/>
    <depend name="include/haxe/Log.h"/>
+   <depend name="include/openfl/display/Bitmap.h"/>
    <depend name="include/openfl/display/BitmapData.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
    <depend name="include/openfl/display/DisplayObjectContainer.h"/>
@@ -5185,10 +5229,13 @@
    <depend name="include/Bullet.h"/>
    <depend name="include/Button.h"/>
    <depend name="include/CollisionDirection.h"/>
-   <depend name="include/Direction.h"/>
    <depend name="include/Enemy.h"/>
+   <depend name="include/EnemyWithGun.h"/>
    <depend name="include/Game.h"/>
    <depend name="include/GameLevel.h"/>
+   <depend name="include/Grenade.h"/>
+   <depend name="include/GrenadeState.h"/>
+   <depend name="include/Inventory.h"/>
    <depend name="include/Main.h"/>
    <depend name="include/Player.h"/>
    <depend name="include/State.h"/>
@@ -5199,26 +5246,43 @@
    <depend name="include/openfl/Lib.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
    <depend name="include/openfl/display/DisplayObjectContainer.h"/>
+   <depend name="include/openfl/display/Graphics.h"/>
    <depend name="include/openfl/display/IBitmapDrawable.h"/>
-   <depend name="include/openfl/display/ITileContainer.h"/>
    <depend name="include/openfl/display/InteractiveObject.h"/>
    <depend name="include/openfl/display/MovieClip.h"/>
    <depend name="include/openfl/display/Sprite.h"/>
    <depend name="include/openfl/display/Stage.h"/>
-   <depend name="include/openfl/display/Tile.h"/>
-   <depend name="include/openfl/display/Tilemap.h"/>
    <depend name="include/openfl/events/Event.h"/>
    <depend name="include/openfl/events/EventDispatcher.h"/>
    <depend name="include/openfl/events/IEventDispatcher.h"/>
    <depend name="include/openfl/events/KeyboardEvent.h"/>
    <depend name="include/openfl/events/MouseEvent.h"/>
-   <depend name="include/openfl/geom/Point.h"/>
-   <depend name="include/openfl/geom/Rectangle.h"/>
+   <depend name="include/openfl/geom/Matrix.h"/>
    <depend name="include/openfl/text/TextField.h"/>
+  </file>
+  <file name="src/EnemyWithGun.cpp" >
+   <depend name="include/Bonus.h"/>
+   <depend name="include/Bullet.h"/>
+   <depend name="include/Direction.h"/>
+   <depend name="include/Enemy.h"/>
+   <depend name="include/EnemyWithGun.h"/>
+   <depend name="include/Game.h"/>
+   <depend name="include/Main.h"/>
+   <depend name="include/Player.h"/>
+   <depend name="include/Unit.h"/>
+   <depend name="include/openfl/display/DisplayObject.h"/>
+   <depend name="include/openfl/display/DisplayObjectContainer.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
+   <depend name="include/openfl/display/InteractiveObject.h"/>
+   <depend name="include/openfl/display/Sprite.h"/>
+   <depend name="include/openfl/events/EventDispatcher.h"/>
+   <depend name="include/openfl/events/IEventDispatcher.h"/>
+   <depend name="include/openfl/geom/Rectangle.h"/>
   </file>
   <file name="src/Enemy.cpp" >
    <depend name="include/Bonus.h"/>
    <depend name="include/Enemy.h"/>
+   <depend name="include/Game.h"/>
    <depend name="include/Player.h"/>
    <depend name="include/Unit.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
@@ -5256,8 +5320,6 @@
    <depend name="include/Bonus.h"/>
    <depend name="include/Bullet.h"/>
    <depend name="include/Direction.h"/>
-   <depend name="include/Enemy.h"/>
-   <depend name="include/Player.h"/>
    <depend name="include/Unit.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
    <depend name="include/openfl/display/DisplayObjectContainer.h"/>
@@ -5267,6 +5329,7 @@
    <depend name="include/openfl/display/Sprite.h"/>
    <depend name="include/openfl/events/EventDispatcher.h"/>
    <depend name="include/openfl/events/IEventDispatcher.h"/>
+   <depend name="include/openfl/geom/Rectangle.h"/>
   </file>
   <file name="src/Bonus.cpp" >
    <depend name="include/Bonus.h"/>
@@ -5274,6 +5337,7 @@
    <depend name="include/Bullet.h"/>
    <depend name="include/Enemy.h"/>
    <depend name="include/Game.h"/>
+   <depend name="include/Grenade.h"/>
    <depend name="include/Main.h"/>
    <depend name="include/Player.h"/>
    <depend name="include/Unit.h"/>
@@ -5694,6 +5758,8 @@
    <depend name="include/Direction.h"/>
    <depend name="include/ValueType.h"/>
    <depend name="include/State.h"/>
+   <depend name="include/Weapon.h"/>
+   <depend name="include/GrenadeState.h"/>
    <depend name="include/BonusType.h"/>
    <depend name="include/haxe/lang/Iterable.h"/>
    <depend name="include/haxe/lang/Iterator.h"/>
@@ -5898,7 +5964,6 @@
    <depend name="include/lime/system/JNI.h"/>
    <depend name="include/lime/system/Clipboard.h"/>
    <depend name="include/lime/system/CFFI.h"/>
-   <depend name="include/lime/system/BackgroundWorker.h"/>
    <depend name="include/lime/net/curl/CURL.h"/>
    <depend name="include/lime/media/openal/ALC.h"/>
    <depend name="include/lime/media/openal/AL.h"/>

@@ -870,9 +870,9 @@ ApplicationMain.create = function(config) {
 	ManifestResources.init(config);
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-		_this.setReserved("build","11");
+		_this.setReserved("build","14");
 	} else {
-		_this.h["build"] = "11";
+		_this.h["build"] = "14";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -4103,11 +4103,12 @@ openfl_display_Sprite.prototype = $extend(openfl_display_DisplayObjectContainer.
 });
 var Main = function() {
 	openfl_display_Sprite.call(this);
+	this.stage.set_frameRate(120);
 	this.startScreen = new StartScreen(Main.sizeWidth,Main.sizeHeight,this);
 	this.rulesScreen = new RulesScreen(Main.sizeWidth,Main.sizeHeight);
 	this.gameOverScreen = new GameOverScreen();
 	this.addChild(this.startScreen);
-	haxe_Log.trace(this.get_width() + " " + this.get_height(),{ fileName : "Source/Main.hx", lineNumber : 30, className : "Main", methodName : "new"});
+	haxe_Log.trace(this.get_width() + " " + this.get_height(),{ fileName : "Source/Main.hx", lineNumber : 31, className : "Main", methodName : "new"});
 	this.addEventListener("enterFrame",$bind(this,this.update));
 	this.timeFlag = new Date().getTime() / 1000;
 };
@@ -4287,6 +4288,9 @@ Unit.prototype = $extend(openfl_display_Sprite.prototype,{
 	,get_collisionDirection: function() {
 		return this.collisionDirection;
 	}
+	,get_direction: function() {
+		return this.direction;
+	}
 	,__class__: Unit
 });
 var Bonus = function() {
@@ -4302,7 +4306,7 @@ var Bonus = function() {
 };
 $hxClasses["Bonus"] = Bonus;
 Bonus.__name__ = "Bonus";
-Bonus.doBonusSlow = function(player,enemies,deadEnemies,bullets) {
+Bonus.doBonusSlow = function(player,enemies,deadEnemies,deadEnemiesWithGun,bullets,enemyBullets,grenade) {
 	if(Bonus.counter == 0) {
 		player.speedX *= 0.5;
 		player.speedY *= 0.5;
@@ -4312,6 +4316,12 @@ Bonus.doBonusSlow = function(player,enemies,deadEnemies,bullets) {
 		while(b < bullets.length) {
 			var tmp = bullets[b].get_speed() * 0.25;
 			bullets[b].set_speed(tmp);
+			++b;
+		}
+		b = 0;
+		while(b < enemyBullets.length) {
+			var tmp1 = enemyBullets[b].get_speed() * 0.25;
+			enemyBullets[b].set_speed(tmp1);
 			++b;
 		}
 		var e = 0;
@@ -4328,6 +4338,18 @@ Bonus.doBonusSlow = function(player,enemies,deadEnemies,bullets) {
 			deadEnemies[e].gravity *= 0.25;
 			++e;
 		}
+		e = 0;
+		while(e < deadEnemiesWithGun.length) {
+			deadEnemiesWithGun[e].speedX *= 0.25;
+			deadEnemiesWithGun[e].speedY *= 0.25;
+			deadEnemiesWithGun[e].gravity *= 0.25;
+			++e;
+		}
+		if(grenade != null) {
+			grenade.set_speedX(grenade.get_speedX() * 0.25);
+			grenade.set_speedY(grenade.get_speedY() * 0.25);
+			grenade.set_gravity(grenade.get_gravity() / 16.0);
+		}
 	} else if(Bonus.counter >= Main.get_FPS() * 10.0) {
 		player.speedX *= 2.0;
 		player.speedY *= 2.0;
@@ -4335,8 +4357,14 @@ Bonus.doBonusSlow = function(player,enemies,deadEnemies,bullets) {
 		Game.jumpPower /= 0.50;
 		var b1 = 0;
 		while(b1 < bullets.length) {
-			var tmp1 = bullets[b1].get_speed() / 0.25;
-			bullets[b1].set_speed(tmp1);
+			var tmp2 = bullets[b1].get_speed() / 0.25;
+			bullets[b1].set_speed(tmp2);
+			++b1;
+		}
+		b1 = 0;
+		while(b1 < enemyBullets.length) {
+			var tmp3 = enemyBullets[b1].get_speed() / 0.25;
+			enemyBullets[b1].set_speed(tmp3);
 			++b1;
 		}
 		var e1 = 0;
@@ -4353,6 +4381,18 @@ Bonus.doBonusSlow = function(player,enemies,deadEnemies,bullets) {
 			deadEnemies[e1].gravity /= 0.25;
 			++e1;
 		}
+		e1 = 0;
+		while(e1 < deadEnemiesWithGun.length) {
+			deadEnemiesWithGun[e1].speedX /= 0.25;
+			deadEnemiesWithGun[e1].speedY /= 0.25;
+			deadEnemiesWithGun[e1].gravity /= 0.25;
+			++e1;
+		}
+		if(grenade != null) {
+			grenade.set_speedX(grenade.get_speedX() / 0.25);
+			grenade.set_speedY(grenade.get_speedY() / 0.25);
+			grenade.set_gravity(grenade.get_gravity() * 16.0);
+		}
 		Bonus.bonusIsUsed = false;
 		Bonus.haveBonus = false;
 		Bonus.counter = -1;
@@ -4361,6 +4401,9 @@ Bonus.doBonusSlow = function(player,enemies,deadEnemies,bullets) {
 };
 Bonus.get_bonusType = function() {
 	return Bonus.bonusType;
+};
+Bonus.get_counter = function() {
+	return Bonus.counter;
 };
 Bonus.__super__ = Unit;
 Bonus.prototype = $extend(Unit.prototype,{
@@ -4408,12 +4451,16 @@ Bonus.prototype = $extend(Unit.prototype,{
 	}
 	,__class__: Bonus
 });
-var Bullet = function(player) {
+var Bullet = function(unit,color) {
 	openfl_display_Sprite.call(this);
-	this.get_graphics().beginFill(255);
+	if(color != null) {
+		this.get_graphics().beginFill(0);
+	} else {
+		this.get_graphics().beginFill(255);
+	}
 	this.get_graphics().drawRect(-3.5,-0.5,7,4);
 	this.get_graphics().endFill();
-	this.setBullet(player);
+	this.setBullet(unit);
 };
 $hxClasses["Bullet"] = Bullet;
 Bullet.__name__ = "Bullet";
@@ -4423,25 +4470,25 @@ Bullet.prototype = $extend(openfl_display_Sprite.prototype,{
 		var _g = this;
 		_g.set_x(_g.get_x() + this.speed);
 	}
-	,setBullet: function(player) {
-		if(player.get_direction() == Direction.right) {
-			this.set_x(player.get_x() + 10.0);
-			this.set_y(player.get_y());
+	,setBullet: function(unit) {
+		if(unit.get_direction() == Direction.right) {
+			this.set_x(unit.get_x() + 10.0);
+			this.set_y(unit.get_y());
 			this.speed = 20.0;
 			if(Bonus.bonusIsUsed) {
 				this.speed = 5.0;
 			}
 		} else {
-			this.set_x(player.get_x() - 10.0);
-			this.set_y(player.get_y());
+			this.set_x(unit.get_x() - 10.0);
+			this.set_y(unit.get_y());
 			this.speed = -20.0;
 			if(Bonus.bonusIsUsed) {
 				this.speed = -5.0;
 			}
 		}
 	}
-	,checkCollisionWithEnemy: function(enemy) {
-		if(this.get_x() + this.get_width() / 2 > enemy.get_x() - enemy.get_width() / 2 && this.get_x() - this.get_width() / 2 < enemy.get_x() + enemy.get_width() / 2 && this.get_y() + this.get_height() / 2 > enemy.get_y() - enemy.get_height() / 2 && this.get_y() - this.get_height() / 2 < enemy.get_y() + enemy.get_height() / 2) {
+	,checkCollisionWithUnit: function(unit) {
+		if(this.get_x() + this.get_width() / 2 > unit.get_x() - unit.get_hitBox().width / 2 && this.get_x() - this.get_width() / 2 < unit.get_x() + unit.get_hitBox().width / 2 && this.get_y() + this.get_height() / 2 > unit.get_y() - unit.get_hitBox().height / 2 && this.get_y() - this.get_height() / 2 < unit.get_y() + unit.get_hitBox().height / 2) {
 			return true;
 		} else {
 			return false;
@@ -4573,6 +4620,7 @@ EReg.prototype = {
 	,__class__: EReg
 };
 var Enemy = function() {
+	this.color = 65280;
 	Unit.call(this);
 	this.hitBox = new openfl_geom_Rectangle(-15.,-20.,30,40);
 	this.drawHitBox();
@@ -4588,7 +4636,7 @@ Enemy.__name__ = "Enemy";
 Enemy.__super__ = Unit;
 Enemy.prototype = $extend(Unit.prototype,{
 	drawHitBox: function() {
-		this.get_graphics().lineStyle(3,65280);
+		this.get_graphics().lineStyle(3,this.color);
 		this.get_graphics().drawRect(-this.get_hitBox().width / 2,-this.get_hitBox().height / 2,this.get_hitBox().width,this.get_hitBox().height);
 		this.get_graphics().endFill();
 	}
@@ -4605,7 +4653,78 @@ Enemy.prototype = $extend(Unit.prototype,{
 		_g2.set_y(_g2.get_y() + this.speedY);
 		this.doCollisionsWithTiles(level);
 	}
+	,doShot: function(game) {
+	}
 	,__class__: Enemy
+});
+var EnemyWithGun = function() {
+	this.counter = 0;
+	this.shot = false;
+	this.shooting = false;
+	this.shootingTime = 1.0;
+	this.rateOfFire = 0.5;
+	Enemy.call(this);
+	this.color = 16711935;
+	this.hitBox = new openfl_geom_Rectangle(-15.,-20.,30,40);
+	this.drawHitBox();
+	this.speedX = 1.5;
+	if(Bonus.bonusIsUsed) {
+		this.speedY *= 0.25;
+		this.speedX = 0.375;
+		this.gravity *= 0.25;
+	}
+};
+$hxClasses["EnemyWithGun"] = EnemyWithGun;
+EnemyWithGun.__name__ = "EnemyWithGun";
+EnemyWithGun.__super__ = Enemy;
+EnemyWithGun.prototype = $extend(Enemy.prototype,{
+	move: function(player,level) {
+		if(!this.shooting) {
+			if(player.get_x() < this.get_x()) {
+				var _g = this;
+				_g.set_x(_g.get_x() - this.speedX);
+				this.direction = Direction.left;
+			} else if(player.get_x() > this.get_x()) {
+				var _g1 = this;
+				_g1.set_x(_g1.get_x() + this.speedX);
+				this.direction = Direction.right;
+			}
+			++this.counter;
+			if(this.counter >= Main.get_FPS() / this.rateOfFire) {
+				this.shooting = true;
+				this.counter = 0;
+			}
+		} else {
+			if(this.counter == Math.floor(Main.get_FPS() * this.shootingTime / 6 * 5)) {
+				this.shot = true;
+			}
+			++this.counter;
+			if(this.counter >= Main.get_FPS() * this.shootingTime) {
+				this.shooting = false;
+				this.counter = 0;
+			}
+		}
+		this.speedY += this.gravity;
+		var _g2 = this;
+		_g2.set_y(_g2.get_y() + this.speedY);
+		this.doCollisionsWithTiles(level);
+	}
+	,doShot: function(game) {
+		if(this.shot) {
+			var bullet;
+			if(game.spentEnemyBullets.length > 0) {
+				game.enemyBullets.push(game.spentEnemyBullets.pop());
+				game.enemyBullets[game.enemyBullets.length - 1].setBullet(this);
+				game.addChild(game.enemyBullets[game.enemyBullets.length - 1]);
+			} else {
+				bullet = new Bullet(this,1);
+				game.enemyBullets.push(bullet);
+				game.addChild(bullet);
+			}
+			this.shot = false;
+		}
+	}
+	,__class__: EnemyWithGun
 });
 var Game = function(width,height) {
 	this.counter = 0;
@@ -4624,15 +4743,25 @@ var Game = function(width,height) {
 	this.addChild(this.gameLevel);
 	this.bullets = [];
 	this.spentBullets = [];
+	this.enemyBullets = [];
+	this.spentEnemyBullets = [];
 	Game.jumpPower = 15.0;
 	this.player = new Player();
 	this.player.set_x(100);
 	this.player.set_y(Main.sizeHeight / 2);
 	this.addChild(this.player);
+	this.addChild(this.player.inventory.panel);
 	this.enemies = [];
 	this.deadEnemies = [];
+	this.deadEnemiesWithGun = [];
 	Bonus.bonusIsUsed = false;
 	Bonus.haveBonus = false;
+	this.bonusIndicator = new openfl_display_Sprite();
+	this.bonusIndicator.set_x(10);
+	this.bonusIndicator.set_y(55);
+	this.healthIndicator = new openfl_display_Sprite();
+	this.healthIndicator.set_x(10);
+	this.healthIndicator.set_y(10);
 	this.pointsField = new openfl_text_TextField();
 	this.pointsField.set_text(Std.string(this.gamePoints));
 	this.pointsField.set_x(Main.sizeWidth / 2);
@@ -4641,6 +4770,11 @@ var Game = function(width,height) {
 	this.pointsField.set_scaleY(2.0);
 	this.pointsField.mouseEnabled = false;
 	this.addChild(this.pointsField);
+	this.pauseScreen = new openfl_display_Sprite();
+	this.pauseScreen.get_graphics().beginFill(0);
+	this.pauseScreen.get_graphics().drawRect(0,0,Main.sizeWidth,Main.sizeHeight);
+	this.pauseScreen.get_graphics().endFill();
+	this.pauseScreen.set_alpha(0.35);
 	this.quitButton = new Button(this.sizeWidth / 2,this.sizeHeight / 2,"QUIT");
 	this.quitButton.set_x(this.sizeWidth * 7 / 8);
 	this.quitButton.set_y(this.sizeHeight / 25);
@@ -4658,8 +4792,10 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 		if(e.keyCode == 120) {
 			if(!this.pauseIsPressed) {
 				this.pauseIsPressed = true;
+				this.set_Pause();
 			} else {
 				this.pauseIsPressed = false;
+				this.set_Unpause();
 			}
 		}
 	}
@@ -4680,13 +4816,22 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 	,update: function() {
 		if(!this.pauseIsPressed) {
 			this.bonusBuf();
+			this.showHealthIndicator();
 			this.player.move();
 			this.player.doCollisionsWithTilesForPLayer(this.gameLevel.level);
-			this.doCollidionWithEnemies();
+			this.doCollisionsWithPLatforms();
+			if(!this.player.get_invulnerability()) {
+				this.doCollidionWithEnemies();
+				this.doCollisionWithEnemyBullet();
+			}
 			this.playerJump(Game.jumpPower);
 			this.player.spriteAnimated(this.player.get_state());
 			this.player.doShot(this);
+			if(this.player.get_invulnerability()) {
+				this.player.doInvulnerability();
+			}
 			this.bulletsMove();
+			this.grenadeMove();
 			this.generateEnemies();
 			this.moveEnemies();
 			this.doCollisionsWithBullet();
@@ -4699,38 +4844,9 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 			}
 		}
 	}
-	,checkCollisionWithTile: function(playerHitBox,tile) {
-		var hitBox = new openfl_geom_Point();
-		hitBox = this.player.localToGlobal(new openfl_geom_Point(playerHitBox.x,playerHitBox.y));
-		if(this.player.get_direction() == Direction.right) {
-			if(hitBox.x + playerHitBox.width > tile.get_x() && hitBox.x < tile.get_x() + tile.get_width()) {
-				if(hitBox.y + playerHitBox.height > tile.get_y() && hitBox.y < tile.get_y()) {
-					return true;
-				}
-			}
-		} else if(hitBox.x > tile.get_x() && hitBox.x - playerHitBox.width < tile.get_x() + tile.get_width()) {
-			if(hitBox.y + playerHitBox.height > tile.get_y() && hitBox.y < tile.get_y()) {
-				return true;
-			}
-		}
-		return false;
-	}
-	,doCollisionsWithTiles: function() {
-		Game.haveCollision = false;
-		var _g = 0;
-		var _g1 = this.gameLevel.tilemap.get_numTiles();
-		while(_g < _g1) {
-			var i = _g++;
-			if(this.checkCollisionWithTile(this.player.get_hitBox(),this.gameLevel.tilemap.getTileAt(i))) {
-				this.player.set_y(this.gameLevel.tilemap.getTileAt(i).get_y() - this.player.get_hitBox().height / 2 + 2.5);
-				this.player.set_speedY(0.0);
-				Game.haveCollision = true;
-			}
-		}
-	}
 	,playerJump: function(jumpPower) {
 		if(this.player.get_jump() && Game.haveCollision && this.player.get_collisionDirection() == CollisionDirection.up) {
-			haxe_Log.trace("jump",{ fileName : "Source/Game.hx", lineNumber : 234, className : "Game", methodName : "playerJump"});
+			haxe_Log.trace("jump",{ fileName : "Source/Game.hx", lineNumber : 291, className : "Game", methodName : "playerJump"});
 			this.player.set_speedY(this.player.get_speedY() - jumpPower);
 		}
 		if(!Game.haveCollision) {
@@ -4748,6 +4864,23 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 			}
 			++i;
 		}
+		i = 0;
+		while(i < this.enemyBullets.length) {
+			this.enemyBullets[i].move();
+			if(this.enemyBullets[i].get_x() - this.enemyBullets[i].get_width() / 2 >= Main.sizeWidth || this.enemyBullets[i].get_x() + this.enemyBullets[i].get_width() / 2 <= 0) {
+				this.removeChild(this.enemyBullets[i]);
+				this.spentEnemyBullets.push(this.enemyBullets[i]);
+				HxOverrides.remove(this.enemyBullets,this.enemyBullets[i]);
+			}
+			++i;
+		}
+	}
+	,grenadeMove: function() {
+		if(this.contains(this.grenade)) {
+			this.grenade.move();
+			this.grenade.doCollisionWithTiles(this.gameLevel.level);
+			this.doCollisionWithGrenade();
+		}
 	}
 	,generateEnemies: function() {
 		if(this.counter >= Main.get_FPS() * this.spawnDelay) {
@@ -4761,10 +4894,16 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 	}
 	,generateEnemy: function() {
 		var enemy;
-		if(this.deadEnemies.length > 0) {
-			enemy = this.deadEnemies.pop();
+		if(Math.random() > 0.2) {
+			if(this.deadEnemies.length > 0) {
+				enemy = this.deadEnemies.pop();
+			} else {
+				enemy = new Enemy();
+			}
+		} else if(this.deadEnemiesWithGun.length > 0) {
+			enemy = this.deadEnemiesWithGun.pop();
 		} else {
-			enemy = new Enemy();
+			enemy = new EnemyWithGun();
 		}
 		enemy.set_y(100);
 		enemy.set_speedY(0.0);
@@ -4780,6 +4919,7 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 		var i = 0;
 		while(i < this.enemies.length) {
 			this.enemies[i].move(this.player,this.gameLevel.level);
+			this.enemies[i].doShot(this);
 			++i;
 		}
 	}
@@ -4788,16 +4928,11 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 		while(b < this.bullets.length) {
 			var e = 0;
 			while(e < this.enemies.length) {
-				if(this.bullets[b].checkCollisionWithEnemy(this.enemies[e])) {
+				if(this.bullets[b].checkCollisionWithUnit(this.enemies[e])) {
 					this.removeChild(this.bullets[b]);
 					this.spentBullets.push(this.bullets[b]);
 					HxOverrides.remove(this.bullets,this.bullets[b]);
-					this.removeChild(this.enemies[e]);
-					this.spawnBonus(this.enemies[e]);
-					++this.gamePoints;
-					this.pointsField.set_text(Std.string(this.gamePoints));
-					this.deadEnemies.push(this.enemies[e]);
-					HxOverrides.remove(this.enemies,this.enemies[e]);
+					this.killEnemy(this.enemies[e]);
 					--b;
 					break;
 				}
@@ -4805,6 +4940,46 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 			}
 			++b;
 		}
+	}
+	,doCollisionWithEnemyBullet: function() {
+		var b = 0;
+		while(b < this.enemyBullets.length) {
+			if(this.enemyBullets[b].checkCollisionWithUnit(this.player)) {
+				this.spentEnemyBullets.push(this.enemyBullets[b]);
+				this.removeChild(this.enemyBullets[b]);
+				HxOverrides.remove(this.enemyBullets,this.enemyBullets[b]);
+				this.player.set_healthPoints(this.player.get_healthPoints() - 1);
+				this.player.set_invulnerability(true);
+				if(this.player.get_healthPoints() == 0) {
+					this.gameIsOver = true;
+				}
+				break;
+			}
+			++b;
+		}
+	}
+	,doCollisionWithGrenade: function() {
+		var e = 0;
+		while(e < this.enemies.length) {
+			if(this.grenade.checkCollisionWithEnemy(this.enemies[e])) {
+				this.killEnemy(this.enemies[e]);
+				this.grenade.set_state(GrenadeState.explosion);
+				break;
+			}
+			++e;
+		}
+	}
+	,killEnemy: function(enemy) {
+		this.removeChild(enemy);
+		this.spawnBonus(enemy);
+		++this.gamePoints;
+		this.pointsField.set_text(Std.string(this.gamePoints));
+		if(enemy.color == 16711935) {
+			this.deadEnemiesWithGun.push(enemy);
+		} else {
+			this.deadEnemies.push(enemy);
+		}
+		HxOverrides.remove(this.enemies,enemy);
 	}
 	,get_gameIsOver: function() {
 		return this.gameIsOver;
@@ -4816,22 +4991,39 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 		var e = 0;
 		while(e < this.enemies.length) {
 			if(this.player.checkCollisionWithEnemy(this.enemies[e])) {
-				this.gameIsOver = true;
+				this.player.set_healthPoints(this.player.get_healthPoints() - 1);
+				this.player.set_invulnerability(true);
+				if(this.player.get_healthPoints() == 0) {
+					this.gameIsOver = true;
+				}
 			}
 			++e;
 		}
 	}
+	,showHealthIndicator: function() {
+		this.healthIndicator.get_graphics().clear();
+		this.healthIndicator.get_graphics().beginGradientFill(1,[65280,16777215],[1.0,1.0],[0,85]);
+		this.healthIndicator.get_graphics().drawRect(0,0,Main.sizeWidth / 4 / this.player.get_maxHealthPoints() * this.player.get_healthPoints(),20);
+		this.addChild(this.healthIndicator);
+	}
 	,bonusBuf: function() {
 		if(Bonus.bonusIsUsed) {
 			if(Bonus.get_bonusType() == BonusType.slow) {
-				Bonus.doBonusSlow(this.player,this.enemies,this.deadEnemies,this.bullets);
+				Bonus.doBonusSlow(this.player,this.enemies,this.deadEnemies,this.deadEnemiesWithGun,this.bullets,this.enemyBullets,this.grenade);
+				this.bonusIndicator.get_graphics().clear();
+				this.bonusIndicator.get_graphics().beginGradientFill(1,[16711680,16777215],[1.0,1.0],[0,95]);
+				this.bonusIndicator.get_graphics().drawRect(0,0,Main.sizeWidth / 3.5 / 600 * (600 - Bonus.get_counter()),20);
+				this.addChild(this.bonusIndicator);
+				if(Bonus.get_counter() < 1) {
+					this.removeChild(this.bonusIndicator);
+				}
 			} else if(Bonus.get_bonusType() == BonusType.destroy) {
 				this.doBonusDestroy();
 			}
 		}
 	}
 	,spawnBonus: function(enemy) {
-		if(!Bonus.bonusIsUsed && !Bonus.haveBonus && Math.random() < 0.08) {
+		if(!Bonus.bonusIsUsed && !Bonus.haveBonus && Math.random() < 0.15) {
 			Bonus.bonusIsUsed = false;
 			Bonus.haveBonus = true;
 			this.bonus = new Bonus();
@@ -4853,6 +5045,20 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 		Bonus.haveBonus = false;
 		Bonus.bonusIsUsed = false;
 	}
+	,doCollisionsWithPLatforms: function() {
+		var _g = 0;
+		var _g1 = this.gameLevel.platforms.length;
+		while(_g < _g1) {
+			var i = _g++;
+			this.player.doCollisionWithPlatform(this.gameLevel.platforms[i]);
+		}
+	}
+	,set_Pause: function() {
+		this.addChild(this.pauseScreen);
+	}
+	,set_Unpause: function() {
+		this.removeChild(this.pauseScreen);
+	}
 	,__class__: Game
 });
 var GameLevel = function(width,height) {
@@ -4863,7 +5069,7 @@ var GameLevel = function(width,height) {
 	this.tileset = new openfl_display_Tileset(this.bmpData);
 	this.tilemap = new openfl_display_Tilemap(this.sizeWidth,this.sizeHeight,this.tileset);
 	this.addChild(this.tilemap);
-	this.level = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,0,0],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[2,1,0,0,0,0,0,9,8,5,6,9,0,0,0,0,1,1,1,1],[2,2,1,1,1,1,1,2,2,2,2,2,1,1,1,1,2,2,2,2],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]];
+	this.level = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[2,1,0,0,0,0,0,9,8,5,6,9,0,0,0,0,1,1,1,1],[2,2,1,1,1,1,1,2,2,2,2,2,1,1,1,1,2,2,2,2],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]];
 	var ind1 = this.tileset.addRect(new openfl_geom_Rectangle(0,0,32,32));
 	var ind2 = this.tileset.addRect(new openfl_geom_Rectangle(32,0,32,32));
 	var ind3 = this.tileset.addRect(new openfl_geom_Rectangle(64,0,32,32));
@@ -4884,7 +5090,26 @@ var GameLevel = function(width,height) {
 	this.IDs.push(ind8);
 	this.IDs.push(ind9);
 	this.addTiles();
-	haxe_Log.trace(this.tilemap.get_numTiles(),{ fileName : "Source/GameLevel.hx", lineNumber : 76, className : "GameLevel", methodName : "new"});
+	haxe_Log.trace(this.tilemap.get_numTiles(),{ fileName : "Source/GameLevel.hx", lineNumber : 79, className : "GameLevel", methodName : "new"});
+	this.platforms = [];
+	var platform_1 = new openfl_display_Sprite();
+	var platform_2 = new openfl_display_Sprite();
+	var bmpplatform_1 = new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("assets/2dplatform.png"));
+	var bmpplatform_2 = new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("assets/2dplatform.png"));
+	platform_1.addChild(bmpplatform_1);
+	platform_1.set_x(Main.sizeWidth / 5);
+	platform_1.set_y(Main.sizeHeight / 1.75);
+	platform_2.addChild(bmpplatform_2);
+	platform_2.set_x(Main.sizeWidth / 5 * 3);
+	platform_2.set_y(Main.sizeHeight / 1.75);
+	this.platforms.push(platform_1);
+	this.platforms.push(platform_2);
+	var _g = 0;
+	var _g1 = this.platforms.length;
+	while(_g < _g1) {
+		var i = _g++;
+		this.addChild(this.platforms[i]);
+	}
 };
 $hxClasses["GameLevel"] = GameLevel;
 GameLevel.__name__ = "GameLevel";
@@ -4977,6 +5202,173 @@ GameOverScreen.prototype = $extend(openfl_display_Sprite.prototype,{
 	}
 	,__class__: GameOverScreen
 });
+var GrenadeState = $hxEnums["GrenadeState"] = { __ename__ : "GrenadeState", __constructs__ : ["active","inactive","explosion"]
+	,active: {_hx_index:0,__enum__:"GrenadeState",toString:$estr}
+	,inactive: {_hx_index:1,__enum__:"GrenadeState",toString:$estr}
+	,explosion: {_hx_index:2,__enum__:"GrenadeState",toString:$estr}
+};
+var Grenade = function(player) {
+	this.explosionCounter = 0;
+	this.currentRadius = 0;
+	this.explosionRadius = 100.0;
+	this.explosionTime = 0.2;
+	this.gravity = 0.8;
+	this.radius = 5.0;
+	openfl_display_Sprite.call(this);
+	this.setGrenade(player);
+	this.state = GrenadeState.active;
+};
+$hxClasses["Grenade"] = Grenade;
+Grenade.__name__ = "Grenade";
+Grenade.__super__ = openfl_display_Sprite;
+Grenade.prototype = $extend(openfl_display_Sprite.prototype,{
+	move: function() {
+		if(this.state == GrenadeState.active) {
+			if(this.get_x() - this.get_width() / 2 >= Main.sizeWidth || this.get_x() + this.get_width() / 2 <= 0) {
+				this.state = GrenadeState.inactive;
+			}
+			var _g = this;
+			_g.set_x(_g.get_x() + this.speedX);
+			var _g1 = this;
+			_g1.set_y(_g1.get_y() + this.speedY);
+			this.speedY += this.gravity;
+		} else if(this.state == GrenadeState.explosion) {
+			this.currentRadius = this.radius + (this.explosionRadius - this.radius) / (Main.get_FPS() * this.explosionTime) * this.explosionCounter;
+			this.get_graphics().clear();
+			this.get_graphics().lineStyle(2,255);
+			this.get_graphics().drawCircle(0,0,this.currentRadius);
+			this.get_graphics().endFill();
+			++this.explosionCounter;
+			if(this.explosionCounter > Main.get_FPS() * this.explosionTime) {
+				this.get_graphics().clear();
+				this.state = GrenadeState.inactive;
+				this.explosionCounter = 0;
+			}
+		}
+	}
+	,setGrenade: function(player) {
+		this.get_graphics().clear();
+		this.get_graphics().beginFill(255);
+		this.get_graphics().drawCircle(0,0,this.radius);
+		this.get_graphics().endFill();
+		if(player.get_direction() == Direction.right) {
+			this.set_x(player.get_x() + 10.0);
+			this.set_y(player.get_y());
+			this.speedX = 6.0;
+			this.speedY = -15.0;
+			this.gravity = 0.8;
+		} else {
+			this.set_x(player.get_x() - 10.0);
+			this.set_y(player.get_y());
+			this.speedX = -6.0;
+			this.speedY = -15.0;
+			this.gravity = 0.8;
+		}
+		if(Bonus.bonusIsUsed) {
+			this.speedX /= 4.0;
+			this.speedY /= 4.0;
+			this.gravity /= 16.0;
+		}
+	}
+	,doCollisionWithTiles: function(level) {
+		if(this.state == GrenadeState.active) {
+			var tileWidth = Main.sizeWidth / 20;
+			var tileHeight = Main.sizeHeight / 15;
+			var _g = 0;
+			var _g1 = level.length;
+			while(_g < _g1) {
+				var i = _g++;
+				var _g2 = 0;
+				var _g11 = level[i].length;
+				while(_g2 < _g11) {
+					var j = _g2++;
+					if(this.checkCollisionWithTile(level[i][j],j * tileWidth,i * tileHeight)) {
+						this.state = GrenadeState.explosion;
+					}
+				}
+			}
+		}
+	}
+	,checkCollisionWithTile: function(tileType,tileX,tileY) {
+		if(tileType > 0 && tileType < 5) {
+			var tileWidth = Main.sizeWidth / 20;
+			var tileHeight = Main.sizeHeight / 15;
+			var center = new openfl_geom_Point(this.get_x(),this.get_y());
+			var aabb_half_extands = new openfl_geom_Point(tileWidth / 2,tileHeight / 2);
+			var aabb_center = new openfl_geom_Point(tileX + tileWidth / 2,tileY + tileHeight / 2);
+			var difference = new openfl_geom_Point(center.x - aabb_center.x,center.y - aabb_center.y);
+			var clamped = new openfl_geom_Point(this.clamp(difference.x,-aabb_half_extands.x,aabb_half_extands.x),this.clamp(difference.y,-aabb_half_extands.y,aabb_half_extands.y));
+			var closest = new openfl_geom_Point(aabb_center.x + clamped.x,aabb_center.y + clamped.y);
+			difference = new openfl_geom_Point(closest.x - center.x,closest.y - center.y);
+			var zero = new openfl_geom_Point(0,0);
+			var dist = Math.abs(openfl_geom_Point.distance(difference,zero));
+			if(dist < this.radius) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+	,checkCollisionWithEnemy: function(enemy) {
+		if(this.state != GrenadeState.inactive) {
+			var radius_;
+			if(this.state == GrenadeState.active) {
+				radius_ = this.radius;
+			} else {
+				radius_ = this.currentRadius;
+			}
+			var center = new openfl_geom_Point(this.get_x(),this.get_y());
+			var aabb_half_extands = new openfl_geom_Point(enemy.get_hitBox().width / 2,enemy.get_hitBox().height / 2);
+			var aabb_center = new openfl_geom_Point(enemy.get_x(),enemy.get_y());
+			var difference = new openfl_geom_Point(center.x - aabb_center.x,center.y - aabb_center.y);
+			var clamped = new openfl_geom_Point(this.clamp(difference.x,-aabb_half_extands.x,aabb_half_extands.x),this.clamp(difference.y,-aabb_half_extands.y,aabb_half_extands.y));
+			var closest = new openfl_geom_Point(aabb_center.x + clamped.x,aabb_center.y + clamped.y);
+			difference = new openfl_geom_Point(closest.x - center.x,closest.y - center.y);
+			var zero = new openfl_geom_Point(0,0);
+			var dist = Math.abs(openfl_geom_Point.distance(difference,zero));
+			if(dist < radius_) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+	,clamp: function(value,min,max) {
+		return Math.max(min,Math.min(max,value));
+	}
+	,get_state: function() {
+		return this.state;
+	}
+	,set_state: function(value) {
+		this.state = value;
+	}
+	,get_explosionRadius: function() {
+		return this.explosionRadius;
+	}
+	,set_speedX: function(value) {
+		this.speedX = value;
+	}
+	,get_speedX: function() {
+		return this.speedX;
+	}
+	,set_speedY: function(value) {
+		this.speedY = value;
+	}
+	,get_speedY: function() {
+		return this.speedY;
+	}
+	,set_gravity: function(value) {
+		this.gravity = value;
+	}
+	,get_gravity: function() {
+		return this.gravity;
+	}
+	,__class__: Grenade
+});
 var HxOverrides = function() { };
 $hxClasses["HxOverrides"] = HxOverrides;
 HxOverrides.__name__ = "HxOverrides";
@@ -5036,6 +5428,83 @@ HxOverrides.iter = function(a) {
 		return this.arr[this.cur++];
 	}};
 };
+var Weapon = $hxEnums["Weapon"] = { __ename__ : "Weapon", __constructs__ : ["gun","grenade"]
+	,gun: {_hx_index:0,__enum__:"Weapon",toString:$estr}
+	,grenade: {_hx_index:1,__enum__:"Weapon",toString:$estr}
+};
+var Inventory = function() {
+	this.indicatorSize = 50.0;
+	this.weapon = Weapon.gun;
+	this.panel = new openfl_display_Sprite();
+	this.gunIndicator = new openfl_display_Sprite();
+	this.gunIndicator.get_graphics().beginFill(12303291);
+	this.gunIndicator.get_graphics().drawRect(0,0,this.indicatorSize,this.indicatorSize);
+	this.gunIndicator.get_graphics().endFill();
+	this.panel.addChild(this.gunIndicator);
+	this.gunReload = new openfl_display_Sprite();
+	this.grenadeIndicator = new openfl_display_Sprite();
+	this.grenadeIndicator.get_graphics().beginFill(12303291);
+	this.grenadeIndicator.get_graphics().drawRect(0,0,this.indicatorSize,this.indicatorSize);
+	this.grenadeIndicator.get_graphics().endFill();
+	this.grenadeIndicator.set_x(55);
+	this.panel.addChild(this.grenadeIndicator);
+	this.grenadeReload = new openfl_display_Sprite();
+	var textGun = new openfl_text_TextField();
+	textGun.set_text("GUN");
+	textGun.set_width(50);
+	textGun.set_height(50);
+	textGun.mouseEnabled = false;
+	this.panel.addChild(textGun);
+	var textGrenade = new openfl_text_TextField();
+	textGrenade.set_text("GRE\nNA\nDE");
+	textGrenade.set_width(50);
+	textGrenade.set_height(50);
+	textGrenade.set_x(55);
+	textGrenade.mouseEnabled = false;
+	this.panel.addChild(textGrenade);
+	openfl_Lib.get_current().stage.addEventListener("keyDown",$bind(this,this.onDown));
+};
+$hxClasses["Inventory"] = Inventory;
+Inventory.__name__ = "Inventory";
+Inventory.prototype = {
+	update: function(player) {
+		if(player.get_gunCounter() != 0) {
+			this.gunIndicator.addChild(this.gunReload);
+			this.gunReload.get_graphics().clear();
+			this.gunReload.get_graphics().beginFill(6710886);
+			this.gunReload.get_graphics().drawRect(0,0,this.indicatorSize,this.indicatorSize / (Main.get_FPS() / player.get_rateOfFire()) * player.get_gunCounter());
+			this.gunReload.get_graphics().endFill();
+		}
+		if(player.get_grenadeCounter() != 0) {
+			this.grenadeIndicator.addChild(this.grenadeReload);
+			this.grenadeReload.get_graphics().clear();
+			this.grenadeReload.get_graphics().beginFill(6710886);
+			this.grenadeReload.get_graphics().drawRect(0,0,this.indicatorSize,this.indicatorSize / (Main.get_FPS() / player.get_rateOfThrow()) * player.get_grenadeCounter());
+			this.grenadeReload.get_graphics().endFill();
+		}
+		this.panel.get_graphics().clear();
+		if(this.weapon == Weapon.gun) {
+			this.panel.get_graphics().lineStyle(4,16777215);
+			this.panel.get_graphics().drawRect(0,0,50,50);
+			this.panel.get_graphics().endFill();
+		} else if(this.weapon == Weapon.grenade) {
+			this.panel.get_graphics().lineStyle(4,16777215);
+			this.panel.get_graphics().drawRect(55,0,50,50);
+			this.panel.get_graphics().endFill();
+		}
+	}
+	,onDown: function(e) {
+		if(e.keyCode == 49) {
+			this.weapon = Weapon.gun;
+		} else if(e.keyCode == 50) {
+			this.weapon = Weapon.grenade;
+		}
+	}
+	,get_weapon: function() {
+		return this.weapon;
+	}
+	,__class__: Inventory
+};
 var Lambda = function() { };
 $hxClasses["Lambda"] = Lambda;
 Lambda.__name__ = "Lambda";
@@ -5062,7 +5531,7 @@ ManifestResources.init = function(config) {
 		ManifestResources.rootPath = "./";
 	}
 	var bundle;
-	var data = "{\"name\":null,\"assets\":\"aoy4:pathy35:assets%2FbackGround%2Fdesert_BG.pngy4:sizei40660y4:typey5:IMAGEy2:idR1y7:preloadtgoR0y40:assets%2FbackGround%2FgameOverScreen.pngR2i100976R3R4R5R7R6tgoR0y36:assets%2FbackGround%2FgameScreen.pngR2i448276R3R4R5R8R6tgoR0y37:assets%2FbackGround%2FrulesScreen.pngR2i81718R3R4R5R9R6tgoR0y37:assets%2FbackGround%2FstartScreen.pngR2i11036R3R4R5R10R6tgoR0y29:assets%2FCowboy%2FCowboy4.pngR2i6250R3R4R5R11R6tgoR0y49:assets%2FCowboy%2FCowboy4_idle%20with%20gun_1.pngR2i623R3R4R5R12R6tgoR0y49:assets%2FCowboy%2FCowboy4_idle%20with%20gun_2.pngR2i627R3R4R5R13R6tgoR0y49:assets%2FCowboy%2FCowboy4_idle%20with%20gun_3.pngR2i627R3R4R5R14R6tgoR0y52:assets%2FCowboy%2FCowboy4_idle%20without%20gun_0.pngR2i557R3R4R5R15R6tgoR0y52:assets%2FCowboy%2FCowboy4_idle%20without%20gun_1.pngR2i557R3R4R5R16R6tgoR0y52:assets%2FCowboy%2FCowboy4_idle%20without%20gun_2.pngR2i560R3R4R5R17R6tgoR0y52:assets%2FCowboy%2FCowboy4_idle%20without%20gun_3.pngR2i560R3R4R5R18R6tgoR0y45:assets%2FCowboy%2FCowboy4_idle_with_gun_0.pngR2i623R3R4R5R19R6tgoR0y44:assets%2FCowboy%2FCowboy4_jump%20shoot_0.pngR2i626R3R4R5R20R6tgoR0y44:assets%2FCowboy%2FCowboy4_jump%20shoot_1.pngR2i808R3R4R5R21R6tgoR0y44:assets%2FCowboy%2FCowboy4_jump%20shoot_2.pngR2i778R3R4R5R22R6tgoR0y44:assets%2FCowboy%2FCowboy4_jump%20shoot_3.pngR2i767R3R4R5R23R6tgoR0y49:assets%2FCowboy%2FCowboy4_jump%20with%20gun_0.pngR2i627R3R4R5R24R6tgoR0y52:assets%2FCowboy%2FCowboy4_jump%20without%20gun_0.pngR2i560R3R4R5R25R6tgoR0y37:assets%2FCowboy%2FCowboy4_shoot_0.pngR2i630R3R4R5R26R6tgoR0y37:assets%2FCowboy%2FCowboy4_shoot_1.pngR2i817R3R4R5R27R6tgoR0y37:assets%2FCowboy%2FCowboy4_shoot_2.pngR2i788R3R4R5R28R6tgoR0y37:assets%2FCowboy%2FCowboy4_shoot_3.pngR2i774R3R4R5R29R6tgoR0y49:assets%2FCowboy%2FCowboy4_walk%20with%20gun_0.pngR2i628R3R4R5R30R6tgoR0y49:assets%2FCowboy%2FCowboy4_walk%20with%20gun_1.pngR2i610R3R4R5R31R6tgoR0y49:assets%2FCowboy%2FCowboy4_walk%20with%20gun_2.pngR2i630R3R4R5R32R6tgoR0y49:assets%2FCowboy%2FCowboy4_walk%20with%20gun_3.pngR2i610R3R4R5R33R6tgoR0y52:assets%2FCowboy%2FCowboy4_walk%20without%20gun_0.pngR2i551R3R4R5R34R6tgoR0y52:assets%2FCowboy%2FCowboy4_walk%20without%20gun_1.pngR2i513R3R4R5R35R6tgoR0y52:assets%2FCowboy%2FCowboy4_walk%20without%20gun_2.pngR2i541R3R4R5R36R6tgoR0y52:assets%2FCowboy%2FCowboy4_walk%20without%20gun_3.pngR2i513R3R4R5R37R6tgoR0y28:assets%2FtileMap%2Fgrass.pngR2i6766R3R4R5R38R6tgoR0y33:assets%2FtileMap%2FPixelAtlas.pngR2i5091R3R4R5R39R6tgh\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
+	var data = "{\"name\":null,\"assets\":\"aoy4:pathy23:assets%2F2dplatform.pngy4:sizei7707y4:typey5:IMAGEy2:idR1y7:preloadtgoR0y35:assets%2FbackGround%2Fdesert_BG.pngR2i40660R3R4R5R7R6tgoR0y40:assets%2FbackGround%2FgameOverScreen.pngR2i100976R3R4R5R8R6tgoR0y36:assets%2FbackGround%2FgameScreen.pngR2i448276R3R4R5R9R6tgoR0y37:assets%2FbackGround%2FrulesScreen.pngR2i81718R3R4R5R10R6tgoR0y37:assets%2FbackGround%2FstartScreen.pngR2i11036R3R4R5R11R6tgoR0y29:assets%2FCowboy%2FCowboy4.pngR2i6250R3R4R5R12R6tgoR0y49:assets%2FCowboy%2FCowboy4_idle%20with%20gun_1.pngR2i623R3R4R5R13R6tgoR0y49:assets%2FCowboy%2FCowboy4_idle%20with%20gun_2.pngR2i627R3R4R5R14R6tgoR0y49:assets%2FCowboy%2FCowboy4_idle%20with%20gun_3.pngR2i627R3R4R5R15R6tgoR0y52:assets%2FCowboy%2FCowboy4_idle%20without%20gun_0.pngR2i557R3R4R5R16R6tgoR0y52:assets%2FCowboy%2FCowboy4_idle%20without%20gun_1.pngR2i557R3R4R5R17R6tgoR0y52:assets%2FCowboy%2FCowboy4_idle%20without%20gun_2.pngR2i560R3R4R5R18R6tgoR0y52:assets%2FCowboy%2FCowboy4_idle%20without%20gun_3.pngR2i560R3R4R5R19R6tgoR0y45:assets%2FCowboy%2FCowboy4_idle_with_gun_0.pngR2i623R3R4R5R20R6tgoR0y44:assets%2FCowboy%2FCowboy4_jump%20shoot_0.pngR2i626R3R4R5R21R6tgoR0y44:assets%2FCowboy%2FCowboy4_jump%20shoot_1.pngR2i808R3R4R5R22R6tgoR0y44:assets%2FCowboy%2FCowboy4_jump%20shoot_2.pngR2i778R3R4R5R23R6tgoR0y44:assets%2FCowboy%2FCowboy4_jump%20shoot_3.pngR2i767R3R4R5R24R6tgoR0y49:assets%2FCowboy%2FCowboy4_jump%20with%20gun_0.pngR2i627R3R4R5R25R6tgoR0y52:assets%2FCowboy%2FCowboy4_jump%20without%20gun_0.pngR2i560R3R4R5R26R6tgoR0y37:assets%2FCowboy%2FCowboy4_shoot_0.pngR2i630R3R4R5R27R6tgoR0y37:assets%2FCowboy%2FCowboy4_shoot_1.pngR2i817R3R4R5R28R6tgoR0y37:assets%2FCowboy%2FCowboy4_shoot_2.pngR2i788R3R4R5R29R6tgoR0y37:assets%2FCowboy%2FCowboy4_shoot_3.pngR2i774R3R4R5R30R6tgoR0y49:assets%2FCowboy%2FCowboy4_walk%20with%20gun_0.pngR2i628R3R4R5R31R6tgoR0y49:assets%2FCowboy%2FCowboy4_walk%20with%20gun_1.pngR2i610R3R4R5R32R6tgoR0y49:assets%2FCowboy%2FCowboy4_walk%20with%20gun_2.pngR2i630R3R4R5R33R6tgoR0y49:assets%2FCowboy%2FCowboy4_walk%20with%20gun_3.pngR2i610R3R4R5R34R6tgoR0y52:assets%2FCowboy%2FCowboy4_walk%20without%20gun_0.pngR2i551R3R4R5R35R6tgoR0y52:assets%2FCowboy%2FCowboy4_walk%20without%20gun_1.pngR2i513R3R4R5R36R6tgoR0y52:assets%2FCowboy%2FCowboy4_walk%20without%20gun_2.pngR2i541R3R4R5R37R6tgoR0y52:assets%2FCowboy%2FCowboy4_walk%20without%20gun_3.pngR2i513R3R4R5R38R6tgoR0y28:assets%2FtileMap%2Fgrass.pngR2i6766R3R4R5R39R6tgoR0y33:assets%2FtileMap%2FPixelAtlas.pngR2i5091R3R4R5R40R6tgh\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
 	var manifest = lime_utils_AssetManifest.parse(data,ManifestResources.rootPath);
 	var library = lime_utils_AssetLibrary.fromManifest(manifest);
 	lime_utils_Assets.registerLibrary("default",library);
@@ -5080,9 +5549,15 @@ var State = $hxEnums["State"] = { __ename__ : "State", __constructs__ : ["idle",
 	,jump: {_hx_index:2,__enum__:"State",toString:$estr}
 };
 var Player = function() {
-	this.counter = 0;
+	this.invulnerabilityCounter = 0;
+	this.invulnerabilityTime = 2.0;
+	this.invulnerability = false;
+	this.maxHealthPoints = 3;
+	this.grenadeCounter = 0;
+	this.gunCounter = 0;
 	this.shooting = false;
-	this.frameOfFire = 0.75;
+	this.rateOfThrow = 0.25;
+	this.rateOfFire = 0.75;
 	this.frameTime = 0.15;
 	this.state = State.idle;
 	this.jump = false;
@@ -5108,10 +5583,14 @@ var Player = function() {
 	this.addChild(this.idleWidthGun[0]);
 	this.idleWidthGun[0].set_x(-15);
 	this.idleWidthGun[0].set_y(-40);
-	haxe_Log.trace(this.get_width() + " " + this.get_height(),{ fileName : "Source/Player.hx", lineNumber : 65, className : "Player", methodName : "new"});
+	haxe_Log.trace(this.get_width() + " " + this.get_height(),{ fileName : "Source/Player.hx", lineNumber : 76, className : "Player", methodName : "new"});
 	this.drawHitBox();
 	this.ind = 0;
 	this.timeFlag = new Date().getTime() / 1000;
+	this.inventory = new Inventory();
+	this.inventory.panel.set_x(250);
+	this.inventory.panel.set_y(5);
+	this.healthPoints = this.maxHealthPoints;
 	openfl_Lib.get_current().stage.addEventListener("keyDown",$bind(this,this.keyDownHandler));
 	openfl_Lib.get_current().stage.addEventListener("mouseDown",$bind(this,this.mouseDownHandler));
 	openfl_Lib.get_current().stage.addEventListener("keyUp",$bind(this,this.keyUpHandler));
@@ -5213,23 +5692,44 @@ Player.prototype = $extend(Unit.prototype,{
 		_g2.set_y(_g2.get_y() + this.speedY);
 	}
 	,doShot: function(game) {
-		if(this.counter >= Main.get_FPS() / this.frameOfFire && this.shooting) {
-			var bullet;
-			if(game.spentBullets.length > 0) {
-				haxe_Log.trace(999999,{ fileName : "Source/Player.hx", lineNumber : 183, className : "Player", methodName : "doShot"});
-				game.bullets.push(game.spentBullets.pop());
-				game.bullets[game.bullets.length - 1].setBullet(this);
-				game.addChild(game.bullets[game.bullets.length - 1]);
-				this.counter = 0;
-			} else {
-				bullet = new Bullet(this);
-				game.bullets.push(bullet);
-				game.addChild(bullet);
-				haxe_Log.trace("Shot",{ fileName : "Source/Player.hx", lineNumber : 196, className : "Player", methodName : "doShot"});
-				this.counter = 0;
-			}
+		this.inventory.update(this);
+		if(this.gunCounter == 0 && this.shooting && this.inventory.get_weapon() == Weapon.gun) {
+			this.doShotGun(game);
+		} else if(this.gunCounter != 0) {
+			--this.gunCounter;
+		}
+		if(this.grenadeCounter == 0 && this.shooting && this.inventory.get_weapon() == Weapon.grenade) {
+			this.doShotGrenade(game);
+		} else if(this.grenadeCounter != 0) {
+			--this.grenadeCounter;
+		}
+	}
+	,doShotGun: function(game) {
+		var bullet;
+		if(game.spentBullets.length > 0) {
+			game.bullets.push(game.spentBullets.pop());
+			game.bullets[game.bullets.length - 1].setBullet(this);
+			game.addChild(game.bullets[game.bullets.length - 1]);
+			this.gunCounter = Math.floor(Main.get_FPS() / this.rateOfFire);
 		} else {
-			++this.counter;
+			bullet = new Bullet(this);
+			game.bullets.push(bullet);
+			game.addChild(bullet);
+			this.gunCounter = Math.floor(Main.get_FPS() / this.rateOfFire);
+		}
+	}
+	,doShotGrenade: function(game) {
+		if(game.grenade != null) {
+			game.grenade.setGrenade(this);
+			game.addChild(game.grenade);
+			game.grenade.set_state(GrenadeState.active);
+			this.grenadeCounter = Math.floor(Main.get_FPS() / this.rateOfThrow);
+			haxe_Log.trace("SETTING GRENADE",{ fileName : "Source/Player.hx", lineNumber : 244, className : "Player", methodName : "doShotGrenade"});
+		} else {
+			var grenade = new Grenade(this);
+			game.grenade = grenade;
+			game.addChild(grenade);
+			this.grenadeCounter = Math.floor(Main.get_FPS() / this.rateOfThrow);
 		}
 	}
 	,checkCollisionWithEnemy: function(enemy) {
@@ -5241,9 +5741,6 @@ Player.prototype = $extend(Unit.prototype,{
 	}
 	,get_state: function() {
 		return this.state;
-	}
-	,get_direction: function() {
-		return this.direction;
 	}
 	,drawHitBox: function() {
 		this.get_graphics().lineStyle(1,16711680);
@@ -5279,6 +5776,24 @@ Player.prototype = $extend(Unit.prototype,{
 			}
 		}
 	}
+	,doInvulnerability: function() {
+		if(this.invulnerabilityCounter % (Main.get_FPS() / 6) == 0) {
+			this.set_alpha(this.get_alpha() == 1.0 ? 0.0 : 1.0);
+		}
+		++this.invulnerabilityCounter;
+		if(this.invulnerabilityCounter >= Main.get_FPS() * this.invulnerabilityTime) {
+			this.invulnerability = false;
+			this.invulnerabilityCounter = 0;
+		}
+	}
+	,doCollisionWithPlatform: function(platform) {
+		if(this.speedY >= 0.0 && this.get_x() + this.get_hitBox().width / 2 > platform.get_x() && this.get_x() - this.get_hitBox().width / 2 < platform.get_x() + platform.get_width() && this.get_y() + this.get_hitBox().height / 2 > platform.get_y() && this.get_y() - this.get_hitBox().height / 2 < platform.get_y()) {
+			Game.haveCollision = true;
+			this.collisionDirection = CollisionDirection.up;
+			this.set_y(platform.get_y() - this.get_hitBox().height / 2);
+			this.speedY = 0.0;
+		}
+	}
 	,get_directionLeft: function() {
 		return this.movingLeft;
 	}
@@ -5290,6 +5805,33 @@ Player.prototype = $extend(Unit.prototype,{
 	}
 	,set_state: function(value) {
 		this.state = value;
+	}
+	,get_gunCounter: function() {
+		return this.gunCounter;
+	}
+	,get_rateOfFire: function() {
+		return this.rateOfFire;
+	}
+	,get_grenadeCounter: function() {
+		return this.grenadeCounter;
+	}
+	,get_rateOfThrow: function() {
+		return this.rateOfThrow;
+	}
+	,get_healthPoints: function() {
+		return this.healthPoints;
+	}
+	,set_healthPoints: function(value) {
+		this.healthPoints = value;
+	}
+	,get_maxHealthPoints: function() {
+		return this.maxHealthPoints;
+	}
+	,get_invulnerability: function() {
+		return this.invulnerability;
+	}
+	,set_invulnerability: function(value) {
+		this.invulnerability = value;
 	}
 	,__class__: Player
 });
@@ -22701,49 +23243,6 @@ lime_net__$HTTPRequest_$openfl_$utils_$ByteArray.prototype = $extend(lime_net__$
 	}
 	,__class__: lime_net__$HTTPRequest_$openfl_$utils_$ByteArray
 });
-var lime_system_BackgroundWorker = function() {
-	this.onProgress = new lime_app__$Event_$Dynamic_$Void();
-	this.onError = new lime_app__$Event_$Dynamic_$Void();
-	this.onComplete = new lime_app__$Event_$Dynamic_$Void();
-	this.doWork = new lime_app__$Event_$Dynamic_$Void();
-};
-$hxClasses["lime.system.BackgroundWorker"] = lime_system_BackgroundWorker;
-lime_system_BackgroundWorker.__name__ = "lime.system.BackgroundWorker";
-lime_system_BackgroundWorker.prototype = {
-	cancel: function() {
-		this.canceled = true;
-	}
-	,run: function(message) {
-		this.canceled = false;
-		this.completed = false;
-		this.__runMessage = message;
-		this.__doWork();
-	}
-	,sendComplete: function(message) {
-		this.completed = true;
-		if(!this.canceled) {
-			this.canceled = true;
-			this.onComplete.dispatch(message);
-		}
-	}
-	,sendError: function(message) {
-		if(!this.canceled) {
-			this.canceled = true;
-			this.onError.dispatch(message);
-		}
-	}
-	,sendProgress: function(message) {
-		if(!this.canceled) {
-			this.onProgress.dispatch(message);
-		}
-	}
-	,__doWork: function() {
-		this.doWork.dispatch(this.__runMessage);
-	}
-	,__update: function(deltaTime) {
-	}
-	,__class__: lime_system_BackgroundWorker
-};
 var lime_system_CFFI = function() { };
 $hxClasses["lime.system.CFFI"] = lime_system_CFFI;
 lime_system_CFFI.__name__ = "lime.system.CFFI";
@@ -24340,7 +24839,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 302504;
+	this.version = 671375;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
@@ -73495,8 +73994,6 @@ lime_media_openal_ALC.EXTENSIONS = 4102;
 lime_media_openal_ALC.ENUMERATE_ALL_EXT = 1;
 lime_media_openal_ALC.DEFAULT_ALL_DEVICES_SPECIFIER = 4114;
 lime_media_openal_ALC.ALL_DEVICES_SPECIFIER = 4115;
-lime_system_BackgroundWorker.MESSAGE_COMPLETE = "__COMPLETE__";
-lime_system_BackgroundWorker.MESSAGE_ERROR = "__ERROR__";
 lime_system_Clipboard.onUpdate = new lime_app__$Event_$Void_$Void();
 lime_system_Sensor.sensorByID = new haxe_ds_IntMap();
 lime_system_Sensor.sensors = [];

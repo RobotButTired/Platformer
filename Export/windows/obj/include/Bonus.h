@@ -13,6 +13,7 @@ HX_DECLARE_CLASS0(Bonus)
 HX_DECLARE_CLASS0(BonusType)
 HX_DECLARE_CLASS0(Bullet)
 HX_DECLARE_CLASS0(Enemy)
+HX_DECLARE_CLASS0(Grenade)
 HX_DECLARE_CLASS0(Player)
 HX_DECLARE_CLASS0(Unit)
 HX_DECLARE_CLASS2(openfl,display,DisplayObject)
@@ -60,11 +61,14 @@ class HXCPP_CLASS_ATTRIBUTES Bonus_obj : public  ::Unit_obj
 		static bool bonusIsUsed;
 		static bool haveBonus;
 		static  ::BonusType bonusType;
-		static void doBonusSlow( ::Player player,::Array< ::Dynamic> enemies,::Array< ::Dynamic> deadEnemies,::Array< ::Dynamic> bullets);
+		static void doBonusSlow( ::Player player,::Array< ::Dynamic> enemies,::Array< ::Dynamic> deadEnemies,::Array< ::Dynamic> deadEnemiesWithGun,::Array< ::Dynamic> bullets,::Array< ::Dynamic> enemyBullets, ::Grenade grenade);
 		static ::Dynamic doBonusSlow_dyn();
 
 		static  ::BonusType get_bonusType();
 		static ::Dynamic get_bonusType_dyn();
+
+		static int get_counter();
+		static ::Dynamic get_counter_dyn();
 
 		void drawHitBox();
 		::Dynamic drawHitBox_dyn();

@@ -23,6 +23,9 @@ class GameLevel extends Sprite
     var IDs:Array<Int>;
     var tile:Tile;
     public var level:Array<Array<Int>>;
+
+    public var platforms:Array<Sprite>;
+
     public function new(width:Int, height:Int) 
     {
         super();
@@ -77,9 +80,28 @@ class GameLevel extends Sprite
         //trace(tilemap.getTileAt(0).x+" "+tilemap.getTileAt(0).y);
         //trace(tilemap.getTileAt(0).width);
 
-           
-       
-       // trace(Lib.current.stage.stageWidth);
+            platforms = [];
+           var platform_1 = new Sprite();
+           var platform_2 = new Sprite();
+           var bmpplatform_1 = new Bitmap(Assets.getBitmapData("assets/2dplatform.png"));
+           var bmpplatform_2 = new Bitmap(Assets.getBitmapData("assets/2dplatform.png"));
+           platform_1.addChild(bmpplatform_1);
+           platform_1.x = Main.sizeWidth/5;
+           platform_1.y = Main.sizeHeight/1.75;
+
+           platform_2.addChild(bmpplatform_2);
+           platform_2.x = Main.sizeWidth/5*3;
+           platform_2.y = Main.sizeHeight/1.75;
+
+           platforms.push(platform_1);
+           platforms.push(platform_2);
+          // trace(platforms.length);
+        for(i in 0...platforms.length)
+        {
+            addChild(platforms[i]);
+        }
+
+   
         
     }
     public function addTiles() 
