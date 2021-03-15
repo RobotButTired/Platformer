@@ -62,6 +62,7 @@ class HXCPP_CLASS_ATTRIBUTES Main_obj : public  ::openfl::display::Sprite_obj
 		static void __boot();
 		static int sizeWidth;
 		static int sizeHeight;
+		static Float timePerFrame;
 		static int FPS;
 		static int get_FPS();
 		static ::Dynamic get_FPS_dyn();

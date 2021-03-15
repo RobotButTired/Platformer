@@ -30,8 +30,8 @@ class Grenade extends Sprite
         {
             if(x - width/2 >= Main.sizeWidth || x + width/2 <= 0)
                 state = inactive;
-            x += speedX;
-            y += speedY;
+            x += speedX* Main.timePerFrame;
+            y += speedY* Main.timePerFrame;
             speedY += gravity;
         }
         else if(state == explosion)
@@ -62,17 +62,17 @@ class Grenade extends Sprite
             {
                 x= player.x + 10.0;
                 y = player.y;
-                speedX = 6.0;
-                speedY = -15.0;
-                gravity =0.8;
+                speedX = 360;
+                speedY = -900;
+                gravity =24;
             } 
         else
             {
                 x = player.x - 10.0;
                 y = player.y;
-                speedX = -6.0;
-                speedY = -15.0;
-                gravity =0.8;
+                speedX = -360;
+                speedY = -900;
+                gravity =24;
                 /*if(Bonus.bonusIsUsed)
                     {
                         speedX *= 4.0;

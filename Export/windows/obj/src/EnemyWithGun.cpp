@@ -72,7 +72,7 @@ HXLINE(  14)		super::__construct();
 HXLINE(  15)		this->color = 16711935;
 HXLINE(  16)		this->hitBox =  ::openfl::geom::Rectangle_obj::__alloc( HX_CTX ,((Float)-15.),((Float)-20.),30,40);
 HXLINE(  17)		this->drawHitBox();
-HXLINE(  18)		this->speedX = ((Float)1.5);
+HXLINE(  18)		this->speedX = ( (Float)(90) );
 HXLINE(  19)		if (::Bonus_obj::bonusIsUsed) {
 HXLINE(  21)			 ::EnemyWithGun _hx_tmp = hx::ObjectPtr<OBJ_>(this);
 HXDLIN(  21)			_hx_tmp->speedY = (_hx_tmp->speedY * ((Float)0.25));
@@ -125,7 +125,7 @@ HXDLIN(  31)			if ((_hx_tmp < this->get_x())) {
 HXLINE(  33)				{
 HXLINE(  33)					 ::EnemyWithGun _g = hx::ObjectPtr<OBJ_>(this);
 HXDLIN(  33)					Float _hx_tmp1 = _g->get_x();
-HXDLIN(  33)					_g->set_x((_hx_tmp1 - this->speedX));
+HXDLIN(  33)					_g->set_x((_hx_tmp1 - (this->speedX * ::Main_obj::timePerFrame)));
             				}
 HXLINE(  34)				this->direction = ::Direction_obj::left_dyn();
             			}
@@ -135,7 +135,7 @@ HXDLIN(  36)				if ((_hx_tmp2 > this->get_x())) {
 HXLINE(  38)					{
 HXLINE(  38)						 ::EnemyWithGun _g1 = hx::ObjectPtr<OBJ_>(this);
 HXDLIN(  38)						Float _hx_tmp3 = _g1->get_x();
-HXDLIN(  38)						_g1->set_x((_hx_tmp3 + this->speedX));
+HXDLIN(  38)						_g1->set_x((_hx_tmp3 + (this->speedX * ::Main_obj::timePerFrame)));
             					}
 HXLINE(  39)					this->direction = ::Direction_obj::right_dyn();
             				}
@@ -167,7 +167,7 @@ HXDLIN(  61)		_hx_tmp10->speedY = (_hx_tmp10->speedY + this->gravity);
 HXLINE(  62)		{
 HXLINE(  62)			 ::EnemyWithGun _g2 = hx::ObjectPtr<OBJ_>(this);
 HXDLIN(  62)			Float _hx_tmp11 = _g2->get_y();
-HXDLIN(  62)			_g2->set_y((_hx_tmp11 + this->speedY));
+HXDLIN(  62)			_g2->set_y((_hx_tmp11 + (this->speedY * ::Main_obj::timePerFrame)));
             		}
 HXLINE(  63)		this->doCollisionsWithTiles(level);
             	}

@@ -12,11 +12,12 @@ class Enemy extends Unit
 
         hitBox = new Rectangle(-30/2,-40/2,30,40);
         drawHitBox();
-        speedX = 1.5;
+        speedX =90;
+        speedY =0.0;
         if(Bonus.bonusIsUsed)
             {
                 speedY *= 0.25;
-                speedX = 1.5*0.25;
+                speedX *= 0.25;
                 gravity *= 0.25;
             }
         
@@ -24,6 +25,7 @@ class Enemy extends Unit
 
     public function drawHitBox() 
     {
+        graphics.clear();
         graphics.lineStyle(3,color); 
         graphics.drawRect(-hitBox.width/2,-hitBox.height/2,hitBox.width,hitBox.height);   
         graphics.endFill();
@@ -32,11 +34,11 @@ class Enemy extends Unit
     public function move (player:Player, level:Array<Array<Int>>) 
     {
         if(player.x < x)
-            x -= speedX;
+            x -= speedX * Main.timePerFrame;
         else if(player.x > x)
-            x += speedX;
+            x += speedX * Main.timePerFrame;
         speedY += gravity;
-        y += speedY;
+        y += speedY * Main.timePerFrame;
         doCollisionsWithTiles(level);
     }
     public function doShot(game:Game)

@@ -45,6 +45,7 @@ class Game extends Sprite
     var enemies:Array<Enemy>;                   //массив врагов
     var deadEnemies:Array<Enemy>;               //массив убитых врагов
     var deadEnemiesWithGun:Array<Enemy>; // массив убитых стреляющих врегов 
+    var deadBirds:Array<Enemy>;                 //...
     var maxEnemies:Int = 4;                         //максимальное число врагов на поле
     var spawnDelay:Float = 1.0;                       //промежуток времени, через который появляются враги
   //  var enemiesTimeFlag:Float;                  //временной флаг для генерации врагов
@@ -78,7 +79,7 @@ class Game extends Sprite
 
 
           //PLayer
-          jumpPower = 15.0;
+          jumpPower = 900;
         player = new Player();
         player.x = 100;
         player.y = Main.sizeHeight/2;
@@ -92,6 +93,7 @@ class Game extends Sprite
         enemies = [];
         deadEnemies = [];
         deadEnemiesWithGun = [];
+        deadBirds = [];
        // enemiesTimeFlag = Timer.stamp();
 
        //Bonus
@@ -353,7 +355,18 @@ class Game extends Sprite
         var enemy:Enemy;
         if(Math.random() > 0.2)
         {
-            if(deadEnemies.length > 0)
+            if(gamePoints >= 25 && Math.random() > 0.8)
+            {
+                    if(deadBirds.length > 0)
+                    {
+                        enemy = deadBirds.pop();
+                    }
+                    else 
+                    {
+                        enemy = new Bird();
+                    }
+            }
+           else if(deadEnemies.length > 0)
                 {
                     enemy = deadEnemies.pop();
                 }
@@ -464,6 +477,8 @@ class Game extends Sprite
         pointsField.text = Std.string(gamePoints);
         if(enemy.color == 0xFF00FF)
             deadEnemiesWithGun.push(enemy);
+        else if(enemy.color == 0xFFFF00)
+            deadBirds.push(enemy);
         else
             deadEnemies.push(enemy);
         enemies.remove(enemy);    
@@ -508,7 +523,7 @@ class Game extends Sprite
         {
             if(Bonus.get_bonusType() == slow)
             {
-                Bonus.doBonusSlow(player,enemies,deadEnemies,deadEnemiesWithGun,bullets,enemyBullets ,grenade);
+                Bonus.doBonusSlow(player,enemies,deadEnemies,deadEnemiesWithGun,deadBirds,bullets,enemyBullets ,grenade);
                 bonusIndicator.graphics.clear();
                 bonusIndicator.graphics.beginGradientFill(RADIAL,[0xFF0000, 0xFFFFFF],[1.0,1.0], [0,95]);
                 bonusIndicator.graphics.drawRect(0,0,(Main.sizeWidth/3.5/(600)*(600-Bonus.get_counter())),20);
@@ -536,7 +551,7 @@ class Game extends Sprite
             Bonus.bonusIsUsed = false;
             Bonus.haveBonus = true;
             bonus = new Bonus();
-            bonus.set_speedY(-10.0);
+            bonus.set_speedY(-500);
             bonus.x = enemy.x;
             bonus.y = enemy.y;
             addChild(bonus);

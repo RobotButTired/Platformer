@@ -15,7 +15,7 @@ class EnemyWithGun extends Enemy
         color = 0xFF00FF;
         hitBox = new Rectangle(-30/2,-40/2,30,40);
         drawHitBox();
-        speedX = 1.5;
+        speedX = 90;
         if(Bonus.bonusIsUsed)
         {
             speedY *= 0.25;
@@ -30,12 +30,12 @@ class EnemyWithGun extends Enemy
             {
                 if(player.x < x)
                 {
-                    x -= speedX;
+                    x -= speedX * Main.timePerFrame;
                     direction = left;
                 }
                 else if(player.x > x)
                 {
-                    x += speedX;
+                    x += speedX * Main.timePerFrame;
                     direction = right;
                 }
                 ++counter;
@@ -59,7 +59,7 @@ class EnemyWithGun extends Enemy
                 }
             }
             speedY += gravity;
-            y += speedY;
+            y += speedY * Main.timePerFrame;
             doCollisionsWithTiles(level);
         }
 

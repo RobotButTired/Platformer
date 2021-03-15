@@ -8,6 +8,9 @@
 #ifndef INCLUDED_BackGround
 #include <BackGround.h>
 #endif
+#ifndef INCLUDED_Bird
+#include <Bird.h>
+#endif
 #ifndef INCLUDED_Bonus
 #include <Bonus.h>
 #endif
@@ -115,26 +118,26 @@
 #endif
 
 HX_DEFINE_STACK_FRAME(_hx_pos_69efd8c9269cf369_14_new,"Game","new",0x79ba3204,"Game.new","Game.hx",14,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_150_pause,"Game","pause",0x2654e99a,"Game.pause","Game.hx",150,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_166_quitButtonClick,"Game","quitButtonClick",0x3679e10b,"Game.quitButtonClick","Game.hx",166,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_169_quitButtonOver,"Game","quitButtonOver",0x51ad35f1,"Game.quitButtonOver","Game.hx",169,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_174_quitButtonOut,"Game","quitButtonOut",0x0f4a3e91,"Game.quitButtonOut","Game.hx",174,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_181_get_quitButtonIsPressed,"Game","get_quitButtonIsPressed",0x5edb1ab2,"Game.get_quitButtonIsPressed","Game.hx",181,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_185_update,"Game","update",0xfb78c2e5,"Game.update","Game.hx",185,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_287_playerJump,"Game","playerJump",0x8a147bcb,"Game.playerJump","Game.hx",287,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_298_bulletsMove,"Game","bulletsMove",0x74d16946,"Game.bulletsMove","Game.hx",298,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_326_grenadeMove,"Game","grenadeMove",0x4a6d5f23,"Game.grenadeMove","Game.hx",326,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_338_generateEnemies,"Game","generateEnemies",0x480cf995,"Game.generateEnemies","Game.hx",338,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_352_generateEnemy,"Game","generateEnemy",0x60fe3977,"Game.generateEnemy","Game.hx",352,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_393_moveEnemies,"Game","moveEnemies",0x96614739,"Game.moveEnemies","Game.hx",393,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_404_doCollisionsWithBullet,"Game","doCollisionsWithBullet",0x41b0c010,"Game.doCollisionsWithBullet","Game.hx",404,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_426_doCollisionWithEnemyBullet,"Game","doCollisionWithEnemyBullet",0xc025d179,"Game.doCollisionWithEnemyBullet","Game.hx",426,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_446_doCollisionWithGrenade,"Game","doCollisionWithGrenade",0xb0596a9d,"Game.doCollisionWithGrenade","Game.hx",446,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_460_killEnemy,"Game","killEnemy",0x2d7e7a6e,"Game.killEnemy","Game.hx",460,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_474_get_gameIsOver,"Game","get_gameIsOver",0x9b104115,"Game.get_gameIsOver","Game.hx",474,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_478_get_gamePoints,"Game","get_gamePoints",0x2b1efcda,"Game.get_gamePoints","Game.hx",478,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_482_doCollidionWithEnemies,"Game","doCollidionWithEnemies",0x085f8ba6,"Game.doCollidionWithEnemies","Game.hx",482,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_498_showHealthIndicator,"Game","showHealthIndicator",0x2121ecba,"Game.showHealthIndicator","Game.hx",498,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_152_pause,"Game","pause",0x2654e99a,"Game.pause","Game.hx",152,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_168_quitButtonClick,"Game","quitButtonClick",0x3679e10b,"Game.quitButtonClick","Game.hx",168,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_171_quitButtonOver,"Game","quitButtonOver",0x51ad35f1,"Game.quitButtonOver","Game.hx",171,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_176_quitButtonOut,"Game","quitButtonOut",0x0f4a3e91,"Game.quitButtonOut","Game.hx",176,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_183_get_quitButtonIsPressed,"Game","get_quitButtonIsPressed",0x5edb1ab2,"Game.get_quitButtonIsPressed","Game.hx",183,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_187_update,"Game","update",0xfb78c2e5,"Game.update","Game.hx",187,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_289_playerJump,"Game","playerJump",0x8a147bcb,"Game.playerJump","Game.hx",289,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_300_bulletsMove,"Game","bulletsMove",0x74d16946,"Game.bulletsMove","Game.hx",300,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_328_grenadeMove,"Game","grenadeMove",0x4a6d5f23,"Game.grenadeMove","Game.hx",328,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_340_generateEnemies,"Game","generateEnemies",0x480cf995,"Game.generateEnemies","Game.hx",340,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_354_generateEnemy,"Game","generateEnemy",0x60fe3977,"Game.generateEnemy","Game.hx",354,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_406_moveEnemies,"Game","moveEnemies",0x96614739,"Game.moveEnemies","Game.hx",406,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_417_doCollisionsWithBullet,"Game","doCollisionsWithBullet",0x41b0c010,"Game.doCollisionsWithBullet","Game.hx",417,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_439_doCollisionWithEnemyBullet,"Game","doCollisionWithEnemyBullet",0xc025d179,"Game.doCollisionWithEnemyBullet","Game.hx",439,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_459_doCollisionWithGrenade,"Game","doCollisionWithGrenade",0xb0596a9d,"Game.doCollisionWithGrenade","Game.hx",459,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_473_killEnemy,"Game","killEnemy",0x2d7e7a6e,"Game.killEnemy","Game.hx",473,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_489_get_gameIsOver,"Game","get_gameIsOver",0x9b104115,"Game.get_gameIsOver","Game.hx",489,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_493_get_gamePoints,"Game","get_gamePoints",0x2b1efcda,"Game.get_gamePoints","Game.hx",493,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_497_doCollidionWithEnemies,"Game","doCollidionWithEnemies",0x085f8ba6,"Game.doCollidionWithEnemies","Game.hx",497,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_513_showHealthIndicator,"Game","showHealthIndicator",0x2121ecba,"Game.showHealthIndicator","Game.hx",513,0x56a4f9ec)
 static const int _hx_array_data_2f382012_29[] = {
 	(int)65280,(int)16777215,
 };
@@ -144,7 +147,7 @@ static const Float _hx_array_data_2f382012_30[] = {
 static const int _hx_array_data_2f382012_31[] = {
 	(int)0,(int)85,
 };
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_507_bonusBuf,"Game","bonusBuf",0x77d8edb0,"Game.bonusBuf","Game.hx",507,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_522_bonusBuf,"Game","bonusBuf",0x77d8edb0,"Game.bonusBuf","Game.hx",522,0x56a4f9ec)
 static const int _hx_array_data_2f382012_33[] = {
 	(int)16711680,(int)16777215,
 };
@@ -154,72 +157,73 @@ static const Float _hx_array_data_2f382012_34[] = {
 static const int _hx_array_data_2f382012_35[] = {
 	(int)0,(int)95,
 };
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_534_spawnBonus,"Game","spawnBonus",0xd1f89d40,"Game.spawnBonus","Game.hx",534,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_546_doBonusDestroy,"Game","doBonusDestroy",0x45505122,"Game.doBonusDestroy","Game.hx",546,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_564_doCollisionsWithPLatforms,"Game","doCollisionsWithPLatforms",0x39d84d72,"Game.doCollisionsWithPLatforms","Game.hx",564,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_571_set_Pause,"Game","set_Pause",0x4724c3dd,"Game.set_Pause","Game.hx",571,0x56a4f9ec)
-HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_577_set_Unpause,"Game","set_Unpause",0x027802a4,"Game.set_Unpause","Game.hx",577,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_549_spawnBonus,"Game","spawnBonus",0xd1f89d40,"Game.spawnBonus","Game.hx",549,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_561_doBonusDestroy,"Game","doBonusDestroy",0x45505122,"Game.doBonusDestroy","Game.hx",561,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_579_doCollisionsWithPLatforms,"Game","doCollisionsWithPLatforms",0x39d84d72,"Game.doCollisionsWithPLatforms","Game.hx",579,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_586_set_Pause,"Game","set_Pause",0x4724c3dd,"Game.set_Pause","Game.hx",586,0x56a4f9ec)
+HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_592_set_Unpause,"Game","set_Unpause",0x027802a4,"Game.set_Unpause","Game.hx",592,0x56a4f9ec)
 HX_LOCAL_STACK_FRAME(_hx_pos_69efd8c9269cf369_24_boot,"Game","boot",0x014a920e,"Game.boot","Game.hx",24,0x56a4f9ec)
 
 void Game_obj::__construct(int width,int height){
             	HX_GC_STACKFRAME(&_hx_pos_69efd8c9269cf369_14_new)
-HXLINE(  51)		this->counter = 0;
-HXLINE(  49)		this->spawnDelay = ((Float)1.0);
-HXLINE(  48)		this->maxEnemies = 4;
+HXLINE(  52)		this->counter = 0;
+HXLINE(  50)		this->spawnDelay = ((Float)1.0);
+HXLINE(  49)		this->maxEnemies = 4;
 HXLINE(  34)		this->gamePoints = 0;
 HXLINE(  27)		this->gameIsOver = false;
 HXLINE(  21)		this->pauseIsPressed = false;
 HXLINE(  20)		this->quitButtonIsPressed = false;
-HXLINE(  61)		super::__construct();
-HXLINE(  62)		this->sizeWidth = width;
-HXLINE(  63)		this->sizeHeight = height;
-HXLINE(  65)		this->backGround =  ::BackGround_obj::__alloc( HX_CTX ,HX_("gameScreen",fe,24,d3,89));
-HXLINE(  67)		this->addChild(this->backGround);
-HXLINE(  70)		this->gameLevel =  ::GameLevel_obj::__alloc( HX_CTX ,this->sizeWidth,this->sizeHeight);
-HXLINE(  71)		this->addChild(this->gameLevel);
-HXLINE(  74)		this->bullets = ::Array_obj< ::Dynamic>::__new(0);
-HXLINE(  75)		this->spentBullets = ::Array_obj< ::Dynamic>::__new(0);
-HXLINE(  76)		this->enemyBullets = ::Array_obj< ::Dynamic>::__new(0);
-HXLINE(  77)		this->spentEnemyBullets = ::Array_obj< ::Dynamic>::__new(0);
-HXLINE(  81)		::Game_obj::jumpPower = ((Float)15.0);
-HXLINE(  82)		this->player =  ::Player_obj::__alloc( HX_CTX );
-HXLINE(  83)		this->player->set_x(( (Float)(100) ));
-HXLINE(  84)		this->player->set_y((( (Float)(::Main_obj::sizeHeight) ) / ( (Float)(2) )));
-HXLINE(  85)		this->addChild(this->player);
-HXLINE(  89)		this->addChild(this->player->inventory->panel);
-HXLINE(  92)		this->enemies = ::Array_obj< ::Dynamic>::__new(0);
-HXLINE(  93)		this->deadEnemies = ::Array_obj< ::Dynamic>::__new(0);
-HXLINE(  94)		this->deadEnemiesWithGun = ::Array_obj< ::Dynamic>::__new(0);
-HXLINE(  98)		::Bonus_obj::bonusIsUsed = false;
-HXLINE(  99)		::Bonus_obj::haveBonus = false;
-HXLINE( 100)		this->bonusIndicator =  ::openfl::display::Sprite_obj::__alloc( HX_CTX );
-HXLINE( 101)		this->bonusIndicator->set_x(( (Float)(10) ));
-HXLINE( 102)		this->bonusIndicator->set_y(( (Float)(55) ));
-HXLINE( 105)		this->healthIndicator =  ::openfl::display::Sprite_obj::__alloc( HX_CTX );
-HXLINE( 106)		this->healthIndicator->set_x(( (Float)(10) ));
-HXLINE( 107)		this->healthIndicator->set_y(( (Float)(10) ));
-HXLINE( 109)		this->pointsField =  ::openfl::text::TextField_obj::__alloc( HX_CTX );
-HXLINE( 110)		 ::openfl::text::TextField _hx_tmp = this->pointsField;
-HXDLIN( 110)		_hx_tmp->set_text(::Std_obj::string(this->gamePoints));
-HXLINE( 111)		this->pointsField->set_x((( (Float)(::Main_obj::sizeWidth) ) / ( (Float)(2) )));
-HXLINE( 112)		this->pointsField->set_y(( (Float)(0) ));
-HXLINE( 113)		this->pointsField->set_scaleX(((Float)2.0));
-HXLINE( 114)		this->pointsField->set_scaleY(((Float)2.0));
-HXLINE( 115)		this->pointsField->mouseEnabled = false;
-HXLINE( 116)		this->addChild(this->pointsField);
-HXLINE( 119)		this->pauseScreen =  ::openfl::display::Sprite_obj::__alloc( HX_CTX );
-HXLINE( 120)		this->pauseScreen->get_graphics()->beginFill(0,null());
-HXLINE( 121)		this->pauseScreen->get_graphics()->drawRect(( (Float)(0) ),( (Float)(0) ),( (Float)(::Main_obj::sizeWidth) ),( (Float)(::Main_obj::sizeHeight) ));
-HXLINE( 122)		this->pauseScreen->get_graphics()->endFill();
-HXLINE( 123)		this->pauseScreen->set_alpha(((Float)0.35));
-HXLINE( 127)		this->quitButton =  ::Button_obj::__alloc( HX_CTX ,(( (Float)(this->sizeWidth) ) / ( (Float)(2) )),(( (Float)(this->sizeHeight) ) / ( (Float)(2) )),HX_("QUIT",cf,07,cb,35));
-HXLINE( 128)		this->quitButton->set_x((( (Float)((this->sizeWidth * 7)) ) / ( (Float)(8) )));
-HXLINE( 129)		this->quitButton->set_y((( (Float)(this->sizeHeight) ) / ( (Float)(25) )));
-HXLINE( 131)		this->addChild(this->quitButton);
-HXLINE( 133)		this->quitButton->addEventListener(HX_("mouseOver",19,4a,0d,f6),this->quitButtonOver_dyn(),null(),null(),null());
-HXLINE( 134)		this->quitButton->addEventListener(HX_("mouseOut",69,e7,1d,a4),this->quitButtonOut_dyn(),null(),null(),null());
-HXLINE( 135)		this->quitButton->addEventListener(HX_("mouseDown",27,b1,c2,ee),this->quitButtonClick_dyn(),null(),null(),null());
-HXLINE( 136)		::openfl::Lib_obj::get_current()->stage->addEventListener(HX_("keyDown",a1,69,47,9c),this->pause_dyn(),null(),null(),null());
+HXLINE(  62)		super::__construct();
+HXLINE(  63)		this->sizeWidth = width;
+HXLINE(  64)		this->sizeHeight = height;
+HXLINE(  66)		this->backGround =  ::BackGround_obj::__alloc( HX_CTX ,HX_("gameScreen",fe,24,d3,89));
+HXLINE(  68)		this->addChild(this->backGround);
+HXLINE(  71)		this->gameLevel =  ::GameLevel_obj::__alloc( HX_CTX ,this->sizeWidth,this->sizeHeight);
+HXLINE(  72)		this->addChild(this->gameLevel);
+HXLINE(  75)		this->bullets = ::Array_obj< ::Dynamic>::__new(0);
+HXLINE(  76)		this->spentBullets = ::Array_obj< ::Dynamic>::__new(0);
+HXLINE(  77)		this->enemyBullets = ::Array_obj< ::Dynamic>::__new(0);
+HXLINE(  78)		this->spentEnemyBullets = ::Array_obj< ::Dynamic>::__new(0);
+HXLINE(  82)		::Game_obj::jumpPower = ( (Float)(900) );
+HXLINE(  83)		this->player =  ::Player_obj::__alloc( HX_CTX );
+HXLINE(  84)		this->player->set_x(( (Float)(100) ));
+HXLINE(  85)		this->player->set_y((( (Float)(::Main_obj::sizeHeight) ) / ( (Float)(2) )));
+HXLINE(  86)		this->addChild(this->player);
+HXLINE(  90)		this->addChild(this->player->inventory->panel);
+HXLINE(  93)		this->enemies = ::Array_obj< ::Dynamic>::__new(0);
+HXLINE(  94)		this->deadEnemies = ::Array_obj< ::Dynamic>::__new(0);
+HXLINE(  95)		this->deadEnemiesWithGun = ::Array_obj< ::Dynamic>::__new(0);
+HXLINE(  96)		this->deadBirds = ::Array_obj< ::Dynamic>::__new(0);
+HXLINE( 100)		::Bonus_obj::bonusIsUsed = false;
+HXLINE( 101)		::Bonus_obj::haveBonus = false;
+HXLINE( 102)		this->bonusIndicator =  ::openfl::display::Sprite_obj::__alloc( HX_CTX );
+HXLINE( 103)		this->bonusIndicator->set_x(( (Float)(10) ));
+HXLINE( 104)		this->bonusIndicator->set_y(( (Float)(55) ));
+HXLINE( 107)		this->healthIndicator =  ::openfl::display::Sprite_obj::__alloc( HX_CTX );
+HXLINE( 108)		this->healthIndicator->set_x(( (Float)(10) ));
+HXLINE( 109)		this->healthIndicator->set_y(( (Float)(10) ));
+HXLINE( 111)		this->pointsField =  ::openfl::text::TextField_obj::__alloc( HX_CTX );
+HXLINE( 112)		 ::openfl::text::TextField _hx_tmp = this->pointsField;
+HXDLIN( 112)		_hx_tmp->set_text(::Std_obj::string(this->gamePoints));
+HXLINE( 113)		this->pointsField->set_x((( (Float)(::Main_obj::sizeWidth) ) / ( (Float)(2) )));
+HXLINE( 114)		this->pointsField->set_y(( (Float)(0) ));
+HXLINE( 115)		this->pointsField->set_scaleX(((Float)2.0));
+HXLINE( 116)		this->pointsField->set_scaleY(((Float)2.0));
+HXLINE( 117)		this->pointsField->mouseEnabled = false;
+HXLINE( 118)		this->addChild(this->pointsField);
+HXLINE( 121)		this->pauseScreen =  ::openfl::display::Sprite_obj::__alloc( HX_CTX );
+HXLINE( 122)		this->pauseScreen->get_graphics()->beginFill(0,null());
+HXLINE( 123)		this->pauseScreen->get_graphics()->drawRect(( (Float)(0) ),( (Float)(0) ),( (Float)(::Main_obj::sizeWidth) ),( (Float)(::Main_obj::sizeHeight) ));
+HXLINE( 124)		this->pauseScreen->get_graphics()->endFill();
+HXLINE( 125)		this->pauseScreen->set_alpha(((Float)0.35));
+HXLINE( 129)		this->quitButton =  ::Button_obj::__alloc( HX_CTX ,(( (Float)(this->sizeWidth) ) / ( (Float)(2) )),(( (Float)(this->sizeHeight) ) / ( (Float)(2) )),HX_("QUIT",cf,07,cb,35));
+HXLINE( 130)		this->quitButton->set_x((( (Float)((this->sizeWidth * 7)) ) / ( (Float)(8) )));
+HXLINE( 131)		this->quitButton->set_y((( (Float)(this->sizeHeight) ) / ( (Float)(25) )));
+HXLINE( 133)		this->addChild(this->quitButton);
+HXLINE( 135)		this->quitButton->addEventListener(HX_("mouseOver",19,4a,0d,f6),this->quitButtonOver_dyn(),null(),null(),null());
+HXLINE( 136)		this->quitButton->addEventListener(HX_("mouseOut",69,e7,1d,a4),this->quitButtonOut_dyn(),null(),null(),null());
+HXLINE( 137)		this->quitButton->addEventListener(HX_("mouseDown",27,b1,c2,ee),this->quitButtonClick_dyn(),null(),null(),null());
+HXLINE( 138)		::openfl::Lib_obj::get_current()->stage->addEventListener(HX_("keyDown",a1,69,47,9c),this->pause_dyn(),null(),null(),null());
             	}
 
 Dynamic Game_obj::__CreateEmpty() { return new Game_obj; }
@@ -254,15 +258,15 @@ bool Game_obj::_hx_isInstanceOf(int inClassId) {
 }
 
 void Game_obj::pause( ::openfl::events::KeyboardEvent e){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_150_pause)
-HXDLIN( 150)		if ((e->keyCode == 120)) {
-HXLINE( 152)			if (!(this->pauseIsPressed)) {
-HXLINE( 154)				this->pauseIsPressed = true;
-HXLINE( 155)				this->set_Pause();
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_152_pause)
+HXDLIN( 152)		if ((e->keyCode == 120)) {
+HXLINE( 154)			if (!(this->pauseIsPressed)) {
+HXLINE( 156)				this->pauseIsPressed = true;
+HXLINE( 157)				this->set_Pause();
             			}
             			else {
-HXLINE( 159)				this->pauseIsPressed = false;
-HXLINE( 160)				this->set_Unpause();
+HXLINE( 161)				this->pauseIsPressed = false;
+HXLINE( 162)				this->set_Unpause();
             			}
             		}
             	}
@@ -271,68 +275,68 @@ HXLINE( 160)				this->set_Unpause();
 HX_DEFINE_DYNAMIC_FUNC1(Game_obj,pause,(void))
 
 void Game_obj::quitButtonClick( ::openfl::events::MouseEvent e){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_166_quitButtonClick)
-HXDLIN( 166)		this->quitButtonIsPressed = true;
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_168_quitButtonClick)
+HXDLIN( 168)		this->quitButtonIsPressed = true;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC1(Game_obj,quitButtonClick,(void))
 
 void Game_obj::quitButtonOver( ::openfl::events::MouseEvent e){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_169_quitButtonOver)
-HXLINE( 170)		this->quitButton->set_scaleX(((Float)1.25));
-HXLINE( 171)		this->quitButton->set_scaleY(((Float)1.25));
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_171_quitButtonOver)
+HXLINE( 172)		this->quitButton->set_scaleX(((Float)1.25));
+HXLINE( 173)		this->quitButton->set_scaleY(((Float)1.25));
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC1(Game_obj,quitButtonOver,(void))
 
 void Game_obj::quitButtonOut( ::openfl::events::MouseEvent e){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_174_quitButtonOut)
-HXLINE( 175)		this->quitButton->set_scaleX(((Float)1.0));
-HXLINE( 176)		this->quitButton->set_scaleY(((Float)1.0));
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_176_quitButtonOut)
+HXLINE( 177)		this->quitButton->set_scaleX(((Float)1.0));
+HXLINE( 178)		this->quitButton->set_scaleY(((Float)1.0));
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC1(Game_obj,quitButtonOut,(void))
 
 bool Game_obj::get_quitButtonIsPressed(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_181_get_quitButtonIsPressed)
-HXDLIN( 181)		return this->quitButtonIsPressed;
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_183_get_quitButtonIsPressed)
+HXDLIN( 183)		return this->quitButtonIsPressed;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,get_quitButtonIsPressed,return )
 
 void Game_obj::update(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_185_update)
-HXDLIN( 185)		if (!(this->pauseIsPressed)) {
-HXLINE( 188)			this->bonusBuf();
-HXLINE( 189)			this->showHealthIndicator();
-HXLINE( 190)			this->player->move();
-HXLINE( 192)			this->player->doCollisionsWithTilesForPLayer(this->gameLevel->level);
-HXLINE( 193)			this->doCollisionsWithPLatforms();
-HXLINE( 194)			if (!(this->player->get_invulnerability())) {
-HXLINE( 196)				this->doCollidionWithEnemies();
-HXLINE( 197)				this->doCollisionWithEnemyBullet();
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_187_update)
+HXDLIN( 187)		if (!(this->pauseIsPressed)) {
+HXLINE( 190)			this->bonusBuf();
+HXLINE( 191)			this->showHealthIndicator();
+HXLINE( 192)			this->player->move();
+HXLINE( 194)			this->player->doCollisionsWithTilesForPLayer(this->gameLevel->level);
+HXLINE( 195)			this->doCollisionsWithPLatforms();
+HXLINE( 196)			if (!(this->player->get_invulnerability())) {
+HXLINE( 198)				this->doCollidionWithEnemies();
+HXLINE( 199)				this->doCollisionWithEnemyBullet();
             			}
-HXLINE( 200)			this->playerJump(::Game_obj::jumpPower);
-HXLINE( 201)			 ::Player _hx_tmp = this->player;
-HXDLIN( 201)			_hx_tmp->spriteAnimated(this->player->get_state());
-HXLINE( 202)			this->player->doShot(hx::ObjectPtr<OBJ_>(this));
-HXLINE( 203)			if (this->player->get_invulnerability()) {
-HXLINE( 205)				this->player->doInvulnerability();
+HXLINE( 202)			this->playerJump(::Game_obj::jumpPower);
+HXLINE( 203)			 ::Player _hx_tmp = this->player;
+HXDLIN( 203)			_hx_tmp->spriteAnimated(this->player->get_state());
+HXLINE( 204)			this->player->doShot(hx::ObjectPtr<OBJ_>(this));
+HXLINE( 205)			if (this->player->get_invulnerability()) {
+HXLINE( 207)				this->player->doInvulnerability();
             			}
-HXLINE( 210)			this->bulletsMove();
-HXLINE( 211)			this->grenadeMove();
-HXLINE( 213)			this->generateEnemies();
-HXLINE( 214)			this->moveEnemies();
-HXLINE( 216)			this->doCollisionsWithBullet();
-HXLINE( 221)			if (this->contains(this->bonus)) {
-HXLINE( 223)				this->bonus->fall(this->gameLevel->level);
-HXLINE( 224)				if (this->bonus->checkCollisionWithPlayer(this->player)) {
-HXLINE( 226)					this->removeChild(this->bonus);
-HXLINE( 227)					this->bonus = null();
+HXLINE( 212)			this->bulletsMove();
+HXLINE( 213)			this->grenadeMove();
+HXLINE( 215)			this->generateEnemies();
+HXLINE( 216)			this->moveEnemies();
+HXLINE( 218)			this->doCollisionsWithBullet();
+HXLINE( 223)			if (this->contains(this->bonus)) {
+HXLINE( 225)				this->bonus->fall(this->gameLevel->level);
+HXLINE( 226)				if (this->bonus->checkCollisionWithPlayer(this->player)) {
+HXLINE( 228)					this->removeChild(this->bonus);
+HXLINE( 229)					this->bonus = null();
             				}
             			}
             		}
@@ -342,28 +346,28 @@ HXLINE( 227)					this->bonus = null();
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,update,(void))
 
 void Game_obj::playerJump(Float jumpPower){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_287_playerJump)
-HXLINE( 289)		bool _hx_tmp;
-HXDLIN( 289)		bool _hx_tmp1;
-HXDLIN( 289)		if (this->player->get_jump()) {
-HXLINE( 289)			_hx_tmp1 = ::Game_obj::haveCollision;
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_289_playerJump)
+HXLINE( 291)		bool _hx_tmp;
+HXDLIN( 291)		bool _hx_tmp1;
+HXDLIN( 291)		if (this->player->get_jump()) {
+HXLINE( 291)			_hx_tmp1 = ::Game_obj::haveCollision;
             		}
             		else {
-HXLINE( 289)			_hx_tmp1 = false;
+HXLINE( 291)			_hx_tmp1 = false;
             		}
-HXDLIN( 289)		if (_hx_tmp1) {
-HXLINE( 289)			_hx_tmp = hx::IsEq( this->player->get_collisionDirection(),::CollisionDirection_obj::up_dyn() );
+HXDLIN( 291)		if (_hx_tmp1) {
+HXLINE( 291)			_hx_tmp = hx::IsEq( this->player->get_collisionDirection(),::CollisionDirection_obj::up_dyn() );
             		}
             		else {
-HXLINE( 289)			_hx_tmp = false;
+HXLINE( 291)			_hx_tmp = false;
             		}
-HXDLIN( 289)		if (_hx_tmp) {
-HXLINE( 291)			::haxe::Log_obj::trace(HX_("jump",ee,c4,69,46),hx::SourceInfo(HX_("Source/Game.hx",98,05,24,39),291,HX_("Game",12,20,38,2f),HX_("playerJump",ef,a0,2b,a9)));
-HXLINE( 292)			 ::Player _hx_tmp2 = this->player;
-HXDLIN( 292)			_hx_tmp2->set_speedY((this->player->get_speedY() - jumpPower));
+HXDLIN( 291)		if (_hx_tmp) {
+HXLINE( 293)			::haxe::Log_obj::trace(HX_("jump",ee,c4,69,46),hx::SourceInfo(HX_("Source/Game.hx",98,05,24,39),293,HX_("Game",12,20,38,2f),HX_("playerJump",ef,a0,2b,a9)));
+HXLINE( 294)			 ::Player _hx_tmp2 = this->player;
+HXDLIN( 294)			_hx_tmp2->set_speedY((this->player->get_speedY() - jumpPower));
             		}
-HXLINE( 294)		if (!(::Game_obj::haveCollision)) {
-HXLINE( 295)			this->player->set_state(::State_obj::jump_dyn());
+HXLINE( 296)		if (!(::Game_obj::haveCollision)) {
+HXLINE( 297)			this->player->set_state(::State_obj::jump_dyn());
             		}
             	}
 
@@ -371,46 +375,46 @@ HXLINE( 295)			this->player->set_state(::State_obj::jump_dyn());
 HX_DEFINE_DYNAMIC_FUNC1(Game_obj,playerJump,(void))
 
 void Game_obj::bulletsMove(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_298_bulletsMove)
-HXLINE( 299)		int i = 0;
-HXLINE( 300)		while((i < this->bullets->length)){
-HXLINE( 302)			this->bullets->__get(i).StaticCast<  ::Bullet >()->move();
-HXLINE( 303)			bool _hx_tmp;
-HXDLIN( 303)			Float _hx_tmp1 = this->bullets->__get(i).StaticCast<  ::Bullet >()->get_x();
-HXDLIN( 303)			Float _hx_tmp2 = (_hx_tmp1 - (this->bullets->__get(i).StaticCast<  ::Bullet >()->get_width() / ( (Float)(2) )));
-HXDLIN( 303)			if (!((_hx_tmp2 >= ::Main_obj::sizeWidth))) {
-HXLINE( 303)				Float _hx_tmp3 = this->bullets->__get(i).StaticCast<  ::Bullet >()->get_x();
-HXDLIN( 303)				_hx_tmp = ((_hx_tmp3 + (this->bullets->__get(i).StaticCast<  ::Bullet >()->get_width() / ( (Float)(2) ))) <= 0);
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_300_bulletsMove)
+HXLINE( 301)		int i = 0;
+HXLINE( 302)		while((i < this->bullets->length)){
+HXLINE( 304)			this->bullets->__get(i).StaticCast<  ::Bullet >()->move();
+HXLINE( 305)			bool _hx_tmp;
+HXDLIN( 305)			Float _hx_tmp1 = this->bullets->__get(i).StaticCast<  ::Bullet >()->get_x();
+HXDLIN( 305)			Float _hx_tmp2 = (_hx_tmp1 - (this->bullets->__get(i).StaticCast<  ::Bullet >()->get_width() / ( (Float)(2) )));
+HXDLIN( 305)			if (!((_hx_tmp2 >= ::Main_obj::sizeWidth))) {
+HXLINE( 305)				Float _hx_tmp3 = this->bullets->__get(i).StaticCast<  ::Bullet >()->get_x();
+HXDLIN( 305)				_hx_tmp = ((_hx_tmp3 + (this->bullets->__get(i).StaticCast<  ::Bullet >()->get_width() / ( (Float)(2) ))) <= 0);
             			}
             			else {
-HXLINE( 303)				_hx_tmp = true;
+HXLINE( 305)				_hx_tmp = true;
             			}
-HXDLIN( 303)			if (_hx_tmp) {
-HXLINE( 305)				this->removeChild(this->bullets->__get(i).StaticCast<  ::Bullet >());
-HXLINE( 306)				this->spentBullets->push(this->bullets->__get(i).StaticCast<  ::Bullet >());
-HXLINE( 307)				this->bullets->remove(this->bullets->__get(i).StaticCast<  ::Bullet >());
+HXDLIN( 305)			if (_hx_tmp) {
+HXLINE( 307)				this->removeChild(this->bullets->__get(i).StaticCast<  ::Bullet >());
+HXLINE( 308)				this->spentBullets->push(this->bullets->__get(i).StaticCast<  ::Bullet >());
+HXLINE( 309)				this->bullets->remove(this->bullets->__get(i).StaticCast<  ::Bullet >());
             			}
-HXLINE( 309)			i = (i + 1);
+HXLINE( 311)			i = (i + 1);
             		}
-HXLINE( 311)		i = 0;
-HXLINE( 312)		while((i < this->enemyBullets->length)){
-HXLINE( 314)			this->enemyBullets->__get(i).StaticCast<  ::Bullet >()->move();
-HXLINE( 315)			bool _hx_tmp4;
-HXDLIN( 315)			Float _hx_tmp5 = this->enemyBullets->__get(i).StaticCast<  ::Bullet >()->get_x();
-HXDLIN( 315)			Float _hx_tmp6 = (_hx_tmp5 - (this->enemyBullets->__get(i).StaticCast<  ::Bullet >()->get_width() / ( (Float)(2) )));
-HXDLIN( 315)			if (!((_hx_tmp6 >= ::Main_obj::sizeWidth))) {
-HXLINE( 315)				Float _hx_tmp7 = this->enemyBullets->__get(i).StaticCast<  ::Bullet >()->get_x();
-HXDLIN( 315)				_hx_tmp4 = ((_hx_tmp7 + (this->enemyBullets->__get(i).StaticCast<  ::Bullet >()->get_width() / ( (Float)(2) ))) <= 0);
+HXLINE( 313)		i = 0;
+HXLINE( 314)		while((i < this->enemyBullets->length)){
+HXLINE( 316)			this->enemyBullets->__get(i).StaticCast<  ::Bullet >()->move();
+HXLINE( 317)			bool _hx_tmp4;
+HXDLIN( 317)			Float _hx_tmp5 = this->enemyBullets->__get(i).StaticCast<  ::Bullet >()->get_x();
+HXDLIN( 317)			Float _hx_tmp6 = (_hx_tmp5 - (this->enemyBullets->__get(i).StaticCast<  ::Bullet >()->get_width() / ( (Float)(2) )));
+HXDLIN( 317)			if (!((_hx_tmp6 >= ::Main_obj::sizeWidth))) {
+HXLINE( 317)				Float _hx_tmp7 = this->enemyBullets->__get(i).StaticCast<  ::Bullet >()->get_x();
+HXDLIN( 317)				_hx_tmp4 = ((_hx_tmp7 + (this->enemyBullets->__get(i).StaticCast<  ::Bullet >()->get_width() / ( (Float)(2) ))) <= 0);
             			}
             			else {
-HXLINE( 315)				_hx_tmp4 = true;
+HXLINE( 317)				_hx_tmp4 = true;
             			}
-HXDLIN( 315)			if (_hx_tmp4) {
-HXLINE( 317)				this->removeChild(this->enemyBullets->__get(i).StaticCast<  ::Bullet >());
-HXLINE( 318)				this->spentEnemyBullets->push(this->enemyBullets->__get(i).StaticCast<  ::Bullet >());
-HXLINE( 319)				this->enemyBullets->remove(this->enemyBullets->__get(i).StaticCast<  ::Bullet >());
+HXDLIN( 317)			if (_hx_tmp4) {
+HXLINE( 319)				this->removeChild(this->enemyBullets->__get(i).StaticCast<  ::Bullet >());
+HXLINE( 320)				this->spentEnemyBullets->push(this->enemyBullets->__get(i).StaticCast<  ::Bullet >());
+HXLINE( 321)				this->enemyBullets->remove(this->enemyBullets->__get(i).StaticCast<  ::Bullet >());
             			}
-HXLINE( 321)			i = (i + 1);
+HXLINE( 323)			i = (i + 1);
             		}
             	}
 
@@ -418,11 +422,11 @@ HXLINE( 321)			i = (i + 1);
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,bulletsMove,(void))
 
 void Game_obj::grenadeMove(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_326_grenadeMove)
-HXDLIN( 326)		if (this->contains(this->grenade)) {
-HXLINE( 328)			this->grenade->move();
-HXLINE( 329)			this->grenade->doCollisionWithTiles(this->gameLevel->level);
-HXLINE( 330)			this->doCollisionWithGrenade();
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_328_grenadeMove)
+HXDLIN( 328)		if (this->contains(this->grenade)) {
+HXLINE( 330)			this->grenade->move();
+HXLINE( 331)			this->grenade->doCollisionWithTiles(this->gameLevel->level);
+HXLINE( 332)			this->doCollisionWithGrenade();
             		}
             	}
 
@@ -430,17 +434,17 @@ HXLINE( 330)			this->doCollisionWithGrenade();
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,grenadeMove,(void))
 
 void Game_obj::generateEnemies(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_338_generateEnemies)
-HXDLIN( 338)		int _hx_tmp = this->counter;
-HXDLIN( 338)		int _hx_tmp1 = ::Main_obj::get_FPS();
-HXDLIN( 338)		if ((_hx_tmp >= (( (Float)(_hx_tmp1) ) * this->spawnDelay))) {
-HXLINE( 340)			if ((this->enemies->length < this->maxEnemies)) {
-HXLINE( 342)				this->generateEnemy();
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_340_generateEnemies)
+HXDLIN( 340)		int _hx_tmp = this->counter;
+HXDLIN( 340)		int _hx_tmp1 = ::Main_obj::get_FPS();
+HXDLIN( 340)		if ((_hx_tmp >= (( (Float)(_hx_tmp1) ) * this->spawnDelay))) {
+HXLINE( 342)			if ((this->enemies->length < this->maxEnemies)) {
+HXLINE( 344)				this->generateEnemy();
             			}
-HXLINE( 344)			this->counter = 0;
+HXLINE( 346)			this->counter = 0;
             		}
             		else {
-HXLINE( 348)			++this->counter;
+HXLINE( 350)			++this->counter;
             		}
             	}
 
@@ -448,33 +452,50 @@ HXLINE( 348)			++this->counter;
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,generateEnemies,(void))
 
 void Game_obj::generateEnemy(){
-            	HX_GC_STACKFRAME(&_hx_pos_69efd8c9269cf369_352_generateEnemy)
-HXLINE( 353)		 ::Enemy enemy;
-HXLINE( 354)		if ((::Math_obj::random() > ((Float)0.2))) {
-HXLINE( 356)			if ((this->deadEnemies->length > 0)) {
-HXLINE( 358)				enemy = this->deadEnemies->pop().StaticCast<  ::Enemy >();
+            	HX_GC_STACKFRAME(&_hx_pos_69efd8c9269cf369_354_generateEnemy)
+HXLINE( 355)		 ::Enemy enemy;
+HXLINE( 356)		if ((::Math_obj::random() > ((Float)0.2))) {
+HXLINE( 358)			bool _hx_tmp;
+HXDLIN( 358)			if ((this->gamePoints >= 25)) {
+HXLINE( 358)				_hx_tmp = (::Math_obj::random() > ((Float)0.8));
             			}
             			else {
-HXLINE( 362)				enemy =  ::Enemy_obj::__alloc( HX_CTX );
+HXLINE( 358)				_hx_tmp = false;
+            			}
+HXDLIN( 358)			if (_hx_tmp) {
+HXLINE( 360)				if ((this->deadBirds->length > 0)) {
+HXLINE( 362)					enemy = this->deadBirds->pop().StaticCast<  ::Enemy >();
+            				}
+            				else {
+HXLINE( 366)					enemy =  ::Bird_obj::__alloc( HX_CTX );
+            				}
+            			}
+            			else {
+HXLINE( 369)				if ((this->deadEnemies->length > 0)) {
+HXLINE( 371)					enemy = this->deadEnemies->pop().StaticCast<  ::Enemy >();
+            				}
+            				else {
+HXLINE( 375)					enemy =  ::Enemy_obj::__alloc( HX_CTX );
+            				}
             			}
             		}
             		else {
-HXLINE( 367)			if ((this->deadEnemiesWithGun->length > 0)) {
-HXLINE( 369)				enemy = this->deadEnemiesWithGun->pop().StaticCast<  ::Enemy >();
+HXLINE( 380)			if ((this->deadEnemiesWithGun->length > 0)) {
+HXLINE( 382)				enemy = this->deadEnemiesWithGun->pop().StaticCast<  ::Enemy >();
             			}
             			else {
-HXLINE( 373)				enemy =  ::EnemyWithGun_obj::__alloc( HX_CTX );
+HXLINE( 386)				enemy =  ::EnemyWithGun_obj::__alloc( HX_CTX );
             			}
             		}
-HXLINE( 376)		enemy->set_y(( (Float)(100) ));
-HXLINE( 377)		enemy->set_speedY(((Float)0.0));
-HXLINE( 378)		this->enemies->push(enemy);
-HXLINE( 379)		this->addChild(this->enemies->__get((this->enemies->length - 1)).StaticCast<  ::Enemy >());
-HXLINE( 380)		if ((::Math_obj::random() >= ((Float)0.5))) {
-HXLINE( 382)			enemy->set_x(( (Float)(800) ));
+HXLINE( 389)		enemy->set_y(( (Float)(100) ));
+HXLINE( 390)		enemy->set_speedY(((Float)0.0));
+HXLINE( 391)		this->enemies->push(enemy);
+HXLINE( 392)		this->addChild(this->enemies->__get((this->enemies->length - 1)).StaticCast<  ::Enemy >());
+HXLINE( 393)		if ((::Math_obj::random() >= ((Float)0.5))) {
+HXLINE( 395)			enemy->set_x(( (Float)(800) ));
             		}
             		else {
-HXLINE( 386)			enemy->set_x(( (Float)(0) ));
+HXLINE( 399)			enemy->set_x(( (Float)(0) ));
             		}
             	}
 
@@ -482,12 +503,12 @@ HXLINE( 386)			enemy->set_x(( (Float)(0) ));
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,generateEnemy,(void))
 
 void Game_obj::moveEnemies(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_393_moveEnemies)
-HXLINE( 394)		int i = 0;
-HXLINE( 395)		while((i < this->enemies->length)){
-HXLINE( 397)			this->enemies->__get(i).StaticCast<  ::Enemy >()->move(this->player,this->gameLevel->level);
-HXLINE( 398)			this->enemies->__get(i).StaticCast<  ::Enemy >()->doShot(hx::ObjectPtr<OBJ_>(this));
-HXLINE( 399)			i = (i + 1);
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_406_moveEnemies)
+HXLINE( 407)		int i = 0;
+HXLINE( 408)		while((i < this->enemies->length)){
+HXLINE( 410)			this->enemies->__get(i).StaticCast<  ::Enemy >()->move(this->player,this->gameLevel->level);
+HXLINE( 411)			this->enemies->__get(i).StaticCast<  ::Enemy >()->doShot(hx::ObjectPtr<OBJ_>(this));
+HXLINE( 412)			i = (i + 1);
             		}
             	}
 
@@ -495,23 +516,23 @@ HXLINE( 399)			i = (i + 1);
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,moveEnemies,(void))
 
 void Game_obj::doCollisionsWithBullet(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_404_doCollisionsWithBullet)
-HXLINE( 405)		int b = 0;
-HXLINE( 406)		while((b < this->bullets->length)){
-HXLINE( 408)			int e = 0;
-HXLINE( 409)			while((e < this->enemies->length)){
-HXLINE( 411)				if (this->bullets->__get(b).StaticCast<  ::Bullet >()->checkCollisionWithUnit(this->enemies->__get(e).StaticCast<  ::Enemy >())) {
-HXLINE( 413)					this->removeChild(this->bullets->__get(b).StaticCast<  ::Bullet >());
-HXLINE( 414)					this->spentBullets->push(this->bullets->__get(b).StaticCast<  ::Bullet >());
-HXLINE( 415)					this->bullets->remove(this->bullets->__get(b).StaticCast<  ::Bullet >());
-HXLINE( 416)					this->killEnemy(this->enemies->__get(e).StaticCast<  ::Enemy >());
-HXLINE( 417)					b = (b - 1);
-HXLINE( 418)					goto _hx_goto_17;
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_417_doCollisionsWithBullet)
+HXLINE( 418)		int b = 0;
+HXLINE( 419)		while((b < this->bullets->length)){
+HXLINE( 421)			int e = 0;
+HXLINE( 422)			while((e < this->enemies->length)){
+HXLINE( 424)				if (this->bullets->__get(b).StaticCast<  ::Bullet >()->checkCollisionWithUnit(this->enemies->__get(e).StaticCast<  ::Enemy >())) {
+HXLINE( 426)					this->removeChild(this->bullets->__get(b).StaticCast<  ::Bullet >());
+HXLINE( 427)					this->spentBullets->push(this->bullets->__get(b).StaticCast<  ::Bullet >());
+HXLINE( 428)					this->bullets->remove(this->bullets->__get(b).StaticCast<  ::Bullet >());
+HXLINE( 429)					this->killEnemy(this->enemies->__get(e).StaticCast<  ::Enemy >());
+HXLINE( 430)					b = (b - 1);
+HXLINE( 431)					goto _hx_goto_17;
             				}
-HXLINE( 420)				e = (e + 1);
+HXLINE( 433)				e = (e + 1);
             			}
             			_hx_goto_17:;
-HXLINE( 422)			b = (b + 1);
+HXLINE( 435)			b = (b + 1);
             		}
             	}
 
@@ -519,22 +540,22 @@ HXLINE( 422)			b = (b + 1);
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,doCollisionsWithBullet,(void))
 
 void Game_obj::doCollisionWithEnemyBullet(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_426_doCollisionWithEnemyBullet)
-HXLINE( 427)		int b = 0;
-HXLINE( 428)		while((b < this->enemyBullets->length)){
-HXLINE( 430)			if (this->enemyBullets->__get(b).StaticCast<  ::Bullet >()->checkCollisionWithUnit(this->player)) {
-HXLINE( 432)				this->spentEnemyBullets->push(this->enemyBullets->__get(b).StaticCast<  ::Bullet >());
-HXLINE( 433)				this->removeChild(this->enemyBullets->__get(b).StaticCast<  ::Bullet >());
-HXLINE( 434)				this->enemyBullets->remove(this->enemyBullets->__get(b).StaticCast<  ::Bullet >());
-HXLINE( 436)				 ::Player _hx_tmp = this->player;
-HXDLIN( 436)				_hx_tmp->set_healthPoints((this->player->get_healthPoints() - 1));
-HXLINE( 437)				this->player->set_invulnerability(true);
-HXLINE( 438)				if ((this->player->get_healthPoints() == 0)) {
-HXLINE( 439)					this->gameIsOver = true;
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_439_doCollisionWithEnemyBullet)
+HXLINE( 440)		int b = 0;
+HXLINE( 441)		while((b < this->enemyBullets->length)){
+HXLINE( 443)			if (this->enemyBullets->__get(b).StaticCast<  ::Bullet >()->checkCollisionWithUnit(this->player)) {
+HXLINE( 445)				this->spentEnemyBullets->push(this->enemyBullets->__get(b).StaticCast<  ::Bullet >());
+HXLINE( 446)				this->removeChild(this->enemyBullets->__get(b).StaticCast<  ::Bullet >());
+HXLINE( 447)				this->enemyBullets->remove(this->enemyBullets->__get(b).StaticCast<  ::Bullet >());
+HXLINE( 449)				 ::Player _hx_tmp = this->player;
+HXDLIN( 449)				_hx_tmp->set_healthPoints((this->player->get_healthPoints() - 1));
+HXLINE( 450)				this->player->set_invulnerability(true);
+HXLINE( 451)				if ((this->player->get_healthPoints() == 0)) {
+HXLINE( 452)					this->gameIsOver = true;
             				}
-HXLINE( 440)				goto _hx_goto_19;
+HXLINE( 453)				goto _hx_goto_19;
             			}
-HXLINE( 442)			b = (b + 1);
+HXLINE( 455)			b = (b + 1);
             		}
             		_hx_goto_19:;
             	}
@@ -543,15 +564,15 @@ HXLINE( 442)			b = (b + 1);
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,doCollisionWithEnemyBullet,(void))
 
 void Game_obj::doCollisionWithGrenade(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_446_doCollisionWithGrenade)
-HXLINE( 447)		int e = 0;
-HXLINE( 448)		while((e < this->enemies->length)){
-HXLINE( 450)			if (this->grenade->checkCollisionWithEnemy(this->enemies->__get(e).StaticCast<  ::Enemy >())) {
-HXLINE( 452)				this->killEnemy(this->enemies->__get(e).StaticCast<  ::Enemy >());
-HXLINE( 453)				this->grenade->set_state(::GrenadeState_obj::explosion_dyn());
-HXLINE( 454)				goto _hx_goto_21;
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_459_doCollisionWithGrenade)
+HXLINE( 460)		int e = 0;
+HXLINE( 461)		while((e < this->enemies->length)){
+HXLINE( 463)			if (this->grenade->checkCollisionWithEnemy(this->enemies->__get(e).StaticCast<  ::Enemy >())) {
+HXLINE( 465)				this->killEnemy(this->enemies->__get(e).StaticCast<  ::Enemy >());
+HXLINE( 466)				this->grenade->set_state(::GrenadeState_obj::explosion_dyn());
+HXLINE( 467)				goto _hx_goto_21;
             			}
-HXLINE( 456)			e = (e + 1);
+HXLINE( 469)			e = (e + 1);
             		}
             		_hx_goto_21:;
             	}
@@ -560,53 +581,58 @@ HXLINE( 456)			e = (e + 1);
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,doCollisionWithGrenade,(void))
 
 void Game_obj::killEnemy( ::Enemy enemy){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_460_killEnemy)
-HXLINE( 461)		this->removeChild(enemy);
-HXLINE( 462)		this->spawnBonus(enemy);
-HXLINE( 463)		++this->gamePoints;
-HXLINE( 464)		 ::openfl::text::TextField _hx_tmp = this->pointsField;
-HXDLIN( 464)		_hx_tmp->set_text(::Std_obj::string(this->gamePoints));
-HXLINE( 465)		if ((enemy->color == 16711935)) {
-HXLINE( 466)			this->deadEnemiesWithGun->push(enemy);
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_473_killEnemy)
+HXLINE( 474)		this->removeChild(enemy);
+HXLINE( 475)		this->spawnBonus(enemy);
+HXLINE( 476)		++this->gamePoints;
+HXLINE( 477)		 ::openfl::text::TextField _hx_tmp = this->pointsField;
+HXDLIN( 477)		_hx_tmp->set_text(::Std_obj::string(this->gamePoints));
+HXLINE( 478)		if ((enemy->color == 16711935)) {
+HXLINE( 479)			this->deadEnemiesWithGun->push(enemy);
             		}
             		else {
-HXLINE( 468)			this->deadEnemies->push(enemy);
+HXLINE( 480)			if ((enemy->color == 16776960)) {
+HXLINE( 481)				this->deadBirds->push(enemy);
+            			}
+            			else {
+HXLINE( 483)				this->deadEnemies->push(enemy);
+            			}
             		}
-HXLINE( 469)		this->enemies->remove(enemy);
+HXLINE( 484)		this->enemies->remove(enemy);
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC1(Game_obj,killEnemy,(void))
 
 bool Game_obj::get_gameIsOver(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_474_get_gameIsOver)
-HXDLIN( 474)		return this->gameIsOver;
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_489_get_gameIsOver)
+HXDLIN( 489)		return this->gameIsOver;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,get_gameIsOver,return )
 
 int Game_obj::get_gamePoints(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_478_get_gamePoints)
-HXDLIN( 478)		return this->gamePoints;
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_493_get_gamePoints)
+HXDLIN( 493)		return this->gamePoints;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,get_gamePoints,return )
 
 void Game_obj::doCollidionWithEnemies(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_482_doCollidionWithEnemies)
-HXLINE( 483)		int e = 0;
-HXLINE( 484)		while((e < this->enemies->length)){
-HXLINE( 486)			if (this->player->checkCollisionWithEnemy(this->enemies->__get(e).StaticCast<  ::Enemy >())) {
-HXLINE( 488)				 ::Player _hx_tmp = this->player;
-HXDLIN( 488)				_hx_tmp->set_healthPoints((this->player->get_healthPoints() - 1));
-HXLINE( 489)				this->player->set_invulnerability(true);
-HXLINE( 490)				if ((this->player->get_healthPoints() == 0)) {
-HXLINE( 491)					this->gameIsOver = true;
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_497_doCollidionWithEnemies)
+HXLINE( 498)		int e = 0;
+HXLINE( 499)		while((e < this->enemies->length)){
+HXLINE( 501)			if (this->player->checkCollisionWithEnemy(this->enemies->__get(e).StaticCast<  ::Enemy >())) {
+HXLINE( 503)				 ::Player _hx_tmp = this->player;
+HXDLIN( 503)				_hx_tmp->set_healthPoints((this->player->get_healthPoints() - 1));
+HXLINE( 504)				this->player->set_invulnerability(true);
+HXLINE( 505)				if ((this->player->get_healthPoints() == 0)) {
+HXLINE( 506)					this->gameIsOver = true;
             				}
             			}
-HXLINE( 493)			e = (e + 1);
+HXLINE( 508)			e = (e + 1);
             		}
             	}
 
@@ -614,37 +640,37 @@ HXLINE( 493)			e = (e + 1);
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,doCollidionWithEnemies,(void))
 
 void Game_obj::showHealthIndicator(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_498_showHealthIndicator)
-HXLINE( 499)		this->healthIndicator->get_graphics()->clear();
-HXLINE( 500)		this->healthIndicator->get_graphics()->beginGradientFill(1,::Array_obj< int >::fromData( _hx_array_data_2f382012_29,2),::Array_obj< Float >::fromData( _hx_array_data_2f382012_30,2),::Array_obj< int >::fromData( _hx_array_data_2f382012_31,2),null(),null(),null(),null());
-HXLINE( 501)		 ::openfl::display::Graphics _hx_tmp = this->healthIndicator->get_graphics();
-HXDLIN( 501)		Float _hx_tmp1 = (( (Float)(::Main_obj::sizeWidth) ) / ( (Float)(4) ));
-HXDLIN( 501)		Float _hx_tmp2 = (_hx_tmp1 / ( (Float)(this->player->get_maxHealthPoints()) ));
-HXDLIN( 501)		_hx_tmp->drawRect(( (Float)(0) ),( (Float)(0) ),(_hx_tmp2 * ( (Float)(this->player->get_healthPoints()) )),( (Float)(20) ));
-HXLINE( 502)		this->addChild(this->healthIndicator);
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_513_showHealthIndicator)
+HXLINE( 514)		this->healthIndicator->get_graphics()->clear();
+HXLINE( 515)		this->healthIndicator->get_graphics()->beginGradientFill(1,::Array_obj< int >::fromData( _hx_array_data_2f382012_29,2),::Array_obj< Float >::fromData( _hx_array_data_2f382012_30,2),::Array_obj< int >::fromData( _hx_array_data_2f382012_31,2),null(),null(),null(),null());
+HXLINE( 516)		 ::openfl::display::Graphics _hx_tmp = this->healthIndicator->get_graphics();
+HXDLIN( 516)		Float _hx_tmp1 = (( (Float)(::Main_obj::sizeWidth) ) / ( (Float)(4) ));
+HXDLIN( 516)		Float _hx_tmp2 = (_hx_tmp1 / ( (Float)(this->player->get_maxHealthPoints()) ));
+HXDLIN( 516)		_hx_tmp->drawRect(( (Float)(0) ),( (Float)(0) ),(_hx_tmp2 * ( (Float)(this->player->get_healthPoints()) )),( (Float)(20) ));
+HXLINE( 517)		this->addChild(this->healthIndicator);
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,showHealthIndicator,(void))
 
 void Game_obj::bonusBuf(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_507_bonusBuf)
-HXDLIN( 507)		if (::Bonus_obj::bonusIsUsed) {
-HXLINE( 509)			if (hx::IsEq( ::Bonus_obj::get_bonusType(),::BonusType_obj::slow_dyn() )) {
-HXLINE( 511)				::Bonus_obj::doBonusSlow(this->player,this->enemies,this->deadEnemies,this->deadEnemiesWithGun,this->bullets,this->enemyBullets,this->grenade);
-HXLINE( 512)				this->bonusIndicator->get_graphics()->clear();
-HXLINE( 513)				this->bonusIndicator->get_graphics()->beginGradientFill(1,::Array_obj< int >::fromData( _hx_array_data_2f382012_33,2),::Array_obj< Float >::fromData( _hx_array_data_2f382012_34,2),::Array_obj< int >::fromData( _hx_array_data_2f382012_35,2),null(),null(),null(),null());
-HXLINE( 514)				 ::openfl::display::Graphics _hx_tmp = this->bonusIndicator->get_graphics();
-HXDLIN( 514)				Float _hx_tmp1 = ((( (Float)(::Main_obj::sizeWidth) ) / ((Float)3.5)) / ( (Float)(600) ));
-HXDLIN( 514)				_hx_tmp->drawRect(( (Float)(0) ),( (Float)(0) ),(_hx_tmp1 * ( (Float)((600 - ::Bonus_obj::get_counter())) )),( (Float)(20) ));
-HXLINE( 515)				this->addChild(this->bonusIndicator);
-HXLINE( 516)				if ((::Bonus_obj::get_counter() < 1)) {
-HXLINE( 517)					this->removeChild(this->bonusIndicator);
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_522_bonusBuf)
+HXDLIN( 522)		if (::Bonus_obj::bonusIsUsed) {
+HXLINE( 524)			if (hx::IsEq( ::Bonus_obj::get_bonusType(),::BonusType_obj::slow_dyn() )) {
+HXLINE( 526)				::Bonus_obj::doBonusSlow(this->player,this->enemies,this->deadEnemies,this->deadEnemiesWithGun,this->deadBirds,this->bullets,this->enemyBullets,this->grenade);
+HXLINE( 527)				this->bonusIndicator->get_graphics()->clear();
+HXLINE( 528)				this->bonusIndicator->get_graphics()->beginGradientFill(1,::Array_obj< int >::fromData( _hx_array_data_2f382012_33,2),::Array_obj< Float >::fromData( _hx_array_data_2f382012_34,2),::Array_obj< int >::fromData( _hx_array_data_2f382012_35,2),null(),null(),null(),null());
+HXLINE( 529)				 ::openfl::display::Graphics _hx_tmp = this->bonusIndicator->get_graphics();
+HXDLIN( 529)				Float _hx_tmp1 = ((( (Float)(::Main_obj::sizeWidth) ) / ((Float)3.5)) / ( (Float)(600) ));
+HXDLIN( 529)				_hx_tmp->drawRect(( (Float)(0) ),( (Float)(0) ),(_hx_tmp1 * ( (Float)((600 - ::Bonus_obj::get_counter())) )),( (Float)(20) ));
+HXLINE( 530)				this->addChild(this->bonusIndicator);
+HXLINE( 531)				if ((::Bonus_obj::get_counter() < 1)) {
+HXLINE( 532)					this->removeChild(this->bonusIndicator);
             				}
             			}
             			else {
-HXLINE( 520)				if (hx::IsEq( ::Bonus_obj::get_bonusType(),::BonusType_obj::destroy_dyn() )) {
-HXLINE( 521)					this->doBonusDestroy();
+HXLINE( 535)				if (hx::IsEq( ::Bonus_obj::get_bonusType(),::BonusType_obj::destroy_dyn() )) {
+HXLINE( 536)					this->doBonusDestroy();
             				}
             			}
             		}
@@ -654,31 +680,31 @@ HXLINE( 521)					this->doBonusDestroy();
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,bonusBuf,(void))
 
 void Game_obj::spawnBonus( ::Enemy enemy){
-            	HX_GC_STACKFRAME(&_hx_pos_69efd8c9269cf369_534_spawnBonus)
-HXDLIN( 534)		bool _hx_tmp;
-HXDLIN( 534)		bool _hx_tmp1;
-HXDLIN( 534)		if (!(::Bonus_obj::bonusIsUsed)) {
-HXDLIN( 534)			_hx_tmp1 = !(::Bonus_obj::haveBonus);
+            	HX_GC_STACKFRAME(&_hx_pos_69efd8c9269cf369_549_spawnBonus)
+HXDLIN( 549)		bool _hx_tmp;
+HXDLIN( 549)		bool _hx_tmp1;
+HXDLIN( 549)		if (!(::Bonus_obj::bonusIsUsed)) {
+HXDLIN( 549)			_hx_tmp1 = !(::Bonus_obj::haveBonus);
             		}
             		else {
-HXDLIN( 534)			_hx_tmp1 = false;
+HXDLIN( 549)			_hx_tmp1 = false;
             		}
-HXDLIN( 534)		if (_hx_tmp1) {
-HXDLIN( 534)			_hx_tmp = (::Math_obj::random() < ((Float)0.15));
+HXDLIN( 549)		if (_hx_tmp1) {
+HXDLIN( 549)			_hx_tmp = (::Math_obj::random() < ((Float)0.15));
             		}
             		else {
-HXDLIN( 534)			_hx_tmp = false;
+HXDLIN( 549)			_hx_tmp = false;
             		}
-HXDLIN( 534)		if (_hx_tmp) {
-HXLINE( 536)			::Bonus_obj::bonusIsUsed = false;
-HXLINE( 537)			::Bonus_obj::haveBonus = true;
-HXLINE( 538)			this->bonus =  ::Bonus_obj::__alloc( HX_CTX );
-HXLINE( 539)			this->bonus->set_speedY(((Float)-10.0));
-HXLINE( 540)			 ::Bonus _hx_tmp2 = this->bonus;
-HXDLIN( 540)			_hx_tmp2->set_x(enemy->get_x());
-HXLINE( 541)			 ::Bonus _hx_tmp3 = this->bonus;
-HXDLIN( 541)			_hx_tmp3->set_y(enemy->get_y());
-HXLINE( 542)			this->addChild(this->bonus);
+HXDLIN( 549)		if (_hx_tmp) {
+HXLINE( 551)			::Bonus_obj::bonusIsUsed = false;
+HXLINE( 552)			::Bonus_obj::haveBonus = true;
+HXLINE( 553)			this->bonus =  ::Bonus_obj::__alloc( HX_CTX );
+HXLINE( 554)			this->bonus->set_speedY(((Float)-10.0));
+HXLINE( 555)			 ::Bonus _hx_tmp2 = this->bonus;
+HXDLIN( 555)			_hx_tmp2->set_x(enemy->get_x());
+HXLINE( 556)			 ::Bonus _hx_tmp3 = this->bonus;
+HXDLIN( 556)			_hx_tmp3->set_y(enemy->get_y());
+HXLINE( 557)			this->addChild(this->bonus);
             		}
             	}
 
@@ -686,31 +712,31 @@ HXLINE( 542)			this->addChild(this->bonus);
 HX_DEFINE_DYNAMIC_FUNC1(Game_obj,spawnBonus,(void))
 
 void Game_obj::doBonusDestroy(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_546_doBonusDestroy)
-HXLINE( 547)		int e = 0;
-HXLINE( 548)		while((e < this->enemies->length)){
-HXLINE( 551)			this->removeChild(this->enemies->__get(e).StaticCast<  ::Enemy >());
-HXLINE( 552)			++this->gamePoints;
-HXLINE( 553)			 ::openfl::text::TextField _hx_tmp = this->pointsField;
-HXDLIN( 553)			_hx_tmp->set_text(::Std_obj::string(this->gamePoints));
-HXLINE( 554)			this->deadEnemies->push(this->enemies->__get(e).StaticCast<  ::Enemy >());
-HXLINE( 555)			this->enemies->remove(this->enemies->__get(e).StaticCast<  ::Enemy >());
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_561_doBonusDestroy)
+HXLINE( 562)		int e = 0;
+HXLINE( 563)		while((e < this->enemies->length)){
+HXLINE( 566)			this->removeChild(this->enemies->__get(e).StaticCast<  ::Enemy >());
+HXLINE( 567)			++this->gamePoints;
+HXLINE( 568)			 ::openfl::text::TextField _hx_tmp = this->pointsField;
+HXDLIN( 568)			_hx_tmp->set_text(::Std_obj::string(this->gamePoints));
+HXLINE( 569)			this->deadEnemies->push(this->enemies->__get(e).StaticCast<  ::Enemy >());
+HXLINE( 570)			this->enemies->remove(this->enemies->__get(e).StaticCast<  ::Enemy >());
             		}
-HXLINE( 559)		::Bonus_obj::haveBonus = false;
-HXLINE( 560)		::Bonus_obj::bonusIsUsed = false;
+HXLINE( 574)		::Bonus_obj::haveBonus = false;
+HXLINE( 575)		::Bonus_obj::bonusIsUsed = false;
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,doBonusDestroy,(void))
 
 void Game_obj::doCollisionsWithPLatforms(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_564_doCollisionsWithPLatforms)
-HXDLIN( 564)		int _g = 0;
-HXDLIN( 564)		int _g1 = this->gameLevel->platforms->length;
-HXDLIN( 564)		while((_g < _g1)){
-HXDLIN( 564)			_g = (_g + 1);
-HXDLIN( 564)			int i = (_g - 1);
-HXLINE( 566)			this->player->doCollisionWithPlatform(this->gameLevel->platforms->__get(i).StaticCast<  ::openfl::display::Sprite >());
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_579_doCollisionsWithPLatforms)
+HXDLIN( 579)		int _g = 0;
+HXDLIN( 579)		int _g1 = this->gameLevel->platforms->length;
+HXDLIN( 579)		while((_g < _g1)){
+HXDLIN( 579)			_g = (_g + 1);
+HXDLIN( 579)			int i = (_g - 1);
+HXLINE( 581)			this->player->doCollisionWithPlatform(this->gameLevel->platforms->__get(i).StaticCast<  ::openfl::display::Sprite >());
             		}
             	}
 
@@ -718,16 +744,16 @@ HXLINE( 566)			this->player->doCollisionWithPlatform(this->gameLevel->platforms-
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,doCollisionsWithPLatforms,(void))
 
 void Game_obj::set_Pause(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_571_set_Pause)
-HXDLIN( 571)		this->addChild(this->pauseScreen);
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_586_set_Pause)
+HXDLIN( 586)		this->addChild(this->pauseScreen);
             	}
 
 
 HX_DEFINE_DYNAMIC_FUNC0(Game_obj,set_Pause,(void))
 
 void Game_obj::set_Unpause(){
-            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_577_set_Unpause)
-HXDLIN( 577)		this->removeChild(this->pauseScreen);
+            	HX_STACKFRAME(&_hx_pos_69efd8c9269cf369_592_set_Unpause)
+HXDLIN( 592)		this->removeChild(this->pauseScreen);
             	}
 
 
@@ -779,6 +805,7 @@ void Game_obj::__Mark(HX_MARK_PARAMS)
 	HX_MARK_MEMBER_NAME(enemies,"enemies");
 	HX_MARK_MEMBER_NAME(deadEnemies,"deadEnemies");
 	HX_MARK_MEMBER_NAME(deadEnemiesWithGun,"deadEnemiesWithGun");
+	HX_MARK_MEMBER_NAME(deadBirds,"deadBirds");
 	HX_MARK_MEMBER_NAME(maxEnemies,"maxEnemies");
 	HX_MARK_MEMBER_NAME(spawnDelay,"spawnDelay");
 	HX_MARK_MEMBER_NAME(counter,"counter");
@@ -811,6 +838,7 @@ void Game_obj::__Visit(HX_VISIT_PARAMS)
 	HX_VISIT_MEMBER_NAME(enemies,"enemies");
 	HX_VISIT_MEMBER_NAME(deadEnemies,"deadEnemies");
 	HX_VISIT_MEMBER_NAME(deadEnemiesWithGun,"deadEnemiesWithGun");
+	HX_VISIT_MEMBER_NAME(deadBirds,"deadBirds");
 	HX_VISIT_MEMBER_NAME(maxEnemies,"maxEnemies");
 	HX_VISIT_MEMBER_NAME(spawnDelay,"spawnDelay");
 	HX_VISIT_MEMBER_NAME(counter,"counter");
@@ -842,6 +870,7 @@ hx::Val Game_obj::__Field(const ::String &inName,hx::PropertyAccess inCallProp)
 	case 9:
 		if (HX_FIELD_EQ(inName,"sizeWidth") ) { return hx::Val( sizeWidth ); }
 		if (HX_FIELD_EQ(inName,"gameLevel") ) { return hx::Val( gameLevel ); }
+		if (HX_FIELD_EQ(inName,"deadBirds") ) { return hx::Val( deadBirds ); }
 		if (HX_FIELD_EQ(inName,"killEnemy") ) { return hx::Val( killEnemy_dyn() ); }
 		if (HX_FIELD_EQ(inName,"set_Pause") ) { return hx::Val( set_Pause_dyn() ); }
 		break;
@@ -943,6 +972,7 @@ hx::Val Game_obj::__SetField(const ::String &inName,const hx::Val &inValue,hx::P
 	case 9:
 		if (HX_FIELD_EQ(inName,"sizeWidth") ) { sizeWidth=inValue.Cast< int >(); return inValue; }
 		if (HX_FIELD_EQ(inName,"gameLevel") ) { gameLevel=inValue.Cast<  ::GameLevel >(); return inValue; }
+		if (HX_FIELD_EQ(inName,"deadBirds") ) { deadBirds=inValue.Cast< ::Array< ::Dynamic> >(); return inValue; }
 		break;
 	case 10:
 		if (HX_FIELD_EQ(inName,"sizeHeight") ) { sizeHeight=inValue.Cast< int >(); return inValue; }
@@ -1016,6 +1046,7 @@ void Game_obj::__GetFields(Array< ::String> &outFields)
 	outFields->push(HX_("enemies",a6,68,0e,d3));
 	outFields->push(HX_("deadEnemies",62,1e,d0,19));
 	outFields->push(HX_("deadEnemiesWithGun",d8,51,93,bb));
+	outFields->push(HX_("deadBirds",d6,a7,b6,fa));
 	outFields->push(HX_("maxEnemies",62,e2,32,3d));
 	outFields->push(HX_("spawnDelay",48,33,3f,11));
 	outFields->push(HX_("counter",fc,ae,59,1d));
@@ -1047,6 +1078,7 @@ static hx::StorageInfo Game_obj_sMemberStorageInfo[] = {
 	{hx::fsObject /* ::Array< ::Dynamic> */ ,(int)offsetof(Game_obj,enemies),HX_("enemies",a6,68,0e,d3)},
 	{hx::fsObject /* ::Array< ::Dynamic> */ ,(int)offsetof(Game_obj,deadEnemies),HX_("deadEnemies",62,1e,d0,19)},
 	{hx::fsObject /* ::Array< ::Dynamic> */ ,(int)offsetof(Game_obj,deadEnemiesWithGun),HX_("deadEnemiesWithGun",d8,51,93,bb)},
+	{hx::fsObject /* ::Array< ::Dynamic> */ ,(int)offsetof(Game_obj,deadBirds),HX_("deadBirds",d6,a7,b6,fa)},
 	{hx::fsInt,(int)offsetof(Game_obj,maxEnemies),HX_("maxEnemies",62,e2,32,3d)},
 	{hx::fsFloat,(int)offsetof(Game_obj,spawnDelay),HX_("spawnDelay",48,33,3f,11)},
 	{hx::fsInt,(int)offsetof(Game_obj,counter),HX_("counter",fc,ae,59,1d)},
@@ -1083,6 +1115,7 @@ static ::String Game_obj_sMemberFields[] = {
 	HX_("enemies",a6,68,0e,d3),
 	HX_("deadEnemies",62,1e,d0,19),
 	HX_("deadEnemiesWithGun",d8,51,93,bb),
+	HX_("deadBirds",d6,a7,b6,fa),
 	HX_("maxEnemies",62,e2,32,3d),
 	HX_("spawnDelay",48,33,3f,11),
 	HX_("counter",fc,ae,59,1d),

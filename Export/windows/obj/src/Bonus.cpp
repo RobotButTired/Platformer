@@ -65,8 +65,8 @@ HX_LOCAL_STACK_FRAME(_hx_pos_b245e5f9face90c2_29_drawHitBox,"Bonus","drawHitBox"
 HX_LOCAL_STACK_FRAME(_hx_pos_b245e5f9face90c2_39_fall,"Bonus","fall",0x5a0aa8ca,"Bonus.fall","Bonus.hx",39,0x6c1a459f)
 HX_LOCAL_STACK_FRAME(_hx_pos_b245e5f9face90c2_73_checkCollisionWithPlayer,"Bonus","checkCollisionWithPlayer",0x6cda9700,"Bonus.checkCollisionWithPlayer","Bonus.hx",73,0x6c1a459f)
 HX_LOCAL_STACK_FRAME(_hx_pos_b245e5f9face90c2_84_doBonusSlow,"Bonus","doBonusSlow",0x3e7836c6,"Bonus.doBonusSlow","Bonus.hx",84,0x6c1a459f)
-HX_LOCAL_STACK_FRAME(_hx_pos_b245e5f9face90c2_197_get_bonusType,"Bonus","get_bonusType",0xe04726a1,"Bonus.get_bonusType","Bonus.hx",197,0x6c1a459f)
-HX_LOCAL_STACK_FRAME(_hx_pos_b245e5f9face90c2_201_get_counter,"Bonus","get_counter",0xe745daa4,"Bonus.get_counter","Bonus.hx",201,0x6c1a459f)
+HX_LOCAL_STACK_FRAME(_hx_pos_b245e5f9face90c2_213_get_bonusType,"Bonus","get_bonusType",0xe04726a1,"Bonus.get_bonusType","Bonus.hx",213,0x6c1a459f)
+HX_LOCAL_STACK_FRAME(_hx_pos_b245e5f9face90c2_217_get_counter,"Bonus","get_counter",0xe745daa4,"Bonus.get_counter","Bonus.hx",217,0x6c1a459f)
 HX_LOCAL_STACK_FRAME(_hx_pos_b245e5f9face90c2_10_boot,"Bonus","boot",0x57707081,"Bonus.boot","Bonus.hx",10,0x6c1a459f)
 HX_LOCAL_STACK_FRAME(_hx_pos_b245e5f9face90c2_11_boot,"Bonus","boot",0x57707081,"Bonus.boot","Bonus.hx",11,0x6c1a459f)
 HX_LOCAL_STACK_FRAME(_hx_pos_b245e5f9face90c2_12_boot,"Bonus","boot",0x57707081,"Bonus.boot","Bonus.hx",12,0x6c1a459f)
@@ -232,7 +232,7 @@ bool Bonus_obj::haveBonus;
 
  ::BonusType Bonus_obj::bonusType;
 
-void Bonus_obj::doBonusSlow( ::Player player,::Array< ::Dynamic> enemies,::Array< ::Dynamic> deadEnemies,::Array< ::Dynamic> deadEnemiesWithGun,::Array< ::Dynamic> bullets,::Array< ::Dynamic> enemyBullets, ::Grenade grenade){
+void Bonus_obj::doBonusSlow( ::Player player,::Array< ::Dynamic> enemies,::Array< ::Dynamic> deadEnemies,::Array< ::Dynamic> deadEnemiesWithGun,::Array< ::Dynamic> deadBirds,::Array< ::Dynamic> bullets,::Array< ::Dynamic> enemyBullets, ::Grenade grenade){
             	HX_STACKFRAME(&_hx_pos_b245e5f9face90c2_84_doBonusSlow)
 HXLINE(  85)		if ((::Bonus_obj::counter == 0)) {
 HXLINE(  87)			 ::Player player1 = player;
@@ -276,101 +276,121 @@ HXDLIN( 118)				deadEnemies3->gravity = (deadEnemies3->gravity * ((Float)0.25));
 HXLINE( 119)				e = (e + 1);
             			}
 HXLINE( 121)			e = 0;
-HXLINE( 122)			while((e < deadEnemiesWithGun->length)){
-HXLINE( 124)				 ::Enemy deadEnemiesWithGun1 = deadEnemiesWithGun->__get(e).StaticCast<  ::Enemy >();
-HXDLIN( 124)				deadEnemiesWithGun1->speedX = (deadEnemiesWithGun1->speedX * ((Float)0.25));
-HXLINE( 125)				 ::Enemy deadEnemiesWithGun2 = deadEnemiesWithGun->__get(e).StaticCast<  ::Enemy >();
-HXDLIN( 125)				deadEnemiesWithGun2->speedY = (deadEnemiesWithGun2->speedY * ((Float)0.25));
-HXLINE( 126)				 ::Enemy deadEnemiesWithGun3 = deadEnemiesWithGun->__get(e).StaticCast<  ::Enemy >();
-HXDLIN( 126)				deadEnemiesWithGun3->gravity = (deadEnemiesWithGun3->gravity * ((Float)0.25));
+HXLINE( 122)			while((e < deadBirds->length)){
+HXLINE( 124)				 ::Enemy deadBirds1 = deadBirds->__get(e).StaticCast<  ::Enemy >();
+HXDLIN( 124)				deadBirds1->speedX = (deadBirds1->speedX * ((Float)0.25));
+HXLINE( 125)				 ::Enemy deadBirds2 = deadBirds->__get(e).StaticCast<  ::Enemy >();
+HXDLIN( 125)				deadBirds2->speedY = (deadBirds2->speedY * ((Float)0.25));
+HXLINE( 126)				 ::Enemy deadBirds3 = deadBirds->__get(e).StaticCast<  ::Enemy >();
+HXDLIN( 126)				deadBirds3->gravity = (deadBirds3->gravity * ((Float)0.25));
 HXLINE( 127)				e = (e + 1);
             			}
-HXLINE( 129)			if (hx::IsNotNull( grenade )) {
-HXLINE( 131)				grenade->set_speedX((grenade->get_speedX() * ((Float)0.25)));
-HXLINE( 132)				grenade->set_speedY((grenade->get_speedY() * ((Float)0.25)));
-HXLINE( 133)				grenade->set_gravity((grenade->get_gravity() / ((Float)16.0)));
+HXLINE( 129)			e = 0;
+HXLINE( 130)			while((e < deadEnemiesWithGun->length)){
+HXLINE( 132)				 ::Enemy deadEnemiesWithGun1 = deadEnemiesWithGun->__get(e).StaticCast<  ::Enemy >();
+HXDLIN( 132)				deadEnemiesWithGun1->speedX = (deadEnemiesWithGun1->speedX * ((Float)0.25));
+HXLINE( 133)				 ::Enemy deadEnemiesWithGun2 = deadEnemiesWithGun->__get(e).StaticCast<  ::Enemy >();
+HXDLIN( 133)				deadEnemiesWithGun2->speedY = (deadEnemiesWithGun2->speedY * ((Float)0.25));
+HXLINE( 134)				 ::Enemy deadEnemiesWithGun3 = deadEnemiesWithGun->__get(e).StaticCast<  ::Enemy >();
+HXDLIN( 134)				deadEnemiesWithGun3->gravity = (deadEnemiesWithGun3->gravity * ((Float)0.25));
+HXLINE( 135)				e = (e + 1);
+            			}
+HXLINE( 137)			if (hx::IsNotNull( grenade )) {
+HXLINE( 139)				grenade->set_speedX((grenade->get_speedX() * ((Float)0.25)));
+HXLINE( 140)				grenade->set_speedY((grenade->get_speedY() * ((Float)0.25)));
+HXLINE( 141)				grenade->set_gravity((grenade->get_gravity() / ((Float)16.0)));
             			}
             		}
             		else {
-HXLINE( 138)			int _hx_tmp3 = ::Bonus_obj::counter;
-HXDLIN( 138)			if ((_hx_tmp3 >= (( (Float)(::Main_obj::get_FPS()) ) * ((Float)10.0)))) {
-HXLINE( 140)				 ::Player player4 = player;
-HXDLIN( 140)				player4->speedX = (player4->speedX * ((Float)2.0));
-HXLINE( 141)				 ::Player player5 = player;
-HXDLIN( 141)				player5->speedY = (player5->speedY * ((Float)2.0));
-HXLINE( 142)				 ::Player player6 = player;
-HXDLIN( 142)				player6->gravity = (player6->gravity / ((Float)0.25));
-HXLINE( 143)				 ::Dynamic _hx_tmp4 = hx::ClassOf< ::Game >();
-HXDLIN( 143)				::Game_obj::jumpPower = (::Game_obj::jumpPower / ((Float)0.50));
-HXLINE( 144)				int b1 = 0;
-HXLINE( 145)				while((b1 < bullets->length)){
-HXLINE( 147)					Float _hx_tmp5 = (bullets->__get(b1).StaticCast<  ::Bullet >()->get_speed() / ((Float)0.25));
-HXDLIN( 147)					bullets->__get(b1).StaticCast<  ::Bullet >()->set_speed(_hx_tmp5);
-HXLINE( 148)					b1 = (b1 + 1);
+HXLINE( 146)			int _hx_tmp3 = ::Bonus_obj::counter;
+HXDLIN( 146)			if ((_hx_tmp3 >= (( (Float)(::Main_obj::get_FPS()) ) * ((Float)10.0)))) {
+HXLINE( 148)				 ::Player player4 = player;
+HXDLIN( 148)				player4->speedX = (player4->speedX * ((Float)2.0));
+HXLINE( 149)				 ::Player player5 = player;
+HXDLIN( 149)				player5->speedY = (player5->speedY * ((Float)2.0));
+HXLINE( 150)				 ::Player player6 = player;
+HXDLIN( 150)				player6->gravity = (player6->gravity / ((Float)0.25));
+HXLINE( 151)				 ::Dynamic _hx_tmp4 = hx::ClassOf< ::Game >();
+HXDLIN( 151)				::Game_obj::jumpPower = (::Game_obj::jumpPower / ((Float)0.50));
+HXLINE( 152)				int b1 = 0;
+HXLINE( 153)				while((b1 < bullets->length)){
+HXLINE( 155)					Float _hx_tmp5 = (bullets->__get(b1).StaticCast<  ::Bullet >()->get_speed() / ((Float)0.25));
+HXDLIN( 155)					bullets->__get(b1).StaticCast<  ::Bullet >()->set_speed(_hx_tmp5);
+HXLINE( 156)					b1 = (b1 + 1);
             				}
-HXLINE( 150)				b1 = 0;
-HXLINE( 151)				while((b1 < enemyBullets->length)){
-HXLINE( 153)					Float _hx_tmp6 = (enemyBullets->__get(b1).StaticCast<  ::Bullet >()->get_speed() / ((Float)0.25));
-HXDLIN( 153)					enemyBullets->__get(b1).StaticCast<  ::Bullet >()->set_speed(_hx_tmp6);
-HXLINE( 154)					b1 = (b1 + 1);
+HXLINE( 158)				b1 = 0;
+HXLINE( 159)				while((b1 < enemyBullets->length)){
+HXLINE( 161)					Float _hx_tmp6 = (enemyBullets->__get(b1).StaticCast<  ::Bullet >()->get_speed() / ((Float)0.25));
+HXDLIN( 161)					enemyBullets->__get(b1).StaticCast<  ::Bullet >()->set_speed(_hx_tmp6);
+HXLINE( 162)					b1 = (b1 + 1);
             				}
-HXLINE( 156)				int e1 = 0;
-HXLINE( 157)				while((e1 < enemies->length)){
-HXLINE( 159)					 ::Enemy enemies4 = enemies->__get(e1).StaticCast<  ::Enemy >();
-HXDLIN( 159)					enemies4->speedX = (enemies4->speedX / ((Float)0.25));
-HXLINE( 160)					 ::Enemy enemies5 = enemies->__get(e1).StaticCast<  ::Enemy >();
-HXDLIN( 160)					enemies5->speedY = (enemies5->speedY / ((Float)0.25));
-HXLINE( 161)					 ::Enemy enemies6 = enemies->__get(e1).StaticCast<  ::Enemy >();
-HXDLIN( 161)					enemies6->gravity = (enemies6->gravity / ((Float)0.25));
-HXLINE( 162)					e1 = (e1 + 1);
-            				}
-HXLINE( 164)				e1 = 0;
-HXLINE( 165)				while((e1 < deadEnemies->length)){
-HXLINE( 167)					 ::Enemy deadEnemies4 = deadEnemies->__get(e1).StaticCast<  ::Enemy >();
-HXDLIN( 167)					deadEnemies4->speedX = (deadEnemies4->speedX / ((Float)0.25));
-HXLINE( 168)					 ::Enemy deadEnemies5 = deadEnemies->__get(e1).StaticCast<  ::Enemy >();
-HXDLIN( 168)					deadEnemies5->speedY = (deadEnemies5->speedY / ((Float)0.25));
-HXLINE( 169)					 ::Enemy deadEnemies6 = deadEnemies->__get(e1).StaticCast<  ::Enemy >();
-HXDLIN( 169)					deadEnemies6->gravity = (deadEnemies6->gravity / ((Float)0.25));
+HXLINE( 164)				int e1 = 0;
+HXLINE( 165)				while((e1 < enemies->length)){
+HXLINE( 167)					 ::Enemy enemies4 = enemies->__get(e1).StaticCast<  ::Enemy >();
+HXDLIN( 167)					enemies4->speedX = (enemies4->speedX / ((Float)0.25));
+HXLINE( 168)					 ::Enemy enemies5 = enemies->__get(e1).StaticCast<  ::Enemy >();
+HXDLIN( 168)					enemies5->speedY = (enemies5->speedY / ((Float)0.25));
+HXLINE( 169)					 ::Enemy enemies6 = enemies->__get(e1).StaticCast<  ::Enemy >();
+HXDLIN( 169)					enemies6->gravity = (enemies6->gravity / ((Float)0.25));
 HXLINE( 170)					e1 = (e1 + 1);
             				}
 HXLINE( 172)				e1 = 0;
-HXLINE( 173)				while((e1 < deadEnemiesWithGun->length)){
-HXLINE( 175)					 ::Enemy deadEnemiesWithGun4 = deadEnemiesWithGun->__get(e1).StaticCast<  ::Enemy >();
-HXDLIN( 175)					deadEnemiesWithGun4->speedX = (deadEnemiesWithGun4->speedX / ((Float)0.25));
-HXLINE( 176)					 ::Enemy deadEnemiesWithGun5 = deadEnemiesWithGun->__get(e1).StaticCast<  ::Enemy >();
-HXDLIN( 176)					deadEnemiesWithGun5->speedY = (deadEnemiesWithGun5->speedY / ((Float)0.25));
-HXLINE( 177)					 ::Enemy deadEnemiesWithGun6 = deadEnemiesWithGun->__get(e1).StaticCast<  ::Enemy >();
-HXDLIN( 177)					deadEnemiesWithGun6->gravity = (deadEnemiesWithGun6->gravity / ((Float)0.25));
+HXLINE( 173)				while((e1 < deadEnemies->length)){
+HXLINE( 175)					 ::Enemy deadEnemies4 = deadEnemies->__get(e1).StaticCast<  ::Enemy >();
+HXDLIN( 175)					deadEnemies4->speedX = (deadEnemies4->speedX / ((Float)0.25));
+HXLINE( 176)					 ::Enemy deadEnemies5 = deadEnemies->__get(e1).StaticCast<  ::Enemy >();
+HXDLIN( 176)					deadEnemies5->speedY = (deadEnemies5->speedY / ((Float)0.25));
+HXLINE( 177)					 ::Enemy deadEnemies6 = deadEnemies->__get(e1).StaticCast<  ::Enemy >();
+HXDLIN( 177)					deadEnemies6->gravity = (deadEnemies6->gravity / ((Float)0.25));
 HXLINE( 178)					e1 = (e1 + 1);
             				}
-HXLINE( 180)				if (hx::IsNotNull( grenade )) {
-HXLINE( 182)					grenade->set_speedX((grenade->get_speedX() / ((Float)0.25)));
-HXLINE( 183)					grenade->set_speedY((grenade->get_speedY() / ((Float)0.25)));
-HXLINE( 184)					grenade->set_gravity((grenade->get_gravity() * ((Float)16.0)));
+HXLINE( 180)				e1 = 0;
+HXLINE( 181)				while((e1 < deadBirds->length)){
+HXLINE( 183)					 ::Enemy deadEnemies7 = deadEnemies->__get(e1).StaticCast<  ::Enemy >();
+HXDLIN( 183)					deadEnemies7->speedX = (deadEnemies7->speedX / ((Float)0.25));
+HXLINE( 184)					 ::Enemy deadEnemies8 = deadEnemies->__get(e1).StaticCast<  ::Enemy >();
+HXDLIN( 184)					deadEnemies8->speedY = (deadEnemies8->speedY / ((Float)0.25));
+HXLINE( 185)					 ::Enemy deadEnemies9 = deadEnemies->__get(e1).StaticCast<  ::Enemy >();
+HXDLIN( 185)					deadEnemies9->gravity = (deadEnemies9->gravity / ((Float)0.25));
+HXLINE( 186)					e1 = (e1 + 1);
             				}
-HXLINE( 186)				::Bonus_obj::bonusIsUsed = false;
-HXLINE( 187)				::Bonus_obj::haveBonus = false;
-HXLINE( 188)				::Bonus_obj::counter = -1;
+HXLINE( 188)				e1 = 0;
+HXLINE( 189)				while((e1 < deadEnemiesWithGun->length)){
+HXLINE( 191)					 ::Enemy deadEnemiesWithGun4 = deadEnemiesWithGun->__get(e1).StaticCast<  ::Enemy >();
+HXDLIN( 191)					deadEnemiesWithGun4->speedX = (deadEnemiesWithGun4->speedX / ((Float)0.25));
+HXLINE( 192)					 ::Enemy deadEnemiesWithGun5 = deadEnemiesWithGun->__get(e1).StaticCast<  ::Enemy >();
+HXDLIN( 192)					deadEnemiesWithGun5->speedY = (deadEnemiesWithGun5->speedY / ((Float)0.25));
+HXLINE( 193)					 ::Enemy deadEnemiesWithGun6 = deadEnemiesWithGun->__get(e1).StaticCast<  ::Enemy >();
+HXDLIN( 193)					deadEnemiesWithGun6->gravity = (deadEnemiesWithGun6->gravity / ((Float)0.25));
+HXLINE( 194)					e1 = (e1 + 1);
+            				}
+HXLINE( 196)				if (hx::IsNotNull( grenade )) {
+HXLINE( 198)					grenade->set_speedX((grenade->get_speedX() / ((Float)0.25)));
+HXLINE( 199)					grenade->set_speedY((grenade->get_speedY() / ((Float)0.25)));
+HXLINE( 200)					grenade->set_gravity((grenade->get_gravity() * ((Float)16.0)));
+            				}
+HXLINE( 202)				::Bonus_obj::bonusIsUsed = false;
+HXLINE( 203)				::Bonus_obj::haveBonus = false;
+HXLINE( 204)				::Bonus_obj::counter = -1;
             			}
             		}
-HXLINE( 192)		::Bonus_obj::counter++;
+HXLINE( 208)		::Bonus_obj::counter++;
             	}
 
 
-STATIC_HX_DEFINE_DYNAMIC_FUNC7(Bonus_obj,doBonusSlow,(void))
+STATIC_HX_DEFINE_DYNAMIC_FUNC8(Bonus_obj,doBonusSlow,(void))
 
  ::BonusType Bonus_obj::get_bonusType(){
-            	HX_STACKFRAME(&_hx_pos_b245e5f9face90c2_197_get_bonusType)
-HXDLIN( 197)		return ::Bonus_obj::bonusType;
+            	HX_STACKFRAME(&_hx_pos_b245e5f9face90c2_213_get_bonusType)
+HXDLIN( 213)		return ::Bonus_obj::bonusType;
             	}
 
 
 STATIC_HX_DEFINE_DYNAMIC_FUNC0(Bonus_obj,get_bonusType,return )
 
 int Bonus_obj::get_counter(){
-            	HX_STACKFRAME(&_hx_pos_b245e5f9face90c2_201_get_counter)
-HXDLIN( 201)		return ::Bonus_obj::counter;
+            	HX_STACKFRAME(&_hx_pos_b245e5f9face90c2_217_get_counter)
+HXDLIN( 217)		return ::Bonus_obj::counter;
             	}
 
 

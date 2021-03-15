@@ -91,6 +91,7 @@ class HXCPP_CLASS_ATTRIBUTES Game_obj : public  ::openfl::display::Sprite_obj
 		::Array< ::Dynamic> enemies;
 		::Array< ::Dynamic> deadEnemies;
 		::Array< ::Dynamic> deadEnemiesWithGun;
+		::Array< ::Dynamic> deadBirds;
 		int maxEnemies;
 		Float spawnDelay;
 		int counter;

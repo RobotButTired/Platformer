@@ -2008,9 +2008,6 @@
 #ifndef INCLUDED_EnemyWithGun
 #include <EnemyWithGun.h>
 #endif
-#ifndef INCLUDED_Enemy
-#include <Enemy.h>
-#endif
 #ifndef INCLUDED_EReg
 #include <EReg.h>
 #endif
@@ -2022,6 +2019,12 @@
 #endif
 #ifndef INCLUDED_Bullet
 #include <Bullet.h>
+#endif
+#ifndef INCLUDED_Bird
+#include <Bird.h>
+#endif
+#ifndef INCLUDED_Enemy
+#include <Enemy.h>
 #endif
 #ifndef INCLUDED_Unit
 #include <Unit.h>
@@ -2747,11 +2750,12 @@ hx::RegisterResources( hx::GetResources() );
 ::GameOverScreen_obj::__register();
 ::GameLevel_obj::__register();
 ::EnemyWithGun_obj::__register();
-::Enemy_obj::__register();
 ::EReg_obj::__register();
 ::Date_obj::__register();
 ::Button_obj::__register();
 ::Bullet_obj::__register();
+::Bird_obj::__register();
+::Enemy_obj::__register();
 ::Unit_obj::__register();
 ::BackGround_obj::__register();
 ::DocumentClass_obj::__register();

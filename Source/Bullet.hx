@@ -20,7 +20,7 @@ class Bullet extends Sprite
     }
     public function move() 
     {
-        x += speed;   
+        x += speed* Main.timePerFrame;   
     }
     public function setBullet(unit:Unit) 
     {
@@ -28,17 +28,17 @@ class Bullet extends Sprite
             {
                 x= unit.x + 10.0;
                 y = unit.y;
-                speed = 20.0;
+                speed = 1200;
                 if(Bonus.bonusIsUsed)
-                    speed = 5.0;
+                    speed *= 0.25;
             } 
         else
             {
                 x = unit.x - 10.0;
                 y = unit.y;
-                speed = -20.0;
+                speed = -1200;
                 if(Bonus.bonusIsUsed)
-                    speed = -5.0;
+                    speed *= 0.25;
             }
     }
 

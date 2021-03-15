@@ -10,10 +10,12 @@ class Main extends Sprite
 {
 	public static  var sizeWidth = 800;
 	public static var sizeHeight = 600;
+	public static var timePerFrame:Float =0.0;
 	var startScreen:StartScreen;
 	var rulesScreen:RulesScreen;
 	var gameOverScreen:GameOverScreen;
 	var game:Game;
+
 
 	static var FPS(get,null):Int = 60;
 	var timeFlag:Float;
@@ -37,7 +39,7 @@ class Main extends Sprite
 
 	public function update(e:Event)
 	{
-		if(Timer.stamp() - timeFlag >= 1/FPS)
+		//if(Timer.stamp() - timeFlag >= 1/FPS)
 		{
 			if(startScreen.get_rulesButtonIsPressed())
 				{
@@ -91,6 +93,7 @@ class Main extends Sprite
 							game.update();
 						}
 				}
+			timePerFrame = Timer.stamp() - timeFlag;
 			timeFlag = Timer.stamp();
 		}
 		

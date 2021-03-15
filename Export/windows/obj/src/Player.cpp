@@ -182,7 +182,7 @@ HXLINE(  64)		::Array< ::Dynamic> _hx_tmp10 = this->jumpWithGun;
 HXDLIN(  64)		_hx_tmp10->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_jump with gun_0.png",16,22,21,26),null()),null(),null()));
 HXLINE(  65)		::Array< ::Dynamic> _hx_tmp11 = this->jumpWithGun;
 HXDLIN(  65)		_hx_tmp11->push( ::openfl::display::Bitmap_obj::__alloc( HX_CTX ,::openfl::utils::Assets_obj::getBitmapData(HX_("assets/Cowboy/Cowboy4_jump with gun_0.png",16,22,21,26),null()),null(),null()));
-HXLINE(  67)		this->speedX = ((Float)5.0);
+HXLINE(  67)		this->speedX = ( (Float)(300) );
 HXLINE(  68)		this->speedY = ((Float)0.0);
 HXLINE(  69)		this->hitBox =  ::openfl::geom::Rectangle_obj::__alloc( HX_CTX ,((Float)-10.),((Float)-17.5),20,30);
 HXLINE(  73)		this->addChild(this->idleWidthGun->__get(0).StaticCast<  ::openfl::display::Bitmap >());
@@ -403,7 +403,7 @@ HXLINE( 170)			Float _hx_tmp = this->get_x();
 HXDLIN( 170)			if (((_hx_tmp - (this->get_hitBox()->width / ( (Float)(2) ))) >= 0)) {
 HXLINE( 171)				 ::Player _g = hx::ObjectPtr<OBJ_>(this);
 HXDLIN( 171)				Float _hx_tmp1 = _g->get_x();
-HXDLIN( 171)				_g->set_x((_hx_tmp1 - this->speedX));
+HXDLIN( 171)				_g->set_x((_hx_tmp1 - (this->speedX * ::Main_obj::timePerFrame)));
             			}
 HXLINE( 172)			this->state = ::State_obj::walk_dyn();
 HXLINE( 173)			this->set_scaleX(((Float)-1.0));
@@ -415,7 +415,7 @@ HXDLIN( 178)			Float _hx_tmp3 = (_hx_tmp2 + (this->get_hitBox()->width / ( (Floa
 HXDLIN( 178)			if ((_hx_tmp3 <= ::Main_obj::sizeWidth)) {
 HXLINE( 179)				 ::Player _g1 = hx::ObjectPtr<OBJ_>(this);
 HXDLIN( 179)				Float _hx_tmp4 = _g1->get_x();
-HXDLIN( 179)				_g1->set_x((_hx_tmp4 + this->speedX));
+HXDLIN( 179)				_g1->set_x((_hx_tmp4 + (this->speedX * ::Main_obj::timePerFrame)));
             			}
 HXLINE( 180)			this->state = ::State_obj::walk_dyn();
 HXLINE( 181)			this->set_scaleX(((Float)1.0));
@@ -446,7 +446,7 @@ HXDLIN( 188)		_hx_tmp7->speedY = (_hx_tmp7->speedY + this->gravity);
 HXLINE( 189)		{
 HXLINE( 189)			 ::Player _g2 = hx::ObjectPtr<OBJ_>(this);
 HXDLIN( 189)			Float _hx_tmp8 = _g2->get_y();
-HXDLIN( 189)			_g2->set_y((_hx_tmp8 + this->speedY));
+HXDLIN( 189)			_g2->set_y((_hx_tmp8 + (this->speedY * ::Main_obj::timePerFrame)));
             		}
             	}
 

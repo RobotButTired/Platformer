@@ -21,6 +21,7 @@ class Bonus extends Unit
         else
             bonusType = slow;
         counter = 0;
+        speedY = - 900;
         hitBox = new Rectangle(-25/2,-25/2,25,25);
         drawHitBox();
     }
@@ -39,7 +40,7 @@ class Bonus extends Unit
     {
         var tileWidth = Main.sizeWidth/20;
         var tileHeight = Main.sizeHeight/15;
-        y += speedY;
+        y += speedY* Main.timePerFrame;
         speedY += gravity;
         for(i in 0...level.length)
         {
@@ -47,7 +48,7 @@ class Bonus extends Unit
             {
                 if(checkCollisionWithTile(level[i][j], j*tileWidth, i*tileHeight))
                 {
-                    if(Math.abs(speedY) <= 2.0)
+                    if(Math.abs(speedY) <=30)
                         {
                             y = i*tileHeight- hitBox.height/2;
                             speedY = 0.0;
@@ -80,7 +81,7 @@ class Bonus extends Unit
             return false;
     }
 
-    public static function doBonusSlow(player:Player, enemies:Array<Enemy>,deadEnemies:Array<Enemy>,deadEnemiesWithGun:Array<Enemy> ,bullets:Array<Bullet>,enemyBullets:Array<Bullet>, grenade:Grenade) 
+    public static function doBonusSlow(player:Player, enemies:Array<Enemy>,deadEnemies:Array<Enemy>,deadEnemiesWithGun:Array<Enemy>, deadBirds:Array<Enemy> ,bullets:Array<Bullet>,enemyBullets:Array<Bullet>, grenade:Grenade) 
     {
         if(counter == 0)
         {
@@ -116,6 +117,14 @@ class Bonus extends Unit
                 deadEnemies[e].speedX *= 0.25;
                 deadEnemies[e].speedY *= 0.25;
                 deadEnemies[e].gravity*=0.25;
+                ++e;
+            }
+            e =0;
+            while(e < deadBirds.length)
+            {
+                deadBirds[e].speedX *= 0.25;
+                deadBirds[e].speedY *= 0.25;
+                deadBirds[e].gravity*=0.25;
                 ++e;
             }
             e =0;
@@ -163,6 +172,14 @@ class Bonus extends Unit
                 }
                 e =0;
                 while(e < deadEnemies.length)
+                {
+                    deadEnemies[e].speedX /= 0.25;
+                    deadEnemies[e].speedY /= 0.25;
+                    deadEnemies[e].gravity/=0.25;
+                    ++e;
+                }
+                e =0;
+                while(e < deadBirds.length)
                 {
                     deadEnemies[e].speedX /= 0.25;
                     deadEnemies[e].speedY /= 0.25;

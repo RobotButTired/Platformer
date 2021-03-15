@@ -61,7 +61,7 @@ class HXCPP_CLASS_ATTRIBUTES Bonus_obj : public  ::Unit_obj
 		static bool bonusIsUsed;
 		static bool haveBonus;
 		static  ::BonusType bonusType;
-		static void doBonusSlow( ::Player player,::Array< ::Dynamic> enemies,::Array< ::Dynamic> deadEnemies,::Array< ::Dynamic> deadEnemiesWithGun,::Array< ::Dynamic> bullets,::Array< ::Dynamic> enemyBullets, ::Grenade grenade);
+		static void doBonusSlow( ::Player player,::Array< ::Dynamic> enemies,::Array< ::Dynamic> deadEnemies,::Array< ::Dynamic> deadEnemiesWithGun,::Array< ::Dynamic> deadBirds,::Array< ::Dynamic> bullets,::Array< ::Dynamic> enemyBullets, ::Grenade grenade);
 		static ::Dynamic doBonusSlow_dyn();
 
 		static  ::BonusType get_bonusType();

@@ -54,7 +54,7 @@ void Unit_obj::__construct(){
 HXLINE(  17)		this->movingRight = false;
 HXLINE(  16)		this->movingLeft = false;
 HXLINE(  13)		this->direction = ::Direction_obj::right_dyn();
-HXLINE(  12)		this->gravity = ((Float)0.8);
+HXLINE(  12)		this->gravity = ((Float)48);
 HXLINE(  11)		this->speedY = ((Float)0.0);
 HXLINE(  10)		this->speedX = ((Float)0.0);
 HXLINE(  22)		super::__construct();

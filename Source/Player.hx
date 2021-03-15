@@ -64,7 +64,7 @@ class Player extends Unit
         jumpWithGun.push(new Bitmap(openfl.Assets.getBitmapData("assets/Cowboy/Cowboy4_jump with gun_0.png")));
         jumpWithGun.push(new Bitmap(openfl.Assets.getBitmapData("assets/Cowboy/Cowboy4_jump with gun_0.png")));
 
-        speedX = 5.0;
+        speedX = 300;
         speedY = 0.0;
         hitBox = new Rectangle(-20/2,-35/2,20,30);
     
@@ -168,7 +168,7 @@ class Player extends Unit
         if(movingLeft )
             {
                 if(x-hitBox.width/2 >= 0)
-                    x -= speedX;
+                    x -= speedX * Main.timePerFrame;
                 state = walk;
                 scaleX = -1.0;
                 direction = left;
@@ -176,7 +176,7 @@ class Player extends Unit
         if(movingRight)
             {
                 if(x+hitBox.width/2 <= Main.sizeWidth)
-                    x += speedX;    
+                    x += speedX * Main.timePerFrame;    
                 state = walk;
                 scaleX = 1.0;
                 direction = right;
@@ -186,7 +186,7 @@ class Player extends Unit
         if(!movingLeft && !movingRight)
             state = idle;
         speedY += gravity;
-        y += speedY;
+        y += speedY * Main.timePerFrame;
 
     }
 

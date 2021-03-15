@@ -9,7 +9,7 @@ class Unit extends Sprite
 {
     var speedX:Float = 0.0;
     var speedY:Float = 0.0;
-    var gravity:Float = 0.8;
+    var gravity:Float = 24;
     var direction:Direction = right;
     var collisionDirection(get,null):CollisionDirection;
 
