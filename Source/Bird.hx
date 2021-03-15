@@ -33,6 +33,7 @@ class Bird extends Enemy
         TV.y  = player.y - y;
         var distance = Math.abs(Point.distance(new Point(player.x, player.y), new Point(x,y)));
         var TV_norm = new Point();
+        
         TV_norm.x = TV.x / distance;
         TV_norm.y = TV.y / distance;
 

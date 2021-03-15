@@ -870,9 +870,9 @@ ApplicationMain.create = function(config) {
 	ManifestResources.init(config);
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-		_this.setReserved("build","14");
+		_this.setReserved("build","16");
 	} else {
-		_this.h["build"] = "14";
+		_this.h["build"] = "16";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -4108,7 +4108,7 @@ var Main = function() {
 	this.rulesScreen = new RulesScreen(Main.sizeWidth,Main.sizeHeight);
 	this.gameOverScreen = new GameOverScreen();
 	this.addChild(this.startScreen);
-	haxe_Log.trace(this.get_width() + " " + this.get_height(),{ fileName : "Source/Main.hx", lineNumber : 31, className : "Main", methodName : "new"});
+	haxe_Log.trace(this.get_width() + " " + this.get_height(),{ fileName : "Source/Main.hx", lineNumber : 33, className : "Main", methodName : "new"});
 	this.addEventListener("enterFrame",$bind(this,this.update));
 	this.timeFlag = new Date().getTime() / 1000;
 };
@@ -4120,51 +4120,50 @@ Main.get_FPS = function() {
 Main.__super__ = openfl_display_Sprite;
 Main.prototype = $extend(openfl_display_Sprite.prototype,{
 	update: function(e) {
-		if(new Date().getTime() / 1000 - this.timeFlag >= 1 / Main.get_FPS()) {
-			if(this.startScreen.get_rulesButtonIsPressed()) {
-				this.removeChild(this.startScreen);
-				this.startScreen.reset();
-				this.addChild(this.rulesScreen);
-			}
-			if(this.rulesScreen.get_backButtonIsPressed()) {
-				this.removeChild(this.rulesScreen);
-				this.rulesScreen.reset();
-				this.addChild(this.startScreen);
-			}
-			if(this.startScreen.get_startButtonIsPressed()) {
-				this.removeChild(this.startScreen);
-				this.startScreen.reset();
-				this.game = new Game(Main.sizeWidth,Main.sizeHeight);
-				this.addChild(this.game);
-			}
-			if(this.gameOverScreen.get_quitButtonIsPressed()) {
-				this.removeChild(this.gameOverScreen);
-				this.gameOverScreen.reset();
-				this.addChild(this.startScreen);
-			}
-			if(this.gameOverScreen.get_tryAgainButtonIsPressed()) {
-				this.removeChild(this.gameOverScreen);
-				this.gameOverScreen.reset();
-				this.game = new Game(Main.sizeWidth,Main.sizeHeight);
-				this.addChild(this.game);
-			}
-			if(this.contains(this.game)) {
-				if(this.game.get_quitButtonIsPressed()) {
-					this.removeChild(this.game);
-					this.addChild(this.startScreen);
-					this.game = null;
-				} else if(this.game.get_gameIsOver()) {
-					this.removeChild(this.game);
-					this.gameOverScreen.pointsField.set_text(Std.string(this.game.get_gamePoints()));
-					this.addChild(this.gameOverScreen);
-					this.game = null;
-				}
-				if(this.game != null) {
-					this.game.update();
-				}
-			}
-			this.timeFlag = new Date().getTime() / 1000;
+		if(this.startScreen.get_rulesButtonIsPressed()) {
+			this.removeChild(this.startScreen);
+			this.startScreen.reset();
+			this.addChild(this.rulesScreen);
 		}
+		if(this.rulesScreen.get_backButtonIsPressed()) {
+			this.removeChild(this.rulesScreen);
+			this.rulesScreen.reset();
+			this.addChild(this.startScreen);
+		}
+		if(this.startScreen.get_startButtonIsPressed()) {
+			this.removeChild(this.startScreen);
+			this.startScreen.reset();
+			this.game = new Game(Main.sizeWidth,Main.sizeHeight);
+			this.addChild(this.game);
+		}
+		if(this.gameOverScreen.get_quitButtonIsPressed()) {
+			this.removeChild(this.gameOverScreen);
+			this.gameOverScreen.reset();
+			this.addChild(this.startScreen);
+		}
+		if(this.gameOverScreen.get_tryAgainButtonIsPressed()) {
+			this.removeChild(this.gameOverScreen);
+			this.gameOverScreen.reset();
+			this.game = new Game(Main.sizeWidth,Main.sizeHeight);
+			this.addChild(this.game);
+		}
+		if(this.contains(this.game)) {
+			if(this.game.get_quitButtonIsPressed()) {
+				this.removeChild(this.game);
+				this.addChild(this.startScreen);
+				this.game = null;
+			} else if(this.game.get_gameIsOver()) {
+				this.removeChild(this.game);
+				this.gameOverScreen.pointsField.set_text(Std.string(this.game.get_gamePoints()));
+				this.addChild(this.gameOverScreen);
+				this.game = null;
+			}
+			if(this.game != null) {
+				this.game.update();
+			}
+		}
+		Main.timePerFrame = new Date().getTime() / 1000 - this.timeFlag;
+		this.timeFlag = new Date().getTime() / 1000;
 	}
 	,__class__: Main
 });
@@ -4190,15 +4189,11 @@ BackGround.__super__ = openfl_display_Sprite;
 BackGround.prototype = $extend(openfl_display_Sprite.prototype,{
 	__class__: BackGround
 });
-var BonusType = $hxEnums["BonusType"] = { __ename__ : "BonusType", __constructs__ : ["slow","destroy"]
-	,slow: {_hx_index:0,__enum__:"BonusType",toString:$estr}
-	,destroy: {_hx_index:1,__enum__:"BonusType",toString:$estr}
-};
 var Unit = function() {
 	this.movingRight = false;
 	this.movingLeft = false;
 	this.direction = Direction.right;
-	this.gravity = 0.8;
+	this.gravity = 24;
 	this.speedY = 0.0;
 	this.speedX = 0.0;
 	openfl_display_Sprite.call(this);
@@ -4293,6 +4288,92 @@ Unit.prototype = $extend(openfl_display_Sprite.prototype,{
 	}
 	,__class__: Unit
 });
+var Enemy = function() {
+	this.color = 65280;
+	Unit.call(this);
+	this.hitBox = new openfl_geom_Rectangle(-15.,-20.,30,40);
+	this.drawHitBox();
+	this.speedX = 90;
+	this.speedY = 0.0;
+	if(Bonus.bonusIsUsed) {
+		this.speedY *= 0.25;
+		this.speedX *= 0.25;
+		this.gravity *= 0.25;
+	}
+};
+$hxClasses["Enemy"] = Enemy;
+Enemy.__name__ = "Enemy";
+Enemy.__super__ = Unit;
+Enemy.prototype = $extend(Unit.prototype,{
+	drawHitBox: function() {
+		this.get_graphics().clear();
+		this.get_graphics().lineStyle(3,this.color);
+		this.get_graphics().drawRect(-this.get_hitBox().width / 2,-this.get_hitBox().height / 2,this.get_hitBox().width,this.get_hitBox().height);
+		this.get_graphics().endFill();
+	}
+	,move: function(player,level) {
+		if(player.get_x() < this.get_x()) {
+			var _g = this;
+			_g.set_x(_g.get_x() - this.speedX * Main.timePerFrame);
+		} else if(player.get_x() > this.get_x()) {
+			var _g1 = this;
+			_g1.set_x(_g1.get_x() + this.speedX * Main.timePerFrame);
+		}
+		this.speedY += this.gravity;
+		var _g2 = this;
+		_g2.set_y(_g2.get_y() + this.speedY * Main.timePerFrame);
+		this.doCollisionsWithTiles(level);
+	}
+	,doShot: function(game) {
+	}
+	,__class__: Enemy
+});
+var Bird = function() {
+	this.speedMax = 240;
+	this.rate = 120;
+	Enemy.call(this);
+	this.TV = new openfl_geom_Point();
+	this.color = 16776960;
+	this.gravity = 0.0;
+	this.hitBox = new openfl_geom_Rectangle(-10.,-10.,20,20);
+	this.drawHitBox();
+};
+$hxClasses["Bird"] = Bird;
+Bird.__name__ = "Bird";
+Bird.__super__ = Enemy;
+Bird.prototype = $extend(Enemy.prototype,{
+	move: function(player,level) {
+		var tmp = player.get_x();
+		var tmp1 = this.get_x();
+		this.TV.x = tmp - tmp1;
+		var tmp2 = player.get_y();
+		var tmp3 = this.get_y();
+		this.TV.y = tmp2 - tmp3;
+		var distance = Math.abs(openfl_geom_Point.distance(new openfl_geom_Point(player.get_x(),player.get_y()),new openfl_geom_Point(this.get_x(),this.get_y())));
+		var TV_norm = new openfl_geom_Point();
+		TV_norm.x = this.TV.x / distance;
+		TV_norm.y = this.TV.y / distance;
+		this.speedX = this.rate * TV_norm.x * Main.timePerFrame;
+		this.speedY = this.rate * TV_norm.y * Main.timePerFrame;
+		if(Bonus.bonusIsUsed) {
+			this.speedX *= 0.25;
+			this.speedY *= 0.25;
+		}
+		if(Math.sqrt(this.speedX * this.speedX + this.speedY * this.speedY) > this.speedMax) {
+			this.speedX *= 0.75;
+			this.speedY *= 0.75;
+		}
+		var _g = this;
+		_g.set_x(_g.get_x() + this.speedX);
+		var _g1 = this;
+		_g1.set_y(_g1.get_y() + this.speedY);
+	}
+	,__class__: Bird
+});
+var BonusType = $hxEnums["BonusType"] = { __ename__ : "BonusType", __constructs__ : ["slow","destroy"]
+	,slow: {_hx_index:0,__enum__:"BonusType",toString:$estr}
+	,destroy: {_hx_index:1,__enum__:"BonusType",toString:$estr}
+};
 var Bonus = function() {
 	Unit.call(this);
 	if(Math.random() < 0.5) {
@@ -4301,12 +4382,13 @@ var Bonus = function() {
 		Bonus.bonusType = BonusType.slow;
 	}
 	Bonus.counter = 0;
+	this.speedY = -900;
 	this.hitBox = new openfl_geom_Rectangle(-12.5,-12.5,25,25);
 	this.drawHitBox();
 };
 $hxClasses["Bonus"] = Bonus;
 Bonus.__name__ = "Bonus";
-Bonus.doBonusSlow = function(player,enemies,deadEnemies,deadEnemiesWithGun,bullets,enemyBullets,grenade) {
+Bonus.doBonusSlow = function(player,enemies,deadEnemies,deadEnemiesWithGun,deadBirds,bullets,enemyBullets,grenade) {
 	if(Bonus.counter == 0) {
 		player.speedX *= 0.5;
 		player.speedY *= 0.5;
@@ -4336,6 +4418,13 @@ Bonus.doBonusSlow = function(player,enemies,deadEnemies,deadEnemiesWithGun,bulle
 			deadEnemies[e].speedX *= 0.25;
 			deadEnemies[e].speedY *= 0.25;
 			deadEnemies[e].gravity *= 0.25;
+			++e;
+		}
+		e = 0;
+		while(e < deadBirds.length) {
+			deadBirds[e].speedX *= 0.25;
+			deadBirds[e].speedY *= 0.25;
+			deadBirds[e].gravity *= 0.25;
 			++e;
 		}
 		e = 0;
@@ -4382,6 +4471,13 @@ Bonus.doBonusSlow = function(player,enemies,deadEnemies,deadEnemiesWithGun,bulle
 			++e1;
 		}
 		e1 = 0;
+		while(e1 < deadBirds.length) {
+			deadEnemies[e1].speedX /= 0.25;
+			deadEnemies[e1].speedY /= 0.25;
+			deadEnemies[e1].gravity /= 0.25;
+			++e1;
+		}
+		e1 = 0;
 		while(e1 < deadEnemiesWithGun.length) {
 			deadEnemiesWithGun[e1].speedX /= 0.25;
 			deadEnemiesWithGun[e1].speedY /= 0.25;
@@ -4420,7 +4516,7 @@ Bonus.prototype = $extend(Unit.prototype,{
 		var tileWidth = Main.sizeWidth / 20;
 		var tileHeight = Main.sizeHeight / 15;
 		var _g = this;
-		_g.set_y(_g.get_y() + this.speedY);
+		_g.set_y(_g.get_y() + this.speedY * Main.timePerFrame);
 		this.speedY += this.gravity;
 		var _g1 = 0;
 		var _g11 = level.length;
@@ -4431,7 +4527,7 @@ Bonus.prototype = $extend(Unit.prototype,{
 			while(_g2 < _g12) {
 				var j = _g2++;
 				if(this.checkCollisionWithTile(level[i][j],j * tileWidth,i * tileHeight)) {
-					if(Math.abs(this.speedY) <= 2.0) {
+					if(Math.abs(this.speedY) <= 30) {
 						this.set_y(i * tileHeight - this.get_hitBox().height / 2);
 						this.speedY = 0.0;
 					} else {
@@ -4468,22 +4564,22 @@ Bullet.__super__ = openfl_display_Sprite;
 Bullet.prototype = $extend(openfl_display_Sprite.prototype,{
 	move: function() {
 		var _g = this;
-		_g.set_x(_g.get_x() + this.speed);
+		_g.set_x(_g.get_x() + this.speed * Main.timePerFrame);
 	}
 	,setBullet: function(unit) {
 		if(unit.get_direction() == Direction.right) {
 			this.set_x(unit.get_x() + 10.0);
 			this.set_y(unit.get_y());
-			this.speed = 20.0;
+			this.speed = 1200;
 			if(Bonus.bonusIsUsed) {
-				this.speed = 5.0;
+				this.speed *= 0.25;
 			}
 		} else {
 			this.set_x(unit.get_x() - 10.0);
 			this.set_y(unit.get_y());
-			this.speed = -20.0;
+			this.speed = -1200;
 			if(Bonus.bonusIsUsed) {
-				this.speed = -5.0;
+				this.speed *= 0.25;
 			}
 		}
 	}
@@ -4619,44 +4715,6 @@ EReg.prototype = {
 	}
 	,__class__: EReg
 };
-var Enemy = function() {
-	this.color = 65280;
-	Unit.call(this);
-	this.hitBox = new openfl_geom_Rectangle(-15.,-20.,30,40);
-	this.drawHitBox();
-	this.speedX = 1.5;
-	if(Bonus.bonusIsUsed) {
-		this.speedY *= 0.25;
-		this.speedX = 0.375;
-		this.gravity *= 0.25;
-	}
-};
-$hxClasses["Enemy"] = Enemy;
-Enemy.__name__ = "Enemy";
-Enemy.__super__ = Unit;
-Enemy.prototype = $extend(Unit.prototype,{
-	drawHitBox: function() {
-		this.get_graphics().lineStyle(3,this.color);
-		this.get_graphics().drawRect(-this.get_hitBox().width / 2,-this.get_hitBox().height / 2,this.get_hitBox().width,this.get_hitBox().height);
-		this.get_graphics().endFill();
-	}
-	,move: function(player,level) {
-		if(player.get_x() < this.get_x()) {
-			var _g = this;
-			_g.set_x(_g.get_x() - this.speedX);
-		} else if(player.get_x() > this.get_x()) {
-			var _g1 = this;
-			_g1.set_x(_g1.get_x() + this.speedX);
-		}
-		this.speedY += this.gravity;
-		var _g2 = this;
-		_g2.set_y(_g2.get_y() + this.speedY);
-		this.doCollisionsWithTiles(level);
-	}
-	,doShot: function(game) {
-	}
-	,__class__: Enemy
-});
 var EnemyWithGun = function() {
 	this.counter = 0;
 	this.shot = false;
@@ -4667,7 +4725,7 @@ var EnemyWithGun = function() {
 	this.color = 16711935;
 	this.hitBox = new openfl_geom_Rectangle(-15.,-20.,30,40);
 	this.drawHitBox();
-	this.speedX = 1.5;
+	this.speedX = 90;
 	if(Bonus.bonusIsUsed) {
 		this.speedY *= 0.25;
 		this.speedX = 0.375;
@@ -4682,11 +4740,11 @@ EnemyWithGun.prototype = $extend(Enemy.prototype,{
 		if(!this.shooting) {
 			if(player.get_x() < this.get_x()) {
 				var _g = this;
-				_g.set_x(_g.get_x() - this.speedX);
+				_g.set_x(_g.get_x() - this.speedX * Main.timePerFrame);
 				this.direction = Direction.left;
 			} else if(player.get_x() > this.get_x()) {
 				var _g1 = this;
-				_g1.set_x(_g1.get_x() + this.speedX);
+				_g1.set_x(_g1.get_x() + this.speedX * Main.timePerFrame);
 				this.direction = Direction.right;
 			}
 			++this.counter;
@@ -4706,7 +4764,7 @@ EnemyWithGun.prototype = $extend(Enemy.prototype,{
 		}
 		this.speedY += this.gravity;
 		var _g2 = this;
-		_g2.set_y(_g2.get_y() + this.speedY);
+		_g2.set_y(_g2.get_y() + this.speedY * Main.timePerFrame);
 		this.doCollisionsWithTiles(level);
 	}
 	,doShot: function(game) {
@@ -4745,7 +4803,7 @@ var Game = function(width,height) {
 	this.spentBullets = [];
 	this.enemyBullets = [];
 	this.spentEnemyBullets = [];
-	Game.jumpPower = 15.0;
+	Game.jumpPower = 900;
 	this.player = new Player();
 	this.player.set_x(100);
 	this.player.set_y(Main.sizeHeight / 2);
@@ -4754,6 +4812,7 @@ var Game = function(width,height) {
 	this.enemies = [];
 	this.deadEnemies = [];
 	this.deadEnemiesWithGun = [];
+	this.deadBirds = [];
 	Bonus.bonusIsUsed = false;
 	Bonus.haveBonus = false;
 	this.bonusIndicator = new openfl_display_Sprite();
@@ -4846,7 +4905,7 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 	}
 	,playerJump: function(jumpPower) {
 		if(this.player.get_jump() && Game.haveCollision && this.player.get_collisionDirection() == CollisionDirection.up) {
-			haxe_Log.trace("jump",{ fileName : "Source/Game.hx", lineNumber : 291, className : "Game", methodName : "playerJump"});
+			haxe_Log.trace("jump",{ fileName : "Source/Game.hx", lineNumber : 293, className : "Game", methodName : "playerJump"});
 			this.player.set_speedY(this.player.get_speedY() - jumpPower);
 		}
 		if(!Game.haveCollision) {
@@ -4895,7 +4954,13 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 	,generateEnemy: function() {
 		var enemy;
 		if(Math.random() > 0.2) {
-			if(this.deadEnemies.length > 0) {
+			if(this.gamePoints >= 25 && Math.random() > 0.8) {
+				if(this.deadBirds.length > 0) {
+					enemy = this.deadBirds.pop();
+				} else {
+					enemy = new Bird();
+				}
+			} else if(this.deadEnemies.length > 0) {
 				enemy = this.deadEnemies.pop();
 			} else {
 				enemy = new Enemy();
@@ -4976,6 +5041,8 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 		this.pointsField.set_text(Std.string(this.gamePoints));
 		if(enemy.color == 16711935) {
 			this.deadEnemiesWithGun.push(enemy);
+		} else if(enemy.color == 16776960) {
+			this.deadBirds.push(enemy);
 		} else {
 			this.deadEnemies.push(enemy);
 		}
@@ -5009,7 +5076,7 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 	,bonusBuf: function() {
 		if(Bonus.bonusIsUsed) {
 			if(Bonus.get_bonusType() == BonusType.slow) {
-				Bonus.doBonusSlow(this.player,this.enemies,this.deadEnemies,this.deadEnemiesWithGun,this.bullets,this.enemyBullets,this.grenade);
+				Bonus.doBonusSlow(this.player,this.enemies,this.deadEnemies,this.deadEnemiesWithGun,this.deadBirds,this.bullets,this.enemyBullets,this.grenade);
 				this.bonusIndicator.get_graphics().clear();
 				this.bonusIndicator.get_graphics().beginGradientFill(1,[16711680,16777215],[1.0,1.0],[0,95]);
 				this.bonusIndicator.get_graphics().drawRect(0,0,Main.sizeWidth / 3.5 / 600 * (600 - Bonus.get_counter()),20);
@@ -5027,7 +5094,7 @@ Game.prototype = $extend(openfl_display_Sprite.prototype,{
 			Bonus.bonusIsUsed = false;
 			Bonus.haveBonus = true;
 			this.bonus = new Bonus();
-			this.bonus.set_speedY(-10.0);
+			this.bonus.set_speedY(-500);
 			this.bonus.set_x(enemy.get_x());
 			this.bonus.set_y(enemy.get_y());
 			this.addChild(this.bonus);
@@ -5228,9 +5295,9 @@ Grenade.prototype = $extend(openfl_display_Sprite.prototype,{
 				this.state = GrenadeState.inactive;
 			}
 			var _g = this;
-			_g.set_x(_g.get_x() + this.speedX);
+			_g.set_x(_g.get_x() + this.speedX * Main.timePerFrame);
 			var _g1 = this;
-			_g1.set_y(_g1.get_y() + this.speedY);
+			_g1.set_y(_g1.get_y() + this.speedY * Main.timePerFrame);
 			this.speedY += this.gravity;
 		} else if(this.state == GrenadeState.explosion) {
 			this.currentRadius = this.radius + (this.explosionRadius - this.radius) / (Main.get_FPS() * this.explosionTime) * this.explosionCounter;
@@ -5254,15 +5321,15 @@ Grenade.prototype = $extend(openfl_display_Sprite.prototype,{
 		if(player.get_direction() == Direction.right) {
 			this.set_x(player.get_x() + 10.0);
 			this.set_y(player.get_y());
-			this.speedX = 6.0;
-			this.speedY = -15.0;
-			this.gravity = 0.8;
+			this.speedX = 360;
+			this.speedY = -900;
+			this.gravity = 24;
 		} else {
 			this.set_x(player.get_x() - 10.0);
 			this.set_y(player.get_y());
-			this.speedX = -6.0;
-			this.speedY = -15.0;
-			this.gravity = 0.8;
+			this.speedX = -360;
+			this.speedY = -900;
+			this.gravity = 24;
 		}
 		if(Bonus.bonusIsUsed) {
 			this.speedX /= 4.0;
@@ -5577,14 +5644,13 @@ var Player = function() {
 	this.jumpWithGun.push(new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("assets/Cowboy/Cowboy4_jump with gun_0.png")));
 	this.jumpWithGun.push(new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("assets/Cowboy/Cowboy4_jump with gun_0.png")));
 	this.jumpWithGun.push(new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("assets/Cowboy/Cowboy4_jump with gun_0.png")));
-	this.speedX = 5.0;
+	this.speedX = 300;
 	this.speedY = 0.0;
 	this.hitBox = new openfl_geom_Rectangle(-10.,-17.5,20,30);
 	this.addChild(this.idleWidthGun[0]);
 	this.idleWidthGun[0].set_x(-15);
 	this.idleWidthGun[0].set_y(-40);
 	haxe_Log.trace(this.get_width() + " " + this.get_height(),{ fileName : "Source/Player.hx", lineNumber : 76, className : "Player", methodName : "new"});
-	this.drawHitBox();
 	this.ind = 0;
 	this.timeFlag = new Date().getTime() / 1000;
 	this.inventory = new Inventory();
@@ -5666,7 +5732,7 @@ Player.prototype = $extend(Unit.prototype,{
 		if(this.movingLeft) {
 			if(this.get_x() - this.get_hitBox().width / 2 >= 0) {
 				var _g = this;
-				_g.set_x(_g.get_x() - this.speedX);
+				_g.set_x(_g.get_x() - this.speedX * Main.timePerFrame);
 			}
 			this.state = State.walk;
 			this.set_scaleX(-1.0);
@@ -5675,7 +5741,7 @@ Player.prototype = $extend(Unit.prototype,{
 		if(this.movingRight) {
 			if(this.get_x() + this.get_hitBox().width / 2 <= Main.sizeWidth) {
 				var _g1 = this;
-				_g1.set_x(_g1.get_x() + this.speedX);
+				_g1.set_x(_g1.get_x() + this.speedX * Main.timePerFrame);
 			}
 			this.state = State.walk;
 			this.set_scaleX(1.0);
@@ -5689,7 +5755,7 @@ Player.prototype = $extend(Unit.prototype,{
 		}
 		this.speedY += this.gravity;
 		var _g2 = this;
-		_g2.set_y(_g2.get_y() + this.speedY);
+		_g2.set_y(_g2.get_y() + this.speedY * Main.timePerFrame);
 	}
 	,doShot: function(game) {
 		this.inventory.update(this);
@@ -24839,7 +24905,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 671375;
+	this.version = 19048;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
@@ -73159,6 +73225,7 @@ openfl_display_DisplayObject.__tempStack = new lime_utils_ObjectPool(function() 
 });
 Main.sizeWidth = 800;
 Main.sizeHeight = 600;
+Main.timePerFrame = 0.0;
 Main.FPS = 60;
 Bonus.counter = 0;
 Bonus.bonusIsUsed = false;
